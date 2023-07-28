@@ -20,7 +20,7 @@ public class StringHelperTests
     [Fact]
     public void NullCheck_Fails()
     {
-        Assert.Throws<ArgumentException>(() => StringHelper.NullCheck(null, "Null"));
+        Assert.Throws<ArgumentNullException>(() => StringHelper.NullCheck(null, "Null"));
     }
 
     #endregion NullCheck
@@ -42,7 +42,7 @@ public class StringHelperTests
     [InlineData("\t\r\n", "SpecialCharacters")]
     public void EmptyOrWhitespaceCheck_Fails(string target, string name)
     {
-        Assert.Throws<ArgumentException>(() => StringHelper.NullCheck(target, name)); 
+        Assert.Throws<ArgumentException>(() => StringHelper.EmptyOrWhitespaceCheck(target, name)); 
     }
 
     #endregion EmptyOrWhitespaceCheck
