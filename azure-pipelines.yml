@@ -15,9 +15,9 @@ variables:
   sdkVersion: 7.0.x
   buildConfiguration: 'Debug'
   mainAppDirectory: 'Khartyko.InsigniaCreator/Khartyko.InsigniaCreator.MainApp'
-  libraryTestingDirectory: 'Testing/Khartyko.InsigniaCreator.Library'
-  domainTestingDirectory: 'Testing/Khartyko.InsigniaCreator.Domain'
-  mainAppTestingDirectory: 'Testing/Khartyko.InsigniaCreator.MainApp'
+  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library'
+  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain'
+  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp'
 
 pool:
   vmImage: ubuntu-latest
@@ -45,11 +45,11 @@ stages:
       - job: test_library_project        
         steps:
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: Build 'Library' Project
+            displayName: 'Build "Library" Project'
             workingDirectory: $(libraryTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: Testing 'Library' Project
+            displayName: 'Testing "Library" Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
@@ -57,16 +57,13 @@ stages:
               workingDirectory: $(libraryTestingDirectory)
 
       - job: test_domain_project
-        variables:
-          testingDirectory: 'Testing/Khartyko.InsigniaCreator.Domain'
-        
         steps:
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: Build 'Domain' Project
+            displayName: 'Build "Domain" Project'
             workingDirectory: $(domainTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: Testing 'Domain' Project
+            displayName: 'Testing "Domain" Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
@@ -74,16 +71,13 @@ stages:
               workingDirectory: $(domainTestingDirectory)
 
       - job: test_mainapp_project
-        variables:
-          testingDirectory: 'Testing/Khartyko.InsigniaCreator.MainApp'
-        
         steps:
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: Build 'MainApp' Project
+            displayName: 'Build "MainApp" Project'
             workingDirectory: $(mainAppTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: Testing 'MainApp' Project
+            displayName: 'Testing "MainApp" Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
