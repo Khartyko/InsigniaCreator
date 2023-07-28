@@ -1,0 +1,110 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+  branches:
+    include:
+      - '*'
+
+pr:
+- develop
+
+variables:
+  sdkVersion: 7.0.x
+  buildConfiguration: 'Debug'
+  mainAppDirectory: 'Khartyko.InsigniaCreator/Khartyko.InsigniaCreator.MainApp'
+  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library.Testing'
+  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain.Testing'
+  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp.Testing'
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: build
+    jobs:
+      - job: build
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET 7 SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(sdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+              workingDirectory: $(mainAppDirectory)
+
+          - script: dotnet build --configuration $(buildConfiguration)
+            displayName: dotnet build
+            workingDirectory: $(mainAppDirectory)
+
+  - stage: test
+    condition: succeeded()
+    jobs:
+      - job: test_library_project        
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET 7 SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(sdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+              workingDirectory: $(libraryTestingDirectory)
+
+          - script: dotnet build --configuration $(buildConfiguration)
+            displayName: 'Build "Library" Project'
+            workingDirectory: $(libraryTestingDirectory)
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Testing "Library" Project'
+            inputs:
+              command: 'test'
+              arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+              publishTestResults: true
+              workingDirectory: $(libraryTestingDirectory)
+
+      - job: test_domain_project
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET 7 SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(sdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+              workingDirectory: $(domainTestingDirectory)
+
+          - script: dotnet build --configuration $(buildConfiguration)
+            displayName: 'Build "Domain" Project'
+            workingDirectory: $(domainTestingDirectory)
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Testing "Domain" Project'
+            inputs:
+              command: 'test'
+              arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+              publishTestResults: true
+              workingDirectory: $(domainTestingDirectory)
+
+      - job: test_mainapp_project
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET 7 SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(sdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+              workingDirectory: $(mainAppTestingDirectory)
+
+          - script: dotnet build --configuration $(buildConfiguration)
+            displayName: 'Build "MainApp" Project'
+            workingDirectory: $(mainAppTestingDirectory)
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Testing "MainApp" Project'
+            inputs:
+              command: 'test'
+              arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+              publishTestResults: true
+              workingDirectory: $(mainAppTestingDirectory)
+  
