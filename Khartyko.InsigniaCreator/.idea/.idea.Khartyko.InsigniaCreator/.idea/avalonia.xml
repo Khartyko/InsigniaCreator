@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/MainWindow.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
