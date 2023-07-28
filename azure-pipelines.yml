@@ -15,9 +15,9 @@ variables:
   sdkVersion: 7.0.x
   buildConfiguration: 'Debug'
   mainAppDirectory: 'Khartyko.InsigniaCreator/Khartyko.InsigniaCreator.MainApp'
-  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library'
-  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain'
-  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp'
+  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library.Testing'
+  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain.Testing'
+  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp.Testing'
 
 pool:
   vmImage: ubuntu-latest
