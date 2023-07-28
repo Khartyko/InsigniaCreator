@@ -37,6 +37,7 @@ public class StringHelperTests
     }
 
     [Theory]
+    [InlineData(null, "Null")]
     [InlineData("", "Empty")]
     [InlineData("    ", "Spaces")]
     [InlineData("\t\r\n", "SpecialCharacters")]
