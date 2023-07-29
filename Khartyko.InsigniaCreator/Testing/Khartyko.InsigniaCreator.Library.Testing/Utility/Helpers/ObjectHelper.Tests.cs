@@ -12,13 +12,13 @@ public class ObjectHelperTests
     [Theory]
     [InlineData("A string")]
     [InlineData(42)]
-    public void NullCheck_Succeeds(object target)
+    public void ObjectHelper_NullCheck_Succeeds(object target)
     {
         ObjectHelper.NullCheck(target, nameof(target));
     }
 
     [Fact]
-    public void NullCheck_Fails()
+    public void ObjectHelper_NullCheck_Fails()
     {
         object nullObj = null;
         
