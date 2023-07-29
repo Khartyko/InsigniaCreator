@@ -6,7 +6,7 @@ public static class MathHelper
 
     public static bool IsOdd(int value) => Math.Abs(value % 2) == 1;
     public static bool IsEven(int value) => Math.Abs(value % 2) == 0;
-    
+
     public static bool Equals(double d0, double d1)
     {
         Verify(d0, "MathHelper::Equals(>d0<, d1)");
@@ -34,13 +34,14 @@ public static class MathHelper
         return Round(Math.Sqrt(value));
     }
 
-    public static double Pi() => 3.142;
+    public static double Pi() => Round(Pi(1, 1));
 
     public static double Pi(double numerator, double denominator)
     {
         if (Equals(denominator, 0.0))
         {
-            throw new ArgumentOutOfRangeException(nameof(denominator), "MathHelper::Pi(numerator, >denominator<); denominator cannot be 0");
+            throw new ArgumentOutOfRangeException(nameof(denominator),
+                "MathHelper::Pi(numerator, >denominator<); denominator cannot be 0");
         }
 
         Verify(numerator, "MathHelper::Pi(>num<, den)");
