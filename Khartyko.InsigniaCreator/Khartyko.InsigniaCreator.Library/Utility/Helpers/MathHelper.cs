@@ -93,21 +93,40 @@ public static class MathHelper
 
     public static void Verify(double value, string descriptor)
     {
-        StringHelper.EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+        if (string.IsNullOrWhiteSpace(descriptor))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                "'descriptor' cannot be null, empty, or whitespace."
+            );
+        }
 
         if (double.IsNaN(value))
         {
-            throw new ArgumentException($"{descriptor} is NaN", descriptor);
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                $"{descriptor} is NaN"
+            );
         }
 
         if (double.IsPositiveInfinity(value))
         {
-            throw new ArgumentException($"{descriptor} is Positive Infinity", descriptor);
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                $"{descriptor} is Positive Infinity"
+            );
         }
 
         if (double.IsNegativeInfinity(value))
         {
-            throw new ArgumentException($"{descriptor} is Negative Infinity", descriptor);
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                $"{descriptor} is Negative Infinity"
+            );
         }
     }
 }
