@@ -85,7 +85,7 @@ public static class ExceptionHelper
         var parameterNames = GetMethodParameterNames(targetType, callerName);
         var constructedMessage = ConstructSignature(fullCallerName, parameterNames, parameterName);
 
-        throw new ArgumentException(errorMessage, constructedMessage);
+        return new ArgumentException(errorMessage, constructedMessage);
     }
     
     private static IList<string> GetMethodParameterNames(Type type, string methodName)
