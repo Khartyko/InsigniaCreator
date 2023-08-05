@@ -99,7 +99,7 @@ public static class ExceptionHelper
             var errorMessage = $"'{methodName}' is not a method found on the type '{type}'";
 
             var fullCallerName = $"{thisType.Name}::{methodName}";
-            parameterNames = GetMethodParameterNames(thisType, nameof(GetMethodParameterNames));
+            parameterNames = new List<string> { nameof(type), nameof(methodName) };
             var constructedMessage = ConstructSignature(fullCallerName, parameterNames, nameof(methodName));
 
             throw new ArgumentException(errorMessage, constructedMessage);

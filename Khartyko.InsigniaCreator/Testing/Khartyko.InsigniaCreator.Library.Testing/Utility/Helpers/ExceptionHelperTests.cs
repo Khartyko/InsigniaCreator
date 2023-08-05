@@ -62,9 +62,8 @@ public class ExceptionHelperTests
     }
 
     [Theory]
-    [InlineData("", "GenerateArgumentNullException_BadStringInput_Fails")]
+    [InlineData("callerName", "")]
     [InlineData("parameterName", "")]
-    [InlineData("", "")]
     public void GenerateArgumentNullException_BadStringInput_Fails(string parameterName,
         string callerName)
     {
@@ -180,6 +179,15 @@ public class ExceptionHelperTests
             ExceptionHelper.GenerateArgumentException(GetType(), parameterName, bogusString));
     }
 
+    [Theory]
+    [InlineData("")]
+    [InlineData("Some other bad input")]
+    public void GenerateArgumentException_InvalidCallerName_Fails(string callerName)
+    {
+        Assert.Throws<ArgumentException>(() =>
+            ExceptionHelper.GenerateArgumentException(GetType(), nameof(callerName), "", callerName));
+    }
+    
     [Fact]
     public void GenerateArgumentException_NoParameter_Fails()
     {
