@@ -9,22 +9,22 @@ public static class MathHelper
 
     public static bool Equals(double d0, double d1)
     {
-        Verify(d0, "MathHelper::Equals(>d0<, d1)");
-        Verify(d1, "MathHelper::Equals(d0, >d1<)");
+        InvalidDoubleCheck(d0, "MathHelper::Equals(>d0<, d1)");
+        InvalidDoubleCheck(d1, "MathHelper::Equals(d0, >d1<)");
 
         return Math.Abs(d0 - d1) < _tolerance;
     }
 
     public static double Round(double value)
     {
-        Verify(value, "MathHelper::Round(>value<)");
+        InvalidDoubleCheck(value, "MathHelper::Round(>value<)");
 
         return Math.Round(value * 1000) / 1000;
     }
 
     public static double Sqrt(double value)
     {
-        Verify(value, "MathHelper::Sqrt(>value<)");
+        InvalidDoubleCheck(value, "MathHelper::Sqrt(>value<)");
 
         if (value < 0)
         {
@@ -44,36 +44,36 @@ public static class MathHelper
                 "MathHelper::Pi(numerator, >denominator<); denominator cannot be 0");
         }
 
-        Verify(numerator, "MathHelper::Pi(>num<, den)");
-        Verify(denominator, "MathHelper::Pi(num, >den<)");
+        InvalidDoubleCheck(numerator, "MathHelper::Pi(>num<, den)");
+        InvalidDoubleCheck(denominator, "MathHelper::Pi(num, >den<)");
 
         return Math.PI * numerator / denominator;
     }
 
     public static double Cos(double theta)
     {
-        Verify(theta, "MathHelper::Cos(>theta<)");
+        InvalidDoubleCheck(theta, "MathHelper::Cos(>theta<)");
 
         return Round(Math.Cos(theta));
     }
 
     public static double Sin(double theta)
     {
-        Verify(theta, "MathHelper::Sin(>theta<)");
+        InvalidDoubleCheck(theta, "MathHelper::Sin(>theta<)");
 
         return Round(Math.Sin(theta));
     }
 
     public static double ToDegrees(double radians)
     {
-        Verify(radians, "MathHelper::ToDegrees(>radians<)");
+        InvalidDoubleCheck(radians, "MathHelper::ToDegrees(>radians<)");
 
         return Round(radians * 180 / Math.PI);
     }
 
     public static double ToRadians(double degrees)
     {
-        Verify(degrees, "MathHelper::ToRadians(>degrees<)");
+        InvalidDoubleCheck(degrees, "MathHelper::ToRadians(>degrees<)");
 
         return Round(degrees * Math.PI / 180);
     }
@@ -91,7 +91,7 @@ public static class MathHelper
         return Round(innerFacingAngle);
     }
 
-    public static void Verify(double value, string descriptor)
+    public static void InvalidDoubleCheck(double value, string descriptor)
     {
         if (string.IsNullOrWhiteSpace(descriptor))
         {

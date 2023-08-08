@@ -13,7 +13,7 @@ public class HsvColor
         get => _hue;
         set
         {
-            MathHelper.Verify(value, "HsvColor::Hue");
+            MathHelper.InvalidDoubleCheck(value, "HsvColor::Hue");
             
             _hue = value;
         }
@@ -24,7 +24,7 @@ public class HsvColor
         get => _saturation;
         set
         {
-            MathHelper.Verify(value, "HsvColor::Saturation");
+            MathHelper.InvalidDoubleCheck(value, "HsvColor::Saturation");
 
             _saturation = value;
         }
@@ -35,7 +35,7 @@ public class HsvColor
         get => _value;
         set
         {
-            MathHelper.Verify(value, "HsvColor::Value");
+            MathHelper.InvalidDoubleCheck(value, "HsvColor::Value");
 
             _value = value;
         }
@@ -50,13 +50,13 @@ public class HsvColor
 
     public HsvColor(double hue, double saturation, double value)
     {
-        MathHelper.Verify(hue, "HsvColor::HsvColor(>hue<, saturation, value)");
-        MathHelper.Verify(saturation, "HsvColor::HsvColor(hue, >saturation<, value)");
-        MathHelper.Verify(value, "HsvColor::HsvColor(hue, saturation, >value<)");
+        MathHelper.InvalidDoubleCheck(hue, "HsvColor::HsvColor(>hue<, saturation, value)");
+        MathHelper.InvalidDoubleCheck(saturation, "HsvColor::HsvColor(hue, >saturation<, value)");
+        MathHelper.InvalidDoubleCheck(value, "HsvColor::HsvColor(hue, saturation, >value<)");
         
-        Hue = double.IsInfinity(hue) ? 0 : hue;
-        Saturation = double.IsInfinity(saturation) ? 0 : saturation;
-        Value = double.IsInfinity(value) ? 0 : value;
+        Hue = hue;
+        Saturation = saturation;
+        Value = value;
     }
 
     public override bool Equals(object? obj)

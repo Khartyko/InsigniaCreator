@@ -30,7 +30,7 @@ public class Transform
 
         set
         {
-            MathHelper.Verify(value, "Transform::Rotation = >value<");
+            MathHelper.InvalidDoubleCheck(value, "Transform::Rotation = >value<");
 
             _rotation = value;
 
@@ -64,7 +64,7 @@ public class Transform
     public Transform(Vector2 scale, double rotation, Vector2 translation)
     {
         ObjectHelper.NullCheck(scale, "Transform::transform(>scale<, rotation, translation)");
-        MathHelper.Verify(rotation, "Transform::transform(scale, >rotation<, translation)");
+        MathHelper.InvalidDoubleCheck(rotation, "Transform::transform(scale, >rotation<, translation)");
         ObjectHelper.NullCheck(translation, "Transform::transform(scale, rotation, >translation<)");
 
         _scale = scale;

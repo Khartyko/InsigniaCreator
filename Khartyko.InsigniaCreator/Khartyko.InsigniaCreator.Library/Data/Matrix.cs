@@ -49,7 +49,7 @@ public class Matrix
                 throw new ArgumentOutOfRangeException(nameof(y), "Matrix::[>y<, x]");
             }
 
-            MathHelper.Verify(value, "Matrix::[y, x] = >value<");
+            MathHelper.InvalidDoubleCheck(value, "Matrix::[y, x] = >value<");
             _data[y][x] = value;
         }
     }

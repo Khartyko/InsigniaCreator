@@ -13,7 +13,7 @@ public class Vector3
         get => _x;
         set
         {
-            MathHelper.Verify(value, "Vector2::X");
+            MathHelper.InvalidDoubleCheck(value, "Vector2::X");
             _x = value;
         }
     }
@@ -23,7 +23,7 @@ public class Vector3
         get => _y;
         set
         {
-            MathHelper.Verify(value, "Vector2::Y");
+            MathHelper.InvalidDoubleCheck(value, "Vector2::Y");
             _y = value;
         }
     }
@@ -33,7 +33,7 @@ public class Vector3
         get => _z;
         set
         {
-            MathHelper.Verify(value, "Vector2::Z");
+            MathHelper.InvalidDoubleCheck(value, "Vector2::Z");
             _z = value;
         }
     }
@@ -77,17 +77,17 @@ public class Vector3
             switch (idx)
             {
                 case 0:
-                    MathHelper.Verify(value, "Vector3::[idx] = >value<");
+                    MathHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
                     _x = value;
                     break;
                 
                 case 1:
-                    MathHelper.Verify(value, "Vector3::[idx] = >value<");
+                    MathHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
                     _y = value;
                     break;
                 
                 case 2:
-                    MathHelper.Verify(value, "Vector3::[idx] = >value<");
+                    MathHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
                     _z = value;
                     break;
                 
@@ -104,9 +104,9 @@ public class Vector3
 
     public Vector3(double x, double y, double z = 1.0)
     {
-        MathHelper.Verify(x, "Vector3::Vector3(>x<, y, z)");
-        MathHelper.Verify(y, "Vector3::Vector3(x, >y<, z)");
-        MathHelper.Verify(z, "Vector3::Vector3(x, y, >z<)");
+        MathHelper.InvalidDoubleCheck(x, "Vector3::Vector3(>x<, y, z)");
+        MathHelper.InvalidDoubleCheck(y, "Vector3::Vector3(x, >y<, z)");
+        MathHelper.InvalidDoubleCheck(z, "Vector3::Vector3(x, y, >z<)");
 
         _x = x;
         _y = y;
@@ -125,7 +125,7 @@ public class Vector3
     public Vector3(Vector2 xy, double z)
         : this(xy)
     {
-        MathHelper.Verify(z, "Vector3::Vector3(vec2, >z<");
+        MathHelper.InvalidDoubleCheck(z, "Vector3::Vector3(vec2, >z<");
 
         _z = z;
     }
