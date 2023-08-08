@@ -129,4 +129,49 @@ public static class MathHelper
             );
         }
     }
+
+    public static void RangeCheck(double value, double minimum, double maximum, string descriptor)
+    {
+        InvalidDoubleCheck(value, nameof(value));
+        InvalidDoubleCheck(minimum, nameof(minimum));
+        InvalidDoubleCheck(maximum, nameof(maximum));
+        
+        StringHelper.EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (value < minimum)
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(value),
+                $"currentValue cannot be less than to the minimumValue (Got: {value} < {minimum})"
+            );
+        }
+
+        if (Equals(value, minimum))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(value),
+                $"currentValue cannot be equal to the minimumValue (Got: {value} == {minimum})"
+            );
+        }
+
+        if (maximum < value)
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(value),
+                $"maximumValue cannot be less than the currentValue (Got: {maximum} < {value})"
+            );
+        }
+        
+        if (Equals(maximum, value))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(value),
+                $"maximumValue cannot be equal to the currentValue (Got: {maximum} == {value})"
+            );
+        }
+    }
 }
