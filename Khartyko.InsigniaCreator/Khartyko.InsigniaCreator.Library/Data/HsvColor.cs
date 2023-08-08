@@ -50,9 +50,9 @@ public class HsvColor
 
     public HsvColor(double hue, double saturation, double value)
     {
-        MathHelper.InvalidDoubleCheck(hue, "HsvColor::HsvColor(>hue<, saturation, value)");
-        MathHelper.InvalidDoubleCheck(saturation, "HsvColor::HsvColor(hue, >saturation<, value)");
-        MathHelper.InvalidDoubleCheck(value, "HsvColor::HsvColor(hue, saturation, >value<)");
+        MathHelper.InvalidDoubleCheck(hue, nameof(hue));
+        MathHelper.InvalidDoubleCheck(saturation, nameof(saturation));
+        MathHelper.InvalidDoubleCheck(value, nameof(value));
         
         Hue = hue;
         Saturation = saturation;
