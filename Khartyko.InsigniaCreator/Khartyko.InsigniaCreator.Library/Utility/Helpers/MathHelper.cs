@@ -143,7 +143,7 @@ public static class MathHelper
             throw ExceptionHelper.GenerateArgumentException(
                 typeof(MathHelper),
                 nameof(value),
-                $"currentValue cannot be less than to the minimumValue (Got: {value} < {minimum})"
+                $"value cannot be less than to the minimum (Got: {value} < {minimum})"
             );
         }
 
@@ -152,7 +152,7 @@ public static class MathHelper
             throw ExceptionHelper.GenerateArgumentException(
                 typeof(MathHelper),
                 nameof(value),
-                $"currentValue cannot be equal to the minimumValue (Got: {value} == {minimum})"
+                $"value cannot be equal to the minimum (Got: {value} == {minimum})"
             );
         }
 
@@ -161,7 +161,7 @@ public static class MathHelper
             throw ExceptionHelper.GenerateArgumentException(
                 typeof(MathHelper),
                 nameof(value),
-                $"maximumValue cannot be less than the currentValue (Got: {maximum} < {value})"
+                $"maximum cannot be less than the value (Got: {maximum} < {value})"
             );
         }
         
@@ -170,7 +170,7 @@ public static class MathHelper
             throw ExceptionHelper.GenerateArgumentException(
                 typeof(MathHelper),
                 nameof(value),
-                $"maximumValue cannot be equal to the currentValue (Got: {maximum} == {value})"
+                $"maximum cannot be equal to the value (Got: {maximum} == {value})"
             );
         }
     }
