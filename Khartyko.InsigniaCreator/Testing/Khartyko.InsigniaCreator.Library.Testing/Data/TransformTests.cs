@@ -1,6 +1,9 @@
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+
+#pragma warning disable CS8625
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
@@ -12,35 +15,35 @@ public class TransformTests
         var matrix = new Matrix();
         var transform = new Transform();
 
-        Assert.True(matrix == transform.Matrix);
+        Assert.True(matrix.Equals(transform.Matrix));
     }
 
     [Fact]
     public void Transform_Scale_Accessor_Succeeds()
     {
-        var data = DataGenerator.GenerateRandomTransformData(true, false, false);
-        var scale = data.Scale;
-        var transform = data.Transform;
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(true, false, false);
+        Vector2 scale = data.Scale;
+        Transform transform = data.Transform;
 
-        Assert.True(scale == transform.Scale);
+        Assert.True(scale.Equals(transform.Scale));
     }
 
     [Fact]
     public void Transform_Scale_Mutator_Succeeds()
     {
         var transform = new Transform();
-        var expectedScale = DataGenerator.GenerateRandomVector2();
+        Vector2 expectedScale = DataGenerator.GenerateRandomVector2();
         var expectedMatrix = new Matrix(
             new Vector3(expectedScale[0], 0, 0),
             new Vector3(0, expectedScale[1], 0),
-            new Vector3(0, 0, 1)
+            new Vector3(0, 0)
         );
-        var actualMatrix = transform.Matrix;
+        Matrix actualMatrix = transform.Matrix;
 
         transform.Scale = expectedScale;
 
-        Assert.True(expectedScale == transform.Scale);
-        Assert.False(expectedMatrix == actualMatrix);
+        Assert.True(expectedScale.Equals(transform.Scale));
+        Assert.False(expectedMatrix.Equals(actualMatrix));
     }
 
     [Fact]
@@ -48,18 +51,16 @@ public class TransformTests
     {
         var transform = new Transform();
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         Assert.Throws<ArgumentNullException>(() => transform.Scale = null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-        Assert.True(new Vector2(1) == transform.Scale);
+        Assert.True(new Vector2(1).Equals(transform.Scale));
     }
 
     [Fact]
     public void Transform_Rotation_Accessor_Succeeds()
     {
-        var data = DataGenerator.GenerateRandomTransformData(false, true, false);
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
         var expectedRotation = data.Rotation;
-        var transform = data.Transform;
+        Transform transform = data.Transform;
 
         Assert.Equal(expectedRotation, transform.Rotation);
     }
@@ -67,21 +68,21 @@ public class TransformTests
     [Fact]
     public void Transform_Rotation_Mutator_Succeeds()
     {
-        var data = DataGenerator.GenerateRandomTransformData(false, true, false);
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
         var expectedRotation = DataGenerator.GenerateRandomDouble();
         var cos = MathHelper.Cos(expectedRotation);
         var sin = MathHelper.Sin(expectedRotation);
         var expectedMatrix = new Matrix(
             new Vector3(cos, -sin, 0),
             new Vector3(sin, cos, 0),
-            new Vector3(0, 0, 1)
+            new Vector3(0, 0)
         );
-        var transform = data.Transform;
+        Transform transform = data.Transform;
 
         transform.Rotation = expectedRotation;
 
         Assert.Equal(expectedRotation, transform.Rotation);
-        Assert.True(expectedMatrix == transform.Matrix);
+        Assert.True(expectedMatrix.Equals(transform.Matrix));
     }
 
     [Theory]
@@ -99,29 +100,29 @@ public class TransformTests
     [Fact]
     public void Transform_Translation_Accessor_Succeeds()
     {
-        var data = DataGenerator.GenerateRandomTransformData(false, true, false);
-        var expectedRotation = data.Translation;
-        var transform = data.Transform;
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
+        Vector2 expectedRotation = data.Translation;
+        Transform transform = data.Transform;
 
-        Assert.True(expectedRotation == transform.Translation);
+        Assert.True(expectedRotation.Equals(transform.Translation));
     }
 
     [Fact]
     public void Transform_Translation_Mutator_Succeeds()
     {
         var transform = new Transform();
-        var expectedTranslation = DataGenerator.GenerateRandomVector2();
+        Vector2 expectedTranslation = DataGenerator.GenerateRandomVector2();
         var expectedMatrix = new Matrix(
             new Vector3(expectedTranslation[0], 0, 0),
             new Vector3(0, expectedTranslation[1], 0),
-            new Vector3(0, 0, 1)
+            new Vector3(0, 0)
         );
-        var actualMatrix = transform.Matrix;
+        Matrix actualMatrix = transform.Matrix;
 
         transform.Translation = expectedTranslation;
 
-        Assert.True(expectedTranslation == transform.Translation);
-        Assert.False(expectedMatrix == actualMatrix);
+        Assert.True(expectedTranslation.Equals(transform.Translation));
+        Assert.False(expectedMatrix.Equals(actualMatrix));
     }
 
     [Fact]
@@ -129,10 +130,8 @@ public class TransformTests
     {
         var transform = new Transform();
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         Assert.Throws<ArgumentNullException>(() => transform.Translation = null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
-        Assert.True(new Vector2(0) == transform.Translation);
+        Assert.True(new Vector2(0).Equals(transform.Translation));
     }
 
     [Fact]
@@ -144,10 +143,10 @@ public class TransformTests
         var rotation = 0.0;
         var translation = new Vector2(0);
 
-        Assert.True(matrix == transform.Matrix);
-        Assert.True(scale == transform.Scale);
+        Assert.True(matrix.Equals(transform.Matrix));
+        Assert.True(scale.Equals(transform.Scale));
         Assert.Equal(rotation, transform.Rotation);
-        Assert.True(translation == transform.Translation);
+        Assert.True(translation.Equals(transform.Translation));
     }
 
     [Theory]
@@ -161,15 +160,15 @@ public class TransformTests
     public void Transform_Create_RandomValues_Succeeds(bool randomScale, bool randomRotation,
         bool randomTranslation)
     {
-        var data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
-        var scale = data.Scale;
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
+        Vector2 scale = data.Scale;
         var rotation = data.Rotation;
-        var translation = data.Translation;
-        var transform = data.Transform;
+        Vector2 translation = data.Translation;
+        Transform transform = data.Transform;
 
-        Assert.True(scale == transform.Scale);
+        Assert.True(scale.Equals(transform.Scale));
         Assert.Equal(rotation, transform.Rotation);
-        Assert.True(translation == transform.Translation);
+        Assert.True(translation.Equals(transform.Translation));
     }
 
     [Fact]
@@ -211,22 +210,22 @@ public class TransformTests
     [InlineData(true, true, true)]
     public void Transform_Reset_Succeeds(bool randomScale, bool randomRotation, bool randomTranslation)
     {
-        var data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
-        var scale = data.Scale;
+        RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
+        Vector2 scale = data.Scale;
         var rotation = data.Rotation;
-        var translation = data.Translation;
-        var transform = data.Transform;
+        Vector2 translation = data.Translation;
+        Transform transform = data.Transform;
         var matrix = new Matrix();
 
-        Assert.True(scale == transform.Scale);
+        Assert.True(scale.Equals(transform.Scale));
         Assert.Equal(rotation, transform.Rotation);
-        Assert.True(translation == transform.Translation);
+        Assert.True(translation.Equals(transform.Translation));
 
         transform.Reset();
 
-        Assert.True(new Vector2(1) == transform.Scale);
+        Assert.True(new Vector2(1).Equals(transform.Scale));
         Assert.Equal(0, transform.Rotation);
-        Assert.True(new Vector2(0) == transform.Translation);
-        Assert.True(matrix == transform.Matrix);
+        Assert.True(new Vector2(0).Equals(transform.Translation));
+        Assert.True(matrix.Equals(transform.Matrix));
     }
 }

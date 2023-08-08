@@ -1,10 +1,12 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
+#pragma warning disable CS0660, CS0661, CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Data;
 
 public class Matrix
 {
-    private Vector3[] _data;
+    private readonly Vector3[] _data;
 
     public Vector3[] Data => _data;
 
@@ -110,13 +112,6 @@ public class Matrix
                && this == matrix;
     }
 
-    public override int GetHashCode()
-    {
-        // ReSharper disable NonReadonlyMemberInGetHashCode
-        return _data.GetHashCode();
-        // ReSharper restore NonReadonlyMemberInGetHashCode
-    }
-
     public override string ToString() => $"{{\n  {_data[0]}\n  {_data[1]}\n {_data[2]}\n}}";
 
     public static Vector2 operator *(Vector2 vec2, Matrix matrix)
@@ -216,25 +211,5 @@ public class Matrix
         }
 
         return result;
-    }
-
-    public static bool operator ==(Matrix left, Matrix right)
-    {
-        ObjectHelper.NullCheck(left, "Matrix::operator ==(>left<, right)");
-        ObjectHelper.NullCheck(right, "Matrix::operator ==(left, >right<)");
-
-        return left[0] == right[0]
-               && left[1] == right[1]
-               && left[2] == right[2];
-    }
-
-    public static bool operator !=(Matrix left, Matrix right)
-    {
-        ObjectHelper.NullCheck(left, "Matrix::operator !=(>left<, right)");
-        ObjectHelper.NullCheck(right, "Matrix::operator !=(left, >right<)");
-
-        return left[0] != right[0]
-               || left[1] != right[1]
-               || left[2] != right[2];
     }
 }

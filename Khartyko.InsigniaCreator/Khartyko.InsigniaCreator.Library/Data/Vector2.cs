@@ -1,5 +1,7 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
+#pragma warning disable CS0660, CS0661, CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Data;
 
 public class Vector2
@@ -109,13 +111,6 @@ public class Vector2
                && this == vec2;
     }
 
-    public override int GetHashCode()
-    {
-        // ReSharper disable NonReadonlyMemberInGetHashCode
-        return HashCode.Combine(_x, _y);
-        // ReSharper restore NonReadonlyMemberInGetHashCode
-    }
-
     public override string ToString() => $"{{ x: {X}, y: {Y} }}";
 
     // Operators
@@ -197,23 +192,5 @@ public class Vector2
         ObjectHelper.NullCheck(vector, "Vector2::operator /(value, >vector<); 'vector' is null");
 
         return new Vector2(value / vector.X, value / vector.Y);
-    }
-
-    public static bool operator ==(Vector2 left, Vector2 right)
-    {
-        ObjectHelper.NullCheck(left, "Vector2::operator ==(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator ==(left, >right<); 'right' is null");
-
-        return MathHelper.Equals(left.X, right.X)
-               && MathHelper.Equals(left.Y, right.Y);
-    }
-
-    public static bool operator !=(Vector2 left, Vector2 right)
-    {
-        ObjectHelper.NullCheck(left, "Vector2::operator !=(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator !=(left, >right<); 'right' is null");
-
-        return !MathHelper.Equals(left.X, right.X)
-               || !MathHelper.Equals(left.Y, right.Y);
     }
 }

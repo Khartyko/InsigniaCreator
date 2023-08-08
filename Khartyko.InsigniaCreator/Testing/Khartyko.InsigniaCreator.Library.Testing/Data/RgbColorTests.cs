@@ -1,5 +1,7 @@
 using Khartyko.InsigniaCreator.Library.Data;
 
+#pragma warning disable CS8625, CS8600
+
 namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
 public class RgbColorTests
@@ -75,10 +77,7 @@ public class RgbColorTests
     [Fact]
     public void Color_Create_FromExisting_Fails()
     {
-        // Note: the below warning is disabled to mimic the user doing the same, and trying to pass a null in place of an object
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
         Assert.Throws<ArgumentNullException>(() => new RgbColor((RgbColor)null));
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
     }
 
     [Theory]

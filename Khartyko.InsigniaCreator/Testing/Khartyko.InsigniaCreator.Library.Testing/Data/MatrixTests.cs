@@ -151,7 +151,7 @@ public class MatrixTests
 
         for (var i = 0; i < 3; i++)
         {
-            Assert.True(expectedData[i] == actualData[i]);
+            Assert.True(expectedData[i].Equals(actualData[i]));
         }
     }
 
@@ -179,7 +179,7 @@ public class MatrixTests
 
         for (var i = 0; i < 3; i++)
         {
-            Assert.True(expectedData[i] == actualData[i]);
+            Assert.True(expectedData[i].Equals(actualData[i]));
         }
     }
 
@@ -204,7 +204,7 @@ public class MatrixTests
     {
         var duplicate = new Matrix(matrix);
 
-        Assert.True(matrix == duplicate);
+        Assert.True(matrix.Equals(duplicate));
     }
 
     [Fact]
@@ -221,7 +221,7 @@ public class MatrixTests
 
         actualMatrix.Reset();
 
-        Assert.True(expectedMatrix == actualMatrix);
+        Assert.True(expectedMatrix.Equals(actualMatrix));
     }
 
     [Theory]
@@ -239,7 +239,7 @@ public class MatrixTests
         var matrix = new Matrix();
         var actualData = matrix.Data;
 
-        Assert.True(expectedData[index] == actualData[index]);
+        Assert.True(expectedData[index].Equals(actualData[index]));
     }
 
     [Theory]
@@ -292,7 +292,7 @@ public class MatrixTests
     {
         Vector2 actual = left * right;
 
-        Assert.True(expected == actual);
+        Assert.True(expected.Equals(actual));
     }
 
     [Theory]
@@ -314,7 +314,7 @@ public class MatrixTests
     {
         Vector2 actual = left * right;
 
-        Assert.True(expected == actual);
+        Assert.True(expected.Equals(actual));
     }
 
     [Theory]
@@ -336,7 +336,7 @@ public class MatrixTests
     {
         Vector3 actual = left * right;
 
-        Assert.True(expected == actual);
+        Assert.True(expected.Equals(actual));
     }
 
     [Theory]
@@ -358,7 +358,7 @@ public class MatrixTests
     {
         Vector3 actual = left * right;
 
-        Assert.True(expected == actual);
+        Assert.True(expected.Equals(actual));
     }
 
     [Theory]
@@ -380,7 +380,7 @@ public class MatrixTests
     {
         Matrix actual = left * right;
 
-        Assert.True(expected == actual);
+        Assert.True(expected.Equals(actual));
     }
 
     [Theory]

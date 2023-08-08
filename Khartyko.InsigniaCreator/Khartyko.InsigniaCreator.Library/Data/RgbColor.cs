@@ -1,5 +1,7 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
+#pragma warning disable CS0660, CS0661, CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Data;
 
 public class RgbColor
@@ -24,7 +26,7 @@ public class RgbColor
     {
     }
 
-    public RgbColor(byte r = 255, byte g = 255, byte b = 255, byte a = 255)
+    public RgbColor(byte r, byte g, byte b, byte a = 255)
     {
         R = r;
         G = g;
@@ -42,7 +44,7 @@ public class RgbColor
         A = other.A;
     }
 
-    private byte ParseChar(char value)
+    private static byte ParseChar(char value)
     {
         int intValue = value;
 
@@ -57,7 +59,7 @@ public class RgbColor
         };
     }
 
-    private byte ParseValue(string value)
+    private static byte ParseValue(string value)
     {
         var firstPlace = ParseChar(value[0]);
         var secondPlace = ParseChar(value[1]);
@@ -65,7 +67,7 @@ public class RgbColor
         return (byte)(firstPlace * 16 + secondPlace);
     }
 
-    private (byte, byte, byte, byte) Parse3Case(string hexValue)
+    private static (byte, byte, byte, byte) Parse3Case(string hexValue)
     {
         var r = hexValue[0];
         var g = hexValue[1];
@@ -74,7 +76,7 @@ public class RgbColor
         return Parse8Case($"{r}{r}{g}{g}{b}{b}FF");
     }
 
-    private (byte, byte, byte, byte) Parse4Case(string hexValue)
+    private static (byte, byte, byte, byte) Parse4Case(string hexValue)
     {
         var r = hexValue[0];
         var g = hexValue[1];
@@ -84,12 +86,12 @@ public class RgbColor
         return Parse8Case($"{r}{r}{g}{g}{b}{b}{a}{a}");
     }
 
-    private (byte, byte, byte, byte) Parse6Case(string hexValue)
+    private static (byte, byte, byte, byte) Parse6Case(string hexValue)
     {
         return Parse8Case($"{hexValue}FF");
     }
 
-    private (byte, byte, byte, byte) Parse8Case(string hexValue)
+    private static (byte, byte, byte, byte) Parse8Case(string hexValue)
     {
         var r = ParseValue(hexValue[..2]);
         var g = ParseValue(hexValue[2..4]);
@@ -148,21 +150,4 @@ public class RgbColor
                                                 && color.G == G
                                                 && color.B == B
                                                 && color.A == A;
-
-    public override int GetHashCode()
-    {
-        // ReSharper disable NonReadonlyMemberInGetHashCode
-        return HashCode.Combine(R, G, B, A);
-        // ReSharper restore NonReadonlyMemberInGetHashCode
-    }
-
-    public static bool operator ==(RgbColor left, RgbColor right) => left.R == right.R
-                                                               && left.G == right.G
-                                                               && left.B == right.B
-                                                               && left.A == right.A;
-
-    public static bool operator !=(RgbColor left, RgbColor right) => left.R != right.R
-                                                               || left.G != right.G
-                                                               || left.B != right.B
-                                                               || left.A != right.A;
 }

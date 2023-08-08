@@ -29,17 +29,11 @@ internal static class DataGenerator
         
     public static RandomMatrixData GenerateRandomMatrixData()
     {
-        return new RandomMatrixData
-        {
-            M0 = GenerateRandomVector3(),
-            M1 = GenerateRandomVector3(),
-            M2 = GenerateRandomVector3(),
-            Matrix = new Matrix(
-                GenerateRandomVector3(),
-                GenerateRandomVector3(),
-                GenerateRandomVector3()
-            )
-        };
+        return new RandomMatrixData(
+            GenerateRandomVector3(),
+            GenerateRandomVector3(),
+            GenerateRandomVector3()
+        );
     }
 
     public static RandomTransformData GenerateRandomTransformData(bool randomScale, bool randomRotation,
