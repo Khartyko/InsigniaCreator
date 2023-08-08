@@ -106,9 +106,9 @@ public class Vector2
             return true;
         }
         
-        return obj.GetType() == GetType()
-               && obj is Vector2 vec2
-               && this == vec2;
+        return obj is Vector2 target
+               && MathHelper.Equals(X, target.X)
+               && MathHelper.Equals(Y, target.Y);
     }
 
     public override string ToString() => $"{{ x: {X}, y: {Y} }}";
