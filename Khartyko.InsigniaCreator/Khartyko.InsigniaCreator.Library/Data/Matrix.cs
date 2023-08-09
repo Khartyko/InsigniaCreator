@@ -106,10 +106,21 @@ public class Matrix
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        
-        return obj.GetType() == GetType()
-               && obj is Matrix matrix
-               && this == matrix;
+
+        if (obj is not Matrix matrix)
+        {
+            return false;
+        }
+
+        for (var y = 0; y < 3; y++)
+        {
+            if (!_data[y].Equals(matrix._data[y]))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public override string ToString() => $"{{\n  {_data[0]}\n  {_data[1]}\n {_data[2]}\n}}";
