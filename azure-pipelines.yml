@@ -9,15 +9,15 @@ trigger:
       - '*'
 
 pr:
-- develop
+  - develop
 
 variables:
   sdkVersion: 7.0.x
   buildConfiguration: 'Debug'
   mainAppDirectory: 'Khartyko.InsigniaCreator/Khartyko.InsigniaCreator.MainApp'
-  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library'
-  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain'
-  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp'
+  libraryTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Library.Testing'
+  domainTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.Domain.Testing'
+  mainAppTestingDirectory: 'Khartyko.InsigniaCreator/Testing/Khartyko.InsigniaCreator.MainApp.Testing'
 
 pool:
   vmImage: ubuntu-latest
@@ -39,48 +39,77 @@ stages:
             displayName: dotnet build
             workingDirectory: $(mainAppDirectory)
 
-  - stage: test
+  - stage: analyse
     condition: succeeded()
     jobs:
-      - job: test_library_project        
+      - job: analyse
         steps:
+          - task: UseDotNet@2
+            displayName: 'Use .NET 6.x SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '6.x'
+
+          - task: SonarCloudPrepare@1
+            displayName: 'Prepare SonarCloud'
+            inputs:
+              SonarCloud: 'Sonar Cloud'
+              organization: 'khyvault'
+              scannerMode: 'MSBuild'
+              projectKey: 'Khartyko_InsigniaCreator'
+              projectName: 'Khartyko.InsigniaCreator'
+              extraProperties: |
+                sonar.exclusions=**/lib/**
+                          sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
+
+          - task: UseDotNet@2
+            displayName: 'Use .NET 7 SDK'
+            inputs:
+              packageType: 'sdk'
+              version: $(sdkVersion)
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+              workingDirectory: $(mainAppDirectory)
+
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: 'Build "Library" Project'
+            displayName: 'Build "Library" Testing Project'
             workingDirectory: $(libraryTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: 'Testing "Library" Project'
+            displayName: 'Testing "Library" Testing Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
               publishTestResults: true
               workingDirectory: $(libraryTestingDirectory)
 
-      - job: test_domain_project
-        steps:
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: 'Build "Domain" Project'
+            displayName: 'Build "Domain" Testing Project'
             workingDirectory: $(domainTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: 'Testing "Domain" Project'
+            displayName: 'Testing "Domain" Testing Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
               publishTestResults: true
               workingDirectory: $(domainTestingDirectory)
 
-      - job: test_mainapp_project
-        steps:
           - script: dotnet build --configuration $(buildConfiguration)
-            displayName: 'Build "MainApp" Project'
+            displayName: 'Build "MainApp" Testing Project'
             workingDirectory: $(mainAppTestingDirectory)
 
           - task: DotNetCoreCLI@2
-            displayName: 'Testing "MainApp" Project'
+            displayName: 'Testing "MainApp" Testing Project'
             inputs:
               command: 'test'
               arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
               publishTestResults: true
               workingDirectory: $(mainAppTestingDirectory)
-  
+
+          - task: SonarCloudAnalyze@1
+            displayName: sonar run analysis
+
+          - task: SonarCloudPublish@1
+            displayName: sonar analysis publish
+            inputs:
+              pollingTimeoutSec: '300'
