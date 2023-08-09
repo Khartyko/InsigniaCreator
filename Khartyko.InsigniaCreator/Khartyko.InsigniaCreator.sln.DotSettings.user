@@ -1,10 +1,8 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=27c45e18_002D9e62_002D4183_002D8915_002Df36d36ee6028/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Testing&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::40B1F605-D582-4A1A-A11A-25F52140E706::net7.0::Khartyko.InsigniaCreator.Library.Testing.Data.HsvColorTests&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::40B1F605-D582-4A1A-A11A-25F52140E706::net7.0::Khartyko.InsigniaCreator.Library.Testing.Utility.Helpers.MathHelperTests&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6208c46e_002D6ba9_002D4aba_002D84d4_002D643fddf53ec0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;Testing&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/home/khartyko/Development/Khartyko/InsigniaCreator/Khartyko.InsigniaCreator" Presentation="&amp;lt;Testing&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	
 	
