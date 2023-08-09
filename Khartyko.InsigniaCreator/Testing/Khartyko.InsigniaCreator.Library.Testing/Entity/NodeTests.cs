@@ -186,11 +186,6 @@ public class NodeTests
 
     #region ToString
     
-    /*
-     * ToString():
-     * - Valid Only
-     */
-
     [Fact]
     public void ToString_Succeeds()
     {
