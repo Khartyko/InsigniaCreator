@@ -1,4 +1,5 @@
 using Khartyko.InsigniaCreator.Library.Data;
+using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Utility;
@@ -19,6 +20,10 @@ internal static class DataGenerator
         GenerateRandomDouble(),
         GenerateRandomDouble(),
         GenerateRandomDouble()
+    );
+
+    public static Node GenerateRandomNode() => new(
+        GenerateRandomVector2()
     );
 
     public static Matrix GenerateRandomMatrix() => new Matrix(
