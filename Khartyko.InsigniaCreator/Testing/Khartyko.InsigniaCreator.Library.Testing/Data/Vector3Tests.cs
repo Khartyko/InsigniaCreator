@@ -209,6 +209,156 @@ public class Vector3Tests
 
 	#endregion Z
 
+	#region Swizzling
+
+	#region Vector2 Swizzling
+
+	[Fact]
+	public void Vector2_Swizzling_XY_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.XY;
+
+		Assert.Equal(subject.X, actualValue.X);
+		Assert.Equal(subject.Y, actualValue.Y);
+	}
+
+	[Fact]
+	public void Vector2_Swizzling_XZ_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.XZ;
+
+		Assert.Equal(subject.X, actualValue.X);
+		Assert.Equal(subject.Z, actualValue.Y);
+	}
+
+	[Fact]
+	public void Vector2_Swizzling_YX_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.YX;
+
+		Assert.Equal(subject.Y, actualValue.X);
+		Assert.Equal(subject.X, actualValue.Y);
+	}
+
+	[Fact]
+	public void Vector2_Swizzling_YZ_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.YZ;
+
+		Assert.Equal(subject.Y, actualValue.X);
+		Assert.Equal(subject.Z, actualValue.Y);
+	}
+
+	[Fact]
+	public void Vector2_Swizzling_ZX_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.ZX;
+
+		Assert.Equal(subject.Z, actualValue.X);
+		Assert.Equal(subject.X, actualValue.Y);
+	}
+
+	[Fact]
+	public void Vector2_Swizzling_ZY_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector2 actualValue = subject.ZY;
+
+		Assert.Equal(subject.Z, actualValue.X);
+		Assert.Equal(subject.Y, actualValue.Y);
+	}
+
+	#endregion Vector2 Swizzling
+
+	#region Vector3 Swizzling
+
+	[Fact]
+	public void Vector3_Swizzling_XYZ_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.XYZ;
+
+		Assert.Equal(subject.X, actualValue.X);
+		Assert.Equal(subject.Y, actualValue.Y);
+		Assert.Equal(subject.Z, actualValue.Z);
+	}
+
+	[Fact]
+	public void Vector3_Swizzling_ZYX_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.ZYX;
+
+		Assert.Equal(subject.Z, actualValue.X);
+		Assert.Equal(subject.Y, actualValue.Y);
+		Assert.Equal(subject.X, actualValue.Z);
+	}
+
+	[Fact]
+	public void Vector3_Swizzling_YXZ_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.YXZ;
+
+		Assert.Equal(subject.Y, actualValue.X);
+		Assert.Equal(subject.X, actualValue.Y);
+		Assert.Equal(subject.Z, actualValue.Z);
+	}
+
+	[Fact]
+	public void Vector3_Swizzling_ZXY_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.ZXY;
+
+		Assert.Equal(subject.Z, actualValue.X);
+		Assert.Equal(subject.X, actualValue.Y);
+		Assert.Equal(subject.Y, actualValue.Z);
+	}
+
+	[Fact]
+	public void Vector3_Swizzling_XZY_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.XZY;
+
+		Assert.Equal(subject.X, actualValue.X);
+		Assert.Equal(subject.Z, actualValue.Y);
+		Assert.Equal(subject.Y, actualValue.Z);
+	}
+
+	[Fact]
+	public void Vector3_Swizzling_YZX_Succeeds()
+	{
+		Vector3 subject = DataGenerator.GenerateRandomVector3();
+
+		Vector3 actualValue = subject.YZX;
+
+		Assert.Equal(subject.Y, actualValue.X);
+		Assert.Equal(subject.Z, actualValue.Y);
+		Assert.Equal(subject.X, actualValue.Z);
+	}
+
+	#endregion Vector3 Swizzling
+
+	#endregion Swizzling
+
 	#region Length
 
 	[Theory]
@@ -413,7 +563,7 @@ public class Vector3Tests
 			left.Y - right.Y,
 			left.Z - right.Z
 		);
-		
+
 		Assert.Equal(expectedValues, left - right);
 	}
 
@@ -441,7 +591,7 @@ public class Vector3Tests
 			left.X - right.X,
 			left.Y - right.Y
 		);
-		
+
 		Assert.Equal(expectedValues, left - right);
 	}
 
@@ -472,7 +622,7 @@ public class Vector3Tests
 			left.Y - right.Y,
 			left.Z
 		);
-		
+
 		Assert.Equal(expectedValues, left - right);
 	}
 
@@ -543,7 +693,7 @@ public class Vector3Tests
 	#endregion Double - Vector3
 
 	#endregion Operator -
-	
+
 	#region Operator *
 
 	#region Vector3 * Vector3
@@ -698,7 +848,7 @@ public class Vector3Tests
 			left.Y / right.Y,
 			left.Z / right.Z
 		);
-		
+
 		Assert.Equal(expectedValues, left / right);
 	}
 
@@ -726,7 +876,7 @@ public class Vector3Tests
 			left.X / right.X,
 			left.Y / right.Y
 		);
-		
+
 		Assert.Equal(expectedValues, left / right);
 	}
 
@@ -757,7 +907,7 @@ public class Vector3Tests
 			left.Y / right.Y,
 			left.Z
 		);
-		
+
 		Assert.Equal(expectedValues, left / right);
 	}
 
