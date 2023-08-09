@@ -440,10 +440,11 @@ public class Vector2Tests
     [Fact]
     public void DivisionOperator_BothFails()
     {
+        Vector2 nullVector = null;
         Vector2 validVector = Vector2.Zero;
 
-        Assert.Throws<ArgumentNullException>(() => validVector / null);
-        Assert.Throws<ArgumentNullException>(() => null / validVector);
+        Assert.Throws<ArgumentNullException>(() => validVector / nullVector);
+        Assert.Throws<ArgumentNullException>(() => nullVector / validVector);
     }
 
     #endregion BothVector2

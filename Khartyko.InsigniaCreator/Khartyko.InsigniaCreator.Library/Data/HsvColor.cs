@@ -1,4 +1,5 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
 
 #pragma warning disable CS0660, CS0661
@@ -7,110 +8,96 @@ namespace Khartyko.InsigniaCreator.Library.Data;
 
 public class HsvColor
 {
-    private static readonly Vector2 s_hueBounds = new(-0.001, 360.001);
-    private static readonly Vector2 s_saturationBounds = new(-0.001, 1.001);
-    private static readonly Vector2 s_valueBounds = new(-0.001, 1.001);
-    
-    private double _hue;
-    private double _saturation;
-    private double _value;
+	private static readonly Vector2 s_hueBounds = new(-0.001, 360.001);
+	private static readonly Vector2 s_saturationBounds = new(-0.001, 1.001);
+	private static readonly Vector2 s_valueBounds = new(-0.001, 1.001);
 
-    public double Hue
-    {
-        get => _hue;
-        set
-        {
-            MathHelper.InvalidDoubleCheck(value, "HsvColor::Hue");
-            MathHelper.RangeCheck(value, s_hueBounds.X, s_hueBounds.Y, nameof(value));
-            
-            _hue = value;
-        }
-    }
+	private double _hue;
+	private double _saturation;
+	private double _value;
 
-    public double Saturation
-    {
-        get => _saturation;
-        set
-        {
-            MathHelper.InvalidDoubleCheck(value, "HsvColor::Saturation");
-            MathHelper.RangeCheck(value, s_saturationBounds.X, s_saturationBounds.Y, nameof(value));
+	public double Hue
+	{
+		get => _hue;
+		set
+		{
+			MathHelper.InvalidDoubleCheck(value, "HsvColor::Hue");
+			MathHelper.RangeCheck(value, s_hueBounds.X, s_hueBounds.Y, nameof(value));
 
-            _saturation = value;
-        }
-    }
+			_hue = value;
+		}
+	}
 
-    public double Value
-    {
-        get => _value;
-        set
-        {
-            MathHelper.InvalidDoubleCheck(value, "HsvColor::Value");
-            MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(value));
+	public double Saturation
+	{
+		get => _saturation;
+		set
+		{
+			MathHelper.InvalidDoubleCheck(value, "HsvColor::Saturation");
+			MathHelper.RangeCheck(value, s_saturationBounds.X, s_saturationBounds.Y, nameof(value));
 
-            _value = value;
-        }
-    }
+			_saturation = value;
+		}
+	}
 
-    public HsvColor()
-    {
-        Hue = 0;
-        Saturation = 0;
-        Value = 0;
-    }
+	public double Value
+	{
+		get => _value;
+		set
+		{
+			MathHelper.InvalidDoubleCheck(value, "HsvColor::Value");
+			MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(value));
 
-    public HsvColor(double hue, double saturation, double value)
-    {
-        MathHelper.InvalidDoubleCheck(hue, nameof(hue));
-        MathHelper.InvalidDoubleCheck(saturation, nameof(saturation));
-        MathHelper.InvalidDoubleCheck(value, nameof(value));
-        
-        MathHelper.RangeCheck(hue, s_hueBounds.X, s_hueBounds.Y, nameof(hue));
-        MathHelper.RangeCheck(saturation, s_saturationBounds.X, s_saturationBounds.Y, nameof(hue));
-        MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(hue));
+			_value = value;
+		}
+	}
 
-        Hue = hue;
-        Saturation = saturation;
-        Value = value;
-    }
+	public HsvColor()
+	{
+		Hue = 0;
+		Saturation = 0;
+		Value = 0;
+	}
 
-    public HsvColor(HsvColor hsvColor)
-    {
-        ObjectHelper.NullCheck(hsvColor, nameof(hsvColor));
+	public HsvColor(double hue, double saturation, double value)
+	{
+		MathHelper.InvalidDoubleCheck(hue, nameof(hue));
+		MathHelper.InvalidDoubleCheck(saturation, nameof(saturation));
+		MathHelper.InvalidDoubleCheck(value, nameof(value));
 
-        Hue = hsvColor.Hue;
-        Saturation = hsvColor.Saturation;
-        Value = hsvColor.Value;
-    }
+		MathHelper.RangeCheck(hue, s_hueBounds.X, s_hueBounds.Y, nameof(hue));
+		MathHelper.RangeCheck(saturation, s_saturationBounds.X, s_saturationBounds.Y, nameof(hue));
+		MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(hue));
 
-    public override bool Equals(object? obj)
-    {
-        return obj is HsvColor hsvColor 
-               && this == hsvColor;
-    }
+		Hue = hue;
+		Saturation = saturation;
+		Value = value;
+	}
 
-    public static bool operator ==(HsvColor left, HsvColor right)
-    {
-        // ReSharper disable twice ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (left is null || right is null)
-        {
-            return false;
-        }
-        
-        return MathHelper.Equals(left.Hue, right.Hue)
-               && MathHelper.Equals(left.Saturation, right.Saturation)
-               && MathHelper.Equals(left.Value, right.Value);
-    }
+	public HsvColor(HsvColor hsvColor)
+	{
+		ObjectHelper.NullCheck(hsvColor, nameof(hsvColor));
 
-    public static bool operator !=(HsvColor left, HsvColor right)
-    {
-        // ReSharper disable twice ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (left is null || right is null)
-        {
-            return true;
-        }
+		Hue = hsvColor.Hue;
+		Saturation = hsvColor.Saturation;
+		Value = hsvColor.Value;
+	}
 
-        return !MathHelper.Equals(left.Hue, right.Hue)
-               || !MathHelper.Equals(left.Saturation, right.Saturation)
-               || !MathHelper.Equals(left.Value, right.Value);
-    }
+	public override bool Equals(object? obj)
+	{
+		if (ReferenceEquals(null, obj))
+		{
+			return false;
+		}
+
+		if (ReferenceEquals(this, obj))
+		{
+			return true;
+		}
+
+		return obj is HsvColor hsvColor
+		       && MathHelper.Equals(Hue, hsvColor.Hue)
+		       && MathHelper.Equals(Saturation, hsvColor.Saturation)
+		       && MathHelper.Equals(Value, hsvColor.Value);
+	}
 }
