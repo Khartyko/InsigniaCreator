@@ -130,6 +130,27 @@ public static class MathHelper
         }
     }
 
+    public static void ZeroCheck(double value, string descriptor)
+    {
+        if (string.IsNullOrWhiteSpace(descriptor))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                "'descriptor' cannot be null, empty, or whitespace"
+            );
+        }
+
+        if (Equals(value, 0.0))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                $"'{descriptor}' cannot be zero"
+            );
+        }
+    }
+    
     public static void RangeCheck(double value, double minimum, double maximum, string descriptor)
     {
         InvalidDoubleCheck(value, nameof(value));

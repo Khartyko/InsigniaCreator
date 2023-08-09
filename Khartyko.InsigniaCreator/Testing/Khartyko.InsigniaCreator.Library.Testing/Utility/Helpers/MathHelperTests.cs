@@ -319,6 +319,25 @@ public class MathHelperTests
 
 	#endregion InvalidDoubleCheck
 
+	#region ZeroCheck
+
+	[Theory]
+	[InlineData(-3.5)]
+	[InlineData(42)]
+	[InlineData(double.MaxValue)]
+	public void ZeroCheck_Succeeds(double value)
+	{
+		MathHelper.ZeroCheck(value, nameof(value));
+	}
+
+	[Fact]
+	public void ZeroCheck_Fails()
+	{
+		Assert.Throws<ArgumentException>(() => MathHelper.ZeroCheck(0.0, "0.0"));
+	}
+
+	#endregion ZeroCheck
+	
 	#region RangeCheck
 
 	[Theory]
