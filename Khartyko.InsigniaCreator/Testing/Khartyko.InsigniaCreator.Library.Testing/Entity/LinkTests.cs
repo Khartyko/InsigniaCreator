@@ -249,16 +249,6 @@ public class LinkTests
 
     #region Equals
 
-    /*
-     * Valid:
-     * - True
-     *  - Self
-     *  - Similar
-     * - False:
-     *  - Null
-     *  - Different
-     */
-
     [Fact]
     public void Equals_Succeeds()
     {
@@ -303,11 +293,6 @@ public class LinkTests
     #endregion Equals
 
     #region ToString
-
-    /*
-     * Valid:
-     * - Expected string. Doesn't rely on inputs
-     */
 
     [Fact]
     public void ToString_Succeeds()
