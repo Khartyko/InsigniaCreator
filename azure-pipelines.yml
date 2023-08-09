@@ -39,7 +39,7 @@ stages:
             displayName: dotnet build
             workingDirectory: $(mainAppDirectory)
 
-  - state: test
+  - stage: test
     condition: succeeded()
     jobs:
       - job: test
