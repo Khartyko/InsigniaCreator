@@ -64,7 +64,10 @@ public class Vector3
 	#endregion
 
 
-	public double Length => MathHelper.Round(MathHelper.Sqrt(X * X + Y * Y + Z * Z));
+	public double Length
+	{
+		get => MathHelper.Round(MathHelper.Sqrt(X * X + Y * Y + Z * Z));
+	}
 
 	public double this[int idx]
 	{
@@ -137,8 +140,14 @@ public class Vector3
 	}
 
 	public Vector3(double x, Vector2 yz)
-		: this(x, yz.X, yz.Y)
 	{
+		ObjectHelper.NullCheck(yz, nameof(yz));
+		
+		MathHelper.InvalidDoubleCheck(x, nameof(x));
+
+		_x = x;
+		_y = yz.X;
+		_z = yz.Y;
 	}
 
 	public Vector3(Vector3 vec3)

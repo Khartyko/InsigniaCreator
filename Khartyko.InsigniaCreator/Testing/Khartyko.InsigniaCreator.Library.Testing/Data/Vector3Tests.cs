@@ -448,7 +448,7 @@ public class Vector3Tests
 		double validValue = DataGenerator.GenerateRandomDouble();
 		Vector2 validVector = DataGenerator.GenerateRandomVector2();
 
-		var actualValue = new Vector3(validVector, validValue);
+		var actualValue = new Vector3(validValue, validVector);
 		
 		Assert.Equal(validValue, actualValue.X);
 		Assert.Equal(validVector.X, actualValue.Y);
