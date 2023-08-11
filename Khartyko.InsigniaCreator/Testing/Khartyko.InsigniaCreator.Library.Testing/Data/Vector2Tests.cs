@@ -545,6 +545,10 @@ public class Vector2Tests
         var vec1 = new Vector2(x, y);
 
         Assert.True(vec0.Equals(vec1));
+        // ReSharper disable EqualExpressionComparison
+        Assert.True(vec0.Equals(vec0));
+        Assert.True(vec1.Equals(vec1));
+        // ReSharper restore EqualExpressionComparison
     }
 
     [Theory]
