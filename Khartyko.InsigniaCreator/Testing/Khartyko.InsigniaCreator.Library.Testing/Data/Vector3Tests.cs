@@ -7,123 +7,6 @@ namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
 public class Vector3Tests
 {
-	#region Create
-
-	[Theory]
-	[InlineData(1.0)]
-	[InlineData(-1.0)]
-	[InlineData(-3.2)]
-	public void Create_FromSingleValue_Succeeds(double value)
-	{
-		var vec = new Vector3(value);
-
-		Assert.Equal(value, vec.X);
-		Assert.Equal(value, vec.Y);
-		Assert.Equal(1, vec.Z);
-	}
-
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
-	public void Create_FromSingleValue_Fails(double value)
-	{
-		Assert.Throws<ArgumentException>(() => new Vector3(value));
-	}
-
-	[Theory]
-	[InlineData(1, 2)]
-	[InlineData(-2, 2)]
-	public void Create_FromXY_Succeeds(double x, double y)
-	{
-		var vec = new Vector3(x, y);
-
-		Assert.Equal(x, vec.X);
-		Assert.Equal(y, vec.Y);
-	}
-
-	[Theory]
-	[InlineData(double.NaN, 1.0)]
-	[InlineData(double.PositiveInfinity, 1.0)]
-	[InlineData(double.NegativeInfinity, 1.0)]
-	[InlineData(1.0, double.NaN)]
-	[InlineData(1.0, double.PositiveInfinity)]
-	[InlineData(1.0, double.NegativeInfinity)]
-	public void Create_FromXY_Fails(double x, double y)
-	{
-		Assert.Throws<ArgumentException>(() => new Vector3(x, y));
-	}
-
-	[Theory]
-	[InlineData(1.0, 1.0, 1.0)]
-	[InlineData(-2.0, 1.0, -3.0)]
-	public void Create_FromXYZ_Succeeds(double x, double y, double z)
-	{
-		var vec = new Vector3(x, y, z);
-
-		Assert.Equal(x, vec.X);
-		Assert.Equal(y, vec.Y);
-		Assert.Equal(z, vec.Z);
-	}
-
-	[Theory]
-	[InlineData(double.NaN, 0, 0)]
-	[InlineData(double.PositiveInfinity, 0, 0)]
-	[InlineData(double.NegativeInfinity, 0, 0)]
-	[InlineData(0, double.NaN, 0)]
-	[InlineData(0, double.PositiveInfinity, 0)]
-	[InlineData(0, double.NegativeInfinity, 0)]
-	[InlineData(0, 0, double.NaN)]
-	[InlineData(0, 0, double.PositiveInfinity)]
-	[InlineData(0, 0, double.NegativeInfinity)]
-	public void Create_FromXYZ_Fails(double x, double y, double z)
-	{
-		Assert.Throws<ArgumentException>(() => new Vector3(x, y, z));
-	}
-
-	[Theory]
-	[InlineData(1, 2)]
-	[InlineData(-2, 2)]
-	public void Create_FromExistingVector2_Succeeds(double x, double y)
-	{
-		var initial = new Vector2(x, y);
-		var duplicate = new Vector3(initial);
-
-		Assert.Equal(x, duplicate.X);
-		Assert.Equal(y, duplicate.Y);
-	}
-
-	[Fact]
-	public void Create_FromExistingVector2_Fails()
-	{
-		Vector2 nullVector = null;
-
-		Assert.Throws<ArgumentNullException>(() => new Vector3(nullVector));
-	}
-
-	[Theory]
-	[InlineData(1.0, 1.0, 1.0)]
-	[InlineData(-2.0, 1.0, -3.0)]
-	public void Create_FromExistingSucceeds(double x, double y, double z)
-	{
-		var initial = new Vector3(x, y, z);
-		var duplicate = new Vector3(initial);
-
-		Assert.Equal(x, duplicate.X);
-		Assert.Equal(y, duplicate.Y);
-		Assert.Equal(z, duplicate.Z);
-	}
-
-	[Fact]
-	public void Create_FromExistingFails()
-	{
-		Vector3 nullVector = null;
-
-		Assert.Throws<ArgumentNullException>(() => new Vector3(nullVector));
-	}
-
-	#endregion Create
-
 	#region X
 
 	[Theory]
@@ -409,6 +292,264 @@ public class Vector3Tests
 
 	#endregion Index
 
+	#region Constructor
+
+	#region From Single Value
+
+	[Theory]
+	[InlineData(1.0)]
+	[InlineData(-1.0)]
+	[InlineData(-3.2)]
+	public void Create_FromSingleValue_Succeeds(double value)
+	{
+		var vec = new Vector3(value);
+
+		Assert.Equal(value, vec.X);
+		Assert.Equal(value, vec.Y);
+		Assert.Equal(1, vec.Z);
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public void Create_FromSingleValue_Fails(double value)
+	{
+		Assert.Throws<ArgumentException>(() => new Vector3(value));
+	}
+
+	#endregion From Single Value
+	
+	#region From XY
+
+	[Theory]
+	[InlineData(1, 2)]
+	[InlineData(-2, 2)]
+	public void Create_FromXY_Succeeds(double x, double y)
+	{
+		var vec = new Vector3(x, y);
+
+		Assert.Equal(x, vec.X);
+		Assert.Equal(y, vec.Y);
+	}
+
+	[Theory]
+	[InlineData(double.NaN, 1.0)]
+	[InlineData(double.PositiveInfinity, 1.0)]
+	[InlineData(double.NegativeInfinity, 1.0)]
+	[InlineData(1.0, double.NaN)]
+	[InlineData(1.0, double.PositiveInfinity)]
+	[InlineData(1.0, double.NegativeInfinity)]
+	public void Create_FromXY_Fails(double x, double y)
+	{
+		Assert.Throws<ArgumentException>(() => new Vector3(x, y));
+	}
+
+	#endregion From XY
+	
+	#region From XYZ
+
+	[Theory]
+	[InlineData(1.0, 1.0, 1.0)]
+	[InlineData(-2.0, 1.0, -3.0)]
+	public void Create_FromXYZ_Succeeds(double x, double y, double z)
+	{
+		var vec = new Vector3(x, y, z);
+
+		Assert.Equal(x, vec.X);
+		Assert.Equal(y, vec.Y);
+		Assert.Equal(z, vec.Z);
+	}
+
+	[Theory]
+	[InlineData(double.NaN, 0, 0)]
+	[InlineData(double.PositiveInfinity, 0, 0)]
+	[InlineData(double.NegativeInfinity, 0, 0)]
+	[InlineData(0, double.NaN, 0)]
+	[InlineData(0, double.PositiveInfinity, 0)]
+	[InlineData(0, double.NegativeInfinity, 0)]
+	[InlineData(0, 0, double.NaN)]
+	[InlineData(0, 0, double.PositiveInfinity)]
+	[InlineData(0, 0, double.NegativeInfinity)]
+	public void Create_FromXYZ_Fails(double x, double y, double z)
+	{
+		Assert.Throws<ArgumentException>(() => new Vector3(x, y, z));
+	}
+
+	#endregion From XYZ
+	
+	#region From Vector2
+
+	[Theory]
+	[InlineData(1, 2)]
+	[InlineData(-2, 2)]
+	public void Create_FromExistingVector2_Succeeds(double x, double y)
+	{
+		var initial = new Vector2(x, y);
+		var duplicate = new Vector3(initial);
+
+		Assert.Equal(x, duplicate.X);
+		Assert.Equal(y, duplicate.Y);
+	}
+
+	[Fact]
+	public void Create_FromExistingVector2_Fails()
+	{
+		Vector2 nullVector = null;
+
+		Assert.Throws<ArgumentNullException>(() => new Vector3(nullVector));
+	}
+
+	#endregion
+
+	#region From Vector2 and Double
+
+	[Fact]
+	public void Construct_FromVector2AndDouble_Succeeds()
+	{
+		Vector2 validVector = DataGenerator.GenerateRandomVector2();
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		var actualValue = new Vector3(validVector, validValue);
+		
+		Assert.Equal(validVector.X, actualValue.X);
+		Assert.Equal(validVector.Y, actualValue.Y);
+		Assert.Equal(validVector, actualValue.XY);
+		Assert.Equal(validValue, actualValue.Z);
+	}
+
+	[Fact]
+	public void Construct_FromVector2AndDouble_NullVector2_Fails()
+	{
+		Vector2 nullVector = null;
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentNullException>(() => new Vector3(nullVector, validValue));
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public void Construct_FromVector2AndDouble_InvalidDouble_Fails(double value)
+	{
+		Vector2 validVector = DataGenerator.GenerateRandomVector2();
+
+		Assert.Throws<ArgumentException>(() => new Vector3(validVector, value));
+	}
+
+	#endregion From Vector2 and Double
+
+	#region From Double and Vector2
+
+	[Fact]
+	public void Construct_FromDoubleAndVector2_Succeeds()
+	{
+		double validValue = DataGenerator.GenerateRandomDouble();
+		Vector2 validVector = DataGenerator.GenerateRandomVector2();
+
+		var actualValue = new Vector3(validVector, validValue);
+		
+		Assert.Equal(validValue, actualValue.X);
+		Assert.Equal(validVector.X, actualValue.Y);
+		Assert.Equal(validVector.Y, actualValue.Z);
+		Assert.Equal(validVector, actualValue.YZ);
+	}
+
+	[Fact]
+	public void Construct_FromDoubleAndVector2_NullVector2_Fails()
+	{
+		double validValue = DataGenerator.GenerateRandomDouble();
+		Vector2 nullVector = null;
+
+		Assert.Throws<ArgumentNullException>(() => new Vector3(validValue, nullVector));
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public void Construct_FromDoubleAndVector2_InvalidDouble_Fails(double value)
+	{
+		Vector2 validVector = DataGenerator.GenerateRandomVector2();
+
+		Assert.Throws<ArgumentException>(() => new Vector3(value, validVector));
+	}
+
+	#endregion From Double and Vector2
+	
+	#region From Vector3
+	
+	[Theory]
+	[InlineData(1.0, 1.0, 1.0)]
+	[InlineData(-2.0, 1.0, -3.0)]
+	public void Create_FromExistingSucceeds(double x, double y, double z)
+	{
+		var initial = new Vector3(x, y, z);
+		var duplicate = new Vector3(initial);
+
+		Assert.Equal(x, duplicate.X);
+		Assert.Equal(y, duplicate.Y);
+		Assert.Equal(z, duplicate.Z);
+	}
+
+	[Fact]
+	public void Create_FromExistingFails()
+	{
+		Vector3 nullVector = null;
+
+		Assert.Throws<ArgumentNullException>(() => new Vector3(nullVector));
+	}
+
+	#endregion From Vector3
+	
+	#endregion Constructor
+	
+	#region Equals
+	
+	/*
+	 * Valid:
+	 * - self
+	 * - similar
+	 * Invalid:
+	 * - null
+	 * - dissimilar
+	 */
+
+	[Fact]
+	public void Equals_Succeeds()
+	{
+		Vector3 vec0 = Vector3.Zero;
+		Vector3 vec1 = Vector3.Zero;
+		
+		Assert.True(vec0.Equals(vec1));
+		// ReSharper disable EqualExpressionComparison
+		Assert.True(vec0.Equals(vec0));
+		Assert.True(vec1.Equals(vec1));
+		// ReSharper restore EqualExpressionComparison
+	}
+
+	[Fact]
+	public void Equals_NullVector3_Fails()
+	{
+		Vector3 validVector = DataGenerator.GenerateRandomVector3();
+		Vector3 nullVector = null;
+		
+		Assert.False(validVector.Equals(nullVector));
+	}
+	
+	[Fact]
+	public void Equals_DissimilarVector_Fails()
+	{
+		Vector3 vec0 = Vector3.Zero;
+		Vector3 vec1 = Vector3.One;
+		
+		Assert.False(vec0.Equals(vec1));
+		Assert.False(vec1.Equals(vec0));
+	}
+	
+	#endregion Equals
+	
 	#region Operator +
 
 	#region Vector3 + Vector3
