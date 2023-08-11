@@ -3,11 +3,11 @@ namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public abstract class NetworkBase
 {
-    public IList<Node> Nodes { get; protected set; }
-    public IList<Link> Links { get; protected set; }
-    public IList<Cell> Cells { get; protected set; }
+    public IList<Node> Nodes { get; }
+    public IList<Link> Links { get; }
+    public IList<Cell> Cells { get; }
 
-    public NetworkBase(IList<Node> nodes, IList<Link> links, IList<Cell> cells)
+    protected NetworkBase(IList<Node> nodes, IList<Link> links, IList<Cell> cells)
     {
         ObjectHelper.NullCheck(nodes, nameof(nodes));
         ObjectHelper.NullCheck(links, nameof(links));
@@ -18,7 +18,7 @@ public abstract class NetworkBase
         Cells = cells;
     }
 
-    public NetworkBase(NetworkBase existing)
+    protected NetworkBase(NetworkBase existing)
     {
         ObjectHelper.NullCheck(existing, nameof(existing));
 
