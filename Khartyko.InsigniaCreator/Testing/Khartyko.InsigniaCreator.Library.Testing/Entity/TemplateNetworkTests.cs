@@ -44,9 +44,13 @@ public class TemplateNetworkTests
     [Fact]
     public void Construct_FromILists_NullLists_Fails()
     {
-	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(null, s_links, s_cells));
-	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(s_nodes, null, s_cells));
-	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(s_nodes, s_links, null));
+	    IList<Node> nullNodes = null;
+	    IList<Link> nullLinks = null;
+	    IList<Cell> nullCells = null;
+	    
+	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(nullNodes, s_links, s_cells));
+	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(s_nodes, nullLinks, s_cells));
+	    Assert.Throws<ArgumentNullException>(() => new TemplateNetwork(s_nodes, s_links, nullCells));
     }
 
     [Fact]
