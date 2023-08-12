@@ -16,7 +16,7 @@ public class Transform
 
         set
         {
-            ObjectHelper.NullCheck(value, "Transform::Translation = >value<");
+            ObjectHelper.NullCheck(value, "Transform::Scale = >value<");
 
             _scale = value;
 
@@ -78,6 +78,8 @@ public class Transform
 
     public Transform(Transform existing)
     {
+        ObjectHelper.NullCheck(existing, nameof(existing));
+        
         _scale = new Vector2(existing.Scale);
         _rotation = existing.Rotation;
         _translation = new Vector2(existing.Translation);

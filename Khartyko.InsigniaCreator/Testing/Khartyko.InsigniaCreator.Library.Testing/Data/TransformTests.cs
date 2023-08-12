@@ -3,14 +3,14 @@ using Khartyko.InsigniaCreator.Library.Testing.Utility;
 using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
-#pragma warning disable CS8625
+#pragma warning disable CS8625, CS8600, CS8604
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
 public class TransformTests
 {
     [Fact]
-    public void Transform_Matrix_Accessor_Succeeds()
+    public void Matrix_Accessor_Succeeds()
     {
         var matrix = new Matrix();
         var transform = new Transform();
@@ -19,7 +19,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Scale_Accessor_Succeeds()
+    public void Scale_Accessor_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(true, false, false);
         Vector2 scale = data.Scale;
@@ -29,7 +29,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Scale_Mutator_Succeeds()
+    public void Scale_Mutator_Succeeds()
     {
         var transform = new Transform();
         Vector2 expectedScale = DataGenerator.GenerateRandomVector2();
@@ -47,7 +47,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Scale_Mutator_Fails()
+    public void Scale_Mutator_Fails()
     {
         var transform = new Transform();
 
@@ -56,7 +56,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Rotation_Accessor_Succeeds()
+    public void Rotation_Accessor_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
         var expectedRotation = data.Rotation;
@@ -66,7 +66,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Rotation_Mutator_Succeeds()
+    public void Rotation_Mutator_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
         var expectedRotation = DataGenerator.GenerateRandomDouble();
@@ -89,7 +89,7 @@ public class TransformTests
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
-    public void Transform_Rotation_Mutator_Fails(double value)
+    public void Rotation_Mutator_Fails(double value)
     {
         var transform = new Transform();
 
@@ -98,7 +98,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Translation_Accessor_Succeeds()
+    public void Accessor_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
         Vector2 expectedRotation = data.Translation;
@@ -108,7 +108,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Translation_Mutator_Succeeds()
+    public void Mutator_Succeeds()
     {
         var transform = new Transform();
         Vector2 expectedTranslation = DataGenerator.GenerateRandomVector2();
@@ -126,7 +126,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Translation_Mutator_Fails()
+    public void Mutator_Fails()
     {
         var transform = new Transform();
 
@@ -135,7 +135,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Create_DefaultValues_Succeeds()
+    public void Create_DefaultValues_Succeeds()
     {
         var transform = new Transform();
         var matrix = new Matrix();
@@ -157,7 +157,7 @@ public class TransformTests
     [InlineData(true, false, true)]
     [InlineData(false, true, true)]
     [InlineData(true, true, true)]
-    public void Transform_Create_RandomValues_Succeeds(bool randomScale, bool randomRotation,
+    public void Create_RandomValues_Succeeds(bool randomScale, bool randomRotation,
         bool randomTranslation)
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
@@ -172,7 +172,7 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Create_Fails_BadScale()
+    public void Create_Fails_BadScale()
     {
         var rotation = 0.0;
         var translation = new Vector2(0);
@@ -184,7 +184,7 @@ public class TransformTests
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
-    public void Transform_Create_Fails_BadRotation(double rotation)
+    public void Create_Fails_BadRotation(double rotation)
     {
         var scale = new Vector2(1);
         var translation = new Vector2(0);
@@ -192,12 +192,36 @@ public class TransformTests
     }
 
     [Fact]
-    public void Transform_Create_Fails_BadTranslation()
+    public void Create_Fails_BadTranslation()
     {
         var scale = new Vector2(1);
-        var rotation = 0;
+        var rotation = 0.0;
 
         Assert.Throws<ArgumentNullException>(() => new Transform(scale, rotation, null));
+    }
+
+    [Fact]
+    public void Create_FromExisting_Succeeds()
+    {
+        Vector2 scale = DataGenerator.GenerateRandomVector2();
+        Vector2 translation = DataGenerator.GenerateRandomVector2();
+        double rotation = DataGenerator.GenerateRandomDouble();
+
+        var initialTransform = new Transform(scale, rotation, translation);
+
+        var duplicateTransform = new Transform(initialTransform);
+        
+        Assert.Equal(initialTransform.Scale, duplicateTransform.Scale);
+        Assert.Equal(initialTransform.Rotation, duplicateTransform.Rotation);
+        Assert.Equal(initialTransform.Translation, duplicateTransform.Translation);
+    }
+
+    [Fact]
+    public void Create_FromExisting_NullTransform_Fails()
+    {
+        Transform nullTransform = null;
+
+        Assert.Throws<ArgumentNullException>(() => new Transform(nullTransform));
     }
 
     [Theory]
@@ -208,7 +232,7 @@ public class TransformTests
     [InlineData(true, false, true)]
     [InlineData(false, true, true)]
     [InlineData(true, true, true)]
-    public void Transform_Reset_Succeeds(bool randomScale, bool randomRotation, bool randomTranslation)
+    public void Reset_Succeeds(bool randomScale, bool randomRotation, bool randomTranslation)
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
         Vector2 scale = data.Scale;
