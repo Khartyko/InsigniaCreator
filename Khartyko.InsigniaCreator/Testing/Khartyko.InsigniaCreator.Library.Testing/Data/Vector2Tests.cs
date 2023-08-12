@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Khartyko.InsigniaCreator.Library.Data;
 
-#pragma warning disable CS8600
-#pragma warning disable CS8604
+#pragma warning disable CS8600, CS8604
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
