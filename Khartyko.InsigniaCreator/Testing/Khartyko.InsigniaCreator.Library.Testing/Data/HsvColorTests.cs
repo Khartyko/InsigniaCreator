@@ -233,6 +233,11 @@ public class HsvColorTests
 		var duplicateHsvColor = new HsvColor(hue, saturation, value);
 
 		Assert.True(initialHsvColor.Equals(duplicateHsvColor));
+		
+		// ReSharper disable EqualExpressionComparison
+		Assert.True(initialHsvColor.Equals(initialHsvColor));
+		Assert.True(duplicateHsvColor.Equals(duplicateHsvColor));
+		// ReSharper restore EqualExpressionComparison
 	}
 
 	[Theory]
