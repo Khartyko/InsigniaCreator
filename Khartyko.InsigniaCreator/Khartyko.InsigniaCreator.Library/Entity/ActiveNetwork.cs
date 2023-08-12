@@ -1,5 +1,7 @@
 ﻿using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
+#pragma warning disable CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public class ActiveNetwork : NetworkBase
@@ -48,5 +50,20 @@ public class ActiveNetwork : NetworkBase
         {
             node.Activated = false;
         }
+    }
+    
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
+        
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        return base.Equals(obj);
     }
 }

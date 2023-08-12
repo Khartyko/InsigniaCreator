@@ -155,4 +155,44 @@ public class ActiveNetworkTests
 	}
 
 	#endregion Deactivate
+
+	#region Equals
+
+	[Fact]
+	public void Equals_Succeeds()
+	{
+		var initialTemplateNetwork = new ActiveNetwork();
+
+		var similarTemplateNetwork = new ActiveNetwork();
+
+		Assert.True(initialTemplateNetwork.Equals(similarTemplateNetwork));
+	    
+		// ReSharper disable EqualExpressionComparison
+		Assert.True(initialTemplateNetwork.Equals(initialTemplateNetwork));
+		Assert.True(similarTemplateNetwork.Equals(similarTemplateNetwork));
+		// ReSharper restore EqualExpressionComparison
+	}
+
+	[Fact]
+	public void Equals_NullTemplateNetwork_Fails()
+	{
+		var initialTemplateNetwork = new ActiveNetwork();
+		ActiveNetwork nullTemplateNetwork = null;
+	    
+		Assert.False(initialTemplateNetwork.Equals(nullTemplateNetwork));
+	}
+
+	[Fact]
+	public void Equals_DissimilarTemplateNetwork_Fails()
+	{
+		var initialTemplateNetwork = new ActiveNetwork();
+
+		initialTemplateNetwork.Activate(new Node(Vector2.Zero));
+
+		var dissimilarTemplateNetwork = new ActiveNetwork();
+
+		Assert.False(initialTemplateNetwork.Equals(dissimilarTemplateNetwork));
+	}
+
+	#endregion Equals
 }

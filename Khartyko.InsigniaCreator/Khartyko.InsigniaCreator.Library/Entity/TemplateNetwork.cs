@@ -1,6 +1,8 @@
 ﻿using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
+#pragma warning disable CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public class TemplateNetwork : NetworkBase
@@ -31,6 +33,21 @@ public class TemplateNetwork : NetworkBase
         ObjectHelper.NullCheck(position, nameof(position));
 
         return Nodes.SingleOrDefault(node => position.Equals(node.Position));
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj))
+        {
+            return false;
+        }
+        
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        return base.Equals(obj);
     }
 
     private static IList<T> Validate<T>(IList<T> list, string descriptor)

@@ -114,7 +114,7 @@ public class TemplateNetworkTests
     }
 
     [Fact]
-    public void GetNode_InvalidVector_Fails()
+    public void GetNode_DissimilarVector_Fails()
     {
 	    var templateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
 
@@ -124,4 +124,61 @@ public class TemplateNetworkTests
     }
 
     #endregion GetNode
+
+    #region Equals
+
+    [Fact]
+    public void Equals_Succeeds()
+    {
+	    var initialTemplateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
+
+	    var similarTemplateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
+
+	    Assert.True(initialTemplateNetwork.Equals(similarTemplateNetwork));
+	    
+	    // ReSharper disable EqualExpressionComparison
+	    Assert.True(initialTemplateNetwork.Equals(initialTemplateNetwork));
+	    Assert.True(similarTemplateNetwork.Equals(similarTemplateNetwork));
+	    // ReSharper restore EqualExpressionComparison
+    }
+
+    [Fact]
+    public void Equals_NullTemplateNetwork_Fails()
+    {
+	    var initialTemplateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
+	    TemplateNetwork nullTemplateNetwork = null;
+	    
+	    Assert.False(initialTemplateNetwork.Equals(nullTemplateNetwork));
+    }
+
+    [Fact]
+    public void Equals_DissimilarTemplateNetwork_Fails()
+    {
+	    var initialTemplateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
+
+	    var nodes = new List<Node>
+	    {
+		    new(Vector2.Zero),
+		    new(new Vector2(-5, 5)),
+		    new(new Vector2(-5, -5))
+	    };
+
+	    var links = new List<Link>
+	    {
+		    new(s_nodes[0], s_nodes[1]),
+		    new(s_nodes[1], s_nodes[2]),
+		    new(s_nodes[2], s_nodes[0])
+	    };
+
+	    var cells = new List<Cell>
+	    {
+			new(nodes, links)
+	    };
+
+	    var dissimilarTemplateNetwork = new TemplateNetwork(nodes, links, cells);
+
+	    Assert.False(initialTemplateNetwork.Equals(dissimilarTemplateNetwork));
+    }
+
+    #endregion Equals
 }
