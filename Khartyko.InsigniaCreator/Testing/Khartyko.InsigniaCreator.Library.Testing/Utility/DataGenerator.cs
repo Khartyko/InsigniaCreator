@@ -9,6 +9,7 @@ internal static class DataGenerator
     private static readonly Random s_random = new();
 
     public static int GenerateRandomInt(int min, int max) => s_random.Next(min, max);
+    public static long GenerateRandomLong(long min, long max) => s_random.NextInt64(min, max);
     public static double GenerateRandomDouble(double multiplier = 100) => s_random.NextDouble() * multiplier;
 
     public static Vector2 GenerateRandomVector2() => new(
