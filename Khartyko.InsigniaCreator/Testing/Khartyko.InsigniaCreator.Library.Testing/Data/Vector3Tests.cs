@@ -507,15 +507,6 @@ public class Vector3Tests
 	
 	#region Equals
 	
-	/*
-	 * Valid:
-	 * - self
-	 * - similar
-	 * Invalid:
-	 * - null
-	 * - dissimilar
-	 */
-
 	[Fact]
 	public void Equals_Succeeds()
 	{
