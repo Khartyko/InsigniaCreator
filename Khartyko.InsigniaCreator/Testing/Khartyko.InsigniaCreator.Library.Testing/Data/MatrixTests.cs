@@ -137,6 +137,29 @@ public class MatrixTests
     };
 
     [Fact]
+    public void Index_Succeeds()
+    {
+        var matrix = new Matrix(
+            Vector3.Zero,
+            Vector3.One,
+            Vector3.One * 2
+        );
+
+        Assert.Equal(Vector3.Zero, matrix[0]);
+        Assert.Equal(Vector3.One, matrix[1]);
+        Assert.Equal(Vector3.One * 2, matrix[2]);
+    }
+
+    [Fact]
+    public void Index_BadIndex_Fails()
+    {
+        var matrix = new Matrix();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => matrix[-1]);
+        Assert.Throws<ArgumentOutOfRangeException>(() => matrix[4]);
+    }
+
+    [Fact]
     public void Matrix_Create_Default_Succeeds()
     {
         var matrix = new Matrix();
