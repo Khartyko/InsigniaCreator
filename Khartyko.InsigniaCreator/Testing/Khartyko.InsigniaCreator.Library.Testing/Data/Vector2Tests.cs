@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Khartyko.InsigniaCreator.Library.Data;
+using Khartyko.InsigniaCreator.Library.Testing.Utility;
 
 #pragma warning disable CS8600, CS8604
 
@@ -292,6 +293,68 @@ public class Vector2Tests
         Assert.Throws<ArgumentNullException>(() => vector + nullVector);
     }
 
+    [Fact]
+    public void AdditionOperator_Vector2AndDouble_Succeeds()
+    {
+        Vector2 vector = Vector2.Zero;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Vector2 actualVector = vector + value;
+        
+        Assert.Equal(value, actualVector.X);
+        Assert.Equal(value, actualVector.Y);
+    }
+
+    [Fact]
+    public void AdditionOperator_Vector2AndDouble_NullVector_Fails()
+    {
+        Vector2 nullVector = null;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentNullException>(() => nullVector + value);
+    }
+
+    [Fact]
+    public void AdditionOperator_Vector2AndDouble_InvalidDouble_Fails()
+    {
+        Vector2 vector = Vector2.Zero;
+
+        Assert.Throws<ArgumentException>(() => vector + double.NaN);
+        Assert.Throws<ArgumentException>(() => vector + double.PositiveInfinity);
+        Assert.Throws<ArgumentException>(() => vector + double.NegativeInfinity);
+    }
+
+    [Fact]
+    public void AdditionOperator_DoubleAndVector2_Succeeds()
+    {
+        Vector2 vector = Vector2.Zero;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Vector2 actualVector = value + vector;
+        
+        Assert.Equal(value, actualVector.X);
+        Assert.Equal(value, actualVector.Y);
+    }
+
+    [Fact]
+    public void AdditionOperator_DoubleAndVector2_NullVector_Fails()
+    {
+        Vector2 nullVector = null;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentNullException>(() => value + nullVector);
+    }
+
+    [Fact]
+    public void AdditionOperator_DoubleAndVector2_InvalidDouble_Fails()
+    {
+        Vector2 vector = Vector2.Zero;
+
+        Assert.Throws<ArgumentException>(() => double.NaN + vector);
+        Assert.Throws<ArgumentException>(() => double.PositiveInfinity + vector);
+        Assert.Throws<ArgumentException>(() => double.NegativeInfinity + vector);
+    }
+
     #endregion AdditionOperator
 
     #region SubtractionOperator
@@ -320,6 +383,68 @@ public class Vector2Tests
 
         Assert.Throws<ArgumentNullException>(() => nullVector - vector);
         Assert.Throws<ArgumentNullException>(() => vector - nullVector);
+    }
+
+    [Fact]
+    public void SubtractionOperator_Vector2AndDouble_Succeeds()
+    {
+        Vector2 vector = Vector2.Zero;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Vector2 actualVector = vector - value;
+        
+        Assert.Equal(-value, actualVector.X);
+        Assert.Equal(-value, actualVector.Y);
+    }
+
+    [Fact]
+    public void SubtractionOperator_Vector2AndDouble_NullVector_Fails()
+    {
+        Vector2 nullVector = null;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentNullException>(() => nullVector - value);
+    }
+
+    [Fact]
+    public void SubtractionOperator_Vector2AndDouble_InvalidDouble_Fails()
+    {
+        Vector2 vector = Vector2.Zero;
+
+        Assert.Throws<ArgumentException>(() => vector - double.NaN);
+        Assert.Throws<ArgumentException>(() => vector - double.PositiveInfinity);
+        Assert.Throws<ArgumentException>(() => vector - double.NegativeInfinity);
+    }
+
+    [Fact]
+    public void SubtractionOperator_DoubleAndVector2_Succeeds()
+    {
+        Vector2 vector = Vector2.Zero;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Vector2 actualVector = value - vector;
+        
+        Assert.Equal(-value, actualVector.X);
+        Assert.Equal(-value, actualVector.Y);
+    }
+
+    [Fact]
+    public void SubtractionOperator_DoubleAndVector2_NullVector_Fails()
+    {
+        Vector2 nullVector = null;
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentNullException>(() => value - nullVector);
+    }
+
+    [Fact]
+    public void SubtractionOperator_DoubleAndVector2_InvalidDouble_Fails()
+    {
+        Vector2 vector = Vector2.Zero;
+
+        Assert.Throws<ArgumentException>(() => double.NaN - vector);
+        Assert.Throws<ArgumentException>(() => double.PositiveInfinity - vector);
+        Assert.Throws<ArgumentException>(() => double.NegativeInfinity - vector);
     }
 
     #endregion SubtractionOperator

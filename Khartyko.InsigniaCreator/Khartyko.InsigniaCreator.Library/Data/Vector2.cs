@@ -137,6 +137,22 @@ public class Vector2
         return new Vector2(left.X - right, left.Y - right);
     }
 
+    public static Vector2 operator +(double left, Vector2 right)
+    {
+        MathHelper.InvalidDoubleCheck(left, "Vector2::operator+(left, >right<)");
+        ObjectHelper.NullCheck(right, "Vector2::operator +(>left<, right); 'left' is null");
+
+        return new Vector2(left + right.X, left + right.Y);
+    }
+
+    public static Vector2 operator -(double left, Vector2 right)
+    {
+        MathHelper.InvalidDoubleCheck(left, "Vector2::operator -(left, >right<)");
+        ObjectHelper.NullCheck(right, "Vector2::operator -(>left<, right); 'left' is null");
+
+        return new Vector2(left - right.X, left - right.Y);
+    }
+
     public static Vector2 operator +(Vector2 left, Vector2 right)
     {
         ObjectHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");
