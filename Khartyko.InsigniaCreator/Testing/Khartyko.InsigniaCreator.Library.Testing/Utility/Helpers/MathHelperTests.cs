@@ -331,9 +331,17 @@ public class MathHelperTests
 	}
 
 	[Fact]
-	public void ZeroCheck_Fails()
+	public void ZeroCheck_ZeroDouble_Fails()
 	{
 		Assert.Throws<ArgumentException>(() => MathHelper.ZeroCheck(0.0, "0.0"));
+	}
+
+	[Fact]
+	public void ZeroCheck_InvalidDescriptor_Fails()
+	{
+		Assert.Throws<ArgumentException>(() => MathHelper.ZeroCheck(double.MaxValue, string.Empty));
+		Assert.Throws<ArgumentException>(() => MathHelper.ZeroCheck(double.MaxValue, "\r\t\n"));
+		Assert.Throws<ArgumentException>(() => MathHelper.ZeroCheck(double.MaxValue, "    "));
 	}
 
 	#endregion ZeroCheck
