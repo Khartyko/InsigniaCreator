@@ -114,6 +114,13 @@ public class Vector2
     public override string ToString() => $"{{ x: {X}, y: {Y} }}";
 
     // Operators
+    public static Vector2 operator -(Vector2 vector)
+    {
+        ObjectHelper.NullCheck(vector, nameof(vector));
+
+        return new Vector2(-vector.X, -vector.Y);
+    }
+    
     public static Vector2 operator +(Vector2 left, double right)
     {
         ObjectHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");

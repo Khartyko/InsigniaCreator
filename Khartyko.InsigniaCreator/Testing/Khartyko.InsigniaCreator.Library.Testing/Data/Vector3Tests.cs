@@ -541,6 +541,30 @@ public class Vector3Tests
 	
 	#endregion Equals
 	
+	#region Negation Operator
+
+	[Fact]
+	public void NegateVector_Succeeds()
+	{
+		Vector3 positiveVector = Vector3.One;
+		Vector3 negativeVector = -positiveVector;
+        
+		Assert.NotEqual(positiveVector, negativeVector);
+		Assert.Equal(positiveVector.X * -1, negativeVector.X);
+		Assert.Equal(positiveVector.Y * -1, negativeVector.Y);
+		Assert.Equal(positiveVector.Z * -1, negativeVector.Z);
+	}
+
+	[Fact]
+	public void NegateVector_NullVector_Fails()
+	{
+		Vector3 nullVector = null;
+
+		Assert.Throws<ArgumentNullException>(() => -nullVector);
+	}
+
+	#endregion Negation Operator
+
 	#region Operator +
 
 	#region Vector3 + Vector3

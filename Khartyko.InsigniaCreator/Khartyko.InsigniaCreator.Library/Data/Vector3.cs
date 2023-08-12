@@ -173,11 +173,20 @@ public class Vector3
 
 		return obj is Vector3 target
 		       && MathHelper.Equals(X, target.X)
-		       && MathHelper.Equals(Y, target.Y);
+		       && MathHelper.Equals(Y, target.Y)
+		       && MathHelper.Equals(Z, target.Z);
 	}
 
 	public override string ToString() => $"{{ x: {X}, y: {Y}, z: {Z} }}";
 
+	public static Vector3 operator -(Vector3 vector)
+	{
+		ObjectHelper.NullCheck(vector, nameof(vector));
+
+		// Note: This might be changed in the future if the 'Z' value isn't used
+		return new Vector3(-vector.X, -vector.Y, -vector.Z);
+	}
+	
 	public static Vector3 operator +(Vector3 left, Vector3 right)
 	{
 		ObjectHelper.NullCheck(left, nameof(left));

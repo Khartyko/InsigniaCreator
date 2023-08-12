@@ -242,6 +242,29 @@ public class Vector2Tests
 
     #endregion Index
 
+    #region Negation Operator
+
+    [Fact]
+    public void NegateVector_Succeeds()
+    {
+        Vector2 positiveVector = Vector2.One;
+        Vector2 negativeVector = -positiveVector;
+        
+        Assert.NotEqual(positiveVector, negativeVector);
+        Assert.Equal(positiveVector.X * -1, negativeVector.X);
+        Assert.Equal(positiveVector.Y * -1, negativeVector.Y);
+    }
+
+    [Fact]
+    public void NegateVector_NullVector_Fails()
+    {
+        Vector2 nullVector = null;
+
+        Assert.Throws<ArgumentNullException>(() => -nullVector);
+    }
+
+    #endregion Negation Operator
+    
     #region AdditionOperator
 
     [Theory]
