@@ -424,8 +424,8 @@ public class Vector2Tests
 
         Vector2 actualVector = value - vector;
         
-        Assert.Equal(-value, actualVector.X);
-        Assert.Equal(-value, actualVector.Y);
+        Assert.Equal(value, actualVector.X);
+        Assert.Equal(value, actualVector.Y);
     }
 
     [Fact]
