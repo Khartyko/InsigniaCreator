@@ -361,9 +361,9 @@ public class CartographTests
 
 		var links = new List<Link>
 		{
-						new(s_nodes[0], s_nodes[1]),
-						new(s_nodes[1], s_nodes[2]),
-						new(s_nodes[2], s_nodes[0])
+						new(nodes[0], nodes[1]),
+						new(nodes[1], nodes[2]),
+						new(nodes[2], nodes[0])
 		};
 
 		var cells = new List<Cell>
