@@ -8,6 +8,8 @@ internal class InvalidViewModel : ViewModelBase
 
 public class ViewLocatorTests
 {
+	#region Build
+
 	[Fact]
 	public void Build_Succeeds()
 	{
@@ -52,4 +54,37 @@ public class ViewLocatorTests
 		
 		Assert.Equal(expectedText, textBlock.Text);
 	}
+
+	#endregion Build
+
+	#region Match
+
+	[Fact]
+	public void Match_Succeeds()
+	{
+		var testViewModel = new TestViewModel();
+		var viewLocator = new ViewLocator();
+		
+		Assert.True(viewLocator.Match(testViewModel));
+	}
+
+	[Fact]
+	public void Match_NullObject_Fails()
+	{
+		object? nullObject = null;
+		var viewLocator = new ViewLocator();
+		
+		Assert.False(viewLocator.Match(nullObject));
+	}
+
+	[Fact]
+	public void Match_InvalidObject_Fails()
+	{
+		object? invalidObject = new object();
+		var viewLocator = new ViewLocator();
+		
+		Assert.False(viewLocator.Match(invalidObject));
+	}
+
+	#endregion Match
 }
