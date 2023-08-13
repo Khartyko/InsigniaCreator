@@ -7,9 +7,15 @@ namespace Khartyko.InsigniaCreator.MainApp;
 
 public class ViewLocator : IDataTemplate
 {
-    public Control Build(object data)
+    public Control Build(object? data)
     {
-        var name = data.GetType().FullName!.Replace("ViewModel", "View");
+        if (data is null)
+        {
+            return new TextBlock { Text = "Null object passed." };
+        }
+
+        Type dataType = data.GetType();
+        string name = dataType.AssemblyQualifiedName!.Replace("ViewModel", "View");
         var type = Type.GetType(name);
 
         if (type != null)
@@ -17,10 +23,10 @@ public class ViewLocator : IDataTemplate
             return (Control)Activator.CreateInstance(type)!;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = "Not Found: " + dataType.FullName!.Replace("ViewModel", "View") };
     }
 
-    public bool Match(object data)
+    public bool Match(object? data)
     {
         return data is ViewModelBase;
     }
