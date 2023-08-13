@@ -13,8 +13,9 @@ public class ViewLocator : IDataTemplate
         {
             return new TextBlock { Text = "Null object passed." };
         }
-        
-        string name = data.GetType().AssemblyQualifiedName!.Replace("ViewModel", "View");
+
+        Type dataType = data.GetType();
+        string name = dataType.AssemblyQualifiedName!.Replace("ViewModel", "View");
         var type = Type.GetType(name);
 
         if (type != null)
@@ -22,7 +23,7 @@ public class ViewLocator : IDataTemplate
             return (Control)Activator.CreateInstance(type)!;
         }
 
-        return new TextBlock { Text = "Not Found: " + name };
+        return new TextBlock { Text = "Not Found: " + dataType.FullName!.Replace("ViewModel", "View") };
     }
 
     public bool Match(object? data)
