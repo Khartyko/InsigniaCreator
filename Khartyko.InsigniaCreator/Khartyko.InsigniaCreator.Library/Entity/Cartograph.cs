@@ -15,7 +15,6 @@ public class Cartograph : IIdBearer
 		get => _name;
 		set
 		{
-			StringHelper.NullCheck(value, nameof(value));
 			StringHelper.EmptyOrWhitespaceCheck(value, nameof(value));
 			 
 			_name = value;

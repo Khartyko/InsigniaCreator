@@ -1,6 +1,6 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8600, CS8604, CS8625 // Cannot convert null literal to non-nullable reference type.
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Utility.Helpers;
 
@@ -404,9 +404,20 @@ public class MathHelperTests
 	{
 		Assert.Throws<ArgumentException>(() => MathHelper.RangeCheck(value, minimum, maximum, nameof(value)));
 	}
+
+	[Fact]
+	public void RangeCheck_NullDescriptor_Fails()
+	{
+		const double minimum = -1.0;
+		const double maximum = 1.0;
+		const double value = 0.0;
+
+		string nullString = null;
+
+		Assert.Throws<ArgumentNullException>(() => MathHelper.RangeCheck(value, minimum, maximum, nullString));
+	}
 	
 	[Theory]
-	[InlineData(null)]
 	[InlineData("")]
 	[InlineData("              ")]
 	[InlineData("\t\n\r")]

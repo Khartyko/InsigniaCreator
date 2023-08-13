@@ -2,16 +2,18 @@ namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 public static class StringHelper
 {
-    public static void NullCheck(string target, string name)
+    public static void EmptyOrWhitespaceCheck(string target, string name)
     {
+        if (name is null)
+        {
+            throw new ArgumentNullException(nameof(name), $"{nameof(name)} is null");
+        }
+        
         if (target is null)
         {
             throw new ArgumentNullException(name, $"{name} is null");
         }
-    }
-
-    public static void EmptyOrWhitespaceCheck(string target, string name)
-    {
+        
         if (string.IsNullOrWhiteSpace(target))
         {
             throw new ArgumentException($"{name} is null or whitespace", name);
