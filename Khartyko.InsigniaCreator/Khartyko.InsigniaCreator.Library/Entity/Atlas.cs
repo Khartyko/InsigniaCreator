@@ -1,5 +1,8 @@
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+
+#pragma warning disable CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public class Atlas : IIdBearer
