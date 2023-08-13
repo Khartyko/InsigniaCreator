@@ -335,13 +335,22 @@ public class CartographTests
 	[Fact]
 	public void Equals_Succeeds()
 	{
+		Cartograph firstCartograph = CreateTestCartograph();
+		Cartograph secondCartograph = CreateTestCartograph();
 		
+		Assert.True(firstCartograph.Equals(secondCartograph));
+		Assert.True(secondCartograph.Equals(firstCartograph));
 	}
 
 	[Fact]
 	public void Equals_NullObject_Fails()
 	{
+		Cartograph cartograph = CreateTestCartograph();
+		object? nullObject = null;
+		Cartograph nullCartograph = null;
 		
+		Assert.False(cartograph.Equals(nullObject));
+		Assert.False(cartograph.Equals(nullCartograph));
 	}
 
 	[Fact]
