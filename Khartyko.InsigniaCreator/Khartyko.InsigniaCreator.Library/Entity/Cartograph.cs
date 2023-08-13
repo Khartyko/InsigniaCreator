@@ -1,5 +1,8 @@
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+
+#pragma warning disable CS0659
+
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public class Cartograph : IIdBearer
@@ -26,9 +29,31 @@ public class Cartograph : IIdBearer
 
 	public Cartograph(long id, long atlasId, string name, TemplateNetwork templateNetwork)
 	{
+		if (long.IsNegative(id))
+		{
+			throw ExceptionHelper.GenerateArgumentException(
+							GetType(),
+							nameof(id),
+							$"'id' must be positive; (got '{id}')"
+			);
+		}
+
+		if (long.IsNegative(atlasId))
+		{
+			throw ExceptionHelper.GenerateArgumentException(
+							GetType(),
+							nameof(atlasId),
+							$"'atlasId' must be positive; (got '{id}')"
+			);
+		}
+
+		StringHelper.EmptyOrWhitespaceCheck(name, nameof(name));
+
+		ObjectHelper.NullCheck(templateNetwork, nameof(templateNetwork));
+		
 		Id = id;
 		AtlasId = atlasId;
-		Name = name;
+		_name = name;
 		Template = templateNetwork;
 
 		IsActive = true;
@@ -37,11 +62,20 @@ public class Cartograph : IIdBearer
 
 	public Cartograph(long id, Cartograph existing)
 	{
+		if (long.IsNegative(id))
+		{
+			throw ExceptionHelper.GenerateArgumentException(
+							GetType(),
+							nameof(id),
+							$"'id' must be positive; (got '{id}')"
+			);
+		}
+
 		ObjectHelper.NullCheck(existing, nameof(existing));
 		
 		Id = id;
 		AtlasId = existing.AtlasId;
-		Name = existing.Name;
+		_name = existing.Name;
 		IsActive = existing.IsActive;
 		Template = new TemplateNetwork(existing.Template);
 		Active = new ActiveNetwork(existing.Active);
@@ -66,5 +100,23 @@ public class Cartograph : IIdBearer
 		}
 
 		return result;
+	}
+
+	public override bool Equals(object? obj)
+	{
+		if (ReferenceEquals(null, obj))
+		{
+			return false;
+		}
+
+		if (ReferenceEquals(this, obj))
+		{
+			return true;
+		}
+
+		return obj is Cartograph cartograph
+		       && cartograph.Name.Equals(Name)
+		       && cartograph.Template.Equals(Template)
+		       && cartograph.Active.Equals(Active);
 	}
 }
