@@ -119,16 +119,8 @@ public class Atlas : IIdBearer
             
             ObjectHelper.NullCheck(cartograph, $"{nameof(cartographs)}[{i}]");
         }
-
-        // TODO: Improve on this code. It works, but it's not as neat as I want it.
-        var ids = cartographs.Select(cartograph => cartograph.Id).ToList();
-        var duplicates = cartographs.Where(cartograph =>
-        {
-            int count = ids.Count(cartographId => cartographId == cartograph.Id);
-
-            return 1 < count;
-        })
-            .ToList();
+        
+        List<Cartograph> duplicates = FindDuplicates(cartographs);
         
         if (duplicates.Any())
         {
@@ -159,6 +151,14 @@ public class Atlas : IIdBearer
         _backgroundColor = existing.BackgroundColor;
 
         Cartographs = new List<Cartograph>(existing.Cartographs);
+    }
+
+    private static List<Cartograph> FindDuplicates(IList<Cartograph> cartographs)
+    {
+        var ids = cartographs.Select(cartograph => cartograph.Id).ToList();
+
+        return cartographs.Where(cartograph => ids.Count(id => id == cartograph.Id) > 1)
+                        .ToList();
     }
 
     public override bool Equals(object? obj)
