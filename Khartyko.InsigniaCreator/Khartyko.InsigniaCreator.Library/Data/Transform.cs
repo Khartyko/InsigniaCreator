@@ -89,6 +89,19 @@ public class Transform
         ApplyChanges();
     }
 
+    public void Reset()
+    {
+        _scale[0] = 1;
+        _scale[1] = 1;
+
+        _rotation = 0;
+
+        _translation[0] = 0;
+        _translation[1] = 0;
+
+        ApplyChanges();
+    }
+
     private void ApplyChanges()
     {
         var translationMatrix = new Matrix(
@@ -112,18 +125,5 @@ public class Transform
         );
 
         Matrix = translationMatrix * rotationMatrix * scaleMatrix;
-    }
-
-    public void Reset()
-    {
-        _scale[0] = 1;
-        _scale[1] = 1;
-
-        _rotation = 0;
-
-        _translation[0] = 0;
-        _translation[1] = 0;
-
-        ApplyChanges();
     }
 }
