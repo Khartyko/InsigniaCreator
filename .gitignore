@@ -4,3 +4,4 @@ obj/
 .sonarqube/
 
 **/.DS_Store
+**.user
