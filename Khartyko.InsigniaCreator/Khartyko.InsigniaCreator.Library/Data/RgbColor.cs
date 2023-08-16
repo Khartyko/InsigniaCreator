@@ -130,7 +130,7 @@ public class RgbColor
 
     public string HexString(bool includeOctothorpe = true, bool includeAlpha = true)
     {
-        var octothorpe = includeOctothorpe ? "#" : "";
+        string octothorpe = includeOctothorpe ? "#" : "";
         var bytes = new List<byte> { R, G, B };
 
         if (includeAlpha)
@@ -138,12 +138,20 @@ public class RgbColor
             bytes.Add(A);
         }
 
-        var hexString = Convert.ToHexString(bytes.ToArray());
+        string hexString = Convert.ToHexString(bytes.ToArray());
 
         return $"{octothorpe}{hexString}";
     }
 
-    public override string ToString() => $"R: {R.ToString().PadLeft(3, '0')}, G: {G.ToString().PadLeft(3, '0')}, B: {B.ToString().PadLeft(3, '0')}, A: {A.ToString().PadLeft(3, '0')}";
+    public override string ToString()
+    {
+        string r = R.ToString().PadLeft(3, '0');
+        string g = G.ToString().PadLeft(3, '0');
+        string b = B.ToString().PadLeft(3, '0');
+        string a = A.ToString().PadLeft(3, '0');
+        
+        return $"{{ r: {r}, g: {g}, b: {b}, a: {a} }}";
+    }
 
     public override bool Equals(object? obj) => obj is RgbColor color
                                                 && color.R == R
