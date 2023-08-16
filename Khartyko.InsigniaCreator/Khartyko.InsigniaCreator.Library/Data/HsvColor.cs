@@ -1,8 +1,6 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
-#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-
-#pragma warning disable CS0660, CS0661
+#pragma warning disable CS0659, CS0660, CS0661
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
