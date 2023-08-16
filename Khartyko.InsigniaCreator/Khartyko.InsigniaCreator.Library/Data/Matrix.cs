@@ -123,8 +123,6 @@ public class Matrix
         return true;
     }
 
-    public override string ToString() => $"{{\n  {_data[0]}\n  {_data[1]}\n {_data[2]}\n}}";
-
     public static Vector2 operator *(Vector2 vec2, Matrix matrix)
     {
         ObjectHelper.NullCheck(vec2, "Matrix::operator *(vec2, >matrix<)");
