@@ -1,4 +1,4 @@
-using Khartyko.InsigniaCreator.Library.Data;
+﻿using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
@@ -21,6 +21,7 @@ public class TemplateNetwork : NetworkBase
      *  the TemplateNetwork to be created with an existing TemplateNetwork,
      *  and not the NetworkBase parent class
      */
+    // ReSharper disable once SuggestBaseTypeForParameterInConstructor
     public TemplateNetwork(TemplateNetwork existing)
         : base(existing)
     {
