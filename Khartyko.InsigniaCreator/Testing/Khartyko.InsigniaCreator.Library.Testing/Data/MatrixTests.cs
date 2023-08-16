@@ -136,13 +136,36 @@ public class MatrixTests
         }
     };
 
+    #region Data
+
+    [Fact]
+    public void Data_Get_Succeeds()
+    {
+        var matrix = new Matrix();
+
+        var expectedData = new[]
+        {
+            new Vector3(1, 0, 0),
+            new Vector3(0, 1, 0),
+            new Vector3(0, 0)
+        };
+
+        Assert.Equal(expectedData, matrix.Data);
+    }
+    
+    #endregion Data
+
+    #region Indexing
+    
+    #region X Indexing
+    
     [Fact]
     public void Index_Succeeds()
     {
         var matrix = new Matrix(
-            Vector3.Zero,
-            Vector3.One,
-            Vector3.One * 2
+                        Vector3.Zero,
+                        Vector3.One,
+                        Vector3.One * 2
         );
 
         Assert.Equal(Vector3.Zero, matrix[0]);
@@ -159,8 +182,85 @@ public class MatrixTests
         Assert.Throws<ArgumentOutOfRangeException>(() => matrix[4]);
     }
 
+    #endregion X Indexing
+    
+    #region Y Indexing
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void Index_Y_Succeeds(int index)
+    {
+        var expectedData = new[]
+        {
+                        new Vector3(1, 0, 0),
+                        new Vector3(0, 1, 0),
+                        new Vector3(0, 0),
+        };
+        var matrix = new Matrix();
+        Vector3[] actualData = matrix.Data;
+
+        Assert.True(expectedData[index].Equals(actualData[index]));
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(3)]
+    public void Index_Y_Fails(int index)
+    {
+        var matrix = new Matrix();
+        Vector3 actual = null;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[index]);
+        Assert.Null(actual);
+    }
+
+    #endregion Y Indexing
+    
+    #region X and Y Indexing
+
+    [Theory]
+    [InlineData(0, 0, 1.0)]
+    [InlineData(0, 1, 0.0)]
+    [InlineData(0, 2, 0.0)]
+    [InlineData(1, 0, 0.0)]
+    [InlineData(1, 1, 1.0)]
+    [InlineData(1, 2, 0.0)]
+    [InlineData(2, 0, 0.0)]
+    [InlineData(2, 1, 0.0)]
+    [InlineData(2, 2, 1.0)]
+    public void Index_YX_Succeeds(int y, int x, double expectedValue)
+    {
+        var matrix = new Matrix();
+
+        Assert.Equal(expectedValue, matrix[y, x]);
+    }
+
+    [Theory]
+    [InlineData(-1, 0)]
+    [InlineData(0, -1)]
+    [InlineData(-1, -1)]
+    [InlineData(3, 0)]
+    [InlineData(3, 3)]
+    [InlineData(0, 3)]
+    public void Index_YX_Fails(int y, int x)
+    {
+        var matrix = new Matrix();
+        double? actual = null;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[y, x]);
+        Assert.False(actual.HasValue);
+    }
+
+    #endregion X and Y Indexing
+    
+    #endregion Indexing
+
+    #region Constructors
+    
     [Fact]
-    public void Matrix_Create_Default_Succeeds()
+    public void Create_Default_Succeeds()
     {
         var matrix = new Matrix();
         var expectedData = new[]
@@ -170,7 +270,7 @@ public class MatrixTests
             new Vector3(0, 0)
         };
 
-        var actualData = matrix.Data;
+        Vector3[] actualData = matrix.Data;
 
         for (var i = 0; i < 3; i++)
         {
@@ -180,7 +280,7 @@ public class MatrixTests
 
     [Theory]
     [InlineData(1, 0, 0, 0, 1, 0, 0, 0, 1)]
-    public void Matrix_Create_Parameterized_Succeeds(
+    public void Create_Parameterized_Succeeds(
         double m00, double m01, double m02,
         double m10, double m11, double m12,
         double m20, double m21, double m22
@@ -198,7 +298,7 @@ public class MatrixTests
             new Vector3(m20, m21, m22)
         };
 
-        var actualData = matrix.Data;
+        Vector3[] actualData = matrix.Data;
 
         for (var i = 0; i < 3; i++)
         {
@@ -213,7 +313,7 @@ public class MatrixTests
     [InlineData(true, false, true)]
     [InlineData(true, true, true)]
     [InlineData(false, true, true)]
-    public void Matrix_Create_Parameterized_Fails(bool vec0Null, bool vec1Null, bool vec2Null)
+    public void Create_Parameterized_Fails(bool vec0Null, bool vec1Null, bool vec2Null)
     {
         Vector3? vec0 = vec0Null ? null : DataGenerator.GenerateRandomVector3();
         Vector3? vec1 = vec1Null ? null : DataGenerator.GenerateRandomVector3();
@@ -223,7 +323,7 @@ public class MatrixTests
     }
 
     [Theory, MemberData(nameof(MatrixCopyConstructorData))]
-    public void Matrix_Create_CopyConstructor_Succeeds(Matrix matrix)
+    public void Create_CopyConstructor_Succeeds(Matrix matrix)
     {
         var duplicate = new Matrix(matrix);
 
@@ -231,13 +331,17 @@ public class MatrixTests
     }
 
     [Fact]
-    public void Matrix_Create_CopyConstructor_Fails()
+    public void Create_CopyConstructor_Fails()
     {
         Assert.Throws<ArgumentNullException>(() => new Matrix(null));
     }
 
+    #endregion Constructors
+
+    #region Reset
+    
     [Fact]
-    public void Matrix_Reset_Succeeds()
+    public void Reset_Succeeds()
     {
         var expectedMatrix = new Matrix();
         Matrix actualMatrix = DataGenerator.GenerateRandomMatrix();
@@ -247,71 +351,63 @@ public class MatrixTests
         Assert.True(expectedMatrix.Equals(actualMatrix));
     }
 
-    [Theory]
-    [InlineData(0)]
-    [InlineData(1)]
-    [InlineData(2)]
-    public void Matrix_Index_Y_Succeeds(int index)
-    {
-        var expectedData = new[]
-        {
-            new Vector3(1, 0, 0),
-            new Vector3(0, 1, 0),
-            new Vector3(0, 0),
-        };
-        var matrix = new Matrix();
-        var actualData = matrix.Data;
+    #endregion Reset
 
-        Assert.True(expectedData[index].Equals(actualData[index]));
+    #region Equals
+
+    [Fact]
+    public void Equals_Succeeds()
+    {
+        var matrix0 = new Matrix();
+        var matrix1 = new Matrix();
+        
+        // ReSharper disable EqualExpressionComparison
+        Assert.True(matrix1.Equals(matrix1));
+        Assert.True(matrix0.Equals(matrix0));
+        // ReSharper restore EqualExpressionComparison
+        Assert.True(matrix0.Equals(matrix1));
+        Assert.True(matrix1.Equals(matrix0));
     }
 
-    [Theory]
-    [InlineData(-1)]
-    [InlineData(3)]
-    public void Matrix_Index_Y_Fails(int index)
+    [Fact]
+    public void Equals_Null_Fails()
     {
         var matrix = new Matrix();
-        Vector3 actual = null;
-
-        Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[index]);
-        Assert.Null(actual);
+        Matrix nullMatrix = null;
+        
+        Assert.False(matrix.Equals(nullMatrix));
     }
 
-    [Theory]
-    [InlineData(0, 0, 1.0)]
-    [InlineData(0, 1, 0.0)]
-    [InlineData(0, 2, 0.0)]
-    [InlineData(1, 0, 0.0)]
-    [InlineData(1, 1, 1.0)]
-    [InlineData(1, 2, 0.0)]
-    [InlineData(2, 0, 0.0)]
-    [InlineData(2, 1, 0.0)]
-    [InlineData(2, 2, 1.0)]
-    public void Matrix_Index_YX_Succeeds(int y, int x, double expectedValue)
+    [Fact]
+    public void Equals_Dissimilar_Fails()
+    {
+        var matrix0 = new Matrix();
+        var matrix1 = new Matrix(
+            new Vector3(2, 0, 0),
+            new Vector3(0 ,2, 0),
+            new Vector3(0, 0, 2)
+        );
+        
+        Assert.False(matrix0.Equals(matrix1));
+        Assert.False(matrix1.Equals(matrix0));
+    }
+
+    [Fact]
+    public void Equals_DissimilarType_Fails()
     {
         var matrix = new Matrix();
+        var testObject = new object();
 
-        Assert.Equal(expectedValue, matrix[y, x]);
+        Assert.False(matrix.Equals(testObject));
+        Assert.False(testObject.Equals(matrix));
     }
+    
+    #endregion Equals
 
-    [Theory]
-    [InlineData(-1, 0)]
-    [InlineData(0, -1)]
-    [InlineData(-1, -1)]
-    [InlineData(3, 0)]
-    [InlineData(3, 3)]
-    [InlineData(0, 3)]
-    public void Matrix_Index_YX_Fails(int y, int x)
-    {
-        var matrix = new Matrix();
-        double? actual = null;
-
-        Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[y, x]);
-        Assert.False(actual.HasValue);
-    }
-
+    #region Multiplication Operator
+    
     [Theory, MemberData(nameof(Vector2MatrixData))]
-    public void Matrix_Multiplication_Vector2_Matrix_Succeeds(Vector2 left, Matrix right, Vector2 expected)
+    public void Multiplication_Vector2_Matrix_Succeeds(Vector2 left, Matrix right, Vector2 expected)
     {
         Vector2 actual = left * right;
 
@@ -322,7 +418,7 @@ public class MatrixTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void Matrix_Multiplication_Vector2_Matrix_Fails(bool leftNull, bool rightNull)
+    public void Multiplication_Vector2_Matrix_Fails(bool leftNull, bool rightNull)
     {
         Vector2? left = leftNull ? null : DataGenerator.GenerateRandomVector2();
         Matrix? right = rightNull ? null : DataGenerator.GenerateRandomMatrix();
@@ -333,7 +429,7 @@ public class MatrixTests
     }
 
     [Theory, MemberData(nameof(MatrixVector2Data))]
-    public void Matrix_Multiplication_Matrix_Vector2_Succeeds(Matrix left, Vector2 right, Vector2 expected)
+    public void Multiplication_Matrix_Vector2_Succeeds(Matrix left, Vector2 right, Vector2 expected)
     {
         Vector2 actual = left * right;
 
@@ -344,7 +440,7 @@ public class MatrixTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void Matrix_Multiplication_Matrix_Vector2_Fails(bool leftNull, bool rightNull)
+    public void Multiplication_Matrix_Vector2_Fails(bool leftNull, bool rightNull)
     {
         Matrix? left = leftNull ? null : DataGenerator.GenerateRandomMatrix();
         Vector2? right = rightNull ? null : DataGenerator.GenerateRandomVector2();
@@ -355,7 +451,7 @@ public class MatrixTests
     }
 
     [Theory, MemberData(nameof(Vector3MatrixData))]
-    public void Matrix_Multiplication_Vector3_Matrix_Succeeds(Vector3 left, Matrix right, Vector3 expected)
+    public void Multiplication_Vector3_Matrix_Succeeds(Vector3 left, Matrix right, Vector3 expected)
     {
         Vector3 actual = left * right;
 
@@ -366,7 +462,7 @@ public class MatrixTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void Matrix_Multiplication_Vector3_Matrix_Fails(bool leftNull, bool rightNull)
+    public void Multiplication_Vector3_Matrix_Fails(bool leftNull, bool rightNull)
     {
         Vector3? left = leftNull ? null : DataGenerator.GenerateRandomVector3();
         Matrix? right = rightNull ? null : DataGenerator.GenerateRandomMatrix();
@@ -377,7 +473,7 @@ public class MatrixTests
     }
 
     [Theory, MemberData(nameof(MatrixVector3Data))]
-    public void Matrix_Multiplication_Matrix_Vector3_Succeeds(Matrix left, Vector3 right, Vector3 expected)
+    public void Multiplication_Matrix_Vector3_Succeeds(Matrix left, Vector3 right, Vector3 expected)
     {
         Vector3 actual = left * right;
 
@@ -388,7 +484,7 @@ public class MatrixTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void Matrix_Multiplication_Matrix_Vector3_Fails(bool leftNull, bool rightNull)
+    public void Multiplication_Matrix_Vector3_Fails(bool leftNull, bool rightNull)
     {
         Matrix? left = leftNull ? null : DataGenerator.GenerateRandomMatrix();
         Vector3? right = rightNull ? null : DataGenerator.GenerateRandomVector3();
@@ -399,7 +495,7 @@ public class MatrixTests
     }
 
     [Theory, MemberData(nameof(MatrixMatrixData))]
-    public void Matrix_Multiplication_Matrix_Matrix_Succeeds(Matrix left, Matrix right, Matrix expected)
+    public void Multiplication_Matrix_Matrix_Succeeds(Matrix left, Matrix right, Matrix expected)
     {
         Matrix actual = left * right;
 
@@ -410,7 +506,7 @@ public class MatrixTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void Matrix_Multiplication_Matrix_Matrix_Fails(bool leftNull, bool rightNull)
+    public void Multiplication_Matrix_Matrix_Fails(bool leftNull, bool rightNull)
     {
         Matrix? left = leftNull ? null : DataGenerator.GenerateRandomMatrix();
         Matrix? right = rightNull ? null : DataGenerator.GenerateRandomMatrix();
@@ -419,4 +515,6 @@ public class MatrixTests
         Assert.Throws<ArgumentNullException>(() => result = left * right);
         Assert.Null(result);
     }
+
+    #endregion Multiplication Operator
 }
