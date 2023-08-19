@@ -327,6 +327,21 @@ public class CartographTests
 		
 		Assert.Empty(cartograph.Active.Nodes);
 	}
+
+	[Fact]
+	public void Activate_InactiveCartograph_Fails()
+	{
+		Cartograph cartograph = CreateTestCartograph();
+
+		cartograph.IsActive = false;
+
+		Vector2 testVector = Vector2.Zero;
+
+		bool actualResult = cartograph.Activate(testVector);
+		
+		Assert.False(actualResult);
+		Assert.Empty(cartograph.Active.Nodes);
+	}
 	
 	#endregion Activate
 
