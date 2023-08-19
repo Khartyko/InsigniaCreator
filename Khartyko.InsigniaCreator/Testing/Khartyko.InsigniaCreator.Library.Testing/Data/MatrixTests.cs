@@ -1,9 +1,7 @@
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
 
-#pragma warning disable CS8600
-#pragma warning disable CS8625
-#pragma warning disable CS8604
+#pragma warning disable CS8600, CS8601, CS8625, CS8604
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
@@ -174,7 +172,7 @@ public class MatrixTests
     }
 
     [Fact]
-    public void Index_BadIndex_Fails()
+    public void Index_Get_BadIndex_Fails()
     {
         var matrix = new Matrix();
 
@@ -190,7 +188,7 @@ public class MatrixTests
     [InlineData(0)]
     [InlineData(1)]
     [InlineData(2)]
-    public void Index_Y_Succeeds(int index)
+    public void Index_Get_Y_Succeeds(int index)
     {
         var expectedData = new[]
         {
@@ -207,13 +205,36 @@ public class MatrixTests
     [Theory]
     [InlineData(-1)]
     [InlineData(3)]
-    public void Index_Y_Fails(int index)
+    public void Index_Get_Y_Fails(int index)
     {
         var matrix = new Matrix();
         Vector3 actual = null;
 
         Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[index]);
         Assert.Null(actual);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(3)]
+    public void Index_Set_InvalidIndex_Fails(int index)
+    {
+        var matrix = new Matrix();
+        Vector3 vector = DataGenerator.GenerateRandomVector3();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => matrix[index] = vector);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void Index_Set_NullVector_Fails(int index)
+    {
+        var matrix = new Matrix();
+        Vector3 nullVector = null;
+
+        Assert.Throws<ArgumentNullException>(() => matrix[index] = nullVector);
     }
 
     #endregion Y Indexing
@@ -230,7 +251,7 @@ public class MatrixTests
     [InlineData(2, 0, 0.0)]
     [InlineData(2, 1, 0.0)]
     [InlineData(2, 2, 1.0)]
-    public void Index_YX_Succeeds(int y, int x, double expectedValue)
+    public void Index_Get_YX_Succeeds(int y, int x, double expectedValue)
     {
         var matrix = new Matrix();
 
@@ -244,13 +265,28 @@ public class MatrixTests
     [InlineData(3, 0)]
     [InlineData(3, 3)]
     [InlineData(0, 3)]
-    public void Index_YX_Fails(int y, int x)
+    public void Index_Get_YX_Fails(int y, int x)
     {
         var matrix = new Matrix();
         double? actual = null;
 
         Assert.Throws<ArgumentOutOfRangeException>(() => actual = matrix[y, x]);
         Assert.False(actual.HasValue);
+    }
+
+    [Theory]
+    [InlineData(-1, 0)]
+    [InlineData(0, -1)]
+    [InlineData(-1, -1)]
+    [InlineData(3, 0)]
+    [InlineData(3, 3)]
+    [InlineData(0, 3)]
+    public void Index_Set_XY_Fails(int y, int x)
+    {
+        var matrix = new Matrix();
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => matrix[y, x] = value);
     }
 
     #endregion X and Y Indexing
