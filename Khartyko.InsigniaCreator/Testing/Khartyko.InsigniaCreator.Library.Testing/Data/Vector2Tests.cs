@@ -72,7 +72,7 @@ public class Vector2Tests
     [InlineData(7.0, -6.0)]
     [InlineData(-3.5, 1.0)]
     [InlineData(-1.0, -42.0)]
-    public void Create_FromSucceeds(double x, double y)
+    public void Create_FromVector2_Succeeds(double x, double y)
     {
         var initial = new Vector2(x, y);
         var duplicate = new Vector2(initial);
@@ -82,7 +82,7 @@ public class Vector2Tests
     }
 
     [Fact]
-    public void Create_FromFails()
+    public void Create_FromVector2_Fails()
     {
         Vector2 nullVector = null;
 
@@ -271,7 +271,7 @@ public class Vector2Tests
     [InlineData(7.0, -6.0, -5.0, 3.2)]
     [InlineData(-3.5, 1.0, 7.6, 42)]
     [InlineData(-1.0, -42.0, 4.2, 103.9)]
-    public void AdditionOperator_Succeeds(double x0, double y0, double x1, double y1)
+    public void AdditionOperator_BothVector2_Succeeds(double x0, double y0, double x1, double y1)
     {
         var vec0 = new Vector2(x0, y0);
         var vec1 = new Vector2(x1, y1);
@@ -283,7 +283,7 @@ public class Vector2Tests
     }
 
     [Fact]
-    public void AdditionOperator_Fails()
+    public void AdditionOperator_BothVector2_Fails()
     {
         Vector2 nullVector = null;
 
@@ -363,7 +363,7 @@ public class Vector2Tests
     [InlineData(7.0, -6.0, -5.0, 3.2)]
     [InlineData(-3.5, 1.0, 7.6, 42)]
     [InlineData(-1.0, -42.0, 4.2, 103.9)]
-    public void SubtractionOperator_Succeeds(double x0, double y0, double x1, double y1)
+    public void SubtractionOperator_BothVector2_Succeeds(double x0, double y0, double x1, double y1)
     {
         var vec0 = new Vector2(x0, y0);
         var vec1 = new Vector2(x1, y1);
@@ -375,7 +375,7 @@ public class Vector2Tests
     }
 
     [Fact]
-    public void SubtractionOperator_Fails()
+    public void SubtractionOperator_BothVector2_Fails()
     {
         Vector2 nullVector = null;
 
@@ -457,7 +457,7 @@ public class Vector2Tests
     [InlineData(1, 1, 1, 1, 1, 1)]
     [InlineData(10, 0.1, 0.1, 10, 1, 1)]
     [InlineData(2, -3.5, -42, 39, -84, -136.5)]
-    public void MultiplyOperator_BothSucceeds(double x1, double y1, double x2, double y2,
+    public void MultiplyOperator_BothVector2_Succeeds(double x1, double y1, double x2, double y2,
         double expectedX, double expectedY)
     {
         var vec1 = new Vector2(x1, y1);
@@ -470,7 +470,7 @@ public class Vector2Tests
     }
 
     [Fact]
-    public void MultiplyOperator_BothFails()
+    public void MultiplyOperator_BothVector2_Fails()
     {
         Vector2 nullVector = null;
         Vector2 goodVector = Vector2.One;
@@ -527,7 +527,7 @@ public class Vector2Tests
 
     [Theory]
     [InlineData(1, 1, 1, 1, 1)]
-    public void MultiplyOperator_DoubleAndSucceeds(double value, double x, double y, double expectedX,
+    public void MultiplyOperator_DoubleAndVector2_Succeeds(double value, double x, double y, double expectedX,
         double expectedY)
     {
         var testVector = new Vector2(x, y);
@@ -542,7 +542,7 @@ public class Vector2Tests
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
-    public void MultiplyOperator_DoubleAndFails(double invalidDouble)
+    public void MultiplyOperator_DoubleAndVector2_Fails(double invalidDouble)
     {
         Vector2 validVector = Vector2.Zero;
 
@@ -572,7 +572,7 @@ public class Vector2Tests
 
     [Theory]
     [InlineData(1, 1, 1, 1, 1, 1)]
-    public void DivisionOperator_BothSucceeds(double x1, double y1, double x2, double y2,
+    public void DivisionOperator_BothVector2_Succeeds(double x1, double y1, double x2, double y2,
         double expectedX, double expectedY)
     {
         var vec1 = new Vector2(x1, y1);
@@ -585,7 +585,7 @@ public class Vector2Tests
     }
 
     [Fact]
-    public void DivisionOperator_BothFails()
+    public void DivisionOperator_BothVector2_Fails()
     {
         Vector2 nullVector = null;
         Vector2 validVector = Vector2.Zero;
@@ -642,7 +642,7 @@ public class Vector2Tests
 
     [Theory]
     [InlineData(1, 1, 1, 1, 1)]
-    public void DivisionOperator_DoubleAndSucceeds(double value, double x, double y, double expectedX,
+    public void DivisionOperator_DoubleAndVector2_Succeeds(double value, double x, double y, double expectedX,
         double expectedY)
     {
         var testVector = new Vector2(x, y);
@@ -653,11 +653,20 @@ public class Vector2Tests
         Assert.Equal(expectedVector, actualVector);
     }
 
+    [Fact]
+    public void DivisionOperator_DoubleAndVector2_DoubleIsZero_Succeeds()
+    {
+        Vector2 testVector = DataGenerator.GenerateRandomVector2();
+        const double zero = 0.0;
+        
+        Assert.Equal(Vector2.Zero, zero / testVector);
+    }
+
     [Theory]
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
-    public void DivisionOperator_DoubleAndFails(double invalidDouble)
+    public void DivisionOperator_DoubleAndVector2_Fails(double invalidDouble)
     {
         Vector2 validVector = Vector2.Zero;
 
@@ -676,7 +685,7 @@ public class Vector2Tests
 
         Assert.Throws<ArgumentNullException>(() => validDouble / nullVector);
     }
-
+    
     #endregion DoubleAndVector2
 
     #endregion Division

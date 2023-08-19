@@ -272,7 +272,7 @@ public class Vector3Tests
 	[Theory]
 	[InlineData(1, 1, 1, -1)]
 	[InlineData(2, -1, 3, 3)]
-	public void Index_Fails_BadIndex(double x, double y, double z, int index)
+	public void Index_BadIndex_Fails(double x, double y, double z, int index)
 	{
 		var vec = new Vector3(x, y, z);
 
@@ -283,11 +283,22 @@ public class Vector3Tests
 	[InlineData(1, 1, 1, 0, double.NaN)]
 	[InlineData(2, -1, 3, 1, double.PositiveInfinity)]
 	[InlineData(2, -1, 3, 1, double.NegativeInfinity)]
-	public void Index_Fails_BadValueUpdate(double x, double y, double z, int index, double valueUpdate)
+	public void Index_BadValueUpdate_Fails(double x, double y, double z, int index, double valueUpdate)
 	{
 		var vec = new Vector3(x, y, z);
 
 		Assert.Throws<ArgumentException>(() => vec[index] = valueUpdate);
+	}
+
+	[Theory]
+	[InlineData(-1)]
+	[InlineData(3)]
+	public void Index_Set_InvalidIndex_Fails(int index)
+	{
+		Vector3 vector = DataGenerator.GenerateRandomVector3();
+		double value = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentOutOfRangeException>(() => vector[index] = value);
 	}
 
 	#endregion Index
@@ -1119,6 +1130,15 @@ public class Vector3Tests
 		var expectedVector = new Vector3(value / vector.X, value / vector.Y, value / vector.Z);
 
 		Assert.Equal(expectedVector, value / vector);
+	}
+
+	[Fact]
+	public void DivisionOperator_DoubleAndVector3_ZeroDouble_Succeeds()
+	{
+		Vector3 vector = DataGenerator.GenerateRandomVector3();
+		const double zero = 0.0;
+		
+		Assert.Equal(Vector3.Zero, zero / vector);
 	}
 
 	[Theory]
