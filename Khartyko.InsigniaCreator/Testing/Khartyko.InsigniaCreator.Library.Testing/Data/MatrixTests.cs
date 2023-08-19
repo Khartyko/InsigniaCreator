@@ -215,6 +215,22 @@ public class MatrixTests
     }
 
     [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void Index_Set_Succeeds(int index)
+    {
+        var matrix = new Matrix();
+        Vector3 expectedVector = DataGenerator.GenerateRandomVector3();
+        Vector3 initialVector = matrix[index];
+
+        matrix[index] = expectedVector;
+        
+        Assert.NotEqual(initialVector, matrix[index]);
+        Assert.Equal(expectedVector, matrix[index]);
+    }
+
+    [Theory]
     [InlineData(-1)]
     [InlineData(3)]
     public void Index_Set_InvalidIndex_Fails(int index)

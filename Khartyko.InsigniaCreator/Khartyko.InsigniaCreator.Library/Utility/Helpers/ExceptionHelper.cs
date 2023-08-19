@@ -107,17 +107,11 @@ public static class ExceptionHelper
 
         parameterNames = new List<string>();
         IEnumerable<ParameterInfo> parameters = method.GetParameters();
-
-        foreach (ParameterInfo parameterInfo in parameters)
-        {
-            if (parameterInfo.Name is null)
-            {
-                continue;
-            }
-
-            parameterNames.Add(parameterInfo.Name);
-        }
-
+        
+        parameters.Select(parameterInfo => parameterInfo.Name!)
+            .ToList()
+            .ForEach(name => parameterNames.Add(name));
+        
         return parameterNames;
     }
 
