@@ -275,6 +275,28 @@ public class MatrixTests
     }
 
     [Theory]
+    [InlineData(0, 0)]
+    [InlineData(0, 1)]
+    [InlineData(0, 2)]
+    [InlineData(1, 0)]
+    [InlineData(1, 1)]
+    [InlineData(1, 2)]
+    [InlineData(2, 0)]
+    [InlineData(2, 1)]
+    [InlineData(2, 2)]
+    public void Index_Set_XY_Succeeds(int y, int x)
+    {
+        var matrix = new Matrix();
+        double priorValue = matrix[y, x];
+        double expectedValue = DataGenerator.GenerateRandomDouble();
+
+        matrix[y, x] = expectedValue;
+        
+        Assert.NotEqual(priorValue, matrix[y, x]);
+        Assert.Equal(expectedValue, matrix[y, x]);
+    }
+
+    [Theory]
     [InlineData(-1, 0)]
     [InlineData(0, -1)]
     [InlineData(-1, -1)]
