@@ -11,9 +11,9 @@ public class AtlasTests
 	private static Atlas ConstructAtlas()
 	{
 		const long id = 1L;
+		const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
-		const string name = "Atlas";
 		var rgbColor = new RgbColor(0);
 
 		return new Atlas(id, name, width, height, rgbColor);
@@ -557,4 +557,64 @@ public class AtlasTests
 	#endregion From Existing
 
 	#endregion Constructor
+
+	#region Equals
+
+	[Fact]
+	public void Equals_Succeeds()
+	{
+		const long id = 1L;
+		const string name = "Atlas";
+		double width = DataGenerator.GenerateRandomDouble() + 1.0;
+		double height = DataGenerator.GenerateRandomDouble() + 1.0;
+		var rgbColor = new RgbColor(0);
+		
+		var atlas0 = new Atlas(id, name, width, height, rgbColor);
+		var atlas1 = new Atlas(id, name, width, height, rgbColor);
+		
+		// ReSharper disable EqualExpressionComparison
+		Assert.True(atlas0.Equals(atlas0));
+		Assert.True(atlas1.Equals(atlas1));
+		// ReSharper restore EqualExpressionComparison
+		Assert.True(atlas0.Equals(atlas1));
+		Assert.True(atlas1.Equals(atlas0));
+	}
+
+	[Fact]
+	public void Equals_Null_Fails()
+	{
+		Atlas atlas = ConstructAtlas();
+		Atlas nullAtlas = null;
+		
+		Assert.False(atlas.Equals(nullAtlas));
+	}
+
+	[Fact]
+	public void Equals_Dissimilar_Fails()
+	{
+		Atlas atlas0 = ConstructAtlas();
+		
+		const long id = 2L;
+		const string name = "Atlas II";
+		double width = DataGenerator.GenerateRandomDouble(199) + 1.0;
+		double height = DataGenerator.GenerateRandomDouble(199) + 1.0;
+		var rgbColor = new RgbColor(127);
+
+		var atlas1 = new Atlas(id, name, width, height, rgbColor);
+		
+		Assert.False(atlas0.Equals(atlas1));
+		Assert.False(atlas1.Equals(atlas0));
+	}
+
+	[Fact]
+	public void Equals_DissimilarType_Fails()
+	{
+		Atlas atlas = ConstructAtlas();
+		var testObject = new object();
+		
+		Assert.False(atlas.Equals(testObject));
+		Assert.False(testObject.Equals(atlas));
+	}
+
+	#endregion Equals
 }
