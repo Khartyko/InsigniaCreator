@@ -9,6 +9,8 @@ namespace Khartyko.InsigniaCreator.Library.Testing.Data;
 
 public class TransformTests
 {
+    #region Matrix
+
     [Fact]
     public void Matrix_Accessor_Succeeds()
     {
@@ -17,6 +19,10 @@ public class TransformTests
 
         Assert.True(matrix.Equals(transform.Matrix));
     }
+
+    #endregion Matrix
+
+    #region Scale
 
     [Fact]
     public void Scale_Accessor_Succeeds()
@@ -55,11 +61,15 @@ public class TransformTests
         Assert.True(new Vector2(1).Equals(transform.Scale));
     }
 
+    #endregion Scale
+
+    #region Rotation
+
     [Fact]
     public void Rotation_Accessor_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
-        var expectedRotation = data.Rotation;
+        double expectedRotation = data.Rotation;
         Transform transform = data.Transform;
 
         Assert.Equal(expectedRotation, transform.Rotation);
@@ -69,9 +79,9 @@ public class TransformTests
     public void Rotation_Mutator_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
-        var expectedRotation = DataGenerator.GenerateRandomDouble();
-        var cos = MathHelper.Cos(expectedRotation);
-        var sin = MathHelper.Sin(expectedRotation);
+        double expectedRotation = DataGenerator.GenerateRandomDouble();
+        double cos = MathHelper.Cos(expectedRotation);
+        double sin = MathHelper.Sin(expectedRotation);
         var expectedMatrix = new Matrix(
             new Vector3(cos, -sin, 0),
             new Vector3(sin, cos, 0),
@@ -97,18 +107,22 @@ public class TransformTests
         Assert.Equal(0, transform.Rotation);
     }
 
+    #endregion Rotation
+
+    #region Translation
+
     [Fact]
-    public void Accessor_Succeeds()
+    public void Translation_Accessor_Succeeds()
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(false, true, false);
-        Vector2 expectedRotation = data.Translation;
+        Vector2 expectedTranslation = data.Translation;
         Transform transform = data.Transform;
 
-        Assert.True(expectedRotation.Equals(transform.Translation));
+        Assert.True(expectedTranslation.Equals(transform.Translation));
     }
 
     [Fact]
-    public void Mutator_Succeeds()
+    public void Translation_Mutator_Succeeds()
     {
         var transform = new Transform();
         Vector2 expectedTranslation = DataGenerator.GenerateRandomVector2();
@@ -126,13 +140,17 @@ public class TransformTests
     }
 
     [Fact]
-    public void Mutator_Fails()
+    public void Translation_Mutator_Fails()
     {
         var transform = new Transform();
 
         Assert.Throws<ArgumentNullException>(() => transform.Translation = null);
         Assert.True(new Vector2(0).Equals(transform.Translation));
     }
+
+    #endregion Translation
+
+    #region Constructor
 
     [Fact]
     public void Create_DefaultValues_Succeeds()
@@ -162,7 +180,7 @@ public class TransformTests
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
         Vector2 scale = data.Scale;
-        var rotation = data.Rotation;
+        double rotation = data.Rotation;
         Vector2 translation = data.Translation;
         Transform transform = data.Transform;
 
@@ -174,7 +192,7 @@ public class TransformTests
     [Fact]
     public void Create_Fails_BadScale()
     {
-        var rotation = 0.0;
+        const double rotation = 0.0;
         var translation = new Vector2(0);
 
         Assert.Throws<ArgumentNullException>(() => new Transform(null, rotation, translation));
@@ -210,7 +228,7 @@ public class TransformTests
         var initialTransform = new Transform(scale, rotation, translation);
 
         var duplicateTransform = new Transform(initialTransform);
-        
+
         Assert.Equal(initialTransform.Scale, duplicateTransform.Scale);
         Assert.Equal(initialTransform.Rotation, duplicateTransform.Rotation);
         Assert.Equal(initialTransform.Translation, duplicateTransform.Translation);
@@ -224,6 +242,10 @@ public class TransformTests
         Assert.Throws<ArgumentNullException>(() => new Transform(nullTransform));
     }
 
+    #endregion Constructor
+
+    #region Reset
+
     [Theory]
     [InlineData(true, false, false)]
     [InlineData(false, true, false)]
@@ -236,7 +258,7 @@ public class TransformTests
     {
         RandomTransformData data = DataGenerator.GenerateRandomTransformData(randomScale, randomRotation, randomTranslation);
         Vector2 scale = data.Scale;
-        var rotation = data.Rotation;
+        double rotation = data.Rotation;
         Vector2 translation = data.Translation;
         Transform transform = data.Transform;
         var matrix = new Matrix();
@@ -252,4 +274,6 @@ public class TransformTests
         Assert.True(new Vector2(0).Equals(transform.Translation));
         Assert.True(matrix.Equals(transform.Matrix));
     }
+
+    #endregion Reset
 }
