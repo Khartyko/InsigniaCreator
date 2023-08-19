@@ -222,7 +222,7 @@ public class Vector2Tests
     [InlineData(7.0, -6.0, -1)]
     [InlineData(-3.5, 1.0, 2)]
     [InlineData(-1.0, -42.0, -1)]
-    public void Index_Fails_BadIndex(double x, double y, int index)
+    public void Index_BadIndex_Fails(double x, double y, int index)
     {
         var vec = new Vector2(x, y);
 
@@ -233,11 +233,22 @@ public class Vector2Tests
     [InlineData(1.0, 1.0, 0, double.NaN)]
     [InlineData(7.0, -6.0, 1, double.PositiveInfinity)]
     [InlineData(-3.5, 1.0, 0, double.NegativeInfinity)]
-    public void Index_Fails_BadValueUpdate(double x, double y, int index, double valueUpdate)
+    public void Index_BadValueUpdate_Fails(double x, double y, int index, double valueUpdate)
     {
         var vec = new Vector2(x, y);
 
         Assert.Throws<ArgumentException>(() => vec[index] = valueUpdate);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    [InlineData(3)]
+    public void Index_Set_InvalidIndex_Fails(int index)
+    {
+        Vector2 vector = DataGenerator.GenerateRandomVector2();
+        double value = DataGenerator.GenerateRandomDouble();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => vector[index] = value);
     }
 
     #endregion Index
