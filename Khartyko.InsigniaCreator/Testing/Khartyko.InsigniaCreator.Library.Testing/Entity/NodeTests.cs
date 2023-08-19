@@ -172,7 +172,7 @@ public class NodeTests
     }
 
     [Fact]
-    public void Equals_Fails()
+    public void Equals_DissimilarNode_Fails()
     {
         var node0 = new Node(Vector2.Zero);
         var node1 = new Node(Vector2.One);
@@ -180,6 +180,16 @@ public class NodeTests
         Assert.False(node0.Equals(node1));
         Assert.False(node0.Equals(null));
         Assert.False(node1.Equals(null));
+    }
+
+    [Fact]
+    public void Equals_DissimilarType_Fails()
+    {
+        var node = new Node(Vector2.Zero);
+        var testObject = new object();
+        
+        Assert.False(node.Equals(testObject));
+        Assert.False(testObject.Equals(node));
     }
     
     #endregion Equals
