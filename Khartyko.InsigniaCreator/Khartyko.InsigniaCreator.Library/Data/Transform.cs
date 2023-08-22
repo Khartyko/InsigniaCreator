@@ -16,7 +16,7 @@ public class Transform
 
         set
         {
-            ObjectHelper.NullCheck(value, "Transform::Scale = >value<");
+            AssertionHelper.NullCheck(value, "Transform::Scale = >value<");
 
             _scale = value;
 
@@ -30,7 +30,7 @@ public class Transform
 
         set
         {
-            MathHelper.InvalidDoubleCheck(value, "Transform::Rotation = >value<");
+            AssertionHelper.InvalidDoubleCheck(value, "Transform::Rotation = >value<");
 
             _rotation = value;
 
@@ -44,7 +44,7 @@ public class Transform
 
         set
         {
-            ObjectHelper.NullCheck(value, "Transform::Translation = >value<");
+            AssertionHelper.NullCheck(value, "Transform::Translation = >value<");
 
             _translation = value;
 
@@ -63,9 +63,9 @@ public class Transform
 
     public Transform(Vector2 scale, double rotation, Vector2 translation)
     {
-        ObjectHelper.NullCheck(scale, "Transform::transform(>scale<, rotation, translation)");
-        MathHelper.InvalidDoubleCheck(rotation, "Transform::transform(scale, >rotation<, translation)");
-        ObjectHelper.NullCheck(translation, "Transform::transform(scale, rotation, >translation<)");
+        AssertionHelper.NullCheck(scale, "Transform::transform(>scale<, rotation, translation)");
+        AssertionHelper.InvalidDoubleCheck(rotation, "Transform::transform(scale, >rotation<, translation)");
+        AssertionHelper.NullCheck(translation, "Transform::transform(scale, rotation, >translation<)");
 
         _scale = scale;
         _rotation = rotation;
@@ -78,7 +78,7 @@ public class Transform
 
     public Transform(Transform existing)
     {
-        ObjectHelper.NullCheck(existing, nameof(existing));
+        AssertionHelper.NullCheck(existing, nameof(existing));
         
         _scale = new Vector2(existing.Scale);
         _rotation = existing.Rotation;

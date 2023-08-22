@@ -9,38 +9,38 @@ public static class MathHelper
 
     public static bool Equals(double d0, double d1)
     {
-        InvalidDoubleCheck(d0, "MathHelper::Equals(>d0<, d1)");
-        InvalidDoubleCheck(d1, "MathHelper::Equals(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::Equals(>d0<, d1)");
+        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::Equals(d0, >d1<)");
 
         return Math.Abs(d0 - d1) < _tolerance;
     }
 
     public static bool LessThan(double d0, double d1)
     {
-        InvalidDoubleCheck(d0, "MathHelper::LessThan(>d0<, d1)");
-        InvalidDoubleCheck(d1, "MathHelper::LessThan(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::LessThan(>d0<, d1)");
+        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::LessThan(d0, >d1<)");
 
         return d0 < d1;
     }
 
     public static bool GreaterThan(double d0, double d1)
     {
-        InvalidDoubleCheck(d0, "MathHelper::GreaterThan(>d0<, d1)");
-        InvalidDoubleCheck(d1, "MathHelper::GreaterThan(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::GreaterThan(>d0<, d1)");
+        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::GreaterThan(d0, >d1<)");
 
         return d0 > d1;
     }
 
     public static double Round(double value)
     {
-        InvalidDoubleCheck(value, "MathHelper::Round(>value<)");
+        AssertionHelper.InvalidDoubleCheck(value, "MathHelper::Round(>value<)");
 
         return Math.Round(value * 1000) / 1000;
     }
 
     public static double Sqrt(double value)
     {
-        InvalidDoubleCheck(value, "MathHelper::Sqrt(>value<)");
+        AssertionHelper.InvalidDoubleCheck(value, "MathHelper::Sqrt(>value<)");
 
         if (value < 0)
         {
@@ -54,42 +54,37 @@ public static class MathHelper
 
     public static double Pi(double numerator, double denominator)
     {
-        if (Equals(denominator, 0.0))
-        {
-            throw new ArgumentOutOfRangeException(nameof(denominator),
-                "MathHelper::Pi(numerator, >denominator<); denominator cannot be 0");
-        }
-
-        InvalidDoubleCheck(numerator, "MathHelper::Pi(>num<, den)");
-        InvalidDoubleCheck(denominator, "MathHelper::Pi(num, >den<)");
+        AssertionHelper.ZeroCheck(denominator, nameof(denominator));
+        
+        AssertionHelper.InvalidDoubleCheck(numerator, nameof(numerator));
 
         return Math.PI * numerator / denominator;
     }
 
     public static double Cos(double theta)
     {
-        InvalidDoubleCheck(theta, "MathHelper::Cos(>theta<)");
+        AssertionHelper.InvalidDoubleCheck(theta, nameof(theta));
 
         return Round(Math.Cos(theta));
     }
 
     public static double Sin(double theta)
     {
-        InvalidDoubleCheck(theta, "MathHelper::Sin(>theta<)");
+        AssertionHelper.InvalidDoubleCheck(theta, nameof(theta));
 
         return Round(Math.Sin(theta));
     }
 
     public static double ToDegrees(double radians)
     {
-        InvalidDoubleCheck(radians, "MathHelper::ToDegrees(>radians<)");
+        AssertionHelper.InvalidDoubleCheck(radians, nameof(radians));
 
         return Round(radians * 180 / Math.PI);
     }
 
     public static double ToRadians(double degrees)
     {
-        InvalidDoubleCheck(degrees, "MathHelper::ToRadians(>degrees<)");
+        AssertionHelper.InvalidDoubleCheck(degrees, nameof(degrees));
 
         return Round(degrees * Math.PI / 180);
     }
@@ -101,135 +96,9 @@ public static class MathHelper
             throw new ArgumentOutOfRangeException(nameof(sideCount), "sideCount cannot be less than 3");
         }
 
-        var totalDegrees = (sideCount - 2) * 180.0;
-        var innerFacingAngle = totalDegrees / sideCount;
+        double totalDegrees = (sideCount - 2) * 180.0;
+        double innerFacingAngle = totalDegrees / sideCount;
 
         return Round(innerFacingAngle);
-    }
-
-    public static void InvalidDoubleCheck(double value, string descriptor)
-    {
-        if (string.IsNullOrWhiteSpace(descriptor))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace."
-            );
-        }
-
-        if (double.IsNaN(value))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                $"{descriptor} is NaN"
-            );
-        }
-
-        if (double.IsPositiveInfinity(value))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                $"{descriptor} is Positive Infinity"
-            );
-        }
-
-        if (double.IsNegativeInfinity(value))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                $"{descriptor} is Negative Infinity"
-            );
-        }
-    }
-
-    public static void ZeroCheck(double value, string descriptor)
-    {
-        if (string.IsNullOrWhiteSpace(descriptor))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace"
-            );
-        }
-
-        if (Equals(value, 0.0))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                $"'{descriptor}' cannot be zero"
-            );
-        }
-    }
-
-    public static void PositiveCheck(double value, string descriptor)
-    {
-        if (string.IsNullOrWhiteSpace(descriptor))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace"
-            );
-        }
-
-        if (MathHelper.LessThan(value, 0) || MathHelper.Equals(value, 0))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(descriptor),
-                $"'{descriptor}' cannot be equal to or less than zero; (got '{value}')"
-            );
-        }
-    }
-    
-    public static void RangeCheck(double value, double minimum, double maximum, string descriptor)
-    {
-        InvalidDoubleCheck(value, nameof(value));
-        InvalidDoubleCheck(minimum, nameof(minimum));
-        InvalidDoubleCheck(maximum, nameof(maximum));
-        
-        StringHelper.EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
-
-        if (value < minimum)
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(value),
-                $"value cannot be less than to the minimum (Got: {value} < {minimum})"
-            );
-        }
-
-        if (Equals(value, minimum))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(value),
-                $"value cannot be equal to the minimum (Got: {value} == {minimum})"
-            );
-        }
-
-        if (maximum < value)
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(value),
-                $"maximum cannot be less than the value (Got: {maximum} < {value})"
-            );
-        }
-        
-        if (Equals(maximum, value))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
-                nameof(value),
-                $"maximum cannot be equal to the value (Got: {maximum} == {value})"
-            );
-        }
     }
 }

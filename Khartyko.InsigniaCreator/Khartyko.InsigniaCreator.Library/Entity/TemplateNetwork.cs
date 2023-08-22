@@ -29,7 +29,7 @@ public class TemplateNetwork : NetworkBase
 
     public Node? GetNode(Vector2 position)
     {
-        ObjectHelper.NullCheck(position, nameof(position));
+        AssertionHelper.NullCheck(position, nameof(position));
 
         return Nodes.SingleOrDefault(node => position.Equals(node.Position));
     }

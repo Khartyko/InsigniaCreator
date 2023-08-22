@@ -19,8 +19,8 @@ public class HsvColor
 		get => _hue;
 		set
 		{
-			MathHelper.InvalidDoubleCheck(value, "HsvColor::Hue");
-			MathHelper.RangeCheck(value, s_hueBounds.X, s_hueBounds.Y, nameof(value));
+			AssertionHelper.InvalidDoubleCheck(value, "HsvColor::Hue");
+			AssertionHelper.RangeCheck(value, s_hueBounds.X, s_hueBounds.Y, nameof(value));
 
 			_hue = value;
 		}
@@ -31,8 +31,8 @@ public class HsvColor
 		get => _saturation;
 		set
 		{
-			MathHelper.InvalidDoubleCheck(value, "HsvColor::Saturation");
-			MathHelper.RangeCheck(value, s_saturationBounds.X, s_saturationBounds.Y, nameof(value));
+			AssertionHelper.InvalidDoubleCheck(value, "HsvColor::Saturation");
+			AssertionHelper.RangeCheck(value, s_saturationBounds.X, s_saturationBounds.Y, nameof(value));
 
 			_saturation = value;
 		}
@@ -43,8 +43,8 @@ public class HsvColor
 		get => _value;
 		set
 		{
-			MathHelper.InvalidDoubleCheck(value, "HsvColor::Value");
-			MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(value));
+			AssertionHelper.InvalidDoubleCheck(value, "HsvColor::Value");
+			AssertionHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(value));
 
 			_value = value;
 		}
@@ -59,13 +59,13 @@ public class HsvColor
 
 	public HsvColor(double hue, double saturation, double value)
 	{
-		MathHelper.InvalidDoubleCheck(hue, nameof(hue));
-		MathHelper.InvalidDoubleCheck(saturation, nameof(saturation));
-		MathHelper.InvalidDoubleCheck(value, nameof(value));
+		AssertionHelper.InvalidDoubleCheck(hue, nameof(hue));
+		AssertionHelper.InvalidDoubleCheck(saturation, nameof(saturation));
+		AssertionHelper.InvalidDoubleCheck(value, nameof(value));
 
-		MathHelper.RangeCheck(hue, s_hueBounds.X, s_hueBounds.Y, nameof(hue));
-		MathHelper.RangeCheck(saturation, s_saturationBounds.X, s_saturationBounds.Y, nameof(hue));
-		MathHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(hue));
+		AssertionHelper.RangeCheck(hue, s_hueBounds.X, s_hueBounds.Y, nameof(hue));
+		AssertionHelper.RangeCheck(saturation, s_saturationBounds.X, s_saturationBounds.Y, nameof(hue));
+		AssertionHelper.RangeCheck(value, s_valueBounds.X, s_valueBounds.Y, nameof(hue));
 
 		Hue = hue;
 		Saturation = saturation;
@@ -74,7 +74,7 @@ public class HsvColor
 
 	public HsvColor(HsvColor hsvColor)
 	{
-		ObjectHelper.NullCheck(hsvColor, nameof(hsvColor));
+		AssertionHelper.NullCheck(hsvColor, nameof(hsvColor));
 
 		Hue = hsvColor.Hue;
 		Saturation = hsvColor.Saturation;

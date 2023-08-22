@@ -22,7 +22,7 @@ public class ActiveNetwork : NetworkBase
 
     public bool Activate(Node node)
     {
-        ObjectHelper.NullCheck(node, nameof(node));
+        AssertionHelper.NullCheck(node, nameof(node));
 
         var result = false;
 
@@ -42,7 +42,7 @@ public class ActiveNetwork : NetworkBase
 
     public void Deactivate(Node node)
     {
-        ObjectHelper.NullCheck(node, nameof(node));
+        AssertionHelper.NullCheck(node, nameof(node));
 
         var result = Nodes.Remove(node);
 

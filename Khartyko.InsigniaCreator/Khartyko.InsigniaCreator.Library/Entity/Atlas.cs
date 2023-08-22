@@ -21,7 +21,7 @@ public class Atlas : IEntity
         get => _name;
         set
         {
-            StringHelper.EmptyOrWhitespaceCheck(value, nameof(value));
+            AssertionHelper.EmptyOrWhitespaceCheck(value, nameof(value));
 
             _name = value;
         }
@@ -32,7 +32,7 @@ public class Atlas : IEntity
         get => _width;
         set
         {
-            MathHelper.PositiveCheck(value, nameof(value));
+            AssertionHelper.PositiveCheck(value, nameof(value));
             
             _width = value;
         }
@@ -43,7 +43,7 @@ public class Atlas : IEntity
         get => _height;
         set
         {
-            MathHelper.PositiveCheck(value, nameof(value));
+            AssertionHelper.PositiveCheck(value, nameof(value));
 
             _height = value;
         }
@@ -54,7 +54,7 @@ public class Atlas : IEntity
         get => _backgroundColor;
         set
         {
-            ObjectHelper.NullCheck(value, nameof(value));
+            AssertionHelper.NullCheck(value, nameof(value));
 
             _backgroundColor = value;
         }
@@ -67,12 +67,12 @@ public class Atlas : IEntity
             throw new ArgumentException($"Atlas::Atlas(>id<, name, width, height, backgroundColor); 'id' cannot be less than 0 (got '{id}')", nameof(id));
         }
 
-        StringHelper.EmptyOrWhitespaceCheck(name, nameof(name));
+        AssertionHelper.EmptyOrWhitespaceCheck(name, nameof(name));
 
-        MathHelper.PositiveCheck(width, nameof(width));
-        MathHelper.PositiveCheck(height, nameof(height));
+        AssertionHelper.PositiveCheck(width, nameof(width));
+        AssertionHelper.PositiveCheck(height, nameof(height));
         
-        ObjectHelper.NullCheck(backgroundColor, nameof(backgroundColor));
+        AssertionHelper.NullCheck(backgroundColor, nameof(backgroundColor));
         
         Id = id;
         _name = name;
@@ -86,7 +86,7 @@ public class Atlas : IEntity
     public Atlas(long id, string name, double width, double height, RgbColor backgroundColor, Cartograph cartograph)
         : this(id, name, width, height, backgroundColor)
     {
-        ObjectHelper.NullCheck(cartograph, nameof(cartograph));
+        AssertionHelper.NullCheck(cartograph, nameof(cartograph));
         
         Cartographs.Add(cartograph);
     }
@@ -94,7 +94,7 @@ public class Atlas : IEntity
     public Atlas(long id, string name, double width, double height, RgbColor backgroundColor, IList<Cartograph> cartographs)
         : this(id, name, width, height, backgroundColor)
     {
-        ObjectHelper.NullCheck(cartographs, nameof(cartographs));
+        AssertionHelper.NullCheck(cartographs, nameof(cartographs));
 
         if (!cartographs.Any())
         {
@@ -108,7 +108,7 @@ public class Atlas : IEntity
         {
             Cartograph cartograph = cartographs[i];
             
-            ObjectHelper.NullCheck(cartograph, $"{nameof(cartographs)}[{i}]");
+            AssertionHelper.NullCheck(cartograph, $"{nameof(cartographs)}[{i}]");
         }
         
         List<Cartograph> duplicates = FindDuplicates(cartographs);
@@ -127,7 +127,7 @@ public class Atlas : IEntity
 
     public Atlas(long id, Atlas existing)
     {
-        ObjectHelper.NullCheck(existing, nameof(existing));
+        AssertionHelper.NullCheck(existing, nameof(existing));
         
         if (id < 0)
         {

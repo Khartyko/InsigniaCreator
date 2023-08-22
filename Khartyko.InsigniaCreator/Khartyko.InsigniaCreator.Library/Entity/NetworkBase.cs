@@ -11,9 +11,9 @@ public abstract class NetworkBase
 
     protected NetworkBase(IList<Node> nodes, IList<Link> links, IList<Cell> cells)
     {
-        ObjectHelper.NullCheck(nodes, nameof(nodes));
-        ObjectHelper.NullCheck(links, nameof(links));
-        ObjectHelper.NullCheck(cells, nameof(cells));
+        AssertionHelper.NullCheck(nodes, nameof(nodes));
+        AssertionHelper.NullCheck(links, nameof(links));
+        AssertionHelper.NullCheck(cells, nameof(cells));
         
         Nodes = nodes;
         Links = links;
@@ -22,7 +22,7 @@ public abstract class NetworkBase
 
     protected NetworkBase(NetworkBase existing)
     {
-        ObjectHelper.NullCheck(existing, nameof(existing));
+        AssertionHelper.NullCheck(existing, nameof(existing));
 
         Nodes = existing.Nodes.Select(node => new Node(node)).ToList();
         Links = existing.Links.Select(link => new Link(link)).ToList();

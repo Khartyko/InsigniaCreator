@@ -14,7 +14,7 @@ public class Link
         get => _head;
         set
         {
-            ObjectHelper.NullCheck(value, nameof(value));
+            AssertionHelper.NullCheck(value, nameof(value));
 
             if (value.Equals(_tail))
             {
@@ -34,7 +34,7 @@ public class Link
         get => _tail;
         set
         {
-            ObjectHelper.NullCheck(value, nameof(value));
+            AssertionHelper.NullCheck(value, nameof(value));
 
             if (value.Equals(_head))
             {
@@ -51,8 +51,8 @@ public class Link
 
     public Link(Node head, Node tail)
     {
-        ObjectHelper.NullCheck(head, nameof(head));
-        ObjectHelper.NullCheck(tail, nameof(tail));
+        AssertionHelper.NullCheck(head, nameof(head));
+        AssertionHelper.NullCheck(tail, nameof(tail));
 
         if (head.Equals(tail))
         {
@@ -69,7 +69,7 @@ public class Link
 
     public Link(Link existingLink)
     {
-        ObjectHelper.NullCheck(existingLink, nameof(existingLink));
+        AssertionHelper.NullCheck(existingLink, nameof(existingLink));
 
         _head = new Node(existingLink.Head);
         _tail = new Node(existingLink.Tail);

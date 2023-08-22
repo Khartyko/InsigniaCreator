@@ -17,7 +17,8 @@ public class Vector2
         get => _x;
         set
         {
-            MathHelper.InvalidDoubleCheck(value, "Vector2::X");
+            AssertionHelper.InvalidDoubleCheck(value, "Vector2::X");
+            
             _x = value;
         }
     }
@@ -27,7 +28,8 @@ public class Vector2
         get => _y;
         set
         {
-            MathHelper.InvalidDoubleCheck(value, "Vector2::Y");
+            AssertionHelper.InvalidDoubleCheck(value, "Vector2::Y");
+            
             _y = value;
         }
     }
@@ -49,12 +51,12 @@ public class Vector2
             switch (idx)
             {
                 case 0:
-                    MathHelper.InvalidDoubleCheck(value, "Vector2::[idx] = >value<");
+                    AssertionHelper.InvalidDoubleCheck(value, "Vector2::[idx] = >value<");
                     _x = value;
                     break;
 
                 case 1:
-                    MathHelper.InvalidDoubleCheck(value, "Vector2::[idx] = >value<");
+                    AssertionHelper.InvalidDoubleCheck(value, "Vector2::[idx] = >value<");
                     _y = value;
                     break;
 
@@ -71,8 +73,8 @@ public class Vector2
 
     public Vector2(double x, double y)
     {
-        MathHelper.InvalidDoubleCheck(x, "Vector2::Vector2(>x<, y)");
-        MathHelper.InvalidDoubleCheck(y, "Vector2::Vector2(x, >y<)");
+        AssertionHelper.InvalidDoubleCheck(x, "Vector2::Vector2(>x<, y)");
+        AssertionHelper.InvalidDoubleCheck(y, "Vector2::Vector2(x, >y<)");
 
         X = x;
         Y = y;
@@ -80,7 +82,7 @@ public class Vector2
 
     public Vector2(Vector2 vec2)
     {
-        ObjectHelper.NullCheck(vec2, "Vector2::Vector2(>vec2<)");
+        AssertionHelper.NullCheck(vec2, "Vector2::Vector2(>vec2<)");
 
         _x = vec2.X;
         _y = vec2.Y;
@@ -88,7 +90,7 @@ public class Vector2
 
     public Vector2(Vector3 vec3)
     {
-        ObjectHelper.NullCheck(vec3, "Vector2::Vector2(>vec3<)");
+        AssertionHelper.NullCheck(vec3, "Vector2::Vector2(>vec3<)");
 
         _x = vec3.X;
         _y = vec3.Y;
@@ -116,103 +118,103 @@ public class Vector2
     // Operators
     public static Vector2 operator -(Vector2 vector)
     {
-        ObjectHelper.NullCheck(vector, nameof(vector));
+        AssertionHelper.NullCheck(vector, nameof(vector));
 
         return new Vector2(-vector.X, -vector.Y);
     }
     
     public static Vector2 operator +(Vector2 left, double right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");
-        MathHelper.InvalidDoubleCheck(right, "Vector2::operator+(left, >right<)");
+        AssertionHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");
+        AssertionHelper.InvalidDoubleCheck(right, "Vector2::operator+(left, >right<)");
 
         return new Vector2(left.X + right, left.Y + right);
     }
 
     public static Vector2 operator -(Vector2 left, double right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator -(>left<, right); 'left' is null");
-        MathHelper.InvalidDoubleCheck(right, "Vector2::operator -(left, >right<)");
+        AssertionHelper.NullCheck(left, "Vector2::operator -(>left<, right); 'left' is null");
+        AssertionHelper.InvalidDoubleCheck(right, "Vector2::operator -(left, >right<)");
 
         return new Vector2(left.X - right, left.Y - right);
     }
 
     public static Vector2 operator +(double left, Vector2 right)
     {
-        MathHelper.InvalidDoubleCheck(left, "Vector2::operator+(left, >right<)");
-        ObjectHelper.NullCheck(right, "Vector2::operator +(>left<, right); 'left' is null");
+        AssertionHelper.InvalidDoubleCheck(left, "Vector2::operator+(left, >right<)");
+        AssertionHelper.NullCheck(right, "Vector2::operator +(>left<, right); 'left' is null");
 
         return new Vector2(left + right.X, left + right.Y);
     }
 
     public static Vector2 operator -(double left, Vector2 right)
     {
-        MathHelper.InvalidDoubleCheck(left, "Vector2::operator -(left, >right<)");
-        ObjectHelper.NullCheck(right, "Vector2::operator -(>left<, right); 'left' is null");
+        AssertionHelper.InvalidDoubleCheck(left, "Vector2::operator -(left, >right<)");
+        AssertionHelper.NullCheck(right, "Vector2::operator -(>left<, right); 'left' is null");
 
         return new Vector2(left - right.X, left - right.Y);
     }
 
     public static Vector2 operator +(Vector2 left, Vector2 right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator +(left, >right<); 'right' is null");
+        AssertionHelper.NullCheck(left, "Vector2::operator +(>left<, right); 'left' is null");
+        AssertionHelper.NullCheck(right, "Vector2::operator +(left, >right<); 'right' is null");
 
         return new Vector2(left.X + right.X, left.Y + right.Y);
     }
 
     public static Vector2 operator -(Vector2 left, Vector2 right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator -(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator -(left, >right<); 'right' is null");
+        AssertionHelper.NullCheck(left, "Vector2::operator -(>left<, right); 'left' is null");
+        AssertionHelper.NullCheck(right, "Vector2::operator -(left, >right<); 'right' is null");
 
         return new Vector2(left.X - right.X, left.Y - right.Y);
     }
 
     public static Vector2 operator *(Vector2 left, Vector2 right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator *(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator *(left, >right<); 'right' is null");
+        AssertionHelper.NullCheck(left, "Vector2::operator *(>left<, right); 'left' is null");
+        AssertionHelper.NullCheck(right, "Vector2::operator *(left, >right<); 'right' is null");
 
         return new Vector2(left.X * right.X, left.Y * right.Y);
     }
 
     public static Vector2 operator /(Vector2 left, Vector2 right)
     {
-        ObjectHelper.NullCheck(left, "Vector2::operator /(>left<, right); 'left' is null");
-        ObjectHelper.NullCheck(right, "Vector2::operator /(left, >right<); 'right' is null");
+        AssertionHelper.NullCheck(left, "Vector2::operator /(>left<, right); 'left' is null");
+        AssertionHelper.NullCheck(right, "Vector2::operator /(left, >right<); 'right' is null");
 
         return new Vector2(left.X / right.X, left.Y / right.Y);
     }
 
     public static Vector2 operator *(Vector2 vector, double value)
     {
-        ObjectHelper.NullCheck(vector, "Vector2::operator *(>vector<, value); 'vector' is null");
-        MathHelper.InvalidDoubleCheck(value, "Vector2::operator *(vector, >value<)");
+        AssertionHelper.NullCheck(vector, "Vector2::operator *(>vector<, value); 'vector' is null");
+        AssertionHelper.InvalidDoubleCheck(value, "Vector2::operator *(vector, >value<)");
 
         return new Vector2(vector.X * value, vector.Y * value);
     }
 
     public static Vector2 operator /(Vector2 vector, double value)
     {
-        ObjectHelper.NullCheck(vector, "Vector2::operator /(>vector<, value); 'vector' is null");
-        MathHelper.InvalidDoubleCheck(value, "Vector2::operator /(vector, >value<)");
+        AssertionHelper.NullCheck(vector, "Vector2::operator /(>vector<, value); 'vector' is null");
+        AssertionHelper.InvalidDoubleCheck(value, "Vector2::operator /(vector, >value<)");
 
         return new Vector2(vector.X / value, vector.Y / value);
     }
 
     public static Vector2 operator *(double value, Vector2 vector)
     {
-        MathHelper.InvalidDoubleCheck(value, "Vector2::operator *(>value<, vector)");
-        ObjectHelper.NullCheck(vector, "Vector2::operator *(value, >vector<); 'vector' is null");
+        AssertionHelper.InvalidDoubleCheck(value, "Vector2::operator *(>value<, vector)");
+        AssertionHelper.NullCheck(vector, "Vector2::operator *(value, >vector<); 'vector' is null");
 
         return new Vector2(value * vector.X, value * vector.Y);
     }
 
     public static Vector2 operator /(double value, Vector2 vector)
     {
-        MathHelper.InvalidDoubleCheck(value, "Vector2::operator /(>value<, vector)");
-        ObjectHelper.NullCheck(vector, "Vector2::operator /(value, >vector<); 'vector' is null");
+        AssertionHelper.InvalidDoubleCheck(value, "Vector2::operator /(>value<, vector)");
+        AssertionHelper.NullCheck(vector, "Vector2::operator /(value, >vector<); 'vector' is null");
 
         return new Vector2(value / vector.X, value / vector.Y);
     }

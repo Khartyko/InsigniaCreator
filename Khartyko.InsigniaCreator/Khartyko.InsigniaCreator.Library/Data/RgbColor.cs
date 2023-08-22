@@ -36,7 +36,7 @@ public class RgbColor
 
     public RgbColor(RgbColor other)
     {
-        ObjectHelper.NullCheck(other, "Color::Color(>other<)");
+        AssertionHelper.NullCheck(other, "Color::Color(>other<)");
 
         R = other.R;
         G = other.G;
@@ -103,11 +103,11 @@ public class RgbColor
 
     private void ParseHexString(string hexString)
     {
-        StringHelper.EmptyOrWhitespaceCheck(hexString, "Color::parseHexString(>hexString<)");
+        AssertionHelper.EmptyOrWhitespaceCheck(hexString, "Color::parseHexString(>hexString<)");
         
         var parsedHexValue = hexString.Length > 0 && hexString[0] == '#' ? hexString.Replace("#", "") : hexString;
 
-        StringHelper.EmptyOrWhitespaceCheck(parsedHexValue, "Color::parseHexString(>parsedHexValue<)");
+        AssertionHelper.EmptyOrWhitespaceCheck(parsedHexValue, "Color::parseHexString(>parsedHexValue<)");
 
         var length = parsedHexValue.Length;
 

@@ -11,8 +11,8 @@ public class Cell
 
     public Cell(IList<Node> nodes, IList<Link> links)
     {
-        ObjectHelper.NullCheck(nodes, nameof(nodes));
-        ObjectHelper.NullCheck(links, nameof(links));
+        AssertionHelper.NullCheck(nodes, nameof(nodes));
+        AssertionHelper.NullCheck(links, nameof(links));
 
         if (!nodes.Any())
         {
@@ -80,7 +80,7 @@ public class Cell
 
     public Cell(Cell existingCell)
     {
-        ObjectHelper.NullCheck(existingCell, nameof(existingCell));
+        AssertionHelper.NullCheck(existingCell, nameof(existingCell));
 
         Nodes = existingCell.Nodes.Select(node => new Node(node)).ToList();
         Links = existingCell.Links.Select(link => new Link(link)).ToList();

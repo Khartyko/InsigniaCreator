@@ -15,7 +15,7 @@ public class Node
         get => _position;
         set
         {
-            ObjectHelper.NullCheck(value, nameof(value));
+            AssertionHelper.NullCheck(value, nameof(value));
             
             _position = value;
         }
@@ -23,22 +23,22 @@ public class Node
 
     public Node(double x, double y)
     {
-        MathHelper.InvalidDoubleCheck(x, nameof(x));
-        MathHelper.InvalidDoubleCheck(y, nameof(y));
+        AssertionHelper.InvalidDoubleCheck(x, nameof(x));
+        AssertionHelper.InvalidDoubleCheck(y, nameof(y));
 
         _position = new Vector2(x, y);
     }
 
     public Node(Vector2 position)
     {
-        ObjectHelper.NullCheck(position, nameof(position));
+        AssertionHelper.NullCheck(position, nameof(position));
 
         _position = position;
     }
 
     public Node(Node existingNode)
     {
-        ObjectHelper.NullCheck(existingNode, nameof(existingNode));
+        AssertionHelper.NullCheck(existingNode, nameof(existingNode));
 
         _position = new Vector2(existingNode.Position);
     }

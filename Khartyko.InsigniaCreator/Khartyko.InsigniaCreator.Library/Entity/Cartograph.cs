@@ -19,7 +19,7 @@ public class Cartograph : IEntity
 		get => _name;
 		set
 		{
-			StringHelper.EmptyOrWhitespaceCheck(value, nameof(value));
+			AssertionHelper.EmptyOrWhitespaceCheck(value, nameof(value));
 			 
 			_name = value;
 		}
@@ -48,9 +48,9 @@ public class Cartograph : IEntity
 			);
 		}
 
-		StringHelper.EmptyOrWhitespaceCheck(name, nameof(name));
+		AssertionHelper.EmptyOrWhitespaceCheck(name, nameof(name));
 
-		ObjectHelper.NullCheck(templateNetwork, nameof(templateNetwork));
+		AssertionHelper.NullCheck(templateNetwork, nameof(templateNetwork));
 		
 		Id = id;
 		AtlasId = atlasId;
@@ -72,7 +72,7 @@ public class Cartograph : IEntity
 			);
 		}
 
-		ObjectHelper.NullCheck(existing, nameof(existing));
+		AssertionHelper.NullCheck(existing, nameof(existing));
 		
 		Id = id;
 		AtlasId = existing.AtlasId;
@@ -84,7 +84,7 @@ public class Cartograph : IEntity
 
 	public bool Activate(Vector2 position)
 	{
-		ObjectHelper.NullCheck(position, nameof(position));
+		AssertionHelper.NullCheck(position, nameof(position));
 		
 		if (!IsActive)
 		{
