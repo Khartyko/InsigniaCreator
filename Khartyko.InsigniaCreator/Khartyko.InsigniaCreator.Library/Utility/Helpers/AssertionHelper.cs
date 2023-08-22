@@ -33,7 +33,7 @@ public static class AssertionHelper
         if (string.IsNullOrWhiteSpace(descriptor))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 "'descriptor' cannot be null, empty, or whitespace."
             );
@@ -42,7 +42,7 @@ public static class AssertionHelper
         if (double.IsNaN(value))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 $"{descriptor} is NaN"
             );
@@ -51,7 +51,7 @@ public static class AssertionHelper
         if (double.IsPositiveInfinity(value))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 $"{descriptor} is Positive Infinity"
             );
@@ -60,7 +60,7 @@ public static class AssertionHelper
         if (double.IsNegativeInfinity(value))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 $"{descriptor} is Negative Infinity"
             );
@@ -72,7 +72,7 @@ public static class AssertionHelper
         if (string.IsNullOrWhiteSpace(descriptor))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 "'descriptor' cannot be null, empty, or whitespace"
             );
@@ -81,7 +81,7 @@ public static class AssertionHelper
         if (Equals(value, 0.0))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 $"'{descriptor}' cannot be zero"
             );
@@ -93,7 +93,7 @@ public static class AssertionHelper
         if (string.IsNullOrWhiteSpace(descriptor))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 "'descriptor' cannot be null, empty, or whitespace"
             );
@@ -102,7 +102,7 @@ public static class AssertionHelper
         if (MathHelper.LessThan(value, 0) || MathHelper.Equals(value, 0))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(descriptor),
                 $"'{descriptor}' cannot be equal to or less than zero; (got '{value}')"
             );
@@ -120,7 +120,7 @@ public static class AssertionHelper
         if (value < minimum)
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(value),
                 $"value cannot be less than to the minimum (Got: {value} < {minimum})"
             );
@@ -129,7 +129,7 @@ public static class AssertionHelper
         if (Equals(value, minimum))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(value),
                 $"value cannot be equal to the minimum (Got: {value} == {minimum})"
             );
@@ -138,7 +138,7 @@ public static class AssertionHelper
         if (maximum < value)
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(value),
                 $"maximum cannot be less than the value (Got: {maximum} < {value})"
             );
@@ -147,7 +147,7 @@ public static class AssertionHelper
         if (Equals(maximum, value))
         {
             throw ExceptionHelper.GenerateArgumentException(
-                typeof(MathHelper),
+                typeof(AssertionHelper),
                 nameof(value),
                 $"maximum cannot be equal to the value (Got: {maximum} == {value})"
             );

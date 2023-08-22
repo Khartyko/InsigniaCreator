@@ -140,6 +140,15 @@ public class AssertionHelperTests
 	}
 
 	[Fact]
+	public void PositiveCheck_NullDescriptor_Fails()
+	{
+		const double validValue = 1.0;
+		string nullDescriptor = null;
+
+		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(validValue, nullDescriptor));
+	}
+
+	[Fact]
 	public void PositiveCheck_NegativeDouble_Fails()
 	{
 		const double testValue = -1;
