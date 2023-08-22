@@ -102,6 +102,58 @@ public class MathHelperTests
 
 	#endregion Equals
 
+	#region LessThan
+
+	[Theory]
+	[InlineData(0, 1, true)]
+	[InlineData(1, 0, false)]
+	public static void LessThan_Succeeds(double d0, double d1, bool expectedResult)
+	{
+		bool actualResult = MathHelper.LessThan(d0, d1);
+		
+		Assert.Equal(expectedResult, actualResult);
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public static void LessThan_InvalidDouble_Fails(double invalidValue)
+	{
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentException>(() => MathHelper.LessThan(invalidValue, validValue));
+		Assert.Throws<ArgumentException>(() => MathHelper.LessThan(validValue, invalidValue));
+	}
+
+	#endregion LessThan
+
+	#region GreaterThan
+
+	[Theory]
+	[InlineData(0, 1, false)]
+	[InlineData(1, 0, true)]
+	public static void GreaterThan_Succeeds(double d0, double d1, bool expectedResult)
+	{
+		bool actualResult = MathHelper.GreaterThan(d0, d1);
+		
+		Assert.Equal(expectedResult, actualResult);
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public static void GreaterThan_InvalidDouble_Fails(double invalidValue)
+	{
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentException>(() => MathHelper.GreaterThan(invalidValue, validValue));
+		Assert.Throws<ArgumentException>(() => MathHelper.GreaterThan(validValue, invalidValue));
+	}
+
+	#endregion GreaterThan
+	
 	#region Round
 
 	[Theory]
@@ -345,6 +397,38 @@ public class MathHelperTests
 	}
 
 	#endregion ZeroCheck
+
+	#region PositiveCheck
+
+	[Theory]
+	[InlineData(1)]
+	[InlineData(15)]
+	[InlineData(3000)]
+	[InlineData(2401)]
+	[InlineData(343)]
+	public void PositiveCheck_Succeeds(double value)
+	{
+		MathHelper.PositiveCheck(value, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(double.NaN)]
+	[InlineData(double.PositiveInfinity)]
+	[InlineData(double.NegativeInfinity)]
+	public void PositiveCheck_InvalidDouble_Fails(double invalidValue)
+	{
+		Assert.Throws<ArgumentException>(() => MathHelper.PositiveCheck(invalidValue, nameof(invalidValue)));
+	}
+
+	[Fact]
+	public void PositiveCheck_NegativeDouble_Fails()
+	{
+		const double testValue = -1;
+		
+		Assert.Throws<ArgumentException>(() => MathHelper.PositiveCheck(testValue, nameof(testValue)));
+	}
+	
+	#endregion PositiveCheck
 	
 	#region RangeCheck
 

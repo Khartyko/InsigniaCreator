@@ -15,6 +15,22 @@ public static class MathHelper
         return Math.Abs(d0 - d1) < _tolerance;
     }
 
+    public static bool LessThan(double d0, double d1)
+    {
+        InvalidDoubleCheck(d0, "MathHelper::LessThan(>d0<, d1)");
+        InvalidDoubleCheck(d1, "MathHelper::LessThan(d0, >d1<)");
+
+        return d0 < d1;
+    }
+
+    public static bool GreaterThan(double d0, double d1)
+    {
+        InvalidDoubleCheck(d0, "MathHelper::GreaterThan(>d0<, d1)");
+        InvalidDoubleCheck(d1, "MathHelper::GreaterThan(d0, >d1<)");
+
+        return d0 > d1;
+    }
+
     public static double Round(double value)
     {
         InvalidDoubleCheck(value, "MathHelper::Round(>value<)");
@@ -147,6 +163,27 @@ public static class MathHelper
                 typeof(MathHelper),
                 nameof(descriptor),
                 $"'{descriptor}' cannot be zero"
+            );
+        }
+    }
+
+    public static void PositiveCheck(double value, string descriptor)
+    {
+        if (string.IsNullOrWhiteSpace(descriptor))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                "'descriptor' cannot be null, empty, or whitespace"
+            );
+        }
+
+        if (MathHelper.LessThan(value, 0) || MathHelper.Equals(value, 0))
+        {
+            throw ExceptionHelper.GenerateArgumentException(
+                typeof(MathHelper),
+                nameof(descriptor),
+                $"'{descriptor}' cannot be equal to or less than zero; (got '{value}')"
             );
         }
     }

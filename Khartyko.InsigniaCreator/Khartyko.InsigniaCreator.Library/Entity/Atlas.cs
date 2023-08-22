@@ -8,16 +8,6 @@ namespace Khartyko.InsigniaCreator.Library.Entity;
 
 public class Atlas : IEntity
 {
-    /*
-     * TODO: Come up with something more sensible than this number.
-     *  I know someone wouldn't reasonably have a 32k monitor,
-     *  but I can't completely ignore it. But checking a max boundary of
-     *  double.MaxValue would be very inefficient and unlikely.
-     *
-     * TODO: Add this to the configuration so it can be easily changed later
-     */
-    private static readonly double s_maxBoundaryLength = 32768;
-    
 	private string _name;
     private double _width;
     private double _height;
@@ -42,7 +32,7 @@ public class Atlas : IEntity
         get => _width;
         set
         {
-            MathHelper.RangeCheck(value, 1, s_maxBoundaryLength, nameof(value));
+            MathHelper.PositiveCheck(value, nameof(value));
             
             _width = value;
         }
@@ -53,7 +43,7 @@ public class Atlas : IEntity
         get => _height;
         set
         {
-            MathHelper.RangeCheck(value, 1, s_maxBoundaryLength, nameof(value));
+            MathHelper.PositiveCheck(value, nameof(value));
 
             _height = value;
         }
@@ -76,11 +66,11 @@ public class Atlas : IEntity
         {
             throw new ArgumentException($"Atlas::Atlas(>id<, name, width, height, backgroundColor); 'id' cannot be less than 0 (got '{id}')", nameof(id));
         }
-        
+
         StringHelper.EmptyOrWhitespaceCheck(name, nameof(name));
-        
-        MathHelper.RangeCheck(width, 0, s_maxBoundaryLength, nameof(width));
-        MathHelper.RangeCheck(height, 0, s_maxBoundaryLength, nameof(height));
+
+        MathHelper.PositiveCheck(width, nameof(width));
+        MathHelper.PositiveCheck(height, nameof(height));
         
         ObjectHelper.NullCheck(backgroundColor, nameof(backgroundColor));
         
@@ -109,7 +99,7 @@ public class Atlas : IEntity
         if (!cartographs.Any())
         {
             throw new ArgumentException(
-        $"'cartographs' cannot be empty",
+                "'cartographs' cannot be empty",
                 nameof(cartographs)
             );
         }
