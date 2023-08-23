@@ -1,5 +1,7 @@
+using System.Reflection;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Interfaces;
+using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
@@ -115,11 +117,12 @@ public class Atlas : IEntity
         
         if (duplicates.Any())
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(),
-                nameof(cartographs),
-                $"'cartographs' cannot have duplicate ids; (got '{string.Join(", ", duplicates)}')"
-            );
+            
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata();
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(cartographs));
+
+            throw new ArgumentException($"{signature}:\n\t'cartographs' cannot have duplicate ids; got '{string.Join(", ", duplicates)}'");
         }
 
         cartographs.ToList().ForEach(Cartographs.Add);

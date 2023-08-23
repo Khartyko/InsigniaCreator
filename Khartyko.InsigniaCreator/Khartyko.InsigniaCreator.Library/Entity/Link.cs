@@ -15,16 +15,8 @@ public class Link
         set
         {
             AssertionHelper.NullCheck(value, nameof(value));
-
-            if (value.Equals(_tail))
-            {
-                throw ExceptionHelper.GenerateArgumentException(
-                    GetType(),
-                    nameof(value),
-                    $"'value' cannot match 'Link.Tail' (got '{value}')"
-                );
-            }
-
+            AssertionHelper.EqualCheck(value, Tail, nameof(value), nameof(Tail));
+            
             _head = value;
         }
     }
@@ -35,15 +27,7 @@ public class Link
         set
         {
             AssertionHelper.NullCheck(value, nameof(value));
-
-            if (value.Equals(_head))
-            {
-                throw ExceptionHelper.GenerateArgumentException(
-                    GetType(),
-                    nameof(value),
-                    $"'value' cannot match 'Link.Head' (got '{value}')"
-                );
-            }
+            AssertionHelper.EqualCheck(value, Head, nameof(value), nameof(Head));
 
             _tail = value;
         }
@@ -54,15 +38,8 @@ public class Link
         AssertionHelper.NullCheck(head, nameof(head));
         AssertionHelper.NullCheck(tail, nameof(tail));
 
-        if (head.Equals(tail))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(),
-                nameof(tail),
-                $"'head' cannot match 'tail'; (got head: '{head}', tail: '{tail}' )"
-            );
-        }
-
+        AssertionHelper.EqualCheck(head, tail, nameof(head), nameof(tail));
+        
         _head = head;
         _tail = tail;
     }

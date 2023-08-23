@@ -1,3 +1,4 @@
+using System.Reflection;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS8600, CS8604
@@ -6,6 +7,18 @@ namespace Khartyko.InsigniaCreator.Library.Testing.Utility.Helpers;
 
 public class AssertionHelperTests
 {
+	private static object[] GenerateItems(int count)
+	{
+		var objects = new object[count];
+
+		for (var i = 0; i < count; i++)
+		{
+			objects[i] = new object();
+		}
+
+		return objects;
+	}
+	
 	#region NullCheck
 
 	[Theory]
@@ -81,11 +94,25 @@ public class AssertionHelperTests
 	}
 
 	[Theory]
-	[InlineData(1.0, "")]
-	[InlineData(1.0, null)]
-	public void InvalidDoubleCheck_BadDescriptor_Fails(double input, string descriptor)
+	[InlineData("")]
+	[InlineData("\t")]
+	[InlineData("\r")]
+	[InlineData("\n")]
+	[InlineData("    ")]
+	public void InvalidDoubleCheck_BadDescriptor_Fails(string descriptor)
 	{
+		const double input = 1.0;
+		
 		Assert.Throws<ArgumentException>(() => AssertionHelper.InvalidDoubleCheck(input, descriptor));
+	}
+
+	[Fact]
+	public void InvalidDoubleCheck_NullDescriptor_Fails()
+	{
+		const double input = 1.0;
+		string nullDescriptor = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.InvalidDoubleCheck(input, nullDescriptor));
 	}
 
 	#endregion InvalidDoubleCheck
@@ -119,13 +146,61 @@ public class AssertionHelperTests
 	
 	#region PositiveCheck
 
+	#region IntValue
+
 	[Theory]
 	[InlineData(1)]
 	[InlineData(15)]
 	[InlineData(3000)]
 	[InlineData(2401)]
 	[InlineData(343)]
-	public void PositiveCheck_Succeeds(double value)
+	public void PositiveCheck_IntValue_Succeeds(int value)
+	{
+		AssertionHelper.PositiveCheck(value, nameof(value));
+	}
+
+	[Fact]
+	public void PositiveCheck_IntValue_NegativeInt_Fails()
+	{
+		const int testValue = -1;
+		
+		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
+	}
+
+	#endregion IntValue
+
+	#region LongValue
+
+	[Theory]
+	[InlineData(1)]
+	[InlineData(15)]
+	[InlineData(3000)]
+	[InlineData(2401)]
+	[InlineData(343)]
+	public void PositiveCheck_LongValue_Succeeds(long value)
+	{
+		AssertionHelper.PositiveCheck(value, nameof(value));
+	}
+
+	[Fact]
+	public void PositiveCheck_LongValue_NegativeLong_Fails()
+	{
+		const long testValue = -1;
+		
+		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
+	}
+
+	#endregion LongValue
+
+	#region DoubleValue
+
+	[Theory]
+	[InlineData(1)]
+	[InlineData(15)]
+	[InlineData(3000)]
+	[InlineData(2401)]
+	[InlineData(343)]
+	public void PositiveCheck_DoubleValue_Succeeds(double value)
 	{
 		AssertionHelper.PositiveCheck(value, nameof(value));
 	}
@@ -134,27 +209,29 @@ public class AssertionHelperTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	public void PositiveCheck_InvalidDouble_Fails(double invalidValue)
+	public void PositiveCheck_DoubleValue_InvalidDouble_Fails(double invalidValue)
 	{
 		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(invalidValue, nameof(invalidValue)));
 	}
 
 	[Fact]
-	public void PositiveCheck_NullDescriptor_Fails()
+	public void PositiveCheck_DoubleValue_NullDescriptor_Fails()
 	{
 		const double validValue = 1.0;
 		string nullDescriptor = null;
 
-		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(validValue, nullDescriptor));
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.PositiveCheck(validValue, nullDescriptor));
 	}
-
+	
 	[Fact]
-	public void PositiveCheck_NegativeDouble_Fails()
+	public void PositiveCheck_DoubleValue_NegativeDouble_Fails()
 	{
 		const double testValue = -1;
 		
 		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
 	}
+
+	#endregion DoubleValue
 	
 	#endregion PositiveCheck
 	
@@ -243,4 +320,156 @@ public class AssertionHelperTests
 	}
 
 	#endregion RangeCheck
+
+	#region EmptyCheck
+
+	[Fact]
+	public void EmptyCheck_Succeeds()
+	{
+		var objects = new[]
+		{
+			new object()
+		};
+		
+		AssertionHelper.EmptyCheck(objects, nameof(objects));
+	}
+
+	[Fact]
+	public void EmptyCheck_NullDescriptor_Fails()
+	{
+		object[] objects = Array.Empty<object>();
+
+		Assert.Throws<ArgumentException>(() => AssertionHelper.EmptyCheck(objects, nameof(objects)));
+	}
+
+	[Fact]
+	public void EmptyCheck_NullItems_Fails()
+	{
+		var objects = new[]
+		{
+			new object()
+		};
+
+		string nullDescriptor = null;
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.EmptyCheck(objects, nullDescriptor));
+	}
+
+	[Fact]
+	public void EmptyCheck_EmptyList_Fails()
+	{
+		object[] nullObjects = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.EmptyCheck(nullObjects, nameof(nullObjects)));
+	}
+
+	#endregion EmptyCheck
+	
+	#region MinimumCountCheck
+
+	[Theory]
+	[InlineData(1, 0)]
+	[InlineData(15, 10)]
+	public void MinimumCountCheck_Succeeds(int count, int minimumCount)
+	{
+		object[] objects = GenerateItems(count);
+		
+		AssertionHelper.MinimumCountCheck(objects, minimumCount, nameof(objects));
+	}
+
+	[Fact]
+	public void MinimumCountCheck_NullDescriptor_Fails()
+	{
+		string nullDescriptor = null;
+		object[] objects = GenerateItems(5);
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCountCheck(objects, 1, nullDescriptor));
+	}
+
+	[Fact]
+	public void MinimumCountCheck_NullItems_Fails()
+	{
+		object[] nullObjects = null;
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCountCheck(nullObjects, 1, nameof(nullObjects)));
+	}
+
+	[Fact]
+	public void MinimumCountCheck_EmptyList_Fails()
+	{
+		object[] objects = Array.Empty<object>();
+		
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCountCheck(objects, 1, nameof(objects)));
+	}
+
+	[Theory]
+	[InlineData(15, 20)]
+	public void MinimumCountCheck_SubMinimum_Fails(int count, int minimumCount)
+	{
+		object[] objects = GenerateItems(count);
+
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCountCheck(objects, minimumCount, nameof(objects)));
+	}
+	
+	#endregion MinimumCountCheck
+
+	#region DuplicatesCheck
+
+	/*
+	 * Valid
+	 * Invalid: Null string, null list, empty list, duplicates
+	 */
+
+	[Fact]
+	public void DuplicatesCheck_Succeeds()
+	{
+		var ints = new[]
+		{
+			1,
+			2,
+			3
+		};
+		
+		AssertionHelper.DuplicatesCheck(ints, nameof(ints));
+	}
+
+	[Fact]
+	public void DuplicatesCheck_NullDescriptor_Fails()
+	{
+		string nullDescriptor = null;
+		var ints = new[]
+		{
+			1,
+			2,
+			3
+		};
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.DuplicatesCheck(ints, nullDescriptor));
+	}
+
+	[Fact]
+	public void DuplicatesCheck_NullItems_Fails()
+	{
+		object[] nullObjects = null;
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.DuplicatesCheck(nullObjects, nameof(nullObjects)));
+	}
+
+	[Fact]
+	public void DuplicatesCheck_DuplicatesPresent_Fails()
+	{
+		var ints = new[]
+		{
+			1,
+			1,
+			2,
+			2,
+			3,
+			3
+		};
+		
+		Assert.Throws<ArgumentException>(() => AssertionHelper.DuplicatesCheck(ints, nameof(ints)));
+	}
+
+	#endregion DuplicatesCheck
 }

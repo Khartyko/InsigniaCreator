@@ -30,26 +30,9 @@ public class Cartograph : IEntity
 
 	public Cartograph(long id, long atlasId, string name, TemplateNetwork templateNetwork)
 	{
-		if (long.IsNegative(id))
-		{
-			throw ExceptionHelper.GenerateArgumentException(
-							GetType(),
-							nameof(id),
-							$"'id' must be positive; (got '{id}')"
-			);
-		}
-
-		if (long.IsNegative(atlasId))
-		{
-			throw ExceptionHelper.GenerateArgumentException(
-							GetType(),
-							nameof(atlasId),
-							$"'atlasId' must be positive; (got '{id}')"
-			);
-		}
-
+		AssertionHelper.PositiveCheck(id, nameof(id));
+		AssertionHelper.PositiveCheck(atlasId, nameof(atlasId));
 		AssertionHelper.EmptyOrWhitespaceCheck(name, nameof(name));
-
 		AssertionHelper.NullCheck(templateNetwork, nameof(templateNetwork));
 		
 		Id = id;
@@ -63,15 +46,7 @@ public class Cartograph : IEntity
 
 	public Cartograph(long id, Cartograph existing)
 	{
-		if (long.IsNegative(id))
-		{
-			throw ExceptionHelper.GenerateArgumentException(
-							GetType(),
-							nameof(id),
-							$"'id' must be positive; (got '{id}')"
-			);
-		}
-
+		AssertionHelper.PositiveCheck(id, nameof(id));
 		AssertionHelper.NullCheck(existing, nameof(existing));
 		
 		Id = id;

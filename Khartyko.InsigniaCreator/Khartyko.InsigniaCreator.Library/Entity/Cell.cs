@@ -14,65 +14,11 @@ public class Cell
         AssertionHelper.NullCheck(nodes, nameof(nodes));
         AssertionHelper.NullCheck(links, nameof(links));
 
-        if (!nodes.Any())
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(), 
-                nameof(nodes), 
-                "'nodes' collection is empty"
-            );
-        }
+        AssertionHelper.MinimumCountCheck(nodes, 3, nameof(nodes));
+        AssertionHelper.MinimumCountCheck(links, 3, nameof(links));
 
-        if (!links.Any())
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(), 
-                nameof(links), 
-                "'links' collection is empty"
-            );
-        }
-
-        if (nodes.Count < 3)
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(),
-                nameof(links),
-                $"'nodes' collection has less than 3 Nodes; (got: {string.Join(", ", nodes)})"
-            );
-        }
-
-        if (links.Count < 3)
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(),
-                nameof(links),
-                $"'links' collection has less than 3 Links; (got: {string.Join(", ", links)})"
-            );
-        }
-
-        if (ContainsDuplicates(nodes))
-        {
-            var duplicates = nodes.Where(outerNode => nodes.Count(innerNode => innerNode.Equals(outerNode)) > 1)
-                .ToList();
-
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(), 
-                nameof(nodes), 
-                $"'nodes' collection contains duplicates (got: {string.Join(", ", duplicates)})"
-            );
-        }
-
-        if (ContainsDuplicates(links))
-        {
-            var duplicates = links.Where(outerLink => links.Count(innerLink => innerLink.Equals(outerLink)) > 1)
-                .ToList();
-            
-            throw ExceptionHelper.GenerateArgumentException(
-                GetType(), 
-                nameof(links), 
-                $"'links' collection contains duplicates (got: {string.Join(", ", duplicates)})"
-            );
-        }
+        AssertionHelper.DuplicatesCheck(nodes, nameof(nodes));
+        AssertionHelper.DuplicatesCheck(links, nameof(links));
         
         Nodes = nodes;
         Links = links;
@@ -88,9 +34,6 @@ public class Cell
 
     public bool Contains(Node node) => Nodes.Contains(node);
     public bool Contains(Link link) => Links.Contains(link);
-
-    private static bool ContainsDuplicates(IList<Node> nodes) => nodes.Any(outerNode => nodes.Count(innerNode => innerNode.Equals(outerNode)) > 1);
-    private static bool ContainsDuplicates(IList<Link> links) => links.Any(outerLink => links.Count(innerLink => innerLink.Equals(outerLink)) > 1);
 
     public override bool Equals(object? obj) => obj is Cell cell
                                                 && Nodes.All(cell.Contains)

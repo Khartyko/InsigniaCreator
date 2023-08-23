@@ -30,7 +30,7 @@ public class CellTests
 
         Assert.Equal(s_nodes.Count, cell.Nodes.Count);
 
-        foreach (var node in s_nodes)
+        foreach (Node node in s_nodes)
         {
             Assert.Contains(node, cell.Nodes);
         }
@@ -47,7 +47,7 @@ public class CellTests
 
         Assert.Equal(s_links.Count, cell.Links.Count);
 
-        foreach (var link in s_links)
+        foreach (Link link in s_links)
         {
             Assert.Contains(link, cell.Links);
         }
@@ -86,7 +86,7 @@ public class CellTests
     [Fact]
     public void ConstructCell_FromNodesAndLinks_TooFewNodes_Fails()
     {
-        var nodes = s_nodes.Take(s_nodes.Count - 1).ToList();
+        List<Node> nodes = s_nodes.Take(s_nodes.Count - 1).ToList();
 
         Assert.Throws<ArgumentException>(() => new Cell(nodes, s_links));
     }
@@ -94,7 +94,7 @@ public class CellTests
     [Fact]
     public void ConstructCell_FromNodesAndLinks_TooFewLinks_Fails()
     {
-        var links = s_links.Take(s_links.Count - 1).ToList();
+        List<Link> links = s_links.Take(s_links.Count - 1).ToList();
 
         Assert.Throws<ArgumentException>(() => new Cell(s_nodes, links));
     }
@@ -102,7 +102,7 @@ public class CellTests
     [Fact]
     public void ConstructCell_FromNodesAndLinks_DuplicateNodes_Fails()
     {
-        var nodes = s_nodes.Select(node => new Node(node))
+        List<Node> nodes = s_nodes.Select(node => new Node(node))
             .ToList();
         nodes.Add(new Node(s_nodes.First()));
 
@@ -112,7 +112,7 @@ public class CellTests
     [Fact]
     public void ConstructCell_FromNodesAndLinks_DuplicateLinks_Fails()
     {
-        var links = s_links.Select(link => new Link(link))
+        List<Link> links = s_links.Select(link => new Link(link))
             .ToList();
         links.Add(new Link(s_links.First()));
 

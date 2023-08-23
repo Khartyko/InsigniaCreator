@@ -51,14 +51,7 @@ public class TemplateNetwork : NetworkBase
 
     private static IList<T> Validate<T>(IList<T> list, string descriptor)
     {
-        if (!list.Any())
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(TemplateNetwork),
-                descriptor,
-                $"'{descriptor}' cannot be empty"
-            );
-        }
+        AssertionHelper.EmptyCheck(list, descriptor);
         
         return list;
     }

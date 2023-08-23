@@ -1,112 +1,153 @@
+using System.Linq;
+
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 public static class AssertionHelper
 {
-    public static void NullCheck(object target, string name)
+    public static void NullCheck(object? target, string name)
     {
-        if (target is null)
+        if (target is not null)
         {
-            throw new ArgumentNullException(name, $"{name} is null");
+            return;
         }
+
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, name);
+
+        throw new ArgumentNullException(null, $"{signature}:\n\t{name} is null");
     }
 
+    public static void EqualCheck<T>(T? left, T? right, string leftDescriptor, string rightDescriptor)
+    {
+        NullCheck(left, leftDescriptor);
+        NullCheck(right, rightDescriptor);
+
+        if (!(left!.Equals(right)))
+        {
+            return;
+        }
+
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata);
+        var primaryMessage = $"\n\t'{leftDescriptor}' and '{rightDescriptor}' cannot be equal";
+        var auxiliaryMessage = $"\n\t\t'{leftDescriptor}': {left}\n\t\t'{rightDescriptor}': {right}";
+
+        throw new ArgumentException($"{signature}:{primaryMessage};{auxiliaryMessage}");
+    }
+    
     public static void EmptyOrWhitespaceCheck(string target, string name)
     {
-        if (name is null)
-        {
-            throw new ArgumentNullException(nameof(name), $"{nameof(name)} is null");
-        }
+        NullCheck(name, nameof(target));
+        NullCheck(target, nameof(target));
         
-        if (target is null)
+        if (!string.IsNullOrWhiteSpace(target))
         {
-            throw new ArgumentNullException(name, $"{name} is null");
+            return;
         }
-        
-        if (string.IsNullOrWhiteSpace(target))
-        {
-            throw new ArgumentException($"{name} is null or whitespace", name);
-        }
+
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, name);
+            
+        throw new ArgumentException($"{signature}:\n\t{name} is null or whitespace");
     }
 
     public static void InvalidDoubleCheck(double value, string descriptor)
     {
-        if (string.IsNullOrWhiteSpace(descriptor))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace."
-            );
-        }
-
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+        
         if (double.IsNaN(value))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                $"{descriptor} is NaN"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\t{descriptor} cannot be 'double.NaN'");
         }
 
         if (double.IsPositiveInfinity(value))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                $"{descriptor} is Positive Infinity"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\t{descriptor} cannot be 'double.PositiveInfinity'");
         }
 
         if (double.IsNegativeInfinity(value))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                $"{descriptor} is Negative Infinity"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\t{descriptor} cannot be 'double.NegativeInfinity'");
         }
     }
 
     public static void ZeroCheck(double value, string descriptor)
     {
-        if (string.IsNullOrWhiteSpace(descriptor))
-        {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace"
-            );
-        }
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
 
-        if (Equals(value, 0.0))
+        if (!MathHelper.Equals(value, 0.0))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                $"'{descriptor}' cannot be zero"
-            );
+            return;
         }
+        
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        throw new ArgumentException($"{signature}:\n\t{descriptor} cannot be 0.0");
     }
 
-    public static void PositiveCheck(double value, string descriptor)
+    public static void PositiveCheck(int value, string descriptor)
     {
-        if (string.IsNullOrWhiteSpace(descriptor))
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (0 <= value)
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                "'descriptor' cannot be null, empty, or whitespace"
-            );
+            return;
         }
 
-        if (MathHelper.LessThan(value, 0) || MathHelper.Equals(value, 0))
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+    }
+    
+    public static void PositiveCheck(long value, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (0L <= value)
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(descriptor),
-                $"'{descriptor}' cannot be equal to or less than zero; (got '{value}')"
-            );
+            return;
         }
+
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+    }
+    
+    public static void PositiveCheck(double value, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (MathHelper.GreaterThan(value, 0.0))
+        {
+            return;
+        }
+
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
     }
     
     public static void RangeCheck(double value, double minimum, double maximum, string descriptor)
@@ -119,38 +160,109 @@ public static class AssertionHelper
 
         if (value < minimum)
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(value),
-                $"value cannot be less than to the minimum (Got: {value} < {minimum})"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\tvalue cannot be less than to the minimum; got: {value} < {minimum}");
         }
 
         if (Equals(value, minimum))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(value),
-                $"value cannot be equal to the minimum (Got: {value} == {minimum})"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\tvalue cannot be equal to the minimum; got: {value} == {minimum}");
         }
 
         if (maximum < value)
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(value),
-                $"maximum cannot be less than the value (Got: {maximum} < {value})"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\tmaximum cannot be less than the value; got: {maximum} < {value}");
         }
         
         if (Equals(maximum, value))
         {
-            throw ExceptionHelper.GenerateArgumentException(
-                typeof(AssertionHelper),
-                nameof(value),
-                $"maximum cannot be equal to the value (Got: {maximum} == {value})"
-            );
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\tmaximum cannot be equal to the value; got: {maximum} == {value}");
         }
+    }
+
+    public static void EmptyCheck<T>(IEnumerable<T> items, string descriptor)
+    {
+        NullCheck(items, nameof(items));
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+        
+        if (items.Any())
+        {
+            return;
+        }
+        
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be empty");
+    }
+    
+    public static void MinimumCountCheck<T>(IEnumerable<T> items, int minimumCount, string descriptor)
+    {
+        NullCheck(items, nameof(items));
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+        PositiveCheck(minimumCount, nameof(minimumCount));
+
+        int itemCount = items.Count();
+
+        if (minimumCount <= itemCount)
+        {
+            return;
+        }
+        
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+        string message = itemCount == 0
+            ? $"{signature}:\n\t'{descriptor}' cannot be empty"
+            : $"{signature}:\n\t'{descriptor}' has to have more than {minimumCount} or more; got {itemCount} items instead";
+        
+        throw new ArgumentException(message);
+    }
+
+    public static void DuplicatesCheck<T>(IEnumerable<T> items, string descriptor)
+    {
+        NullCheck(items, nameof(items));
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        List<T> itemsList = items.ToList();
+        
+        if (!itemsList.Any())
+        {
+            return;
+        }
+
+        List<T> duplicatesFound = itemsList
+            .Where(outerItem => itemsList
+                .Count(innerItem => innerItem.Equals(outerItem)) > 1)
+            .ToList();
+
+        if (!duplicatesFound.Any())
+        {
+            return;
+        }
+        
+        ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+        string duplicatesString = string.Join(", ", duplicatesFound);
+
+        throw new ArgumentException($"{signature}:\n\t'' contains duplicates; got '{duplicatesString}'");
     }
 }
