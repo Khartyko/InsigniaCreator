@@ -15,7 +15,7 @@ public static class AssertionHelper
 
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, name);
 
-        throw new ArgumentNullException(null, $"{signature}:\n\t{name} is null");
+        throw new ArgumentNullException(name, $"{signature}:\n\t{name} is null");
     }
 
     public static void EqualCheck<T>(T? left, T? right, string leftDescriptor, string rightDescriptor)
@@ -250,7 +250,8 @@ public static class AssertionHelper
 
         List<T> duplicatesFound = itemsList
             .Where(outerItem => itemsList
-                .Count(innerItem => innerItem.Equals(outerItem)) > 1)
+                .Count(innerItem => innerItem != null
+                                    && innerItem.Equals(outerItem)) > 1)
             .ToList();
 
         if (!duplicatesFound.Any())

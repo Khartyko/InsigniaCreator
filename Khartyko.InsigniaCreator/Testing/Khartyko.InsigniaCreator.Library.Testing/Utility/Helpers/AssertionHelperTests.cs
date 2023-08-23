@@ -456,6 +456,14 @@ public class AssertionHelperTests
 	}
 
 	[Fact]
+	public void DuplicatesCheck_EmptyItems_Fails()
+	{
+		object[] emptyList = Array.Empty<object>();
+		
+		AssertionHelper.DuplicatesCheck(emptyList, nameof(emptyList));
+	}
+
+	[Fact]
 	public void DuplicatesCheck_DuplicatesPresent_Fails()
 	{
 		var ints = new[]
