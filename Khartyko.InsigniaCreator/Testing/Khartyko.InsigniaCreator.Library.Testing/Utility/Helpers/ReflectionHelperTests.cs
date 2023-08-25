@@ -10,7 +10,7 @@ public class ReflectionHelperTests
 {
     private object _testValue = new();
     
-    private ReflectionMetadata TestMetadata { get; set; }
+    private ReflectionMetadata? TestMetadata { get; set; }
 
     private object TestProperty
     {
@@ -27,7 +27,31 @@ public class ReflectionHelperTests
             _testValue = value;
         }
     }
-    
+
+    internal class TestClass
+    {
+        internal ReflectionMetadata? Metadata { get; set; }
+        private object _objValue = new object();
+        
+        internal object this[object obj]
+        {
+            get
+            {
+                Metadata = ReflectionHelper.GetCallerMetadata();
+                
+                return _objValue;
+            }
+            set
+            {
+                Metadata = ReflectionHelper.GetCallerMetadata();
+
+                _objValue = value;
+            }
+        }
+    }
+
+    #region GetCallerMetadata
+
     [Fact]
     public void GetCallerMetadata_RegularMethod_Succeeds()
     {
@@ -45,6 +69,7 @@ public class ReflectionHelperTests
     {
         _ = TestProperty;
         
+        Assert.NotNull(TestMetadata);
         MethodBase methodInfo = GetType().GetMethod(TestMetadata.MethodBase.Name)!;
         
         Assert.Equal(GetType(), TestMetadata.Type);
@@ -58,6 +83,7 @@ public class ReflectionHelperTests
     {
         TestProperty = new object();
         
+        Assert.NotNull(TestMetadata);
         MethodBase methodInfo = GetType().GetMethod(TestMetadata.MethodBase.Name)!;
         
         Assert.Equal(GetType(), TestMetadata.Type);
@@ -65,6 +91,36 @@ public class ReflectionHelperTests
         Assert.Equal(MethodTypes.PropertySet, TestMetadata.MethodType);
         Assert.Equal($"set_{nameof(TestProperty)}", TestMetadata.MethodBase.Name);
     }
+
+    [Fact]
+    public void GetCallerMetadata_IndexerGet_Succeeds()
+    {
+        var testClass = new TestClass();
+
+        _ = testClass[testClass];
+
+        Assert.NotNull(testClass.Metadata);
+        Assert.Equal(testClass.GetType(), testClass.Metadata.Type);
+        Assert.Equal(MethodTypes.IndexerGet, testClass.Metadata.MethodType);
+        Assert.Equal("get_Item", testClass.Metadata.MethodBase.Name);
+    }
+
+    [Fact]
+    public void GetCallerMetadata_IndexerSet_Succeeds()
+    {
+        var testClass = new TestClass();
+
+        testClass[testClass] = new object();
+
+        Assert.NotNull(testClass.Metadata);
+        Assert.Equal(testClass.GetType(), testClass.Metadata.Type);
+        Assert.Equal(MethodTypes.IndexerSet, testClass.Metadata.MethodType);
+        Assert.Equal("set_Item", testClass.Metadata.MethodBase.Name);
+    }
+
+    #endregion GetCallerMetadata
+    
+    #region ConstructMethodSignature
 
     [Fact]
     public void ConstructMethodSignature_Succeeds()
@@ -122,8 +178,59 @@ public class ReflectionHelperTests
 
         string methodSignature = ReflectionHelper.ConstructMethodSignature(TestMetadata);
         
-        var expectedSignature = $"{GetType().Name}::{nameof(TestProperty)}";
+        var expectedSignature = $"{GetType().Name}::{nameof(TestProperty)} = >value<";
 		
+        Assert.Equal(expectedSignature, methodSignature);
+    }
+
+    [Theory]
+    [InlineData(null, "obj")]
+    [InlineData("ob", "obj")]
+    [InlineData("obj", ">obj<")]
+    public void ConstructMethodSignature_GetIndexer_Succeeds(string? parameterName, string expectedNotedParameter)
+    {
+        var testClass = new TestClass();
+
+        _ = testClass[testClass];
+
+        string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
+
+        var expectedSignature = $"{nameof(TestClass)}[{expectedNotedParameter}]";
+        
+        Assert.Equal(expectedSignature, methodSignature);
+    }
+
+    [Theory]
+    [InlineData(null, "obj")]
+    [InlineData("ob", "obj")]
+    [InlineData("obj", ">obj<")]
+    public void ConstructMethodSignature_SetIndexer_IndexValue_Succeeds(string? parameterName, string expectedNotedParameter)
+    {
+        var testClass = new TestClass();
+
+        testClass[testClass] = testClass;
+
+        string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
+
+        var expectedSignature = $"{nameof(TestClass)}[{expectedNotedParameter}] = value";
+        
+        Assert.Equal(expectedSignature, methodSignature);
+    }
+
+    [Theory]
+    [InlineData(null, "value")]
+    [InlineData("va", "value")]
+    [InlineData("value", ">value<")]
+    public void ConstructMethodSignature_SetIndexer_RighthandValue_Succeeds(string? parameterName, string expectedNotedValue)
+    {
+        var testClass = new TestClass();
+
+        testClass[testClass] = testClass;
+
+        string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
+
+        var expectedSignature = $"{nameof(TestClass)}[obj] = {expectedNotedValue}";
+        
         Assert.Equal(expectedSignature, methodSignature);
     }
 
@@ -134,4 +241,6 @@ public class ReflectionHelperTests
 
         Assert.Throws<ArgumentNullException>(() => ReflectionHelper.ConstructMethodSignature(nullMetadata));
     }
+
+    #endregion ConstructMethodSignature
 }

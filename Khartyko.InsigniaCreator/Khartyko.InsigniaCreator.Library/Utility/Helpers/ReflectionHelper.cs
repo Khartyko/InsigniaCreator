@@ -16,15 +16,21 @@ public static class ReflectionHelper
 
         if (methodBase.IsSpecialName)
         {
+            ParameterInfo[] parameters = methodBase.GetParameters();
+            
             if (methodBase.Name.StartsWith("get_"))
             {
                 // More than likely a 'Get' Property
-                methodType = MethodTypes.PropertyGet;
+                methodType = parameters.Length == 1
+                    ? MethodTypes.IndexerGet
+                    : MethodTypes.PropertyGet;
             }
             else if (methodBase.Name.StartsWith("set_"))
             {
                 // More than likely a 'Set' Property
-                methodType = MethodTypes.PropertySet;
+                methodType = parameters.Length == 2
+                    ? MethodTypes.IndexerSet
+                    : MethodTypes.PropertySet;
             }
         }
         
@@ -41,24 +47,78 @@ public static class ReflectionHelper
         var parameterList = string.Empty;
         string methodName = methodBase.Name;
 
-        if (reflectionMetadata.MethodType == MethodTypes.RegularMethod)
+        switch (reflectionMetadata.MethodType)
         {
-            ParameterInfo[] parameters = methodBase.GetParameters();
-            string[] parameterNames = parameters.Select(
-                    parameterInfo => string.Equals(parameterInfo.Name, parameterName)
-                        ? $">{parameterInfo.Name}<"
-                        : parameterInfo.Name!)
-                .ToArray();
+            case MethodTypes.RegularMethod:
+            {
+                ParameterInfo[] parameters = methodBase.GetParameters();
+                string[] parameterNames = parameters.Select(
+                        parameterInfo => string.Equals(parameterInfo.Name, parameterName)
+                            ? $">{parameterInfo.Name}<"
+                            : parameterInfo.Name!)
+                    .ToArray();
 
-            parameterList = $"({string.Join(", ", parameterNames)})";
-        }
-        else
-        {
-            int startIndex = methodName.IndexOf('_') + 1;
-            int usableLength = methodName.Length - 4;
-            methodName = methodName.Substring(startIndex, usableLength);
+                parameterList = $"({string.Join(", ", parameterNames)})";
+                
+                break;
+            }
+
+            case MethodTypes.IndexerGet:
+            {
+                string contents = parameterName ?? string.Empty;
+
+                ParameterInfo[] parameters = methodBase.GetParameters();
+
+                string? presentParameterName = parameters.First()?.Name;
+
+                contents = string.Equals(presentParameterName, contents)
+                    ? $"[>{presentParameterName}<]"
+                    : $"[{presentParameterName}]";
+            
+                parameterList = contents;
+                methodName = string.Empty;
+                
+                break;
+            }
+
+            case MethodTypes.IndexerSet:
+            {
+                string contents = parameterName ?? string.Empty;
+
+                ParameterInfo[] parameters = methodBase.GetParameters();
+
+                string? presentParameterName = parameters.First()?.Name;
+                string? presentValueName = parameters.Last()?.Name;
+
+                if (string.Equals(presentParameterName, contents))
+                {
+                    contents = $"[>{presentParameterName}<] = value";
+                }
+                else if (string.Equals(presentValueName, contents))
+                {
+                    contents = $"[{presentParameterName}] = >{presentValueName}<";
+                }
+                else
+                {
+                    contents = $"[{presentParameterName}] = {presentValueName}";
+                }
+                
+                parameterList = contents;
+                methodName = string.Empty;
+                
+                break;
+            }
+
+            default:
+            {
+                int startIndex = methodName.IndexOf('_') + 1;
+                int usableLength = methodName.Length - 4;
+                methodName = $"::{methodName.Substring(startIndex, usableLength)}";
+                
+                break;
+            }
         }
         
-        return $"{type.Name}::{methodName}{parameterList}";
+        return $"{type.Name}{methodName}{parameterList}";
     }
 }
