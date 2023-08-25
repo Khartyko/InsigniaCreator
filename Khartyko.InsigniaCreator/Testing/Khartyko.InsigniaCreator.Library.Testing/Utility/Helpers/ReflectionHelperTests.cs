@@ -171,14 +171,17 @@ public class ReflectionHelperTests
         Assert.Equal(expectedSignature, methodSignature);
     }
 
-    [Fact]
-    public void ConstructMethodSignature_SetProperty_Succeeds()
+    [Theory]
+    [InlineData(null, "value")]
+    [InlineData("val", "value")]
+    [InlineData("value", ">value<")]
+    public void ConstructMethodSignature_SetProperty_Succeeds(string? parameterName, string expectedValueName)
     {
         TestProperty = new object();
 
-        string methodSignature = ReflectionHelper.ConstructMethodSignature(TestMetadata);
+        string methodSignature = ReflectionHelper.ConstructMethodSignature(TestMetadata, parameterName);
         
-        var expectedSignature = $"{GetType().Name}::{nameof(TestProperty)} = >value<";
+        var expectedSignature = $"{GetType().Name}::{nameof(TestProperty)} = {expectedValueName}";
 		
         Assert.Equal(expectedSignature, methodSignature);
     }

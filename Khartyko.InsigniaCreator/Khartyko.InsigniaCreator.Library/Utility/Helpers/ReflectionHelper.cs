@@ -59,6 +59,7 @@ public static class ReflectionHelper
                     .ToArray();
 
                 parameterList = $"({string.Join(", ", parameterNames)})";
+                methodName = $"::{methodName}";
                 
                 break;
             }
@@ -106,6 +107,18 @@ public static class ReflectionHelper
                 parameterList = contents;
                 methodName = string.Empty;
                 
+                break;
+            }
+
+            case MethodTypes.PropertySet:
+            {
+                int startIndex = methodName.IndexOf('_') + 1;
+                int usableLength = methodName.Length - 4;
+                string valueString = string.Equals(parameterName, "value")
+                    ? ">value<"
+                    : "value";
+                methodName = $"::{methodName.Substring(startIndex, usableLength)} = {valueString}";
+
                 break;
             }
 
