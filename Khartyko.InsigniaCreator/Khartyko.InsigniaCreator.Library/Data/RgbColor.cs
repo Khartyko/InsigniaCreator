@@ -75,7 +75,6 @@ public class RgbColor
 
             default:
             {
-                // TODO: Verify how this will appear when logging/getting the Message from this Exception
                 ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata();
                 string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(value));
 
@@ -166,7 +165,6 @@ public class RgbColor
 
             default:
             {
-                // TODO: Verify how this will appear when logging/getting the Message from this Exception
                 ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata();
                 string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(hexString));
 

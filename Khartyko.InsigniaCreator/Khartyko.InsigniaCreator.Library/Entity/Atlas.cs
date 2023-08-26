@@ -95,7 +95,6 @@ public class Atlas : IEntity
 
         cartographs.ToList().ForEach(cartograph =>
         {
-            // TODO: Devise a test to check for anonymous methods
             AssertionHelper.NullCheck(cartograph, nameof(cartographs));
 
             Cartographs.Add(cartograph);
