@@ -18,7 +18,8 @@ public class Vector3
 		get => _x;
 		set
 		{
-			AssertionHelper.InvalidDoubleCheck(value, "Vector2::X");
+			AssertionHelper.InvalidDoubleCheck(value, nameof(value));
+			
 			_x = value;
 		}
 	}
@@ -28,7 +29,8 @@ public class Vector3
 		get => _y;
 		set
 		{
-			AssertionHelper.InvalidDoubleCheck(value, "Vector2::Y");
+			AssertionHelper.InvalidDoubleCheck(value, nameof(value));
+
 			_y = value;
 		}
 	}
@@ -38,7 +40,8 @@ public class Vector3
 		get => _z;
 		set
 		{
-			AssertionHelper.InvalidDoubleCheck(value, "Vector2::Z");
+			AssertionHelper.InvalidDoubleCheck(value, nameof(value));
+
 			_z = value;
 		}
 	}
@@ -71,37 +74,36 @@ public class Vector3
 
 	public double this[int idx]
 	{
-		get => idx switch
+		get
 		{
-			0 => X,
-			1 => Y,
-			2 => Z,
-			_ => throw new ArgumentOutOfRangeException(nameof(idx),
-				$"Vector3::[>idx<]; 'idx' is out of range; got '{idx}'")
-		};
+            AssertionHelper.RangeCheck(idx, -1, 3, nameof(idx));
+
+            return idx switch
+            {
+	            0 => X,
+	            1 => Y,
+	            _ => Z
+            };
+		}
 
 		set
 		{
+			AssertionHelper.RangeCheck(idx, -1, 3, nameof(idx));
+			AssertionHelper.InvalidDoubleCheck(value, nameof(value));
+
 			switch (idx)
 			{
 				case 0:
-					AssertionHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
-					_x = value;
+					X = value;
 					break;
-
+				
 				case 1:
-					AssertionHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
-					_y = value;
+					Y = value;
 					break;
-
-				case 2:
-					AssertionHelper.InvalidDoubleCheck(value, "Vector3::[idx] = >value<");
-					_z = value;
-					break;
-
+				
 				default:
-					throw new ArgumentOutOfRangeException(nameof(idx),
-						$"Vector3::[>idx<]; 'idx' is out of range, got '{idx}'");
+					Z = value;
+					break;
 			}
 		}
 	}
@@ -113,9 +115,9 @@ public class Vector3
 
 	public Vector3(double x, double y, double z = 1.0)
 	{
-		AssertionHelper.InvalidDoubleCheck(x, "Vector3::Vector3(>x<, y, z)");
-		AssertionHelper.InvalidDoubleCheck(y, "Vector3::Vector3(x, >y<, z)");
-		AssertionHelper.InvalidDoubleCheck(z, "Vector3::Vector3(x, y, >z<)");
+		AssertionHelper.InvalidDoubleCheck(x, nameof(x));
+		AssertionHelper.InvalidDoubleCheck(y, nameof(y));
+		AssertionHelper.InvalidDoubleCheck(z, nameof(z));
 
 		_x = x;
 		_y = y;
@@ -124,7 +126,7 @@ public class Vector3
 
 	public Vector3(Vector2 vec2)
 	{
-		AssertionHelper.NullCheck(vec2, "Vector3::Vector3(>vec2<)");
+		AssertionHelper.NullCheck(vec2, nameof(vec2));
 
 		_x = vec2.X;
 		_y = vec2.Y;
@@ -134,7 +136,7 @@ public class Vector3
 	public Vector3(Vector2 xy, double z)
 		: this(xy)
 	{
-		AssertionHelper.InvalidDoubleCheck(z, "Vector3::Vector3(vec2, >z<");
+		AssertionHelper.InvalidDoubleCheck(z, nameof(z));
 
 		_z = z;
 	}
@@ -152,7 +154,7 @@ public class Vector3
 
 	public Vector3(Vector3 vec3)
 	{
-		AssertionHelper.NullCheck(vec3, "Vector3::Vector3(>vec3<)");
+		AssertionHelper.NullCheck(vec3, nameof(vec3));
 
 		_x = vec3.X;
 		_y = vec3.Y;

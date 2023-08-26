@@ -16,7 +16,7 @@ public class Transform
 
         set
         {
-            AssertionHelper.NullCheck(value, "Transform::Scale = >value<");
+            AssertionHelper.NullCheck(value, nameof(value));
 
             _scale = value;
 
@@ -30,7 +30,7 @@ public class Transform
 
         set
         {
-            AssertionHelper.InvalidDoubleCheck(value, "Transform::Rotation = >value<");
+            AssertionHelper.InvalidDoubleCheck(value, nameof(value));
 
             _rotation = value;
 
@@ -44,7 +44,7 @@ public class Transform
 
         set
         {
-            AssertionHelper.NullCheck(value, "Transform::Translation = >value<");
+            AssertionHelper.NullCheck(value, nameof(value));
 
             _translation = value;
 
@@ -63,9 +63,9 @@ public class Transform
 
     public Transform(Vector2 scale, double rotation, Vector2 translation)
     {
-        AssertionHelper.NullCheck(scale, "Transform::transform(>scale<, rotation, translation)");
-        AssertionHelper.InvalidDoubleCheck(rotation, "Transform::transform(scale, >rotation<, translation)");
-        AssertionHelper.NullCheck(translation, "Transform::transform(scale, rotation, >translation<)");
+        AssertionHelper.NullCheck(scale, nameof(scale));
+        AssertionHelper.InvalidDoubleCheck(rotation, nameof(rotation));
+        AssertionHelper.NullCheck(translation, nameof(translation));
 
         _scale = scale;
         _rotation = rotation;
@@ -110,8 +110,8 @@ public class Transform
             new Vector3(0, 0)
         );
 
-        var cos = MathHelper.Cos(_rotation);
-        var sin = MathHelper.Sin(_rotation);
+        double cos = MathHelper.Cos(_rotation);
+        double sin = MathHelper.Sin(_rotation);
         var rotationMatrix = new Matrix(
             new Vector3(cos, -sin, 0),
             new Vector3(sin, cos, 0),

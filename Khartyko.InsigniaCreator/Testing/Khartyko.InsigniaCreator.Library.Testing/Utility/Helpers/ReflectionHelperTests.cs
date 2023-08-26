@@ -28,7 +28,7 @@ public class ReflectionHelperTests
         }
     }
 
-    internal class TestClass
+    internal class IndexingTestClass
     {
         internal ReflectionMetadata? Metadata { get; set; }
         private object _objValue = new object();
@@ -47,6 +47,16 @@ public class ReflectionHelperTests
 
                 _objValue = value;
             }
+        }
+    }
+
+    internal class ConstructorMetadataTestClass
+    {
+        internal ReflectionMetadata Metadata { get; set; }
+        
+        public ConstructorMetadataTestClass()
+        {
+            Metadata = ReflectionHelper.GetCallerMetadata();
         }
     }
 
@@ -95,7 +105,7 @@ public class ReflectionHelperTests
     [Fact]
     public void GetCallerMetadata_IndexerGet_Succeeds()
     {
-        var testClass = new TestClass();
+        var testClass = new IndexingTestClass();
 
         _ = testClass[testClass];
 
@@ -108,7 +118,7 @@ public class ReflectionHelperTests
     [Fact]
     public void GetCallerMetadata_IndexerSet_Succeeds()
     {
-        var testClass = new TestClass();
+        var testClass = new IndexingTestClass();
 
         testClass[testClass] = new object();
 
@@ -116,6 +126,37 @@ public class ReflectionHelperTests
         Assert.Equal(testClass.GetType(), testClass.Metadata.Type);
         Assert.Equal(MethodTypes.IndexerSet, testClass.Metadata.MethodType);
         Assert.Equal("set_Item", testClass.Metadata.MethodBase.Name);
+    }
+
+
+    [Fact]
+    public void GetCallerMetadata_Constructor_Succeeds()
+    {
+        var testClass = new ConstructorMetadataTestClass();
+
+        ReflectionMetadata metadata = testClass.Metadata;
+        
+        Assert.NotNull(testClass.Metadata);
+        Assert.Equal(testClass.GetType(), metadata.Type);
+        Assert.Equal(MethodTypes.Constructor, metadata.MethodType);
+        Assert.Equal(".ctor", metadata.MethodBase.Name);
+    }
+    
+    [Fact]
+    public void GetCallerMetadata_Lambda_Succeeds()
+    {
+        ReflectionMetadata? metadata = null;
+
+        // ReSharper disable once ConvertToLocalFunction
+        Action action = () =>
+        {
+            metadata = ReflectionHelper.GetCallerMetadata();
+        };
+        
+        action();
+        
+        Assert.NotNull(metadata);
+        Assert.Equal(MethodTypes.Lambda, metadata.MethodType);
     }
 
     #endregion GetCallerMetadata
@@ -132,6 +173,14 @@ public class ReflectionHelperTests
         const string expectedSignature = $"ReflectionHelperTests::ConstructMethodSignature_Succeeds()";
 		
         Assert.Equal(expectedSignature, methodSignature);
+    }
+
+    [Fact]
+    public void ConstructMethodSignature_NullMetadata_Fails()
+    {
+        ReflectionMetadata nullMetadata = null;
+
+        Assert.Throws<ArgumentNullException>(() => ReflectionHelper.ConstructMethodSignature(nullMetadata));
     }
 
     [Fact]
@@ -192,13 +241,13 @@ public class ReflectionHelperTests
     [InlineData("obj", ">obj<")]
     public void ConstructMethodSignature_GetIndexer_Succeeds(string? parameterName, string expectedNotedParameter)
     {
-        var testClass = new TestClass();
+        var testClass = new IndexingTestClass();
 
         _ = testClass[testClass];
 
         string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
 
-        var expectedSignature = $"{nameof(TestClass)}[{expectedNotedParameter}]";
+        var expectedSignature = $"{nameof(IndexingTestClass)}[{expectedNotedParameter}]";
         
         Assert.Equal(expectedSignature, methodSignature);
     }
@@ -209,13 +258,13 @@ public class ReflectionHelperTests
     [InlineData("obj", ">obj<")]
     public void ConstructMethodSignature_SetIndexer_IndexValue_Succeeds(string? parameterName, string expectedNotedParameter)
     {
-        var testClass = new TestClass();
+        var testClass = new IndexingTestClass();
 
         testClass[testClass] = testClass;
 
         string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
 
-        var expectedSignature = $"{nameof(TestClass)}[{expectedNotedParameter}] = value";
+        var expectedSignature = $"{nameof(IndexingTestClass)}[{expectedNotedParameter}] = value";
         
         Assert.Equal(expectedSignature, methodSignature);
     }
@@ -226,24 +275,46 @@ public class ReflectionHelperTests
     [InlineData("value", ">value<")]
     public void ConstructMethodSignature_SetIndexer_RighthandValue_Succeeds(string? parameterName, string expectedNotedValue)
     {
-        var testClass = new TestClass();
+        var testClass = new IndexingTestClass();
 
         testClass[testClass] = testClass;
 
         string methodSignature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata, parameterName);
 
-        var expectedSignature = $"{nameof(TestClass)}[obj] = {expectedNotedValue}";
+        var expectedSignature = $"{nameof(IndexingTestClass)}[obj] = {expectedNotedValue}";
         
         Assert.Equal(expectedSignature, methodSignature);
     }
 
     [Fact]
-    public void ConstructMethodSignature_NullMetadata_Fails()
+    public void ConstructMethodSignature_Constructor_Succeeds()
     {
-        ReflectionMetadata nullMetadata = null;
+        var testClass = new ConstructorMetadataTestClass();
 
-        Assert.Throws<ArgumentNullException>(() => ReflectionHelper.ConstructMethodSignature(nullMetadata));
+        string signature = ReflectionHelper.ConstructMethodSignature(testClass.Metadata);
+
+        var expectedSignature = $"{nameof(ConstructorMetadataTestClass)}::{nameof(ConstructorMetadataTestClass)}()";
+        
+        Assert.Equal(expectedSignature, signature);
     }
 
+    [Fact]
+    public void ConstructMethodSignature_LambdaMethod_Succeeds()
+    {
+        ReflectionMetadata? metadata = null;
+
+        // ReSharper disable once ConvertToLocalFunction
+        Action action = () =>
+        {
+            metadata = ReflectionHelper.GetCallerMetadata();
+        };
+        
+        action();
+        
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata);
+        
+        Assert.Equal("ReflectionHelperTests::ConstructMethodSignature_LambdaMethod_Succeeds() -> λ()", signature);
+    }
+    
     #endregion ConstructMethodSignature
 }

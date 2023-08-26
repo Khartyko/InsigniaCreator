@@ -9,43 +9,38 @@ public static class MathHelper
 
     public static bool Equals(double d0, double d1)
     {
-        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::Equals(>d0<, d1)");
-        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::Equals(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, nameof(d0));
+        AssertionHelper.InvalidDoubleCheck(d1, nameof(d1));
 
         return Math.Abs(d0 - d1) < _tolerance;
     }
 
     public static bool LessThan(double d0, double d1)
     {
-        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::LessThan(>d0<, d1)");
-        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::LessThan(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, nameof(d0));
+        AssertionHelper.InvalidDoubleCheck(d1, nameof(d1));
 
         return d0 < d1;
     }
 
     public static bool GreaterThan(double d0, double d1)
     {
-        AssertionHelper.InvalidDoubleCheck(d0, "MathHelper::GreaterThan(>d0<, d1)");
-        AssertionHelper.InvalidDoubleCheck(d1, "MathHelper::GreaterThan(d0, >d1<)");
+        AssertionHelper.InvalidDoubleCheck(d0, nameof(d0));
+        AssertionHelper.InvalidDoubleCheck(d1, nameof(d1));
 
         return d0 > d1;
     }
 
     public static double Round(double value)
     {
-        AssertionHelper.InvalidDoubleCheck(value, "MathHelper::Round(>value<)");
+        AssertionHelper.InvalidDoubleCheck(value, nameof(value));
 
         return Math.Round(value * 1000) / 1000;
     }
 
     public static double Sqrt(double value)
     {
-        AssertionHelper.InvalidDoubleCheck(value, "MathHelper::Sqrt(>value<)");
-
-        if (value < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(value), "MathHelper::Sqrt(value); 'value' passed in is 0");
-        }
+        AssertionHelper.PositiveCheck(value, nameof(value));
 
         return Round(Math.Sqrt(value));
     }
@@ -55,7 +50,6 @@ public static class MathHelper
     public static double Pi(double numerator, double denominator)
     {
         AssertionHelper.ZeroCheck(denominator, nameof(denominator));
-        
         AssertionHelper.InvalidDoubleCheck(numerator, nameof(numerator));
 
         return Math.PI * numerator / denominator;
@@ -91,10 +85,7 @@ public static class MathHelper
 
     public static double GetInteriorAngleFromSideCount(int sideCount)
     {
-        if (sideCount < 3)
-        {
-            throw new ArgumentOutOfRangeException(nameof(sideCount), "sideCount cannot be less than 3");
-        }
+        AssertionHelper.MinimumCheck(sideCount, 3, nameof(sideCount));
 
         double totalDegrees = (sideCount - 2) * 180.0;
         double innerFacingAngle = totalDegrees / sideCount;

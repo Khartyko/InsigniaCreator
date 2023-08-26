@@ -15,6 +15,7 @@ public class ActiveNetwork : NetworkBase
     {
     }
 
+    // ReSharper disable once SuggestBaseTypeForParameterInConstructor
     public ActiveNetwork(ActiveNetwork existing)
         : base(existing)
     {
@@ -44,7 +45,7 @@ public class ActiveNetwork : NetworkBase
     {
         AssertionHelper.NullCheck(node, nameof(node));
 
-        var result = Nodes.Remove(node);
+        bool result = Nodes.Remove(node);
 
         if (result)
         {

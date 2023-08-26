@@ -1,3 +1,4 @@
+using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0660, CS0661, CS0659
@@ -36,7 +37,7 @@ public class RgbColor
 
     public RgbColor(RgbColor other)
     {
-        AssertionHelper.NullCheck(other, "Color::Color(>other<)");
+        AssertionHelper.NullCheck(other, nameof(other));
 
         R = other.R;
         G = other.G;
@@ -46,42 +47,68 @@ public class RgbColor
 
     private static byte ParseChar(char value)
     {
+        byte result;
         int intValue = value;
-
-        return intValue switch
+        
+        switch (intValue)
         {
-            // between 48 (0) - 57 (9)
-            >= 48 and <= 57 => (byte)(intValue - 48),
-            >= 65 and <= 70 => (byte)(intValue - 55),
-            >= 97 and <= 102 => (byte)(intValue - 87),
-            _ => throw new ArgumentOutOfRangeException(nameof(value),
-                "Color::parseChar(>value<); 'value' is not an expected hexadecimal character")
-        };
+            case >= 48 and <= 57:
+            {
+                result = (byte)(intValue - 48);
+                
+                break;
+            }
+            
+            case >= 65 and <= 70:
+            {
+                result = (byte)(intValue - 55);
+                
+                break;
+            }
+            
+            case >= 97 and <= 102:
+            {
+                result = (byte)(intValue - 87);
+                
+                break;
+            }
+
+            default:
+            {
+                // TODO: Verify how this will appear when logging/getting the Message from this Exception
+                ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata();
+                string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(value));
+
+                throw new ArgumentOutOfRangeException(nameof(value), $"{signature}\n\t'value' is not an expected hexadecimal character; got '{value}' -> '{intValue}'");
+            }
+        }
+
+        return result;
     }
 
     private static byte ParseValue(string value)
     {
-        var firstPlace = ParseChar(value[0]);
-        var secondPlace = ParseChar(value[1]);
+        byte firstPlace = ParseChar(value[0]);
+        byte secondPlace = ParseChar(value[1]);
 
         return (byte)(firstPlace * 16 + secondPlace);
     }
 
     private static (byte, byte, byte, byte) Parse3Case(string hexValue)
     {
-        var r = hexValue[0];
-        var g = hexValue[1];
-        var b = hexValue[2];
+        char r = hexValue[0];
+        char g = hexValue[1];
+        char b = hexValue[2];
 
         return Parse8Case($"{r}{r}{g}{g}{b}{b}FF");
     }
 
     private static (byte, byte, byte, byte) Parse4Case(string hexValue)
     {
-        var r = hexValue[0];
-        var g = hexValue[1];
-        var b = hexValue[2];
-        var a = hexValue[3];
+        char r = hexValue[0];
+        char g = hexValue[1];
+        char b = hexValue[2];
+        char a = hexValue[3];
 
         return Parse8Case($"{r}{r}{g}{g}{b}{b}{a}{a}");
     }
@@ -93,39 +120,60 @@ public class RgbColor
 
     private static (byte, byte, byte, byte) Parse8Case(string hexValue)
     {
-        var r = ParseValue(hexValue[..2]);
-        var g = ParseValue(hexValue[2..4]);
-        var b = ParseValue(hexValue[4..6]);
-        var a = ParseValue(hexValue[6..8]);
+        byte r = ParseValue(hexValue[..2]);
+        byte g = ParseValue(hexValue[2..4]);
+        byte b = ParseValue(hexValue[4..6]);
+        byte a = ParseValue(hexValue[6..8]);
 
         return (r, g, b, a);
     }
 
     private void ParseHexString(string hexString)
     {
-        AssertionHelper.EmptyOrWhitespaceCheck(hexString, "Color::parseHexString(>hexString<)");
+        AssertionHelper.EmptyOrWhitespaceCheck(hexString, nameof(hexString));
         
-        var parsedHexValue = hexString.Length > 0 && hexString[0] == '#' ? hexString.Replace("#", "") : hexString;
+        string parsedHexValue = hexString.Length > 0 && hexString[0] == '#' ? hexString.Replace("#", "") : hexString;
 
-        AssertionHelper.EmptyOrWhitespaceCheck(parsedHexValue, "Color::parseHexString(>parsedHexValue<)");
+        AssertionHelper.EmptyOrWhitespaceCheck(parsedHexValue, nameof(parsedHexValue));
 
-        var length = parsedHexValue.Length;
-
-        var (r, g, b, a) = length switch
+        switch (parsedHexValue.Length)
         {
-            3 => Parse3Case(parsedHexValue),
-            4 => Parse4Case(parsedHexValue),
-            6 => Parse6Case(parsedHexValue),
-            8 => Parse8Case(parsedHexValue),
-            _ => throw new ArgumentException(
-                "Color::parseHexString(>hexString<); 'hexValue' has an incorrect number of characters. Accepted values are in the format 'RGB', 'RGBA', '#RGB', '#RGBA', 'RRGGBB', '#RRGGBB', 'RRGGBBAA', and '#RRGGBBAA'",
-                nameof(hexString))
-        };
+            case 3:
+                (R, G, B, A) = Parse3Case(parsedHexValue);
+                
+                break;
+            
+            case 4:
+            {
+                (R, G, B, A) = Parse4Case(parsedHexValue);
+                
+                break;
+            }
+            
+            case 6:
+            {
+                (R, G, B, A) = Parse6Case(parsedHexValue);
+                
+                break;
+            }
+            
+            case 8:
+            {
+                (R, G, B, A) = Parse8Case(parsedHexValue);
+                
+                break;
+            }
 
-        R = r;
-        G = g;
-        B = b;
-        A = a;
+            default:
+            {
+                // TODO: Verify how this will appear when logging/getting the Message from this Exception
+                ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata();
+                string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(hexString));
+
+                throw new ArgumentException($"{signature}\n\t'hexValue' has an incorrect number of characters. Accepted values are in the format 'RGB', 'RGBA', '#RGB', '#RGBA', 'RRGGBB', '#RRGGBB', 'RRGGBBAA', and '#RRGGBBAA'");
+                break;
+            }
+        }
     }
 
     public string HexString(bool includeOctothorpe = true, bool includeAlpha = true)
@@ -153,9 +201,22 @@ public class RgbColor
         return $"{{ r: {r}, g: {g}, b: {b}, a: {a} }}";
     }
 
-    public override bool Equals(object? obj) => obj is RgbColor color
-                                                && color.R == R
-                                                && color.G == G
-                                                && color.B == B
-                                                && color.A == A;
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(obj, null))
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(obj, this))
+        {
+            return true;
+        }
+
+        return obj is RgbColor color
+            && color.R == R
+            && color.G == G
+            && color.B == B
+            && color.A == A;
+    }
 }

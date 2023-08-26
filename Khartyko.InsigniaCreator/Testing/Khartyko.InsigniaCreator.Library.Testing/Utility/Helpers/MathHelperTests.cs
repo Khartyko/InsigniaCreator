@@ -48,7 +48,7 @@ public class MathHelperTests
 	[InlineData(15, true)]
 	public void IsOdd_IntVariant_Succeeds(int testValue, bool expectedResult)
 	{
-		var actualResult = MathHelper.IsOdd(testValue);
+		bool actualResult = MathHelper.IsOdd(testValue);
 
 		Assert.Equal(expectedResult, actualResult);
 	}
@@ -65,7 +65,7 @@ public class MathHelperTests
 	[InlineData(15, false)]
 	public void IsEven_IntVariant_Succeeds(int testValue, bool expectedResult)
 	{
-		var actualResult = MathHelper.IsEven(testValue);
+		bool actualResult = MathHelper.IsEven(testValue);
 
 		Assert.Equal(expectedResult, actualResult);
 	}
@@ -202,8 +202,8 @@ public class MathHelperTests
 	[Fact]
 	public void Pi_Succeeds()
 	{
-		var expected = Math.Round(Math.PI * 1000) / 1000;
-		var actual = MathHelper.Pi();
+		double expected = Math.Round(Math.PI * 1000) / 1000;
+		double actual = MathHelper.Pi();
 		Assert.Equal(expected, actual);
 	}
 
@@ -219,8 +219,8 @@ public class MathHelperTests
 	[InlineData(2.0, 1.0, 2.0)]
 	public void PiOverload_Succeeds(double d0, double d1, double expectedMultiplier)
 	{
-		var result = MathHelper.Pi(d0, d1);
-		var expected = expectedMultiplier * Math.PI;
+		double result = MathHelper.Pi(d0, d1);
+		double expected = expectedMultiplier * Math.PI;
 		Assert.Equal(expected, result);
 	}
 
@@ -241,8 +241,8 @@ public class MathHelperTests
 	[InlineData(90, 0)]
 	public void Cos_Succeeds(double theta, double expectedValue)
 	{
-		var radians = MathHelper.ToRadians(theta);
-		var actualValue = MathHelper.Cos(radians);
+		double radians = MathHelper.ToRadians(theta);
+		double actualValue = MathHelper.Cos(radians);
 
 		Assert.Equal(expectedValue, actualValue);
 	}
@@ -264,8 +264,8 @@ public class MathHelperTests
 	[InlineData(90, 1)]
 	public void Sin_Succeeds(double theta, double expectedValue)
 	{
-		var radians = MathHelper.ToRadians(theta);
-		var actualValue = MathHelper.Sin(radians);
+		double radians = MathHelper.ToRadians(theta);
+		double actualValue = MathHelper.Sin(radians);
 
 		Assert.Equal(expectedValue, actualValue);
 	}
@@ -287,7 +287,7 @@ public class MathHelperTests
 	[MemberData(nameof(ToDegreesTestData))]
 	public void ToDegrees_Succeeds(double input, double expected)
 	{
-		var actual = MathHelper.ToDegrees(input);
+		double actual = MathHelper.ToDegrees(input);
 		Assert.Equal(expected, actual);
 	}
 
@@ -307,7 +307,7 @@ public class MathHelperTests
 	[MemberData(nameof(ToRadiansTestData))]
 	public void ToRadians_Succeeds(double input, double expected)
 	{
-		var actual = MathHelper.ToRadians(input);
+		double actual = MathHelper.ToRadians(input);
 		Assert.Equal(expected, actual);
 	}
 
@@ -328,7 +328,7 @@ public class MathHelperTests
 	[InlineData(7, 128.571)]
 	public void GetInteriorAngleFromSideCount_Succeeds(int sideCount, double expected)
 	{
-		var actual = MathHelper.GetInteriorAngleFromSideCount(sideCount);
+		double actual = MathHelper.GetInteriorAngleFromSideCount(sideCount);
 
 		Assert.Equal(expected, actual);
 	}

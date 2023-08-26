@@ -138,14 +138,24 @@ public class AtlasTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	[InlineData(-1.0)]
-	[InlineData(0.0)]
 	public void Width_Set_InvalidWidth_Fails(double invalidWidth)
 	{
 		Atlas atlas = ConstructAtlas();
 		double previousWidth = atlas.Width;
 		
 		Assert.Throws<ArgumentException>(() => atlas.Width = invalidWidth);
+		Assert.Equal(previousWidth, atlas.Width);
+	}
+
+	[Theory]
+	[InlineData(-1.0)]
+	[InlineData(0.0)]
+	public void Width_Set_WidthOutOfRange_Fails(double invalidWidth)
+	{
+		Atlas atlas = ConstructAtlas();
+		double previousWidth = atlas.Width;
+		
+		Assert.Throws<ArgumentOutOfRangeException>(() => atlas.Width = invalidWidth);
 		Assert.Equal(previousWidth, atlas.Width);
 	}
 
@@ -189,14 +199,24 @@ public class AtlasTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	[InlineData(-1.0)]
-	[InlineData(0.0)]
 	public void Height_Set_InvalidWidth_Fails(double invalidHeight)
 	{
 		Atlas atlas = ConstructAtlas();
 		double previousHeight = atlas.Height;
 		
 		Assert.Throws<ArgumentException>(() => atlas.Width = invalidHeight);
+		Assert.Equal(previousHeight, atlas.Height);
+	}
+
+	[Theory]
+	[InlineData(-1.0)]
+	[InlineData(0.0)]
+	public void Height_Set_WidthOutOfBounds_Fails(double invalidHeight)
+	{
+		Atlas atlas = ConstructAtlas();
+		double previousHeight = atlas.Height;
+		
+		Assert.Throws<ArgumentOutOfRangeException>(() => atlas.Width = invalidHeight);
 		Assert.Equal(previousHeight, atlas.Height);
 	}
 
@@ -272,9 +292,7 @@ public class AtlasTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	[InlineData(-1.0)]
-	[InlineData(0.0)]
-	public void Construct_InvalidBounds_NoCartographs_Fails(double invalidBoundary)
+	public void Construct_NoCartographs_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);
 		const string name = "Atlas";
@@ -283,6 +301,20 @@ public class AtlasTests
 		
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor));
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor));
+	}
+
+	[Theory]
+	[InlineData(-1.0)]
+	[InlineData(0.0)]
+	public void Construct_NoCartographs_BoundsOutOfRange_Fails(double invalidBoundary)
+	{
+		long id = DataGenerator.GenerateRandomLong(0, 100);
+		const string name = "Atlas";
+		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
+		var rgbColor = new RgbColor(0);
+		
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor));
 	}
 
 	[Fact]
@@ -340,8 +372,6 @@ public class AtlasTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	[InlineData(-1.0)]
-	[InlineData(0.0)]
 	public void Construct_FromSingleCartograph_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);
@@ -353,6 +383,22 @@ public class AtlasTests
 
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor, cartograph));
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor, cartograph));
+	}
+
+	[Theory]
+	[InlineData(-1.0)]
+	[InlineData(0.0)]
+	public void Construct_FromSingleCartograph_BoundsOutOfRange_Fails(double invalidBoundary)
+	{
+		long id = DataGenerator.GenerateRandomLong(0, 100);
+		const string name = "Atlas";
+		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
+		var rgbColor = new RgbColor(0);
+		
+		Cartograph cartograph = ConstructCartograph();
+
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor, cartograph));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor, cartograph));
 	}
 
 	[Fact]
@@ -430,8 +476,6 @@ public class AtlasTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	[InlineData(-1.0)]
-	[InlineData(0.0)]
 	public void Construct_FromMultipleCartographs_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);
@@ -446,6 +490,25 @@ public class AtlasTests
 
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor, cartographs));
 		Assert.Throws<ArgumentException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor, cartographs));
+	}
+
+	[Theory]
+	[InlineData(-1.0)]
+	[InlineData(0.0)]
+	public void Construct_FromMultipleCartographs_OutOfRangeBounds_Fails(double invalidBoundary)
+	{
+		long id = DataGenerator.GenerateRandomLong(0, 100);
+		const string name = "Atlas";
+		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
+		var rgbColor = new RgbColor(0);
+		
+		IList<Cartograph> cartographs = new List<Cartograph>
+		{
+			ConstructCartograph()
+		};
+
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, invalidBoundary, validBoundary, rgbColor, cartographs));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(id, name, validBoundary, invalidBoundary, rgbColor, cartographs));
 	}
 
 	[Fact]

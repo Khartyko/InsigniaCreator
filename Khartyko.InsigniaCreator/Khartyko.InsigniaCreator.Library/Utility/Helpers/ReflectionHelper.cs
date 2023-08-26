@@ -1,10 +1,13 @@
 using System.Diagnostics;
 using System.Reflection;
-
+using System.Text.RegularExpressions;
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
-public static class ReflectionHelper
+public static partial class ReflectionHelper
 {
+    [GeneratedRegex("<[\\w_]+>b__[0-9]+")]
+    private static partial Regex LambdaRegex();
+
     public static ReflectionMetadata GetCallerMetadata(int frameOffset = 0)
     {
         var stackTrace = new StackTrace();
@@ -12,15 +15,26 @@ public static class ReflectionHelper
 
         MethodBase methodBase = frame.GetMethod()!;
         Type ownerType = methodBase.DeclaringType!;
-        var methodType = MethodTypes.RegularMethod;
 
-        if (methodBase.IsSpecialName)
+        MethodTypes methodType = methodBase.MemberType == MemberTypes.Constructor
+            ? MethodTypes.Constructor
+            : MethodTypes.RegularMethod;
+        
+        Regex lambdaRegex = LambdaRegex();
+        bool lambdaRegexMatches = lambdaRegex.IsMatch(methodBase.Name);
+        
+        if (lambdaRegexMatches)
+        {
+            methodType = MethodTypes.Lambda;
+        }
+        else if (methodBase.IsSpecialName)
         {
             ParameterInfo[] parameters = methodBase.GetParameters();
-            
+
             if (methodBase.Name.StartsWith("get_"))
             {
                 // More than likely a 'Get' Property
+                // If it has a property, this is the indexer; otherwise it just gets the backing field
                 methodType = parameters.Length == 1
                     ? MethodTypes.IndexerGet
                     : MethodTypes.PropertyGet;
@@ -28,12 +42,13 @@ public static class ReflectionHelper
             else if (methodBase.Name.StartsWith("set_"))
             {
                 // More than likely a 'Set' Property
+                // If it has 2 properties, it means the first is the indexer
                 methodType = parameters.Length == 2
                     ? MethodTypes.IndexerSet
                     : MethodTypes.PropertySet;
             }
         }
-        
+
         return new ReflectionMetadata(ownerType, methodBase, methodType);
     }
 
@@ -45,6 +60,7 @@ public static class ReflectionHelper
         MethodBase methodBase = reflectionMetadata.MethodBase;
 
         var parameterList = string.Empty;
+        string typeName = type.Name;
         string methodName = methodBase.Name;
 
         switch (reflectionMetadata.MethodType)
@@ -60,7 +76,7 @@ public static class ReflectionHelper
 
                 parameterList = $"({string.Join(", ", parameterNames)})";
                 methodName = $"::{methodName}";
-                
+
                 break;
             }
 
@@ -69,19 +85,19 @@ public static class ReflectionHelper
                 string contents = parameterName ?? string.Empty;
 
                 string[] parameterNames = methodBase.GetParameters()
-                        .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
-                        .Select(parameter => parameter.Name!)
-                        .ToArray();
+                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                    .Select(parameter => parameter.Name!)
+                    .ToArray();
 
                 string presentParameterName = parameterNames.First();
 
                 contents = string.Equals(presentParameterName, contents)
                     ? $"[>{presentParameterName}<]"
                     : $"[{presentParameterName}]";
-            
+
                 parameterList = contents;
                 methodName = string.Empty;
-                
+
                 break;
             }
 
@@ -90,9 +106,9 @@ public static class ReflectionHelper
                 string contents = parameterName ?? string.Empty;
 
                 string[] parameterNames = methodBase.GetParameters()
-                        .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
-                        .Select(parameter => parameter.Name!)
-                        .ToArray();
+                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                    .Select(parameter => parameter.Name!)
+                    .ToArray();
 
                 string presentParameterName = parameterNames.First();
                 string presentValueName = parameterNames.Last();
@@ -109,10 +125,10 @@ public static class ReflectionHelper
                 {
                     contents = $"[{presentParameterName}] = {presentValueName}";
                 }
-                
+
                 parameterList = contents;
                 methodName = string.Empty;
-                
+
                 break;
             }
 
@@ -128,16 +144,51 @@ public static class ReflectionHelper
                 break;
             }
 
+            case MethodTypes.Constructor:
+            {
+                ParameterInfo[] parameters = methodBase.GetParameters();
+                string[] parameterNames = parameters.Select(
+                        parameterInfo => string.Equals(parameterInfo.Name, parameterName)
+                            ? $">{parameterInfo.Name}<"
+                            : parameterInfo.Name!)
+                    .ToArray();
+
+                parameterList = $"({string.Join(", ", parameterNames)})";
+                methodName = $"::{type.Name}";
+
+                break;
+            }
+
+            case MethodTypes.Lambda:
+            {
+                ParameterInfo[] parameters = methodBase.GetParameters();
+                string[] parameterNames = parameters.Select(
+                        parameterInfo => string.Equals(parameterInfo.Name, parameterName)
+                            ? $">{parameterInfo.Name}<"
+                            : parameterInfo.Name!)
+                    .ToArray();
+
+                parameterList = $"({string.Join(", ", parameterNames)})";
+                methodName = $" -> λ";
+
+                // This is just to get the method in which the lambda is called in
+                ReflectionMetadata parentMethodMetadata = GetCallerMetadata(1);
+
+                typeName = ConstructMethodSignature(parentMethodMetadata);
+                
+                break;
+            }
+
             default:
             {
                 int startIndex = methodName.IndexOf('_') + 1;
                 int usableLength = methodName.Length - 4;
                 methodName = $"::{methodName.Substring(startIndex, usableLength)}";
-                
+
                 break;
             }
         }
-        
-        return $"{type.Name}{methodName}{parameterList}";
+
+        return $"{typeName}{methodName}{parameterList}";
     }
 }

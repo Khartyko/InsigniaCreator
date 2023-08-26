@@ -12,22 +12,23 @@ public class Matrix
 
     public Vector3 this[int idx]
     {
-        get => idx switch
+        get
         {
-            0 => _data[0],
-            1 => _data[1],
-            2 => _data[2],
-            _ => throw new ArgumentOutOfRangeException(nameof(idx), "Matrix::[>idx<]")
-        };
+            AssertionHelper.RangeCheck(idx, -1, 3, nameof(idx));
+
+            return idx switch
+            {
+                0 => _data[0],
+                1 => _data[1],
+                _ => _data[2]
+            };
+        }
 
         set
         {
-            if (0 > idx || idx >= 3)
-            {
-                throw new ArgumentOutOfRangeException(nameof(idx), "Matrix::[>idx<]");
-            }
+            AssertionHelper.RangeCheck(idx, -1, 3, nameof(idx));
+            AssertionHelper.NullCheck(value, nameof(value));
 
-            AssertionHelper.NullCheck(value, "Matrix::[idx] = >value<");
             _data[idx] = value;
         }
     }
@@ -36,22 +37,18 @@ public class Matrix
     {
         get
         {
-            if (y is < 0 or >= 3)
-            {
-                throw new ArgumentOutOfRangeException(nameof(y), "Matrix::[>y<, x]");
-            }
-
+            AssertionHelper.RangeCheck(y, -1, 3, nameof(y));
+            AssertionHelper.RangeCheck(x, -1, 3, nameof(x));
+            
             return _data[y][x];
         }
 
         set
         {
-            if (y is < 0 or >= 3)
-            {
-                throw new ArgumentOutOfRangeException(nameof(y), "Matrix::[>y<, x]");
-            }
-
-            AssertionHelper.InvalidDoubleCheck(value, "Matrix::[y, x] = >value<");
+            AssertionHelper.RangeCheck(y, -1, 3, nameof(y));
+            AssertionHelper.RangeCheck(x, -1, 3, nameof(x));
+            AssertionHelper.InvalidDoubleCheck(value, nameof(value));
+            
             _data[y][x] = value;
         }
     }
@@ -68,22 +65,22 @@ public class Matrix
 
     public Matrix(Vector3 m0, Vector3 m1, Vector3 m2)
     {
-        AssertionHelper.NullCheck(m0, "Matrix::Matrix(>m0<, m1, m2)");
-        AssertionHelper.NullCheck(m1, "Matrix::Matrix(m0, >m1<, m2)");
-        AssertionHelper.NullCheck(m2, "Matrix::Matrix(m0, m1, >m2<)");
+        AssertionHelper.NullCheck(m0, nameof(m0));
+        AssertionHelper.NullCheck(m1, nameof(m1));
+        AssertionHelper.NullCheck(m2, nameof(m2));
 
         _data = new[] { m0, m1, m2 };
     }
 
-    public Matrix(Matrix other)
+    public Matrix(Matrix existingMatrix)
     {
-        AssertionHelper.NullCheck(other, "Matrix::Matrix(>other<)");
+        AssertionHelper.NullCheck(existingMatrix, nameof(existingMatrix));
 
         _data = new[]
         {
-            new Vector3(other[0]),
-            new Vector3(other[1]),
-            new Vector3(other[2])
+            new Vector3(existingMatrix[0]),
+            new Vector3(existingMatrix[1]),
+            new Vector3(existingMatrix[2])
         };
     }
 
@@ -104,8 +101,15 @@ public class Matrix
 
     public override bool Equals(object? obj)
     {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
+        if (ReferenceEquals(null, obj)) 
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
 
         if (obj is not Matrix matrix)
         {
@@ -125,8 +129,8 @@ public class Matrix
 
     public static Vector2 operator *(Vector2 vec2, Matrix matrix)
     {
-        AssertionHelper.NullCheck(vec2, "Matrix::operator *(vec2, >matrix<)");
-        AssertionHelper.NullCheck(matrix, "Matrix::operator *(>vec2<, matrix)");
+        AssertionHelper.NullCheck(vec2, nameof(vec2));
+        AssertionHelper.NullCheck(matrix, nameof(matrix));
 
         var tempVector = new Vector3(vec2);
         var resultVector = new Vector3(0, 0, 0);
@@ -144,8 +148,8 @@ public class Matrix
 
     public static Vector2 operator *(Matrix matrix, Vector2 vec2)
     {
-        AssertionHelper.NullCheck(matrix, "Matrix::operator *(>matrix<, vec2)");
-        AssertionHelper.NullCheck(vec2, "Matrix::operator *(matrix, >vec2<)");
+        AssertionHelper.NullCheck(matrix, nameof(matrix));
+        AssertionHelper.NullCheck(vec2, nameof(vec2));
 
         var tempVector = new Vector3(vec2);
         var resultVector = new Vector3(0, 0, 0);
@@ -163,8 +167,8 @@ public class Matrix
 
     public static Vector3 operator *(Vector3 vec3, Matrix matrix)
     {
-        AssertionHelper.NullCheck(vec3, "Matrix::operator *(vec3, >matrix<)");
-        AssertionHelper.NullCheck(matrix, "Matrix::operator *(>vec3<, matrix)");
+        AssertionHelper.NullCheck(vec3, nameof(vec3));
+        AssertionHelper.NullCheck(matrix, nameof(matrix));
 
         var resultVector = new Vector3(0, 0, 0);
 
@@ -181,8 +185,8 @@ public class Matrix
 
     public static Vector3 operator *(Matrix matrix, Vector3 vec3)
     {
-        AssertionHelper.NullCheck(matrix, "Matrix::operator *(>matrix<, vec3)");
-        AssertionHelper.NullCheck(vec3, "Matrix::operator *(matrix, >vec3<)");
+        AssertionHelper.NullCheck(matrix, nameof(matrix));
+        AssertionHelper.NullCheck(vec3, nameof(vec3));
 
         var resultVector = new Vector3(0, 0, 0);
 
@@ -199,8 +203,8 @@ public class Matrix
 
     public static Matrix operator *(Matrix left, Matrix right)
     {
-        AssertionHelper.NullCheck(left, "Matrix::operator *(>left<, right)");
-        AssertionHelper.NullCheck(right, "Matrix::operator *(left, >right<)");
+        AssertionHelper.NullCheck(left, nameof(left));
+        AssertionHelper.NullCheck(right, nameof(right));
 
         var result = new Matrix(
             new Vector3(0, 0, 0),

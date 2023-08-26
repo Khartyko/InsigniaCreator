@@ -83,8 +83,8 @@ public class NodeTests
     [Fact]
     public void ConstructFromDoubles_Succeeds()
     {
-        var x = DataGenerator.GenerateRandomDouble();
-        var y = DataGenerator.GenerateRandomDouble();
+        double x = DataGenerator.GenerateRandomDouble();
+        double y = DataGenerator.GenerateRandomDouble();
 
         var node = new Node(x, y);
         

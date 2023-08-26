@@ -47,7 +47,7 @@ public class HsvColorTests
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Hue = hue);
+		Assert.Throws<ArgumentOutOfRangeException>(() => hsvColor.Hue = hue);
 	}
 	
 	#endregion Hue Property
@@ -93,7 +93,7 @@ public class HsvColorTests
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Saturation = saturation);
+		Assert.Throws<ArgumentOutOfRangeException>(() => hsvColor.Saturation = saturation);
 	}
 
 	#endregion Saturation Property
@@ -139,7 +139,7 @@ public class HsvColorTests
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Value = value);
+		Assert.Throws<ArgumentOutOfRangeException>(() => hsvColor.Value = value);
 	}
 
 	#endregion Value Property
@@ -174,7 +174,7 @@ public class HsvColorTests
 	[InlineData(361.0)]
 	public void HsvColor_DoubleParameters_HueOutOfRange_Fails(double hue)
 	{
-		Assert.Throws<ArgumentException>(() => new HsvColor(hue, 0.0, 0.0));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new HsvColor(hue, 0.0, 0.0));
 	}
 
 	[Theory]
@@ -182,7 +182,7 @@ public class HsvColorTests
 	[InlineData(1.1)]
 	public void HsvColor_DoubleParameters_SaturationOutOfRange_Fails(double saturation)
 	{
-		Assert.Throws<ArgumentException>(() => new HsvColor(0.0, saturation, 0.0));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new HsvColor(0.0, saturation, 0.0));
 	}
 
 	[Theory]
@@ -190,7 +190,7 @@ public class HsvColorTests
 	[InlineData(1.1)]
 	public void HsvColor_DoubleParameters_ValueOutOfRange_Fails(double value)
 	{
-		Assert.Throws<ArgumentException>(() => new HsvColor(0.0, 0.0, value));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new HsvColor(0.0, 0.0, value));
 	}
 
 	[Theory]

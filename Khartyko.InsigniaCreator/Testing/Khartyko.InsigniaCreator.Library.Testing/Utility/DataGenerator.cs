@@ -45,9 +45,9 @@ internal static class DataGenerator
     public static RandomTransformData GenerateRandomTransformData(bool randomScale, bool randomRotation,
         bool randomTranslation)
     {
-        var scale = randomScale ? GenerateRandomVector2() : new Vector2(1);
-        var rotation = randomRotation ? GenerateRandomDouble() : 0.0;
-        var translation = randomTranslation ? GenerateRandomVector2() : new Vector2(0);
+        Vector2? scale = randomScale ? GenerateRandomVector2() : new Vector2(1);
+        double rotation = randomRotation ? GenerateRandomDouble() : 0.0;
+        Vector2? translation = randomTranslation ? GenerateRandomVector2() : new Vector2(0);
 
         return new RandomTransformData
         {

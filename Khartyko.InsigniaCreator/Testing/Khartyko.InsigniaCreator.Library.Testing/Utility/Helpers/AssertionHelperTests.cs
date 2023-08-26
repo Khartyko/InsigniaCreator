@@ -228,19 +228,135 @@ public class AssertionHelperTests
 	{
 		const double testValue = -1;
 		
-		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
 	}
 
 	#endregion DoubleValue
 	
 	#endregion PositiveCheck
+
+	#region MinimumCheck
+
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_Succeeds(int value, int minimum)
+	{
+		AssertionHelper.MinimumCheck(value, minimum, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_NullDescriptor_Fails(int value, int minimum)
+	{
+		string nullString = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCheck(value, minimum, nullString));
+	}
+
+	[Theory]
+	[InlineData(3, 0, "")]
+	[InlineData(0, -3, " ")]
+	[InlineData(1, 0, "\n\r\t")]
+	public void MinimumCheck_EmptyDescriptor_Fails(int value, int minimum, string descriptor)
+	{
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCheck(value, minimum, descriptor));
+	}
+
+	[Theory]
+	[InlineData(0, 3)]
+	[InlineData(-3, 0)]
+	[InlineData(0, 10)]
+	public void MinimumCheck_ValueFailsConstraints_Fails(int value, int minimum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
+	}
+
+	#endregion MinimumCheck
 	
 	#region RangeCheck
+
+	#region IntValue
+
+	[Theory]
+	[InlineData(0.0, -1, 1.0)]
+	public void RangeCheck_IntValue_Succeeds(int value, int minimum, int maximum)
+	{
+		AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(1.0, 0.0)]
+	[InlineData(-1.0, 0.0)]
+	[InlineData(-3.5, 42.0)]
+	public void RangeCheck_ValueEqualsMinimum_IntValue_Fails(int invalidValue, int validValue)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() =>
+			AssertionHelper.RangeCheck(invalidValue, invalidValue, validValue, nameof(invalidValue)));
+	}
+
+	[Theory]
+	[InlineData(1.0, 0.0)]
+	[InlineData(-1.0, 0.0)]
+	[InlineData(-3.5, 42.0)]
+	public void RangeCheck_ValueEqualsMaximum_IntValue_Fails(int invalidValue, int validValue)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() =>
+			AssertionHelper.RangeCheck(invalidValue, validValue, invalidValue, nameof(invalidValue)));
+	}
+
+	[Theory]
+	[InlineData(0.0, 1.0, 2.0)]
+	[InlineData(99.999, 100.0, -3.5)]
+	public void RangeCheck_MinimumGreaterThanValue_IntValue_Fails(int value, int minimum, int maximum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
+	}
+
+	[Theory]
+	[InlineData(1.0, -1.0, 0.0)]
+	[InlineData(100.0, -3.5, 99.999)]
+	public void RangeCheck_MaximumLessThanValue_IntValue_Fails(int value, int minimum, int maximum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
+	}
+
+	[Fact]
+	public void RangeCheck_NullDescriptor_IntValue_Fails()
+	{
+		const int minimum = -1;
+		const int maximum = 1;
+		const int value = 0;
+
+		string nullString = null;
+
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nullString));
+	}
+	
+	[Theory]
+	[InlineData("")]
+	[InlineData("              ")]
+	[InlineData("\t\n\r")]
+	public void RangeCheck_InvalidDescriptor_IntValue_Fails(string descriptor)
+	{
+		const int minimum = -1;
+		const int maximum = 1;
+		const int value = 0;
+
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, descriptor));
+	}
+
+	#endregion IntValue
+	
+	#region DoubleValue
 
 	[Theory]
 	[InlineData(0.0, -1.0, 1.0)]
 	[InlineData(0.0, -0.001, 0.001)]
-	public void RangeCheck_Succeeds(double value, double minimum, double maximum)
+	public void RangeCheck_DoubleValue_Succeeds(double value, double minimum, double maximum)
 	{
 		AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value));
 	}
@@ -249,7 +365,7 @@ public class AssertionHelperTests
 	[InlineData(double.NaN)]
 	[InlineData(double.PositiveInfinity)]
 	[InlineData(double.NegativeInfinity)]
-	public void RangeCheck_InvalidDoubleValues_Fails(double value)
+	public void RangeCheck_InvalidDoubleValues_DoubleValue_Fails(double value)
 	{
 		const double validValue = 0.0;
 
@@ -262,9 +378,9 @@ public class AssertionHelperTests
 	[InlineData(1.0, 0.0)]
 	[InlineData(-1.0, 0.0)]
 	[InlineData(-3.5, 42.0)]
-	public void RangeCheck_ValueEqualsMinimum_Fails(double invalidValue, double validValue)
+	public void RangeCheck_ValueEqualsMinimum_DoubleValue_Fails(double invalidValue, double validValue)
 	{
-		Assert.Throws<ArgumentException>(() =>
+		Assert.Throws<ArgumentOutOfRangeException>(() =>
 			AssertionHelper.RangeCheck(invalidValue, invalidValue, validValue, nameof(invalidValue)));
 	}
 
@@ -272,30 +388,30 @@ public class AssertionHelperTests
 	[InlineData(1.0, 0.0)]
 	[InlineData(-1.0, 0.0)]
 	[InlineData(-3.5, 42.0)]
-	public void RangeCheck_ValueEqualsMaximum_Fails(double invalidValue, double validValue)
+	public void RangeCheck_ValueEqualsMaximum_DoubleValue_Fails(double invalidValue, double validValue)
 	{
-		Assert.Throws<ArgumentException>(() =>
+		Assert.Throws<ArgumentOutOfRangeException>(() =>
 			AssertionHelper.RangeCheck(invalidValue, validValue, invalidValue, nameof(invalidValue)));
 	}
 
 	[Theory]
 	[InlineData(0.0, 1.0, 2.0)]
 	[InlineData(99.999, 100.0, -3.5)]
-	public void RangeCheck_MinimumGreaterThanValue_Fails(double value, double minimum, double maximum)
+	public void RangeCheck_MinimumGreaterThanValue_DoubleValue_Fails(double value, double minimum, double maximum)
 	{
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
 	}
 
 	[Theory]
 	[InlineData(1.0, -1.0, 0.0)]
 	[InlineData(100.0, -3.5, 99.999)]
-	public void RangeCheck_MaximumLessThanValue_Fails(double value, double minimum, double maximum)
+	public void RangeCheck_MaximumLessThanValue_DoubleValue_Fails(double value, double minimum, double maximum)
 	{
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value)));
 	}
 
 	[Fact]
-	public void RangeCheck_NullDescriptor_Fails()
+	public void RangeCheck_NullDescriptor_DoubleValue_Fails()
 	{
 		const double minimum = -1.0;
 		const double maximum = 1.0;
@@ -310,7 +426,7 @@ public class AssertionHelperTests
 	[InlineData("")]
 	[InlineData("              ")]
 	[InlineData("\t\n\r")]
-	public void RangeCheck_InvalidDescriptor_Fails(string descriptor)
+	public void RangeCheck_InvalidDescriptor_DoubleValue_Fails(string descriptor)
 	{
 		const double minimum = -1.0;
 		const double maximum = 1.0;
@@ -319,6 +435,8 @@ public class AssertionHelperTests
 		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, minimum, maximum, descriptor));
 	}
 
+	#endregion DoubleValue
+	
 	#endregion RangeCheck
 
 	#region EmptyCheck
@@ -414,11 +532,6 @@ public class AssertionHelperTests
 	#endregion MinimumCountCheck
 
 	#region DuplicatesCheck
-
-	/*
-	 * Valid
-	 * Invalid: Null string, null list, empty list, duplicates
-	 */
 
 	[Fact]
 	public void DuplicatesCheck_Succeeds()

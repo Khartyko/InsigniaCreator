@@ -94,7 +94,7 @@ public class TemplateNetworkTests
     {
 	    var templateNetwork = new TemplateNetwork(s_nodes, s_links, s_cells);
 
-	    var subjectIndex = DataGenerator.GenerateRandomInt(0, s_nodes.Count - 1);
+	    int subjectIndex = DataGenerator.GenerateRandomInt(0, s_nodes.Count - 1);
 	    Vector2 subjectPosition = s_nodes[subjectIndex].Position;
 
 	    Node? node = templateNetwork.GetNode(subjectPosition);

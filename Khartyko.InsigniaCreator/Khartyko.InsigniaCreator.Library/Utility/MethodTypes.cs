@@ -6,5 +6,7 @@ public enum MethodTypes
     PropertyGet,
     IndexerGet,
     IndexerSet,
+    Constructor,
+    Lambda,
     RegularMethod
 }

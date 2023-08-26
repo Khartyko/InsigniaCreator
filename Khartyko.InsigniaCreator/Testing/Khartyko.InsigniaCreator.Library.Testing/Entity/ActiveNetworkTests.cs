@@ -76,7 +76,7 @@ public class ActiveNetworkTests
 	{
 		var activeNetwork = new ActiveNetwork();
 
-		var nodeIndex = GetRandomTemplateNetworkNodeIndex();
+		int nodeIndex = GetRandomTemplateNetworkNodeIndex();
 
 		Node node = s_templateNetwork.Nodes[nodeIndex];
 		
@@ -103,7 +103,7 @@ public class ActiveNetworkTests
 	{
 		var activeNetwork = new ActiveNetwork();
 
-		var nodeIndex = GetRandomTemplateNetworkNodeIndex();
+		int nodeIndex = GetRandomTemplateNetworkNodeIndex();
 
 		Node node = s_templateNetwork.Nodes[nodeIndex];
 		
@@ -126,7 +126,7 @@ public class ActiveNetworkTests
 	{
 		var activeNetwork = new ActiveNetwork();
 
-		var nodeIndex = GetRandomTemplateNetworkNodeIndex();
+		int nodeIndex = GetRandomTemplateNetworkNodeIndex();
 
 		Node node = s_templateNetwork.Nodes[nodeIndex];
 		

@@ -147,7 +147,62 @@ public static class AssertionHelper
 
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+        throw new ArgumentOutOfRangeException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+    }
+
+    public static void MinimumCheck(int value, int minimum, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (value < minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than or equal to the minimum; got: {value} < {minimum}");
+        }
+    }
+
+    public static void RangeCheck(int value, int minimum, int maximum, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (value < minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than to the minimum; got: {value} < {minimum}");
+        }
+
+        if (value == minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be equal to the minimum; got: {value} == {minimum}");
+        }
+
+        if (maximum < value)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tmaximum cannot be less than the value; got: {maximum} < {value}");
+        }
+        
+        if (value == maximum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tmaximum cannot be equal to the value; got: {maximum} == {value}");
+        }
     }
     
     public static void RangeCheck(double value, double minimum, double maximum, string descriptor)
@@ -164,7 +219,7 @@ public static class AssertionHelper
 
             string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-            throw new ArgumentException($"{signature}:\n\tvalue cannot be less than to the minimum; got: {value} < {minimum}");
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than to the minimum; got: {value} < {minimum}");
         }
 
         if (Equals(value, minimum))
@@ -173,7 +228,7 @@ public static class AssertionHelper
 
             string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-            throw new ArgumentException($"{signature}:\n\tvalue cannot be equal to the minimum; got: {value} == {minimum}");
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be equal to the minimum; got: {value} == {minimum}");
         }
 
         if (maximum < value)
@@ -182,7 +237,7 @@ public static class AssertionHelper
 
             string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-            throw new ArgumentException($"{signature}:\n\tmaximum cannot be less than the value; got: {maximum} < {value}");
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tmaximum cannot be less than the value; got: {maximum} < {value}");
         }
         
         if (Equals(maximum, value))
@@ -191,7 +246,7 @@ public static class AssertionHelper
 
             string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-            throw new ArgumentException($"{signature}:\n\tmaximum cannot be equal to the value; got: {maximum} == {value}");
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tmaximum cannot be equal to the value; got: {maximum} == {value}");
         }
     }
 
@@ -262,7 +317,7 @@ public static class AssertionHelper
 
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
         string duplicatesString = string.Join(", ", duplicatesFound);
-
+        
         throw new ArgumentException($"{signature}:\n\t'' contains duplicates; got '{duplicatesString}'");
     }
 }
