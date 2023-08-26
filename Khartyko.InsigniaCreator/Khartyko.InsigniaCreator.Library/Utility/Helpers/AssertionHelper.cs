@@ -250,8 +250,7 @@ public static class AssertionHelper
 
         List<T> duplicatesFound = itemsList
             .Where(outerItem => itemsList
-                .Count(innerItem => innerItem != null
-                                    && innerItem.Equals(outerItem)) > 1)
+                .Count(innerItem => Equals(outerItem, innerItem)) > 1)
             .ToList();
 
         if (!duplicatesFound.Any())
