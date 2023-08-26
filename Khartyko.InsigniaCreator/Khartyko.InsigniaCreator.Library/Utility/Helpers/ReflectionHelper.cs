@@ -68,9 +68,12 @@ public static class ReflectionHelper
             {
                 string contents = parameterName ?? string.Empty;
 
-                ParameterInfo[] parameters = methodBase.GetParameters();
+                string[] parameterNames = methodBase.GetParameters()
+                        .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                        .Select(parameter => parameter.Name!)
+                        .ToArray();
 
-                string? presentParameterName = parameters.First()?.Name;
+                string presentParameterName = parameterNames.First();
 
                 contents = string.Equals(presentParameterName, contents)
                     ? $"[>{presentParameterName}<]"
@@ -86,10 +89,13 @@ public static class ReflectionHelper
             {
                 string contents = parameterName ?? string.Empty;
 
-                ParameterInfo[] parameters = methodBase.GetParameters();
+                string[] parameterNames = methodBase.GetParameters()
+                        .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                        .Select(parameter => parameter.Name!)
+                        .ToArray();
 
-                string? presentParameterName = parameters.First()?.Name;
-                string? presentValueName = parameters.Last()?.Name;
+                string presentParameterName = parameterNames.First();
+                string presentValueName = parameterNames.Last();
 
                 if (string.Equals(presentParameterName, contents))
                 {
