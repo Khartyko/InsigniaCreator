@@ -34,55 +34,6 @@ stages:
             displayName: dotnet build
             workingDirectory: $(mainAppDirectory)
 
-  - stage: test
-    condition: succeeded()
-    jobs:
-      - job: test
-        steps:
-        - task: UseDotNet@2
-          displayName: 'Use .NET 7 SDK'
-          inputs:
-            packageType: 'sdk'
-            version: $(sdkVersion)
-            installationPath: $(Agent.ToolsDirectory)/dotnet
-            workingDirectory: $(mainAppDirectory)
-
-        - script: dotnet build --configuration $(buildConfiguration)
-          displayName: 'Build "Library" Testing Project'
-          workingDirectory: $(libraryTestingDirectory)
-
-        - task: DotNetCoreCLI@2
-          displayName: 'Testing "Library" Testing Project'
-          inputs:
-            command: 'test'
-            arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
-            publishTestResults: true
-            workingDirectory: $(libraryTestingDirectory)
-
-        - script: dotnet build --configuration $(buildConfiguration)
-          displayName: 'Build "Domain" Testing Project'
-          workingDirectory: $(domainTestingDirectory)
-
-        - task: DotNetCoreCLI@2
-          displayName: 'Testing "Domain" Testing Project'
-          inputs:
-            command: 'test'
-            arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
-            publishTestResults: true
-            workingDirectory: $(domainTestingDirectory)
-
-        - script: dotnet build --configuration $(buildConfiguration)
-          displayName: 'Build "MainApp" Testing Project'
-          workingDirectory: $(mainAppTestingDirectory)
-
-        - task: DotNetCoreCLI@2
-          displayName: 'Testing "MainApp" Testing Project'
-          inputs:
-            command: 'test'
-            arguments: '--configuration $(BuildConfiguration) --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
-            publishTestResults: true
-            workingDirectory: $(mainAppTestingDirectory)
-
   - stage: analyse
     condition: succeeded()
     jobs:
@@ -104,7 +55,7 @@ stages:
               projectName: 'Khartyko.InsigniaCreator'
               extraProperties: |
                 sonar.exclusions=**/lib/**
-                sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
+                          sonar.cs.opencover.reportsPaths = $(Agent.TempDirectory)/**/coverage.opencover.xml
 
           - task: UseDotNet@2
             displayName: 'Use .NET 7 SDK'
