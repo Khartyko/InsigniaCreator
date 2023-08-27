@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 public static class MathHelper
@@ -93,3 +96,4 @@ public static class MathHelper
         return Round(innerFacingAngle);
     }
 }
+/** @} */

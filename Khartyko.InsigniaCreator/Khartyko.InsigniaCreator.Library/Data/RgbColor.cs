@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
@@ -218,3 +221,4 @@ public class RgbColor
             && color.A == A;
     }
 }
+/** @} */

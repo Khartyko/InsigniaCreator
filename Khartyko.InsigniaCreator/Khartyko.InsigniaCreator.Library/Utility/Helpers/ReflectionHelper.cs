@@ -1,6 +1,10 @@
+/** \addtogroup Library
+ * @{
+ */
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
+
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 public static partial class ReflectionHelper
@@ -192,3 +196,4 @@ public static partial class ReflectionHelper
         return $"{typeName}{methodName}{parameterList}";
     }
 }
+/** @} */

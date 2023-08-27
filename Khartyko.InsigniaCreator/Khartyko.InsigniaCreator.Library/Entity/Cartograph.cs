@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Interfaces;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -96,3 +99,4 @@ public class Cartograph : IEntity
 		       && cartograph.Active.Equals(Active);
 	}
 }
+/** @} */

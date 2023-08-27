@@ -1,5 +1,6 @@
-using System.Linq;
-
+/** \addtogroup Library
+ * @{
+ */
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 public static class AssertionHelper
@@ -321,3 +322,4 @@ public static class AssertionHelper
         throw new ArgumentException($"{signature}:\n\t'' contains duplicates; got '{duplicatesString}'");
     }
 }
+/** @} */

@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 using System.Reflection;
 
 namespace Khartyko.InsigniaCreator.Library.Utility;
@@ -15,3 +18,4 @@ public class ReflectionMetadata
     public MethodBase MethodBase { get; set; }
     public MethodTypes MethodType { get; set; }
 }
+/** @} */

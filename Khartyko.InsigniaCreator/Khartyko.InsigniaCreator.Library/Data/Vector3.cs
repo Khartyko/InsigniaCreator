@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0660, CS0661, CS0659
@@ -352,3 +355,4 @@ public class Vector3
 			: new Vector3(left / right.X, left / right.Y, left / right.Z);
 	}
 }
+/** @} */

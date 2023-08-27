@@ -1,4 +1,7 @@
-﻿using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+﻿/** \addtogroup Library
+ * @{
+ */
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 #pragma warning disable CS0659
@@ -37,3 +40,4 @@ public abstract class NetworkBase
                && Cells.All(network.Cells.Contains);
     }
 }
+/** @} */

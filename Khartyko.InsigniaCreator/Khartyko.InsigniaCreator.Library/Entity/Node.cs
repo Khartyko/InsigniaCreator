@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
@@ -61,3 +64,4 @@ public class Node
 
     public override string ToString() => $"{{ activated: {Activated}, position: {Position} }}";
 }
+/** @} */

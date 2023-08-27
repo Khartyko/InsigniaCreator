@@ -1,3 +1,6 @@
+/** \addtogroup Library
+ * @{
+ */
 namespace Khartyko.InsigniaCreator.Library.Utility;
 
 public enum MethodTypes
@@ -10,3 +13,4 @@ public enum MethodTypes
     Lambda,
     RegularMethod
 }
+/** @} */

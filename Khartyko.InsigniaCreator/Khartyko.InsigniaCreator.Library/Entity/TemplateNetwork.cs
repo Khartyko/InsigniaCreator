@@ -1,4 +1,7 @@
-﻿using Khartyko.InsigniaCreator.Library.Data;
+﻿/** \addtogroup Library
+ * @{
+ */
+using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
@@ -56,3 +59,4 @@ public class TemplateNetwork : NetworkBase
         return list;
     }
 }
+/** @} */

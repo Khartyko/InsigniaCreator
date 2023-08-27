@@ -1,4 +1,7 @@
-﻿using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+﻿/** \addtogroup Library
+ * @{
+ */
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
 
@@ -68,3 +71,4 @@ public class ActiveNetwork : NetworkBase
         return base.Equals(obj);
     }
 }
+/** @} */
