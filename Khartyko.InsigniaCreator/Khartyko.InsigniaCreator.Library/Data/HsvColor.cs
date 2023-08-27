@@ -7,6 +7,9 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
+/// <summary>
+/// This class represents a color comprised of Hue, Saturation, and Value.
+/// </summary>
 public class HsvColor
 {
 	private static readonly Vector2 s_hueBounds = new(-0.001, 360.001);
@@ -17,6 +20,15 @@ public class HsvColor
 	private double _saturation;
 	private double _value;
 
+	/// <summary>
+	/// This is which hue the color leans towards (i.e., red, blue, green, yellow).
+	/// It is can only be values between 0 and 360 degrees.
+	/// </summary>
+	/// <remarks>
+	/// This can possibly throw one of two exceptions:
+	/// - ArgumentException: the double isn't a real number.
+	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 360.0.
+	/// </remarks>
 	public double Hue
 	{
 		get => _hue;
@@ -29,6 +41,15 @@ public class HsvColor
 		}
 	}
 
+	/// <summary>
+	/// This is how much of the hue is present.
+	/// It only accepts values between 0.0 and 1.0.
+	/// </summary>
+	/// <remarks>
+	/// This can possibly throw one of two exceptions:
+	/// - ArgumentException: the double isn't a real number.
+	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0.
+	/// </remarks>
 	public double Saturation
 	{
 		get => _saturation;
@@ -41,6 +62,15 @@ public class HsvColor
 		}
 	}
 
+	/// <summary>
+	/// This is how bright the color is.
+	/// It only accepts values between 0.0 and 1.0.
+	/// </summary>
+	/// <remarks>
+	/// This can possibly throw one of two exceptions:
+	/// - ArgumentException: the double isn't a real number.
+	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0.
+	/// </remarks>
 	public double Value
 	{
 		get => _value;
@@ -53,6 +83,9 @@ public class HsvColor
 		}
 	}
 
+	/// <summary>
+	/// This constructs a default HSV Color with the Hue, Saturation, and Value all being 0.0.
+	/// </summary>
 	public HsvColor()
 	{
 		Hue = 0;
@@ -60,6 +93,18 @@ public class HsvColor
 		Value = 0;
 	}
 
+	/// <summary>
+	/// This creates an HSV Color with the Hue, Saturation, and Value being specified.
+	/// The values are strict
+	/// </summary>
+	/// <remarks>
+	/// This can possibly throw one of two exceptions:
+	/// - ArgumentException: any of the values passed in aren't a real number.
+	/// - ArgumentOutOfRangeException: any of the values passed in aren't within their acceptable ranges.
+	/// </remarks>
+	/// <param name="hue">A double between 0.0 and 360.0 that represents the color's hue.</param>
+	/// <param name="saturation">A number between 0.0 and 1.0 that represents the color's saturation.</param>
+	/// <param name="value">A number 0.0 and 1.0 that represents the color's brightness/gamma.</param>
 	public HsvColor(double hue, double saturation, double value)
 	{
 		AssertionHelper.InvalidDoubleCheck(hue, nameof(hue));
@@ -75,6 +120,13 @@ public class HsvColor
 		Value = value;
 	}
 
+	/// <summary>
+	/// This copies the values of one HSV Color to another HSV Color.
+	/// </summary>
+	/// <remarks>
+	/// This can possibly through an ArgumentNullException if the 'hsvColor' argument is null
+	/// </remarks>
+	/// <param name="hsvColor">An existing HSV Color.</param>
 	public HsvColor(HsvColor hsvColor)
 	{
 		AssertionHelper.NullCheck(hsvColor, nameof(hsvColor));
@@ -84,6 +136,16 @@ public class HsvColor
 		Value = hsvColor.Value;
 	}
 
+	/// <summary>
+	/// An override of the default Equals method that checks if it's Hue, Saturation, and Values are equal
+	/// </summary>
+	/// <remarks>
+	/// If 'obj' is null, it'll return false.
+	/// If 'obj' is this, it'll return true.
+	/// Otherwise, the values are compared outright.
+	/// </remarks>
+	/// <param name="obj">The object that is compared against this instance of an HSV Color</param>
+	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color </returns>
 	public override bool Equals(object? obj)
 	{
 		if (ReferenceEquals(null, obj))
