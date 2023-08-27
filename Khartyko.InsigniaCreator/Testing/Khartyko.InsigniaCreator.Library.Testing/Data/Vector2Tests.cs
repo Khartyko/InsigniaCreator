@@ -1,4 +1,6 @@
-using System.ComponentModel.DataAnnotations;
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
 
@@ -740,3 +742,4 @@ public class Vector2Tests
 
     #endregion Equals
 }
+/** @} */

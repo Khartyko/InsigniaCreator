@@ -1,3 +1,6 @@
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
 
@@ -592,3 +595,4 @@ public class MatrixTests
 
     #endregion Multiplication Operator
 }
+/** @} */

@@ -1,4 +1,6 @@
-using System.Reflection;
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS8600, CS8604
@@ -594,3 +596,4 @@ public class AssertionHelperTests
 
 	#endregion DuplicatesCheck
 }
+/** @} */

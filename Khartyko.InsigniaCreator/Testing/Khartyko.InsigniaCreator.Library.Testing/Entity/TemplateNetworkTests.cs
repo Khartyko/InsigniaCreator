@@ -1,4 +1,7 @@
-﻿using Khartyko.InsigniaCreator.Library.Data;
+﻿/** \addtogroup LibraryTests
+ * @{
+ */
+using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
 
@@ -182,3 +185,4 @@ public class TemplateNetworkTests
 
     #endregion Equals
 }
+/** @} */

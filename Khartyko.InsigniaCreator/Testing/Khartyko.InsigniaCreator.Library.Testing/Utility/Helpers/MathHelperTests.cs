@@ -1,3 +1,6 @@
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS8600, CS8604, CS8625 // Cannot convert null literal to non-nullable reference type.
@@ -345,3 +348,4 @@ public class MathHelperTests
 
 	#endregion GetInteriorAngleFromSideCount
 }
+/** @} */

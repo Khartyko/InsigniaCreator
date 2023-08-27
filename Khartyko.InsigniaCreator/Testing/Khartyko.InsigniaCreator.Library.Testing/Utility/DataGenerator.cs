@@ -1,3 +1,6 @@
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
@@ -58,3 +61,4 @@ internal static class DataGenerator
         };
     }
 }
+/** @} */

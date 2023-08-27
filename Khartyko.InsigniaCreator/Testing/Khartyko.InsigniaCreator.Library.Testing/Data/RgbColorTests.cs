@@ -1,3 +1,6 @@
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 
 #pragma warning disable CS8625, CS8600
@@ -308,3 +311,4 @@ public class RgbColorTests
     
     #endregion Equals
 }
+/** @} */

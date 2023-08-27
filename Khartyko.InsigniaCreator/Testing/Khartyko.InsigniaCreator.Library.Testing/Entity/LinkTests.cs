@@ -1,3 +1,6 @@
+/** \addtogroup LibraryTests
+ * @{
+ */
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
@@ -308,3 +311,4 @@ public class LinkTests
 
     #endregion ToString
 }
+/** @} */

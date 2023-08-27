@@ -1,6 +1,10 @@
-﻿using Khartyko.InsigniaCreator.Library.Data;
+﻿/** \addtogroup LibraryTests
+ * @{
+ */
+using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
+
 namespace Khartyko.InsigniaCreator.Library.Testing.Entity;
 
 #pragma warning disable CS0219, CS8600, CS8601, CS8604
@@ -196,3 +200,4 @@ public class ActiveNetworkTests
 
 	#endregion Equals
 }
+/** @} */
