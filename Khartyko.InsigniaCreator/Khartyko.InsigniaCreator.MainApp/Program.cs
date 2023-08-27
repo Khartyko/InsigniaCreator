@@ -1,4 +1,7 @@
-﻿using Avalonia;
+﻿/** \addtogroup MainApp
+ * @{
+ */
+using Avalonia;
 using Avalonia.ReactiveUI;
 using System;
 
@@ -21,3 +24,4 @@ public class Program
             .LogToTrace()
             .UseReactiveUI();
 }
+/** @} */
