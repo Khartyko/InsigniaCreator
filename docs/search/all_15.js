@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['x_0',['X',['../d8/dbe/class_vector2.html#a6ceb07658d61730ed3a0dce1845a5279',1,'Vector2.X()'],['../d3/de7/class_vector3.html#a7f4cf6a1e8002b2838073f02417f7b93',1,'Vector3.X()']]],
-  ['x_5ffails_1',['X_Fails',['../d2/da8/class_vector2_tests.html#afa84e739546a1abfd95b6dda652bd1ab',1,'Vector2Tests.X_Fails()'],['../de/d56/class_vector3_tests.html#a2cebf92d3e6baf8b2142a6604d4ec948',1,'Vector3Tests.X_Fails()']]],
-  ['x_5fsucceeds_2',['X_Succeeds',['../d2/da8/class_vector2_tests.html#af339b282ecc74cd29c6c800de62fd52e',1,'Vector2Tests.X_Succeeds()'],['../de/d56/class_vector3_tests.html#a9b6af76faf5c44216dd828eef2cd815a',1,'Vector3Tests.X_Succeeds()']]],
-  ['xy_3',['XY',['../d3/de7/class_vector3.html#af869a90211aae8f28816ecd815de7da1',1,'Vector3']]],
-  ['xyz_4',['XYZ',['../d3/de7/class_vector3.html#a7fe30189c46abd4dfe45c9872fb438ee',1,'Vector3']]],
-  ['xz_5',['XZ',['../d3/de7/class_vector3.html#ac2acdc482d20578c7a21a19fe103ec82',1,'Vector3']]],
-  ['xzy_6',['XZY',['../d3/de7/class_vector3.html#a97b4bb52010696673718f432113f8c50',1,'Vector3']]]
+  ['x_0',['x',['../d2/da5/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector2.html#a4078d8f364f42517869a539e069060fb',1,'Khartyko.InsigniaCreator.Library.Data.Vector2.X'],['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a93793009004d9d96e1dc300404f3f7b3',1,'Khartyko.InsigniaCreator.Library.Data.Vector3.X']]],
+  ['x_5ffails_1',['x_fails',['../d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a685f1f073672bbfd5272a9c4c9e71a8b',1,'Khartyko.InsigniaCreator.Library.Testing.Data.Vector2Tests.X_Fails()'],['../dd/de9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector3Tests.html#a1ae4baaa9b83351cabded445daa99111',1,'Khartyko.InsigniaCreator.Library.Testing.Data.Vector3Tests.X_Fails()']]],
+  ['x_5fsucceeds_2',['x_succeeds',['../d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a885d57fe4402c68340f15f2c94844ebe',1,'Khartyko.InsigniaCreator.Library.Testing.Data.Vector2Tests.X_Succeeds()'],['../dd/de9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector3Tests.html#a89cdddc1789703e1ae16a098fb20e495',1,'Khartyko.InsigniaCreator.Library.Testing.Data.Vector3Tests.X_Succeeds()']]],
+  ['xy_3',['XY',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#aeba90b06219437c5355495f411f51303',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xyz_4',['XYZ',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a8c097ed7cdaa5d673b9bf11847e2ad2d',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xz_5',['XZ',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a5c357b23041d5282f559b8bdb6028e1e',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xzy_6',['XZY',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a3213488196fce36d8861b0ede9da293f',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]]
 ];

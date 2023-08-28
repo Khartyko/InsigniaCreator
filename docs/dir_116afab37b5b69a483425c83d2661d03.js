@@ -1,9 +1,9 @@
 var dir_116afab37b5b69a483425c83d2661d03 =
 [
-    [ "HsvColorTests.cs", "da/ded/_hsv_color_tests_8cs.html", null ],
-    [ "MatrixTests.cs", "d1/d18/_matrix_tests_8cs.html", null ],
-    [ "RgbColorTests.cs", "da/d39/_rgb_color_tests_8cs.html", null ],
-    [ "TransformTests.cs", "dc/db8/_transform_tests_8cs.html", null ],
-    [ "Vector2Tests.cs", "de/d20/_vector2_tests_8cs.html", null ],
-    [ "Vector3Tests.cs", "d8/ddb/_vector3_tests_8cs.html", null ]
+    [ "HsvColorTests.cs", "d5/d05/HsvColorTests_8cs.html", null ],
+    [ "MatrixTests.cs", "d3/daf/MatrixTests_8cs.html", null ],
+    [ "RgbColorTests.cs", "de/d27/RgbColorTests_8cs.html", null ],
+    [ "TransformTests.cs", "da/dae/TransformTests_8cs.html", null ],
+    [ "Vector2Tests.cs", "de/d04/Vector2Tests_8cs.html", null ],
+    [ "Vector3Tests.cs", "d3/d00/Vector3Tests_8cs.html", null ]
 ];

@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['m0_0',['M0',['../d1/dc7/class_random_matrix_data.html#ac12caca094ebb369353a13d5df3f3077',1,'RandomMatrixData']]],
-  ['m1_1',['M1',['../d1/dc7/class_random_matrix_data.html#a4cff70670db24f820f13980980b63532',1,'RandomMatrixData']]],
-  ['m2_2',['M2',['../d1/dc7/class_random_matrix_data.html#aede47a45b02fb815ae8bea5e81e3ee0c',1,'RandomMatrixData']]],
-  ['matrix_3',['Matrix',['../dd/db7/class_transform.html#acdb3d31202b062ce8dce7337fb571107',1,'Transform.Matrix()'],['../d1/dc7/class_random_matrix_data.html#aa64caf9bb648a13f74590d1ea1498557',1,'RandomMatrixData.Matrix()']]],
-  ['matrixcopyconstructordata_4',['MatrixCopyConstructorData',['../d6/d6e/class_matrix_tests.html#afe3aa224a937dafce6994ea73f87fe6b',1,'MatrixTests']]],
-  ['matrixmatrixdata_5',['MatrixMatrixData',['../d6/d6e/class_matrix_tests.html#ae64998b59114faf301e1f148ede60a6b',1,'MatrixTests']]],
-  ['matrixvector2data_6',['MatrixVector2Data',['../d6/d6e/class_matrix_tests.html#a7b397bf23da6e781e685f93e845a3197',1,'MatrixTests']]],
-  ['matrixvector3data_7',['MatrixVector3Data',['../d6/d6e/class_matrix_tests.html#ab5d9d2c93e66e9306139e3b426f51a93',1,'MatrixTests']]],
-  ['methodbase_8',['MethodBase',['../df/d34/class_reflection_metadata.html#aef7ec838a9ac087baaa2fc71bfb9f120',1,'ReflectionMetadata']]],
-  ['methodtype_9',['MethodType',['../df/d34/class_reflection_metadata.html#aaf261b641a5a1804a3b8c3b2113d3d6e',1,'ReflectionMetadata']]]
+  ['m0_0',['M0',['../d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html#ab76fd826e95d943205d3638bc5a6242b',1,'Khartyko::InsigniaCreator::Library::Testing::Utility::Model::RandomMatrixData']]],
+  ['m1_1',['M1',['../d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html#a2f334fe252e77295c9778d2c3a8877b1',1,'Khartyko::InsigniaCreator::Library::Testing::Utility::Model::RandomMatrixData']]],
+  ['m2_2',['M2',['../d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html#aae015463234da43cc033a0862716db07',1,'Khartyko::InsigniaCreator::Library::Testing::Utility::Model::RandomMatrixData']]],
+  ['matrix_3',['matrix',['../dd/db3/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Transform.html#a779801bba625b6b13c67b3fe5ffabd84',1,'Khartyko.InsigniaCreator.Library.Data.Transform.Matrix'],['../d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html#af664b30631f17389ff36cd8a6f3a7eec',1,'Khartyko.InsigniaCreator.Library.Testing.Utility.Model.RandomMatrixData.Matrix']]],
+  ['matrixcopyconstructordata_4',['MatrixCopyConstructorData',['../d8/dbb/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1MatrixTests.html#a2ec4ca0a4510fcac41e04f7fad76ffd7',1,'Khartyko::InsigniaCreator::Library::Testing::Data::MatrixTests']]],
+  ['matrixmatrixdata_5',['MatrixMatrixData',['../d8/dbb/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1MatrixTests.html#af64425a93db8ce020edfd46224740ae2',1,'Khartyko::InsigniaCreator::Library::Testing::Data::MatrixTests']]],
+  ['matrixvector2data_6',['MatrixVector2Data',['../d8/dbb/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1MatrixTests.html#a26e9deeb8bfec50920aa6d2bf03352b4',1,'Khartyko::InsigniaCreator::Library::Testing::Data::MatrixTests']]],
+  ['matrixvector3data_7',['MatrixVector3Data',['../d8/dbb/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1MatrixTests.html#ad7e0587f51bf092cdf425cfcbe33aae6',1,'Khartyko::InsigniaCreator::Library::Testing::Data::MatrixTests']]],
+  ['methodbase_8',['MethodBase',['../d1/d6b/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Utility_1_1ReflectionMetadata.html#a8546ff486ca23a690a9bf2cb31f9667d',1,'Khartyko::InsigniaCreator::Library::Utility::ReflectionMetadata']]],
+  ['methodtype_9',['MethodType',['../d1/d6b/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Utility_1_1ReflectionMetadata.html#acd05c391fd8ed59514c31b3022562470',1,'Khartyko::InsigniaCreator::Library::Utility::ReflectionMetadata']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['one_0',['One',['../d8/dbe/class_vector2.html#a656e8905c043bb0f482bc422d5ca065c',1,'Vector2.One()'],['../d3/de7/class_vector3.html#ae2af835a33a6a89d2827486f30527f8d',1,'Vector3.One()']]]
+  ['one_0',['one',['../d2/da5/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector2.html#ab5da34d8cc6a068ad07dab98bf0cf360',1,'Khartyko.InsigniaCreator.Library.Data.Vector2.One'],['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a21e8ae9a4b72617e9bfcbf1d6c1e8309',1,'Khartyko.InsigniaCreator.Library.Data.Vector3.One']]]
 ];

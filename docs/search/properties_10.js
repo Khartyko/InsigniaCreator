@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['x_0',['X',['../d8/dbe/class_vector2.html#a6ceb07658d61730ed3a0dce1845a5279',1,'Vector2.X()'],['../d3/de7/class_vector3.html#a7f4cf6a1e8002b2838073f02417f7b93',1,'Vector3.X()']]],
-  ['xy_1',['XY',['../d3/de7/class_vector3.html#af869a90211aae8f28816ecd815de7da1',1,'Vector3']]],
-  ['xyz_2',['XYZ',['../d3/de7/class_vector3.html#a7fe30189c46abd4dfe45c9872fb438ee',1,'Vector3']]],
-  ['xz_3',['XZ',['../d3/de7/class_vector3.html#ac2acdc482d20578c7a21a19fe103ec82',1,'Vector3']]],
-  ['xzy_4',['XZY',['../d3/de7/class_vector3.html#a97b4bb52010696673718f432113f8c50',1,'Vector3']]]
+  ['x_0',['x',['../d2/da5/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector2.html#a4078d8f364f42517869a539e069060fb',1,'Khartyko.InsigniaCreator.Library.Data.Vector2.X'],['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a93793009004d9d96e1dc300404f3f7b3',1,'Khartyko.InsigniaCreator.Library.Data.Vector3.X']]],
+  ['xy_1',['XY',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#aeba90b06219437c5355495f411f51303',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xyz_2',['XYZ',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a8c097ed7cdaa5d673b9bf11847e2ad2d',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xz_3',['XZ',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a5c357b23041d5282f559b8bdb6028e1e',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]],
+  ['xzy_4',['XZY',['../d6/d35/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Vector3.html#a3213488196fce36d8861b0ede9da293f',1,'Khartyko::InsigniaCreator::Library::Data::Vector3']]]
 ];

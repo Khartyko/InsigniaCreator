@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['name_0',['Name',['../de/d13/class_atlas.html#acb8d49ec891a8a22c09b57c18198ebe8',1,'Atlas.Name()'],['../dd/d0d/class_cartograph.html#af7bbeced71b4f1e827c8720875b38788',1,'Cartograph.Name()']]],
-  ['nodes_1',['Nodes',['../dd/d11/class_cell.html#a588a774e0be78690449f9ec583afa982',1,'Cell.Nodes()'],['../d9/d5f/class_network_base.html#a0fd8cab8bbcb31adde8a301991c5fd0a',1,'NetworkBase.Nodes()']]]
+  ['name_0',['name',['../da/da2/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Atlas.html#a7fa4b84c47cae623af9167e53ae5f468',1,'Khartyko.InsigniaCreator.Library.Entity.Atlas.Name'],['../d8/dd3/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Cartograph.html#a414f6da22d5e7c1a7c3d4de131f8f0b5',1,'Khartyko.InsigniaCreator.Library.Entity.Cartograph.Name']]],
+  ['nodes_1',['nodes',['../d9/d7a/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Cell.html#aad7e0b458085859f69c98d5f749bd682',1,'Khartyko.InsigniaCreator.Library.Entity.Cell.Nodes'],['../d0/d4e/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1NetworkBase.html#a6c2a79dc9a94561f1ea8d4d048b4bb23',1,'Khartyko.InsigniaCreator.Library.Entity.NetworkBase.Nodes']]]
 ];

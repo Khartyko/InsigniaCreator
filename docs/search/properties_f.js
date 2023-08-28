@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width_0',['Width',['../de/d13/class_atlas.html#abc02ce2b11172de302a8a4d99fc32f70',1,'Atlas']]]
+  ['width_0',['Width',['../da/da2/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Atlas.html#a3a9fcea18feb6a72fec1bc91777ae9b2',1,'Khartyko::InsigniaCreator::Library::Entity::Atlas']]]
 ];

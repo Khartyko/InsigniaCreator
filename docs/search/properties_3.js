@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['data_0',['Data',['../d6/d3f/class_matrix.html#a36e0d16be1536f9e743f7579eb7f0b9e',1,'Matrix']]]
+  ['data_0',['Data',['../df/d63/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Matrix.html#a92f80105b05c50554c35e14a0f8afdcc',1,'Khartyko::InsigniaCreator::Library::Data::Matrix']]]
 ];

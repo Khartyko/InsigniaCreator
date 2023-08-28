@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['b_0',['B',['../de/db7/class_rgb_color.html#af8047bddecf177fe6322dab010958cbf',1,'RgbColor']]],
-  ['b_5fsucceeds_1',['B_Succeeds',['../dc/d01/class_rgb_color_tests.html#adb2cca9d07fee6beeb6f699f59a0ad00',1,'RgbColorTests']]],
-  ['backgroundcolor_2',['BackgroundColor',['../de/d13/class_atlas.html#a5891979628069c33345a25823fef4c11',1,'Atlas']]],
-  ['backgroundcolor_5fget_5fsucceeds_3',['BackgroundColor_Get_Succeeds',['../d5/d51/class_atlas_tests.html#a96d0a3e2e13143f760d933a289f143db',1,'AtlasTests']]],
-  ['backgroundcolor_5fset_5ffails_4',['BackgroundColor_Set_Fails',['../d5/d51/class_atlas_tests.html#a1dd6f251e3f4edd54941d3be14eeec2d',1,'AtlasTests']]],
-  ['build_5',['Build',['../d6/d63/class_view_locator.html#a3d24a86978a77d34f25376a36fd45dfd',1,'ViewLocator']]],
-  ['build_5finvalidviewmodel_5ffails_6',['Build_InvalidViewModel_Fails',['../d0/d05/class_view_locator_tests.html#ae925420dd3253430b44f3dd94cd9dcf1',1,'ViewLocatorTests']]],
-  ['build_5fnullobject_5ffails_7',['Build_NullObject_Fails',['../d0/d05/class_view_locator_tests.html#ad69f833c71f55d31e17537019c881775',1,'ViewLocatorTests']]],
-  ['build_5fsucceeds_8',['Build_Succeeds',['../d0/d05/class_view_locator_tests.html#a9031b74407db4e05477408714fd9104d',1,'ViewLocatorTests']]],
-  ['buildavaloniaapp_9',['BuildAvaloniaApp',['../d3/d8a/class_program.html#a7c5a66c5428564821da24b3ac53b73f8',1,'Program']]],
-  ['buildavaloniaapp_5fsucceeds_10',['BuildAvaloniaApp_Succeeds',['../d5/df2/class_program_tests.html#aad53d023f7dca17363e3d0c12e3b1c15',1,'ProgramTests']]]
+  ['b_0',['B',['../d2/d56/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1RgbColor.html#a77df9caa9878e6ac9179654802ecb7f0',1,'Khartyko::InsigniaCreator::Library::Data::RgbColor']]],
+  ['b_5fsucceeds_1',['B_Succeeds',['../d3/d19/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1RgbColorTests.html#a19ea6b0dc1d13bbbcda7db4a4d1a4558',1,'Khartyko::InsigniaCreator::Library::Testing::Data::RgbColorTests']]],
+  ['backgroundcolor_2',['BackgroundColor',['../da/da2/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Atlas.html#aad9b5eaf7176a89a1972f0a3d775470e',1,'Khartyko::InsigniaCreator::Library::Entity::Atlas']]],
+  ['backgroundcolor_5fget_5fsucceeds_3',['BackgroundColor_Get_Succeeds',['../da/df9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Entity_1_1AtlasTests.html#a737d217975f7f09a0f10ae4f03870808',1,'Khartyko::InsigniaCreator::Library::Testing::Entity::AtlasTests']]],
+  ['backgroundcolor_5fset_5ffails_4',['BackgroundColor_Set_Fails',['../da/df9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Entity_1_1AtlasTests.html#a6248ec434b863d63872c46741bcdb126',1,'Khartyko::InsigniaCreator::Library::Testing::Entity::AtlasTests']]],
+  ['build_5',['Build',['../dd/dc2/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1ViewLocator.html#aee62fadd7606803daab24c88f26aafb7',1,'Khartyko::InsigniaCreator::MainApp::ViewLocator']]],
+  ['build_5finvalidviewmodel_5ffails_6',['Build_InvalidViewModel_Fails',['../d0/db3/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ViewLocatorTests.html#a6cefafa8becad5626bf59d744333e322',1,'Khartyko::InsigniaCreator::MainApp::Testing::ViewLocatorTests']]],
+  ['build_5fnullobject_5ffails_7',['Build_NullObject_Fails',['../d0/db3/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ViewLocatorTests.html#a9c7b87c15c93fb580614a8fa9de9f208',1,'Khartyko::InsigniaCreator::MainApp::Testing::ViewLocatorTests']]],
+  ['build_5fsucceeds_8',['Build_Succeeds',['../d0/db3/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ViewLocatorTests.html#a27fc7d1909ac1c46b985661fcfab5e33',1,'Khartyko::InsigniaCreator::MainApp::Testing::ViewLocatorTests']]],
+  ['buildavaloniaapp_9',['BuildAvaloniaApp',['../dd/dcc/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Program.html#ac922efa17fe05eb48d1fa2313712a6de',1,'Khartyko::InsigniaCreator::MainApp::Program']]],
+  ['buildavaloniaapp_5fsucceeds_10',['BuildAvaloniaApp_Succeeds',['../de/d0a/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ProgramTests.html#af024af072545e7a4d17819aa8c4c9e47',1,'Khartyko::InsigniaCreator::MainApp::Testing::ProgramTests']]]
 ];

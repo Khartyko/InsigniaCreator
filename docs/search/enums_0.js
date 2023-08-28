@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['methodtypes_0',['MethodTypes',['../d7/d14/group___library.html#ga0872178db42722c310fe6117189ed441',1,'MethodTypes.cs']]]
+  ['methodtypes_0',['MethodTypes',['../d6/dec/group__Library.html#ga45a40d508f227fac804c7632bbe76ed6',1,'Khartyko::InsigniaCreator::Library::Utility']]]
 ];

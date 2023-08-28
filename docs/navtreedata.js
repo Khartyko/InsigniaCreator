@@ -25,7 +25,14 @@
 var NAVTREE =
 [
   [ "Khartyko Insignia Creator", "index.html", [
-    [ "Modules", "modules.html", "modules" ],
+    [ "Topics", "topics.html", "topics" ],
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ]
+      ] ]
+    ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
@@ -38,11 +45,7 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Enumerations", "globals_enum.html", null ]
-      ] ]
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
@@ -50,9 +53,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"d5/d51/class_atlas_tests.html#a7650d78bd00eb4a716f5772fac336cfe",
-"da/d51/_khartyko_8_insignia_creator_8_main_app_2obj_2_debug_2net7_80_2_8_n_e_t_core_app_00_version_0av7_80_8_assembly_attributes_8cs.html",
-"de/d56/class_vector3_tests.html#a63997ae7489d00fd7aaab19188fbdd8b"
+"d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html#ab76fd826e95d943205d3638bc5a6242b",
+"d8/dd3/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Cartograph.html#aa41e2d1e9c8851345e6d2b0a8ba4253c",
+"dd/de9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector3Tests.html#a7a6e7cde90cd1e01ff1bf878a7d8fd87"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
