@@ -3,8 +3,20 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
+/// <summary>
+/// Private static methods for RgbColor
+/// </summary>
 public partial class RgbColor
 {
+    /// <summary>
+    /// Converts a char into a byte between 0-15.
+    /// </summary>
+    /// <remarks>
+    /// Acceptable values are between 48 and 57, 65 and 70, 97 and 102.
+    /// </remarks>
+    /// <param name="value">A char that represents a single character of a hexadecimal color value.</param>
+    /// <returns>A byte representation from the char value.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">'value' isn't a valid hexadecimal character.</exception>
     private static byte ParseChar(char value)
     {
         byte result;
@@ -45,6 +57,11 @@ public partial class RgbColor
         return result;
     }
 
+    /// <summary>
+    /// Parses a hexadecimal color string into a byte.
+    /// </summary>
+    /// <param name="value">A 2-character string that represents a single color value.</param>
+    /// <returns>4 bytes representing 'R', 'G', 'B', and 'A' values.</returns>
     private static byte ParseValue(string value)
     {
         byte firstPlace = ParseChar(value[0]);
@@ -53,6 +70,11 @@ public partial class RgbColor
         return (byte)(firstPlace * 16 + secondPlace);
     }
 
+    /// <summary>
+    /// Parses a color in the form of "RGB" and returns all 4 color bytes.
+    /// </summary>
+    /// <param name="hexValue">A hexadecimal color string.</param>
+    /// <returns>4 bytes representing 'R', 'G', 'B', and 'A' values.</returns>
     private static (byte, byte, byte, byte) Parse3Case(string hexValue)
     {
         char r = hexValue[0];
@@ -62,6 +84,11 @@ public partial class RgbColor
         return Parse8Case($"{r}{r}{g}{g}{b}{b}FF");
     }
 
+    /// <summary>
+    /// Parses a color in the form of "RGBA" and returns all 4 color bytes.
+    /// </summary>
+    /// <param name="hexValue">A hexadecimal color string.</param>
+    /// <returns>4 bytes representing 'R', 'G', 'B', and 'A' values.</returns>
     private static (byte, byte, byte, byte) Parse4Case(string hexValue)
     {
         char r = hexValue[0];
@@ -72,11 +99,21 @@ public partial class RgbColor
         return Parse8Case($"{r}{r}{g}{g}{b}{b}{a}{a}");
     }
 
+    /// <summary>
+    /// Parses a color in the form of "RRGGBB" and returns all 4 color bytes.
+    /// </summary>
+    /// <param name="hexValue">A hexadecimal color string.</param>
+    /// <returns>4 bytes representing 'R', 'G', 'B', and 'A' values.</returns>
     private static (byte, byte, byte, byte) Parse6Case(string hexValue)
     {
         return Parse8Case($"{hexValue}FF");
     }
 
+    /// <summary>
+    /// Parses a color in the form of "RRGGBBAA" and returns all 4 color bytes.
+    /// </summary>
+    /// <param name="hexValue">A hexadecimal color string.</param>
+    /// <returns>4 bytes representing 'R', 'G', 'B', and 'A' values.</returns>
     private static (byte, byte, byte, byte) Parse8Case(string hexValue)
     {
         byte r = ParseValue(hexValue[..2]);
