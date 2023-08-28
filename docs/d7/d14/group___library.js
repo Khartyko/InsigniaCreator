@@ -20,7 +20,16 @@ var group___library =
       [ "this[int y, int x]", "d6/d3f/class_matrix.html#ae86dc8d1fd1aaa46875d9043893151b0", null ]
     ] ],
     [ "RgbColor", "de/db7/class_rgb_color.html", null ],
-    [ "Transform", "dd/db7/class_transform.html", null ],
+    [ "Transform", "dd/db7/class_transform.html", [
+      [ "Transform", "dd/db7/class_transform.html#a6dfe6a4b1d69e04da731d9d5795e3b8f", null ],
+      [ "Transform", "dd/db7/class_transform.html#a4f5da089246b59810429c325316b69fe", null ],
+      [ "Transform", "dd/db7/class_transform.html#ad213ee106b0b9199960859fcc05bb4a1", null ],
+      [ "Reset", "dd/db7/class_transform.html#a39ad86bec9f3cfc1a671facc7b327c83", null ],
+      [ "Matrix", "dd/db7/class_transform.html#acdb3d31202b062ce8dce7337fb571107", null ],
+      [ "Rotation", "dd/db7/class_transform.html#a6f6e75cd777a409f11673c1b0424e04a", null ],
+      [ "Scale", "dd/db7/class_transform.html#a4bddd42be0ee4b789e717d1cb821550a", null ],
+      [ "Translation", "dd/db7/class_transform.html#a6aa2c74634f5c75e88f4dae6490d3308", null ]
+    ] ],
     [ "Vector2", "d8/dbe/class_vector2.html", [
       [ "Vector2", "d8/dbe/class_vector2.html#a92cdbea94134a047e9a86a4a21b10913", null ],
       [ "Vector2", "d8/dbe/class_vector2.html#a61ad11bec9b41e5decf90607ca183189", null ],
@@ -35,13 +44,33 @@ var group___library =
     ] ],
     [ "Vector3", "d3/de7/class_vector3.html", null ],
     [ "ActiveNetwork", "d7/d75/class_active_network.html", null ],
-    [ "Atlas", "de/d13/class_atlas.html", null ],
-    [ "Cartograph", "dd/d0d/class_cartograph.html", null ],
+    [ "Atlas", "de/d13/class_atlas.html", [
+      [ "Id", "de/d13/class_atlas.html#ad31d08abbe5ae85656664848bfb3c226", null ]
+    ] ],
+    [ "Cartograph", "dd/d0d/class_cartograph.html", [
+      [ "Id", "dd/d0d/class_cartograph.html#a6b4d4e8c4264486388ec8ad401a494b9", null ]
+    ] ],
     [ "Cell", "dd/d11/class_cell.html", null ],
     [ "Link", "d5/d25/class_link.html", null ],
     [ "NetworkBase", "d9/d5f/class_network_base.html", null ],
     [ "Node", "dc/d8f/class_node.html", null ],
     [ "TemplateNetwork", "d0/dd3/class_template_network.html", null ],
-    [ "IEntity", "d5/d20/interface_i_entity.html", null ],
-    [ "ReflectionMetadata", "df/d34/class_reflection_metadata.html", null ]
+    [ "IEntity", "d5/d20/interface_i_entity.html", [
+      [ "Id", "d5/d20/interface_i_entity.html#a3c10be910b264031c6f83d4a6cd55426", null ]
+    ] ],
+    [ "ReflectionMetadata", "df/d34/class_reflection_metadata.html", [
+      [ "ReflectionMetadata", "df/d34/class_reflection_metadata.html#aa49fc2b4433c802be3f92ea8d7b46def", null ],
+      [ "MethodBase", "df/d34/class_reflection_metadata.html#aef7ec838a9ac087baaa2fc71bfb9f120", null ],
+      [ "MethodType", "df/d34/class_reflection_metadata.html#aaf261b641a5a1804a3b8c3b2113d3d6e", null ],
+      [ "Type", "df/d34/class_reflection_metadata.html#a0af637d20952a2b3149a0b96e38af8fa", null ]
+    ] ],
+    [ "MethodTypes", "d7/d14/group___library.html#ga0872178db42722c310fe6117189ed441", [
+      [ "MethodTypes.PropertySet", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a29dda4166f4c96f64df0a72d18fb0105", null ],
+      [ "MethodTypes.PropertyGet", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a6d512dc92b42d3d94c8e62384a231399", null ],
+      [ "MethodTypes.IndexerGet", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a55c06a54e1cfa4e6a074a63942956390", null ],
+      [ "MethodTypes.IndexerSet", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a8af4ee1196b8222cc059587fa3800743", null ],
+      [ "MethodTypes.Constructor", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a678d0a4421b60dc59999ac02837496a6", null ],
+      [ "MethodTypes.Lambda", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a04a7da3c5b04cad85da1eebb92315b8b", null ],
+      [ "MethodTypes.RegularMethod", "d7/d14/group___library.html#gga0872178db42722c310fe6117189ed441a5abae3cdce3ef937ac4f1cbd01cef135", null ]
+    ] ]
 ];

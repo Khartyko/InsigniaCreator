@@ -96,34 +96,268 @@ $(document).ready(function(){initNavTree('dd/db7/class_transform.html','../../')
   <div class="headertitle"><div class="title">Transform Class Reference<div class="ingroups"><a class="el" href="../../d7/d14/group___library.html">Library</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class that represents a Transformation <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and stores the relevant data.  
+ <a href="../../dd/db7/class_transform.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4f5da089246b59810429c325316b69fe"><td class="memItemLeft" align="right" valign="top"><a id="a4f5da089246b59810429c325316b69fe" name="a4f5da089246b59810429c325316b69fe"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Transform</b> (<a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> scale, double rotation, <a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> translation)</td></tr>
+<tr class="memitem:a6dfe6a4b1d69e04da731d9d5795e3b8f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a6dfe6a4b1d69e04da731d9d5795e3b8f">Transform</a> ()</td></tr>
+<tr class="memdesc:a6dfe6a4b1d69e04da731d9d5795e3b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that defaults the values, and has an identity matrix for the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> data.  <br /></td></tr>
+<tr class="separator:a6dfe6a4b1d69e04da731d9d5795e3b8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f5da089246b59810429c325316b69fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a4f5da089246b59810429c325316b69fe">Transform</a> (<a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> scale, double rotation, <a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> translation)</td></tr>
+<tr class="memdesc:a4f5da089246b59810429c325316b69fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that allows the specification of Scale, Rotation, and Translation.  <br /></td></tr>
 <tr class="separator:a4f5da089246b59810429c325316b69fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad213ee106b0b9199960859fcc05bb4a1"><td class="memItemLeft" align="right" valign="top"><a id="ad213ee106b0b9199960859fcc05bb4a1" name="ad213ee106b0b9199960859fcc05bb4a1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Transform</b> (<a class="el" href="../../dd/db7/class_transform.html">Transform</a> existing)</td></tr>
+<tr class="memitem:ad213ee106b0b9199960859fcc05bb4a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#ad213ee106b0b9199960859fcc05bb4a1">Transform</a> (<a class="el" href="../../dd/db7/class_transform.html">Transform</a> existing)</td></tr>
+<tr class="memdesc:ad213ee106b0b9199960859fcc05bb4a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor that copies the values of one <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to another.  <br /></td></tr>
 <tr class="separator:ad213ee106b0b9199960859fcc05bb4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39ad86bec9f3cfc1a671facc7b327c83"><td class="memItemLeft" align="right" valign="top"><a id="a39ad86bec9f3cfc1a671facc7b327c83" name="a39ad86bec9f3cfc1a671facc7b327c83"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Reset</b> ()</td></tr>
+<tr class="memitem:a39ad86bec9f3cfc1a671facc7b327c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a39ad86bec9f3cfc1a671facc7b327c83">Reset</a> ()</td></tr>
+<tr class="memdesc:a39ad86bec9f3cfc1a671facc7b327c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the values of this <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to their defaults. The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will also be set to its identity state.  <br /></td></tr>
 <tr class="separator:a39ad86bec9f3cfc1a671facc7b327c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:acdb3d31202b062ce8dce7337fb571107"><td class="memItemLeft" align="right" valign="top"><a id="acdb3d31202b062ce8dce7337fb571107" name="acdb3d31202b062ce8dce7337fb571107"></a>
 <a class="el" href="../../d6/d3f/class_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Matrix</b><code> [get]</code></td></tr>
+<tr class="memdesc:acdb3d31202b062ce8dce7337fb571107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the transformed <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>. <br /></td></tr>
 <tr class="separator:acdb3d31202b062ce8dce7337fb571107"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bddd42be0ee4b789e717d1cb821550a"><td class="memItemLeft" align="right" valign="top"><a id="a4bddd42be0ee4b789e717d1cb821550a" name="a4bddd42be0ee4b789e717d1cb821550a"></a>
-<a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Scale</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a4bddd42be0ee4b789e717d1cb821550a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a4bddd42be0ee4b789e717d1cb821550a">Scale</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a4bddd42be0ee4b789e717d1cb821550a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or Sets the Scale.  <br /></td></tr>
 <tr class="separator:a4bddd42be0ee4b789e717d1cb821550a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f6e75cd777a409f11673c1b0424e04a"><td class="memItemLeft" align="right" valign="top"><a id="a6f6e75cd777a409f11673c1b0424e04a" name="a6f6e75cd777a409f11673c1b0424e04a"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Rotation</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a6f6e75cd777a409f11673c1b0424e04a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a6f6e75cd777a409f11673c1b0424e04a">Rotation</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a6f6e75cd777a409f11673c1b0424e04a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or Sets the Rotation.  <br /></td></tr>
 <tr class="separator:a6f6e75cd777a409f11673c1b0424e04a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aa2c74634f5c75e88f4dae6490d3308"><td class="memItemLeft" align="right" valign="top"><a id="a6aa2c74634f5c75e88f4dae6490d3308" name="a6aa2c74634f5c75e88f4dae6490d3308"></a>
-<a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Translation</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a6aa2c74634f5c75e88f4dae6490d3308"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/db7/class_transform.html#a6aa2c74634f5c75e88f4dae6490d3308">Translation</a><code> [get, set]</code></td></tr>
+<tr class="memdesc:a6aa2c74634f5c75e88f4dae6490d3308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets or Sets the Translation.  <br /></td></tr>
 <tr class="separator:a6aa2c74634f5c75e88f4dae6490d3308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class that represents a Transformation <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and stores the relevant data. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6dfe6a4b1d69e04da731d9d5795e3b8f" name="a6dfe6a4b1d69e04da731d9d5795e3b8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dfe6a4b1d69e04da731d9d5795e3b8f">&#9670;&#160;</a></span>Transform() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Transform.Transform </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor that defaults the values, and has an identity matrix for the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> data. </p>
+<p>The Scale will have both 'X' and 'Y' values set to 1.0. The Rotation will be 0.0. The Translation will have both 'X' and 'Y' values set to 0.0. </p>
+
+</div>
+</div>
+<a id="a4f5da089246b59810429c325316b69fe" name="a4f5da089246b59810429c325316b69fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f5da089246b59810429c325316b69fe">&#9670;&#160;</a></span>Transform() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Transform.Transform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td>
+          <td class="paramname"><em>scale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rotation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a>&#160;</td>
+          <td class="paramname"><em>translation</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor that allows the specification of Scale, Rotation, and Translation. </p>
+<p>This can throw the following exceptions:</p><ul>
+<li>ArgumentNullException: if either 'scale' or 'translation' are null.</li>
+<li>ArgumentException: if 'rotation' is NaN, PositiveInfinity, or NegativeInfinity. </li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>The scale of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
+    <tr><td class="paramname">rotation</td><td>The rotation of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
+    <tr><td class="paramname">translation</td><td>The translation of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad213ee106b0b9199960859fcc05bb4a1" name="ad213ee106b0b9199960859fcc05bb4a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad213ee106b0b9199960859fcc05bb4a1">&#9670;&#160;</a></span>Transform() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Transform.Transform </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/db7/class_transform.html">Transform</a>&#160;</td>
+          <td class="paramname"><em>existing</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor that copies the values of one <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to another. </p>
+<p>This will throw an 'ArgumentNullException' if 'existing' is null. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">existing</td><td>The existing <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to duplicate.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a39ad86bec9f3cfc1a671facc7b327c83" name="a39ad86bec9f3cfc1a671facc7b327c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39ad86bec9f3cfc1a671facc7b327c83">&#9670;&#160;</a></span>Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Transform.Reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the values of this <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to their defaults. The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will also be set to its identity state. </p>
+<p>The Scale will have both 'X' and 'Y' values set to 1.0. The Rotation will be 0.0. The Translation will have both 'X' and 'Y' values set to 0.0. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a6f6e75cd777a409f11673c1b0424e04a" name="a6f6e75cd777a409f11673c1b0424e04a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f6e75cd777a409f11673c1b0424e04a">&#9670;&#160;</a></span>Rotation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Transform.Rotation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or Sets the Rotation. </p>
+<p>This will throw an "ArgumentException" if is set to NaN, PositiveInfinity, or NegativeInfinity. </p>
+
+</div>
+</div>
+<a id="a4bddd42be0ee4b789e717d1cb821550a" name="a4bddd42be0ee4b789e717d1cb821550a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bddd42be0ee4b789e717d1cb821550a">&#9670;&#160;</a></span>Scale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> Transform.Scale</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or Sets the Scale. </p>
+<p>This will throw an 'ArgumentNullException' if it is set to null. After setting the Scale, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+
+</div>
+</div>
+<a id="a6aa2c74634f5c75e88f4dae6490d3308" name="a6aa2c74634f5c75e88f4dae6490d3308"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aa2c74634f5c75e88f4dae6490d3308">&#9670;&#160;</a></span>Translation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d8/dbe/class_vector2.html">Vector2</a> Transform.Translation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets or Sets the Translation. </p>
+<p>This will throw an 'ArgumentNullException' if it is set to null. After setting the Translation, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Khartyko.InsigniaCreator/Khartyko.InsigniaCreator.Library/Data/Transform.cs</li>
 </ul>

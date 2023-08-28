@@ -4,8 +4,10 @@ var indexSectionsWithContent =
   1: "achilmnprtv",
   2: "behimortv",
   3: "oz",
-  4: "dhlstvxy",
-  5: "lm"
+  4: "m",
+  5: "cilpr",
+  6: "dhilmrstvxy",
+  7: "lm"
 };
 
 var indexSectionNames =
@@ -14,8 +16,10 @@ var indexSectionNames =
   1: "classes",
   2: "functions",
   3: "variables",
-  4: "properties",
-  5: "groups"
+  4: "enums",
+  5: "enumvalues",
+  6: "properties",
+  7: "groups"
 };
 
 var indexSectionLabels =
@@ -24,7 +28,9 @@ var indexSectionLabels =
   1: "Classes",
   2: "Functions",
   3: "Variables",
-  4: "Properties",
-  5: "Modules"
+  4: "Enumerations",
+  5: "Enumerator",
+  6: "Properties",
+  7: "Modules"
 };
 
