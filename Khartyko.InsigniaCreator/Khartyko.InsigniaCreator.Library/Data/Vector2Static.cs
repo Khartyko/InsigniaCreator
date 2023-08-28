@@ -1,4 +1,5 @@
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+
 namespace Khartyko.InsigniaCreator.Library.Data;
 
 public partial class Vector2
@@ -26,7 +27,9 @@ public partial class Vector2
 
         return new Vector2(-vector.X, -vector.Y);
     }
-    
+
+    #region Addition
+
     /// <summary>
     /// Operator that adds both values of a Vector2 to a double and returns the results as a Vector2.
     /// </summary>
@@ -86,6 +89,10 @@ public partial class Vector2
         return new Vector2(left.X + right.X, left.Y + right.Y);
     }
 
+    #endregion Addition
+
+    #region Subtraction
+
     /// <summary>
     /// Operator that subtracts both values of a Vector2 from a double and returns the results as a Vector2.
     /// </summary>
@@ -142,6 +149,10 @@ public partial class Vector2
 
         return new Vector2(left.X - right.X, left.Y - right.Y);
     }
+
+    #endregion Subtraction
+
+    #region Multiplication
 
     /// <summary>
     /// Operator that multiplies both values of a Vector2 to a double and returns the results as a Vector2.
@@ -202,6 +213,10 @@ public partial class Vector2
         return new Vector2(left.X * right.X, left.Y * right.Y);
     }
 
+    #endregion Multiplication
+
+    #region Division
+
     /// <summary>
     /// Operator that divides a double by both values of a Vector2 and returns the results as a Vector2.
     /// </summary>
@@ -256,4 +271,6 @@ public partial class Vector2
 
         return new Vector2(left.X / right.X, left.Y / right.Y);
     }
+
+    #endregion Division
 }
