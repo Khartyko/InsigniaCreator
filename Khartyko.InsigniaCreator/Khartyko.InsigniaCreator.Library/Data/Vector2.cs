@@ -18,9 +18,7 @@ public partial class Vector2
     /// <summary>
     /// Accesses the first value of a Vector2 instance.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentException' if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
+    /// <exception cref="ArgumentException">Can be thrown if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public double X
     {
         get => _x;
@@ -35,9 +33,7 @@ public partial class Vector2
     /// <summary>
     /// Accesses the second value of a Vector2 instance.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentException' if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
+    /// <exception cref="ArgumentException">Can be thrown if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public double Y
     {
         get => _y;
@@ -57,12 +53,9 @@ public partial class Vector2
     /// <summary>
     /// Gets a double using the index operator.
     /// </summary>
-    /// <remarks>
-    /// The following exceptions can be thrown:
-    /// - ArgumentOutOfRangeException: If the index used is not 0 or 1.
-    /// - ArgumentException: If the value is NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
     /// <param name="idx">The index of the value</param>
+    /// <exception cref="ArgumentOutOfRangeException">'index' is neither 0 or 1</exception>
+    /// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public double this[int idx]
     {
         get
@@ -91,10 +84,8 @@ public partial class Vector2
     /// <summary>
     /// Creates a Vector2 instance with both values being the double value passed in.
     /// </summary>
-    /// <remarks>
-    /// This can throw an 'ArgumentException' if the value is NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
     /// <param name="value">The value of both 'X' and 'Y'.</param>
+    /// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public Vector2(double value)
         : this(value, value)
     {
@@ -103,11 +94,9 @@ public partial class Vector2
     /// <summary>
     /// Creates a Vector2 instance with 2 double values.
     /// </summary>
-    /// <remarks>
-    /// This can throw an 'ArgumentException' if either value is NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
     /// <param name="x">The 'X' value.</param>
     /// <param name="y">The 'Y' value.</param>
+    /// <exception cref="ArgumentException">Can be thrown if 'x' or 'y' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public Vector2(double x, double y)
     {
         AssertionHelper.InvalidDoubleCheck(x, nameof(x));
@@ -120,10 +109,8 @@ public partial class Vector2
     /// <summary>
     /// Copies the values of one Vector2 to another.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'vec2' is null.
-    /// </remarks>
     /// <param name="vec2">The existing Vector2 to duplicate.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'vec2' is null.</exception>
     public Vector2(Vector2 vec2)
     {
         AssertionHelper.NullCheck(vec2, nameof(vec2));
@@ -137,9 +124,9 @@ public partial class Vector2
     /// </summary>
     /// <remarks>
     /// The 'Z' value of the Vector3 is ignored.
-    /// This will throw an 'ArgumentNullException' if 'vec3' is null.
     /// </remarks>
     /// <param name="vec2">The existing Vector3 to duplicate.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'vec3' is null.</exception>
     public Vector2(Vector3 vec3)
     {
         AssertionHelper.NullCheck(vec3, nameof(vec3));
@@ -152,10 +139,9 @@ public partial class Vector2
     /// Override that compares the 'X' and 'Y' values of 2 Vector2s.
     /// </summary>
     /// <remarks>
-    /// The following outcomes are possible:
-    /// - If 'obj' is null, it'll return false.
-    /// - If 'obj' is this, it'll return true.
-    /// - Otherwise, the values are compared outright.
+    /// If the object is null, it'll return false.
+    /// If the object is 'this', it'll return true.
+    /// Otherwise, the values are compared outright.
     /// </remarks>
     /// <param name="obj">The object to compare to this Vector2 instance.</param>
     /// <returns>A boolean value if the object is equal to this Vector2 instance.</returns>

@@ -23,9 +23,9 @@ public class Transform
     /// Gets or Sets the Scale.
     /// </summary>
     /// <remarks>
-    /// This will throw an 'ArgumentNullException' if it is set to null.
     /// After setting the Scale, the Matrix will be updated to reflect the new changes.
     /// </remarks>
+    /// <exception cref="ArgumentNullException">Can be thrown if it's set to null.</exception>
     public Vector2 Scale
     {
         get => _scale;
@@ -43,9 +43,7 @@ public class Transform
     /// <summary>
     /// Gets or Sets the Rotation.
     /// </summary>
-    /// <remarks>
-    /// This will throw an "ArgumentException" if is set to NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
+    /// <exception cref="ArgumentException">Can be thrown if it's set to NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public double Rotation
     {
         get => _rotation;
@@ -64,9 +62,9 @@ public class Transform
     /// Gets or Sets the Translation.
     /// </summary>
     /// <remarks>
-    /// This will throw an 'ArgumentNullException' if it is set to null.
     /// After setting the Translation, the Matrix will be updated to reflect the new changes.
     /// </remarks>
+    /// <exception cref="ArgumentNullException">Can be thrown if it's set to null.</exception>
     public Vector2 Translation
     {
         get => _translation;
@@ -101,14 +99,11 @@ public class Transform
     /// <summary>
     /// Constructor that allows the specification of Scale, Rotation, and Translation.
     /// </summary>
-    /// <remarks>
-    /// This can throw the following exceptions:
-    /// - ArgumentNullException: if either 'scale' or 'translation' are null.
-    /// - ArgumentException: if 'rotation' is NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
     /// <param name="scale">The scale of the Transform.</param>
     /// <param name="rotation">The rotation of the Transform.</param>
     /// <param name="translation">The translation of the Transform.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if either 'scale' or 'translation' are null.</exception>
+    /// <exception cref="ArgumentException">Can be thrown if 'rotation' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public Transform(Vector2 scale, double rotation, Vector2 translation)
     {
         AssertionHelper.NullCheck(scale, nameof(scale));
@@ -127,10 +122,8 @@ public class Transform
     /// <summary>
     /// Constructor that copies the values of one Transform to another.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'existing' is null.
-    /// </remarks>
     /// <param name="existing">The existing Transform to duplicate.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'existing' is null.</exception>
     public Transform(Transform existing)
     {
         AssertionHelper.NullCheck(existing, nameof(existing));

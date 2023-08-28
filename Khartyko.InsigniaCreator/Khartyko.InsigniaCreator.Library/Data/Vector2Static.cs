@@ -11,6 +11,7 @@ public partial class Vector2
     /// Vector2 with 'X' and 'Y' values of 0.0.
     /// </summary>
     public static readonly Vector2 Zero = new(0, 0);
+    
     /// <summary>
     /// Vector2 with 'X' and 'Y' values of 1.0.
     /// </summary>
@@ -19,10 +20,8 @@ public partial class Vector2
     /// <summary>
     /// Operator that negates a Vector2, making both values change their sign
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'vector' is null
-    /// </remarks>
     /// <param name="vector">The Vector2 to negate</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'vector' is null.</exception>
     /// <returns>A Vector2 that has negated values from the operand.</returns>
     public static Vector2 operator -(Vector2 vector)
     {
@@ -37,14 +36,12 @@ public partial class Vector2
     /// Operator that adds both values of a Vector2 to a double and returns the results as a Vector2.
     /// </summary>
     /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.
-    /// - ArgumentNullException: If 'right' is null.
-    ///
     /// This is functionally the same as Vector2 + double.
     /// </remarks>
     /// <param name="left">The first double operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentException">If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
+    /// <exception cref="ArgumentNullException">If 'right' is null.</exception>
     /// <returns>A Vector2 with the addition results from both operands.</returns>
     public static Vector2 operator +(double left, Vector2 right)
     {
@@ -58,14 +55,12 @@ public partial class Vector2
     /// Operator that adds a double to both values of a Vector2 and returns the results as a Vector2.
     /// </summary>
     /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentNullException: If 'left' is null
-    /// - ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity
-    ///
     /// This is functionally the same as double + Vector2.
     /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second double operand.</param>
+    /// <exception cref="ArgumentNullException">If 'left' is null</exception>
+    /// <exception cref="ArgumentException">If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
     /// <returns>A Vector2 with the addition results from both operands.</returns>
     public static Vector2 operator +(Vector2 left, double right)
     {
@@ -78,11 +73,9 @@ public partial class Vector2
     /// <summary>
     /// Operator that adds 2 Vector2 instances and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'left' or 'right' is null.
-    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'left' or 'right' is null.</exception>
     /// <returns>A Vector2 with the addition results from both operands.</returns>
     public static Vector2 operator +(Vector2 left, Vector2 right)
     {
@@ -103,11 +96,11 @@ public partial class Vector2
     /// This will throw the following exceptions:
     /// - ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.
     /// - ArgumentNullException: If 'right' is null.
-    ///
-    /// This is functionally the same as 
     /// </remarks>
     /// <param name="left">The first double operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentException">If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
+    /// <exception cref="ArgumentNullException">If 'right' is null</exception>
     /// <returns>A Vector2 with the subtraction results from both operands.</returns>
     public static Vector2 operator -(double left, Vector2 right)
     {
@@ -127,6 +120,8 @@ public partial class Vector2
     /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second double operand.</param>
+    /// <exception cref="ArgumentNullException">If 'left' is null</exception>
+    /// <exception cref="ArgumentException">If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
     /// <returns>A Vector2 with the subtraction results from both operands.</returns>
     public static Vector2 operator -(Vector2 left, double right)
     {
@@ -139,11 +134,9 @@ public partial class Vector2
     /// <summary>
     /// Operator that subtracts one Vector2 instance from another and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'left' or 'right' is null.
-    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'left' or 'right' is null.</exception>
     /// <returns>A Vector2 with the subtraction results from both operands.</returns>
     public static Vector2 operator -(Vector2 left, Vector2 right)
     {
@@ -161,14 +154,12 @@ public partial class Vector2
     /// Operator that multiplies both values of a Vector2 to a double and returns the results as a Vector2.
     /// </summary>
     /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentException: If 'value' is either NaN, PositiveInfinity, or NegativeInfinity.
-    /// - ArgumentNullException: If 'vector' is null.
-    ///
     /// This is functionally the same as Vector2 * double.
     /// </remarks>
     /// <param name="left">The first double operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentException">If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
+    /// <exception cref="ArgumentNullException">If 'right' is null</exception>
     /// <returns>A Vector2 with the multiplication results from both operands.</returns>
     public static Vector2 operator *(double left, Vector2 right)
     {
@@ -182,14 +173,12 @@ public partial class Vector2
     /// Operator that multiplies a double to both values of a Vector2 and returns the results as a Vector2.
     /// </summary>
     /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentNullException: If 'left' is null.
-    /// - ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.
-    ///
     /// This is functionally the same as Vector2 * double.
     /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second double operand.</param>
+    /// <exception cref="ArgumentNullException">If 'left' is null</exception>
+    /// <exception cref="ArgumentException">If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
     /// <returns>A Vector2 with the multiplication results from both operands.</returns>
     public static Vector2 operator *(Vector2 left, double right)
     {
@@ -202,11 +191,9 @@ public partial class Vector2
     /// <summary>
     /// Operator that multiplies 2 Vector2 instances and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'left' or 'right' is null.
-    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'left' or 'right' is null.</exception>
     /// <returns>A Vector2 with the multiplication results from both operands.</returns>
     public static Vector2 operator *(Vector2 left, Vector2 right)
     {
@@ -223,13 +210,10 @@ public partial class Vector2
     /// <summary>
     /// Operator that divides a double by both values of a Vector2 and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.
-    /// - ArgumentNullException: If 'right' is null.
-    /// </remarks>
     /// <param name="left">The first double operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentException">If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
+    /// <exception cref="ArgumentNullException">If 'right' is null.</exception>
     /// <returns>A Vector2 with the division results from both operands.</returns>
     public static Vector2 operator /(double left, Vector2 right)
     {
@@ -242,13 +226,10 @@ public partial class Vector2
     /// <summary>
     /// Operator that divides both values of a Vector2 by a double and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw the following exceptions:
-    /// - ArgumentNullException: If 'left' is null.
-    /// - ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.
-    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second double operand.</param>
+    /// <exception cref="ArgumentNullException">If 'left' is null</exception>
+    /// <exception cref="ArgumentException">If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</exception>
     /// <returns>A Vector2 with the division results from both operands.</returns>
     public static Vector2 operator /(Vector2 left, double right)
     {
@@ -261,11 +242,9 @@ public partial class Vector2
     /// <summary>
     /// Operator that divides one Vector2 instance from another and returns the results as a Vector2.
     /// </summary>
-    /// <remarks>
-    /// This will throw an 'ArgumentNullException' if 'left' or 'right' is null.
-    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second Vector2 operand.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'left' or 'right' is null.</exception>
     /// <returns>A Vector2 with the division results from both operands.</returns>
     public static Vector2 operator /(Vector2 left, Vector2 right)
     {
