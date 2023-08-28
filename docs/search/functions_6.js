@@ -1,5 +1,30 @@
 var searchData=
 [
-  ['reflectionmetadata_0',['ReflectionMetadata',['../df/d34/class_reflection_metadata.html#aa49fc2b4433c802be3f92ea8d7b46def',1,'ReflectionMetadata']]],
-  ['reset_1',['Reset',['../d6/d3f/class_matrix.html#a2590bfe043e80d68ee886b30924d3243',1,'Matrix.Reset()'],['../dd/db7/class_transform.html#a39ad86bec9f3cfc1a671facc7b327c83',1,'Transform.Reset()']]]
+  ['head_5fget_5fsucceeds_0',['Head_Get_Succeeds',['../d1/d94/class_link_tests.html#a305979d585cf3c16acb1ba169db56f95',1,'LinkTests']]],
+  ['head_5fset_5fmatchestail_5ffails_1',['Head_Set_MatchesTail_Fails',['../d1/d94/class_link_tests.html#a871a7a88aab4960590411b25745d0eba',1,'LinkTests']]],
+  ['head_5fset_5fnullvalue_5ffails_2',['Head_Set_NullValue_Fails',['../d1/d94/class_link_tests.html#ad1342795832e4b69b4a55991900173d9',1,'LinkTests']]],
+  ['head_5fset_5fsucceeds_3',['Head_Set_Succeeds',['../d1/d94/class_link_tests.html#a87ace13099062e3904ef85adaf099a38',1,'LinkTests']]],
+  ['height_5fget_5fsucceeds_4',['Height_Get_Succeeds',['../d5/d51/class_atlas_tests.html#aa00ef2e846554f8dddb0e8ffd0db4aea',1,'AtlasTests']]],
+  ['height_5fset_5finvalidwidth_5ffails_5',['Height_Set_InvalidWidth_Fails',['../d5/d51/class_atlas_tests.html#a7de14d4e988bb7190985bca2116bac63',1,'AtlasTests']]],
+  ['height_5fset_5fsucceeds_6',['Height_Set_Succeeds',['../d5/d51/class_atlas_tests.html#a35f64b91334a5fd1b8de1f3c55bdcf78',1,'AtlasTests']]],
+  ['height_5fset_5fwidthoutofbounds_5ffails_7',['Height_Set_WidthOutOfBounds_Fails',['../d5/d51/class_atlas_tests.html#aaeaa5b1276375d0180b7dd0e60dbd2db',1,'AtlasTests']]],
+  ['hexstring_8',['HexString',['../de/db7/class_rgb_color.html#ae0220d35ab94d3c925067e451bfb3e32',1,'RgbColor']]],
+  ['hexstring_5fincludealphaonly_5fsucceeds_9',['HexString_IncludeAlphaOnly_Succeeds',['../dc/d01/class_rgb_color_tests.html#ae41fa56f856d91c034088209b65602da',1,'RgbColorTests']]],
+  ['hexstring_5fincludeboth_5fsucceeds_10',['HexString_IncludeBoth_Succeeds',['../dc/d01/class_rgb_color_tests.html#ad09580ba809dbc696bd66d68e93e8e77',1,'RgbColorTests']]],
+  ['hexstring_5fincludeoctothorpeonly_5fsucceeds_11',['HexString_IncludeOctothorpeOnly_Succeeds',['../dc/d01/class_rgb_color_tests.html#ab9bae5669990945d3d6523dbdd57324a',1,'RgbColorTests']]],
+  ['hsvcolor_12',['HsvColor',['../d0/da5/class_hsv_color.html#a37c7558947b8bffa746bd01b31b59e14',1,'HsvColor.HsvColor()'],['../d0/da5/class_hsv_color.html#ad7c9a4b82dfd43c972c0a68ea73a213c',1,'HsvColor.HsvColor(double hue, double saturation, double value)'],['../d0/da5/class_hsv_color.html#af5425bf00b675296aedcd7c6a7ad56c2',1,'HsvColor.HsvColor(HsvColor hsvColor)']]],
+  ['hsvcolor_5fcopyconstructor_5fnullvalue_5ffails_13',['HsvColor_CopyConstructor_NullValue_Fails',['../d4/dfe/class_hsv_color_tests.html#aed9bdf3bf18544c8ed9ef33520ff7c94',1,'HsvColorTests']]],
+  ['hsvcolor_5fcopyconstructor_5fsucceeds_14',['HsvColor_CopyConstructor_Succeeds',['../d4/dfe/class_hsv_color_tests.html#adb01571e53b9440b6c0ed0dc2b4c61b0',1,'HsvColorTests']]],
+  ['hsvcolor_5fdoubleparameters_5fhueoutofrange_5ffails_15',['HsvColor_DoubleParameters_HueOutOfRange_Fails',['../d4/dfe/class_hsv_color_tests.html#a8f3e78188395c95879b6c2058e333b09',1,'HsvColorTests']]],
+  ['hsvcolor_5fdoubleparameters_5fsaturationoutofrange_5ffails_16',['HsvColor_DoubleParameters_SaturationOutOfRange_Fails',['../d4/dfe/class_hsv_color_tests.html#a70de9c14eed65681febad975595f0cd6',1,'HsvColorTests']]],
+  ['hsvcolor_5fdoubleparameters_5fsucceeds_17',['HsvColor_DoubleParameters_Succeeds',['../d4/dfe/class_hsv_color_tests.html#aae372c72721b4c9b119dd82b5b8af92f',1,'HsvColorTests']]],
+  ['hsvcolor_5fdoubleparameters_5fvalueoutofrange_5ffails_18',['HsvColor_DoubleParameters_ValueOutOfRange_Fails',['../d4/dfe/class_hsv_color_tests.html#a547da118a008c1d4d5463cb13473def3',1,'HsvColorTests']]],
+  ['hsvcolor_5fequals_5fnullobject_5ffails_19',['HsvColor_Equals_NullObject_Fails',['../d4/dfe/class_hsv_color_tests.html#a1f33ff4e903d105db45fed1ff1535783',1,'HsvColorTests']]],
+  ['hsvcolor_5fequals_5fsucceeds_20',['HsvColor_Equals_Succeeds',['../d4/dfe/class_hsv_color_tests.html#a132db46225393a0e9fd237fddf3684b6',1,'HsvColorTests']]],
+  ['hsvcolor_5fequals_5fvalidobject_5ffails_21',['HsvColor_Equals_ValidObject_Fails',['../d4/dfe/class_hsv_color_tests.html#a701f1cdcf8a56d259f1cedc315743598',1,'HsvColorTests']]],
+  ['hsvcolor_5fparameterless_5fsucceeds_22',['HsvColor_Parameterless_Succeeds',['../d4/dfe/class_hsv_color_tests.html#a7dcc782367fc08010741268dc173878f',1,'HsvColorTests']]],
+  ['hue_5fget_5fsucceeds_23',['Hue_Get_Succeeds',['../d4/dfe/class_hsv_color_tests.html#a2612450ab64a413cee68ce0d96e75b28',1,'HsvColorTests']]],
+  ['hue_5fset_5finvaliddouble_5ffails_24',['Hue_Set_InvalidDouble_Fails',['../d4/dfe/class_hsv_color_tests.html#ac0074e5702c76272deb582e4547462be',1,'HsvColorTests']]],
+  ['hue_5fset_5fsucceeds_25',['Hue_Set_Succeeds',['../d4/dfe/class_hsv_color_tests.html#a9c681e4a0e0b92e101a3610d34abbd95',1,'HsvColorTests']]],
+  ['hue_5fset_5fvalueoutofrange_5ffails_26',['Hue_Set_ValueOutOfRange_Fails',['../d4/dfe/class_hsv_color_tests.html#a4a85bde11f9917b5a1b3cdb443829611',1,'HsvColorTests']]]
 ];

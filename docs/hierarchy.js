@@ -5,6 +5,7 @@ var hierarchy =
       [ "App", "d8/d97/class_app.html", null ]
     ] ],
     [ "AppTests", "d9/d9d/class_app_tests.html", null ],
+    [ "AssertionHelper", "de/d21/class_assertion_helper.html", null ],
     [ "AssertionHelperTests", "da/d5d/class_assertion_helper_tests.html", null ],
     [ "AtlasTests", "d5/d51/class_atlas_tests.html", null ],
     [ "CartographTests", "de/d6d/class_cartograph_tests.html", null ],
@@ -22,6 +23,7 @@ var hierarchy =
     [ "Link", "d5/d25/class_link.html", null ],
     [ "LinkTests", "d1/d94/class_link_tests.html", null ],
     [ "MainWindowViewModelTests", "dc/dce/class_main_window_view_model_tests.html", null ],
+    [ "MathHelper", "d7/dfb/class_math_helper.html", null ],
     [ "MathHelperTests", "d5/d68/class_math_helper_tests.html", null ],
     [ "Matrix", "d6/d3f/class_matrix.html", null ],
     [ "MatrixTests", "d6/d6e/class_matrix_tests.html", null ],
@@ -41,6 +43,7 @@ var hierarchy =
         [ "MainWindowViewModel", "d7/de6/class_main_window_view_model.html", null ]
       ] ]
     ] ],
+    [ "ReflectionHelper", "dd/dd2/class_reflection_helper.html", null ],
     [ "ReflectionHelperTests", "d4/dc5/class_reflection_helper_tests.html", null ],
     [ "ReflectionMetadata", "df/d34/class_reflection_metadata.html", null ],
     [ "RgbColor", "de/db7/class_rgb_color.html", null ],

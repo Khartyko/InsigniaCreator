@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['length_0',['Length',['../d8/dbe/class_vector2.html#a68c6a77afe5ad09a789bf35f693838e8',1,'Vector2']]]
+  ['data_0',['Data',['../d6/d3f/class_matrix.html#a36e0d16be1536f9e743f7579eb7f0b9e',1,'Matrix']]]
 ];

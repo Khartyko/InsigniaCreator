@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['id_0',['Id',['../de/d13/class_atlas.html#ad31d08abbe5ae85656664848bfb3c226',1,'Atlas.Id()'],['../dd/d0d/class_cartograph.html#a6b4d4e8c4264486388ec8ad401a494b9',1,'Cartograph.Id()'],['../d5/d20/interface_i_entity.html#a3c10be910b264031c6f83d4a6cd55426',1,'IEntity.Id()']]]
+  ['cartographs_0',['Cartographs',['../de/d13/class_atlas.html#ade0ec36d77d1cc3fea85939f6d6906b6',1,'Atlas']]],
+  ['cells_1',['Cells',['../d9/d5f/class_network_base.html#a2633949eca2a715d72073a5ec074b3a0',1,'NetworkBase']]]
 ];
