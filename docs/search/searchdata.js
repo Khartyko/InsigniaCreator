@@ -1,9 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "abimoptv",
-  1: "amptv",
-  2: "bimo",
-  3: "m"
+  0: "abcdehilmnoprstvxyz",
+  1: "achilmnprtv",
+  2: "behimortv",
+  3: "oz",
+  4: "dhlstvxy",
+  5: "lm"
 };
 
 var indexSectionNames =
@@ -11,7 +13,9 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "functions",
-  3: "groups"
+  3: "variables",
+  4: "properties",
+  5: "groups"
 };
 
 var indexSectionLabels =
@@ -19,6 +23,8 @@ var indexSectionLabels =
   0: "All",
   1: "Classes",
   2: "Functions",
-  3: "Modules"
+  3: "Variables",
+  4: "Properties",
+  5: "Modules"
 };
 

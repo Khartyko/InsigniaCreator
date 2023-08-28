@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['program_0',['Program',['../d3/d8a/class_program.html',1,'']]],
-  ['programtests_1',['ProgramTests',['../d5/df2/class_program_tests.html',1,'']]]
+  ['hsvcolor_0',['HsvColor',['../d0/da5/class_hsv_color.html',1,'']]],
+  ['hsvcolortests_1',['HsvColorTests',['../d4/dfe/class_hsv_color_tests.html',1,'']]]
 ];
