@@ -18,7 +18,7 @@ public partial class Vector2
     public static readonly Vector2 One = new(1, 1);
 
     /// <summary>
-    /// Operator that negates a Vector2, making both values change their sign
+    /// Operator that negates a Vector2, making both values change their sign.
     /// </summary>
     /// <param name="vector">The Vector2 to negate</param>
     /// <exception cref="ArgumentNullException">Can be thrown if 'vector' is null.</exception>
@@ -226,6 +226,9 @@ public partial class Vector2
     /// <summary>
     /// Operator that divides both values of a Vector2 by a double and returns the results as a Vector2.
     /// </summary>
+    /// <remarks>
+    /// If the double value is '0.0', Vector2.Zero will be returned, since dividing by 0.0 is invalid.
+    /// </remarks>
     /// <param name="left">The first Vector2 operand.</param>
     /// <param name="right">The second double operand.</param>
     /// <exception cref="ArgumentNullException">If 'left' is null</exception>
@@ -236,7 +239,9 @@ public partial class Vector2
         AssertionHelper.NullCheck(left, nameof(left));
         AssertionHelper.InvalidDoubleCheck(right, nameof(right));
 
-        return new Vector2(left.X / right, left.Y / right);
+        return MathHelper.Equals(right, 0.0)
+            ? Zero
+            : new Vector2(left.X / right, left.Y / right);
     }
 
     /// <summary>

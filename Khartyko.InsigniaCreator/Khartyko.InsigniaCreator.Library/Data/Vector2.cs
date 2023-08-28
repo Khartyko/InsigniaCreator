@@ -54,7 +54,7 @@ public partial class Vector2
     /// Gets a double using the index operator.
     /// </summary>
     /// <param name="idx">The index of the value</param>
-    /// <exception cref="ArgumentOutOfRangeException">'index' is neither 0 or 1</exception>
+    /// <exception cref="ArgumentOutOfRangeException">'index' is neither 0 or 1.</exception>
     /// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public double this[int idx]
     {
@@ -82,9 +82,9 @@ public partial class Vector2
     }
 
     /// <summary>
-    /// Creates a Vector2 instance with both values being the double value passed in.
+    /// Constructs a Vector2 instance with both values being the double value passed in.
     /// </summary>
-    /// <param name="value">The value of both 'X' and 'Y'.</param>
+    /// <param name="value">The value of both 'X' and 'Y' components.</param>
     /// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</exception>
     public Vector2(double value)
         : this(value, value)
@@ -92,7 +92,7 @@ public partial class Vector2
     }
 
     /// <summary>
-    /// Creates a Vector2 instance with 2 double values.
+    /// Constructs a Vector2 instance with 2 double values.
     /// </summary>
     /// <param name="x">The 'X' value.</param>
     /// <param name="y">The 'Y' value.</param>
@@ -125,7 +125,7 @@ public partial class Vector2
     /// <remarks>
     /// The 'Z' value of the Vector3 is ignored.
     /// </remarks>
-    /// <param name="vec2">The existing Vector3 to duplicate.</param>
+    /// <param name="vec3">The existing Vector3 to duplicate.</param>
     /// <exception cref="ArgumentNullException">Can be thrown if 'vec3' is null.</exception>
     public Vector2(Vector3 vec3)
     {
@@ -136,7 +136,7 @@ public partial class Vector2
     }
 
     /// <summary>
-    /// Override that compares the 'X' and 'Y' values of 2 Vector2s.
+    /// Override that compares the 'X' and 'Y' values of 2 Vector2's.
     /// </summary>
     /// <remarks>
     /// If the object is null, it'll return false.
@@ -163,7 +163,7 @@ public partial class Vector2
     }
 
     /// <summary>
-    /// An override of ToString() that creates a string.
+    /// An override of ToString() that Constructs a string.
     /// </summary>
     /// <returns>A string containing the 'X' and 'Y' values.</returns>
     public override string ToString() => $"{{ x: {X}, y: {Y} }}";
