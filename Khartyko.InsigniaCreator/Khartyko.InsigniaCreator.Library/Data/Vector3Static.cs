@@ -11,7 +11,9 @@ public partial class Vector3
 		// Note: This might be changed in the future if the 'Z' value isn't used
 		return new Vector3(-vector.X, -vector.Y, -vector.Z);
 	}
-	
+
+	#region Addition
+
 	public static Vector3 operator +(Vector3 left, Vector3 right)
 	{
 		AssertionHelper.NullCheck(left, nameof(left));
@@ -51,6 +53,10 @@ public partial class Vector3
 
 		return new Vector3(left + right.X, left + right.Y, left + right.Z);
 	}
+
+	#endregion Addition
+
+	#region Subtraction
 
 	public static Vector3 operator -(Vector3 left, Vector3 right)
 	{
@@ -92,6 +98,10 @@ public partial class Vector3
 		return new Vector3(left - right.X, left - right.Y, left - right.Z);
 	}
 
+	#endregion Subtraction
+
+	#region Multiplication
+
 	public static Vector3 operator *(Vector3 left, Vector3 right)
 	{
 		AssertionHelper.NullCheck(left, nameof(left));
@@ -131,6 +141,10 @@ public partial class Vector3
 
 		return new Vector3(left * right.X, left * right.Y, left * right.Z);
 	}
+
+	#endregion Multiplication
+
+	#region Division
 
 	public static Vector3 operator /(Vector3 left, Vector3 right)
 	{
@@ -174,4 +188,6 @@ public partial class Vector3
 			? Zero
 			: new Vector3(left / right.X, left / right.Y, left / right.Z);
 	}
+
+	#endregion Division
 }
