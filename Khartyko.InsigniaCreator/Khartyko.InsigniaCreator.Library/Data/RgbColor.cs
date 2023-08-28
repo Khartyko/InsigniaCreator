@@ -90,7 +90,6 @@ public partial class RgbColor
                 string signature = ReflectionHelper.ConstructMethodSignature(metadata, nameof(hexString));
 
                 throw new ArgumentException($"{signature}\n\t'hexValue' has an incorrect number of characters. Accepted values are in the format 'RGB', 'RGBA', '#RGB', '#RGBA', 'RRGGBB', '#RRGGBB', 'RRGGBBAA', and '#RRGGBBAA'");
-                break;
             }
         }
     }
