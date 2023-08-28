@@ -140,9 +140,10 @@ public class HsvColor
 	/// An override of the default Equals method that checks if it's Hue, Saturation, and Values are equal
 	/// </summary>
 	/// <remarks>
-	/// If 'obj' is null, it'll return false.
-	/// If 'obj' is this, it'll return true.
-	/// Otherwise, the values are compared outright.
+	/// The following outcomes are possible:
+	/// - If 'obj' is null, it'll return false.
+	/// - If 'obj' is this, it'll return true.
+	/// - Otherwise, the values are compared outright.
 	/// </remarks>
 	/// <param name="obj">The object that is compared against this instance of an HSV Color</param>
 	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color </returns>

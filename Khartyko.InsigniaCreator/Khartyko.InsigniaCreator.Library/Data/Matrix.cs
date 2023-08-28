@@ -7,12 +7,25 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
-public class Matrix
+public partial class Matrix
 {
-    private readonly Vector3[] _data;
+    /// <summary>
+    /// This is a property that exposes the matrix's internal data in the form of 3 vectors.
+    /// </summary>
+    /// <remarks>
+    /// There are only 3 vectors present, so any attempt to index beyond 2 will resume in an ArgumentOutOfRangeException.
+    /// </remarks>
+    public Vector3[] Data { get; }
 
-    public Vector3[] Data => _data;
-
+    /// <summary>
+    /// This is an indexing operator on the 'Matrix' class, which allows for accessing the internal vectors.
+    /// </summary>
+    /// <remarks>
+    /// The following exceptions can be thrown:
+    /// - ArgumentOutOfRangeException: if 'idx' does not conform to 0 <= idx <= 2.
+    /// - ArgumentNullException: if the new Vector3 of a valid index is set to null.
+    /// </remarks>
+    /// <param name="idx">The index of the Vector3 that is trying to be retrieved</param>
     public Vector3 this[int idx]
     {
         get
@@ -21,9 +34,9 @@ public class Matrix
 
             return idx switch
             {
-                0 => _data[0],
-                1 => _data[1],
-                _ => _data[2]
+                0 => Data[0],
+                1 => Data[1],
+                _ => Data[2]
             };
         }
 
@@ -32,10 +45,18 @@ public class Matrix
             AssertionHelper.RangeCheck(idx, -1, 3, nameof(idx));
             AssertionHelper.NullCheck(value, nameof(value));
 
-            _data[idx] = value;
+            Data[idx] = value;
         }
     }
 
+    /// <summary>
+    /// This is an indexing operator that accepts 2 value to get a particular double value that's stored within its data
+    /// </summary>
+    /// <remarks>
+    /// Both 'y' and 'x' will throw an 'ArgumentOutOfRangeException' if the value does not conform to 0 <= idx <= 2.ß
+    /// </remarks>
+    /// <param name="y">The index of the row that's trying to be accessed.</param>
+    /// <param name="x">The index of the column that's being accessed.</param>
     public double this[int y, int x]
     {
         get
@@ -43,7 +64,7 @@ public class Matrix
             AssertionHelper.RangeCheck(y, -1, 3, nameof(y));
             AssertionHelper.RangeCheck(x, -1, 3, nameof(x));
             
-            return _data[y][x];
+            return Data[y][x];
         }
 
         set
@@ -52,13 +73,19 @@ public class Matrix
             AssertionHelper.RangeCheck(x, -1, 3, nameof(x));
             AssertionHelper.InvalidDoubleCheck(value, nameof(value));
             
-            _data[y][x] = value;
+            Data[y][x] = value;
         }
     }
 
+    /// <summary>
+    /// The default constructor that sets the values to that of an identity matrix, shown below.
+    /// - 1, 0, 0
+    /// - 0, 1, 0
+    /// - 0, 0, 1
+    /// </summary>
     public Matrix()
     {
-        _data = new[]
+        Data = new[]
         {
             new Vector3(1, 0, 0),
             new Vector3(0, 1, 0),
@@ -66,20 +93,36 @@ public class Matrix
         };
     }
 
+    /// <summary>
+    /// A constructor that accepts 3 Vector3 to set each row of values.
+    /// </summary>
+    /// <remarks>
+    /// This will throw an 'ArgumentNullException' if any of the Vector3s are null.
+    /// </remarks>
+    /// <param name="m0">The first row of values at index 0.</param>
+    /// <param name="m1">The second row of values at index 1.</param>
+    /// <param name="m2">The third row of values at index 2.</param>
     public Matrix(Vector3 m0, Vector3 m1, Vector3 m2)
     {
         AssertionHelper.NullCheck(m0, nameof(m0));
         AssertionHelper.NullCheck(m1, nameof(m1));
         AssertionHelper.NullCheck(m2, nameof(m2));
 
-        _data = new[] { m0, m1, m2 };
+        Data = new[] { m0, m1, m2 };
     }
 
+    /// <summary>
+    /// Create a new matrix from an existing Matrix.
+    /// </summary>
+    /// <remarks>
+    /// This constructor will throw an 'ArgumentNullException' if 'existingMatrix' is null.
+    /// </remarks>
+    /// <param name="existingMatrix">A Matrix that's to be duplicated.</param>
     public Matrix(Matrix existingMatrix)
     {
         AssertionHelper.NullCheck(existingMatrix, nameof(existingMatrix));
 
-        _data = new[]
+        Data = new[]
         {
             new Vector3(existingMatrix[0]),
             new Vector3(existingMatrix[1]),
@@ -87,21 +130,38 @@ public class Matrix
         };
     }
 
+    /// <summary>
+    /// This will reset the values to that of an identity matrix, shown below.
+    /// - 1, 0, 0
+    /// - 0, 1, 0
+    /// - 0, 0, 1
+    /// </summary>
     public void Reset()
     {
-        _data[0][0] = 1.0;
-        _data[0][1] = 0.0;
-        _data[0][2] = 0.0;
+        Data[0][0] = 1.0;
+        Data[0][1] = 0.0;
+        Data[0][2] = 0.0;
 
-        _data[1][0] = 0.0;
-        _data[1][1] = 1.0;
-        _data[1][2] = 0.0;
+        Data[1][0] = 0.0;
+        Data[1][1] = 1.0;
+        Data[1][2] = 0.0;
 
-        _data[2][0] = 0.0;
-        _data[2][1] = 0.0;
-        _data[2][2] = 1.0;
+        Data[2][0] = 0.0;
+        Data[2][1] = 0.0;
+        Data[2][2] = 1.0;
     }
 
+    /// <summary>
+    /// This compares a nullable object instance to this instance of a Matrix, and later the internal values of both Matrices
+    /// </summary>
+    /// <remarks>
+    /// The following outcomes are possible:
+    /// - If 'obj' is null, it'll return false.
+    /// - If 'obj' is this, it'll return true.
+    /// - Otherwise, the values are compared outright.
+    /// </remarks>
+    /// <param name="obj">The object in question to compare to this Matrix instance</param>
+    /// <returns>A boolean value if the object is equal to this Matrix instance</returns>
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) 
@@ -121,112 +181,13 @@ public class Matrix
 
         for (var y = 0; y < 3; y++)
         {
-            if (!_data[y].Equals(matrix._data[y]))
+            if (!Data[y].Equals(matrix.Data[y]))
             {
                 return false;
             }
         }
 
         return true;
-    }
-
-    public static Vector2 operator *(Vector2 vec2, Matrix matrix)
-    {
-        AssertionHelper.NullCheck(vec2, nameof(vec2));
-        AssertionHelper.NullCheck(matrix, nameof(matrix));
-
-        var tempVector = new Vector3(vec2);
-        var resultVector = new Vector3(0, 0, 0);
-
-        for (int y = 0; y < 3; y++)
-        {
-            for (int x = 0; x < 3; x++)
-            {
-                resultVector[y] += tempVector[x] * matrix[y, x];
-            }
-        }
-
-        return new Vector2(resultVector);
-    }
-
-    public static Vector2 operator *(Matrix matrix, Vector2 vec2)
-    {
-        AssertionHelper.NullCheck(matrix, nameof(matrix));
-        AssertionHelper.NullCheck(vec2, nameof(vec2));
-
-        var tempVector = new Vector3(vec2);
-        var resultVector = new Vector3(0, 0, 0);
-
-        for (var y = 0; y < 3; y++)
-        {
-            for (var x = 0; x < 3; x++)
-            {
-                resultVector[y] += tempVector[x] * matrix[y, x];
-            }
-        }
-
-        return new Vector2(resultVector);
-    }
-
-    public static Vector3 operator *(Vector3 vec3, Matrix matrix)
-    {
-        AssertionHelper.NullCheck(vec3, nameof(vec3));
-        AssertionHelper.NullCheck(matrix, nameof(matrix));
-
-        var resultVector = new Vector3(0, 0, 0);
-
-        for (var y = 0; y < 3; y++)
-        {
-            for (var x = 0; x < 3; x++)
-            {
-                resultVector[y] += vec3[x] * matrix[y, x];
-            }
-        }
-
-        return resultVector;
-    }
-
-    public static Vector3 operator *(Matrix matrix, Vector3 vec3)
-    {
-        AssertionHelper.NullCheck(matrix, nameof(matrix));
-        AssertionHelper.NullCheck(vec3, nameof(vec3));
-
-        var resultVector = new Vector3(0, 0, 0);
-
-        for (var y = 0; y < 3; y++)
-        {
-            for (var x = 0; x < 3; x++)
-            {
-                resultVector[y] += vec3[x] * matrix[y, x];
-            }
-        }
-
-        return resultVector;
-    }
-
-    public static Matrix operator *(Matrix left, Matrix right)
-    {
-        AssertionHelper.NullCheck(left, nameof(left));
-        AssertionHelper.NullCheck(right, nameof(right));
-
-        var result = new Matrix(
-            new Vector3(0, 0, 0),
-            new Vector3(0, 0, 0),
-            new Vector3(0, 0, 0)
-        );
-
-        for (var y = 0; y < 3; y++)
-        {
-            for (var x = 0; x < 3; x++)
-            {
-                for (var w = 0; w < 3; w++)
-                {
-                    result[y, x] += left[y, w] * right[w, x];
-                }
-            }
-        }
-
-        return result;
     }
 }
 /** @} */
