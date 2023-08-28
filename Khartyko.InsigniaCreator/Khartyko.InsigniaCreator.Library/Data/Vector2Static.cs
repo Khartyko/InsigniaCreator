@@ -2,6 +2,9 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
+/// <summary>
+/// Section of Vector2 that holds the static methods.
+/// </summary>
 public partial class Vector2
 {
     /// <summary>

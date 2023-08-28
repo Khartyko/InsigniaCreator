@@ -7,6 +7,9 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
 
+/// <summary>
+/// Class that represents 2 double values used in vector maths.
+/// </summary>
 public partial class Vector2
 {
     private double _x;
