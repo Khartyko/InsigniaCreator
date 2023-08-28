@@ -14,6 +14,8 @@ public static partial class ReflectionHelper
 
     public static ReflectionMetadata GetCallerMetadata(int frameOffset = 0)
     {
+        AssertionHelper.PositiveCheck(frameOffset, nameof(frameOffset));
+        
         var stackTrace = new StackTrace();
         StackFrame frame = stackTrace.GetFrame(frameOffset + 1)!;
 

@@ -166,7 +166,7 @@ public class AssertionHelperTests
 	{
 		const int testValue = -1;
 		
-		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
 	}
 
 	#endregion IntValue
@@ -189,7 +189,7 @@ public class AssertionHelperTests
 	{
 		const long testValue = -1;
 		
-		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.PositiveCheck(testValue, nameof(testValue)));
 	}
 
 	#endregion LongValue

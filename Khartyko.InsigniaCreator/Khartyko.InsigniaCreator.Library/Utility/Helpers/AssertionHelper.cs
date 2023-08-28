@@ -116,7 +116,7 @@ public static class AssertionHelper
 
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+        throw new ArgumentOutOfRangeException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
     }
     
     public static void PositiveCheck(long value, string descriptor)
@@ -132,7 +132,7 @@ public static class AssertionHelper
 
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
 
-        throw new ArgumentException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
+        throw new ArgumentOutOfRangeException($"{signature}:\n\t'{descriptor}' cannot be equal to or less than zero; got '{value}'");
     }
     
     public static void PositiveCheck(double value, string descriptor)
