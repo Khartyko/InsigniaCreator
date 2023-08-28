@@ -202,15 +202,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor that allows the specification of Scale, Rotation, and Translation. </p>
-<p>This can throw the following exceptions:</p><ul>
-<li>ArgumentNullException: if either 'scale' or 'translation' are null.</li>
-<li>ArgumentException: if 'rotation' is NaN, PositiveInfinity, or NegativeInfinity. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scale</td><td>The scale of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
     <tr><td class="paramname">rotation</td><td>The rotation of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
     <tr><td class="paramname">translation</td><td>The translation of the <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'scale' or 'translation' are null.</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'rotation' is NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -242,10 +245,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructor that copies the values of one <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to another. </p>
-<p>This will throw an 'ArgumentNullException' if 'existing' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">existing</td><td>The existing <a class="el" href="../../dd/db7/class_transform.html" title="Class that represents a Transformation Matrix, and stores the relevant data.">Transform</a> to duplicate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'existing' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -327,7 +335,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets or Sets the Rotation. </p>
-<p>This will throw an "ArgumentException" if is set to NaN, PositiveInfinity, or NegativeInfinity. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if it's set to NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -352,7 +365,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets or Sets the Scale. </p>
-<p>This will throw an 'ArgumentNullException' if it is set to null. After setting the Scale, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+<p>After setting the Scale, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if it's set to null.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -377,7 +396,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets or Sets the Translation. </p>
-<p>This will throw an 'ArgumentNullException' if it is set to null. After setting the Translation, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+<p>After setting the Translation, the <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> will be updated to reflect the new changes. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if it's set to null.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

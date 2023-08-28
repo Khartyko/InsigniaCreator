@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('d6/d3f/class_matrix.html','../../'); i
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afab2892bc6e20ba00745e13efc047f54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d3f/class_matrix.html#afab2892bc6e20ba00745e13efc047f54">Matrix</a> ()</td></tr>
-<tr class="memdesc:afab2892bc6e20ba00745e13efc047f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor that sets the values to that of an identity matrix, shown below.  <br /></td></tr>
+<tr class="memdesc:afab2892bc6e20ba00745e13efc047f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The default constructor that sets the values to that of an identity matrix.  <br /></td></tr>
 <tr class="separator:afab2892bc6e20ba00745e13efc047f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeac4fc754c10b186e84fe648c8f3db95"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d3f/class_matrix.html#aeac4fc754c10b186e84fe648c8f3db95">Matrix</a> (<a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> m0, <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> m1, <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> m2)</td></tr>
 <tr class="memdesc:aeac4fc754c10b186e84fe648c8f3db95"><td class="mdescLeft">&#160;</td><td class="mdescRight">A constructor that accepts 3 <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> to set each row of values.  <br /></td></tr>
@@ -113,7 +113,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a798c8a20be982dbece9a2db856f8a2e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new matrix from an existing <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>.  <br /></td></tr>
 <tr class="separator:a798c8a20be982dbece9a2db856f8a2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2590bfe043e80d68ee886b30924d3243"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d3f/class_matrix.html#a2590bfe043e80d68ee886b30924d3243">Reset</a> ()</td></tr>
-<tr class="memdesc:a2590bfe043e80d68ee886b30924d3243"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will reset the values to that of an identity matrix, shown below.  <br /></td></tr>
+<tr class="memdesc:a2590bfe043e80d68ee886b30924d3243"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will reset the values to that of an identity matrix.  <br /></td></tr>
 <tr class="separator:a2590bfe043e80d68ee886b30924d3243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac003f550c277dddf3f2384f40fd51f67"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d3f/class_matrix.html#ac003f550c277dddf3f2384f40fd51f67">Equals</a> (object? obj)</td></tr>
 <tr class="memdesc:ac003f550c277dddf3f2384f40fd51f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">This compares a nullable object instance to this instance of a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and later the internal values of both Matrices.  <br /></td></tr>
@@ -175,12 +175,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The default constructor that sets the values to that of an identity matrix, shown below. </p>
-<ul>
-<li>1, 0, 0</li>
-<li>0, 1, 0</li>
-<li>0, 0, 1 </li>
-</ul>
+<p>The default constructor that sets the values to that of an identity matrix. </p>
 
 </div>
 </div>
@@ -225,12 +220,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>A constructor that accepts 3 <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> to set each row of values. </p>
-<p>This will throw an 'ArgumentNullException' if any of the Vector3s are null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">m0</td><td>The first row of values at index 0.</td></tr>
     <tr><td class="paramname">m1</td><td>The second row of values at index 1.</td></tr>
     <tr><td class="paramname">m2</td><td>The third row of values at index 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if any of the <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a>'s are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -262,10 +262,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create a new matrix from an existing <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>. </p>
-<p>This constructor will throw an 'ArgumentNullException' if 'existingMatrix' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">existingMatrix</td><td>A <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> that's to be duplicated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'existingMatrix' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -298,18 +303,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This compares a nullable object instance to this instance of a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and later the internal values of both Matrices. </p>
-<p>The following outcomes are possible:</p><ul>
-<li>If 'obj' is null, it'll return false.</li>
-<li>If 'obj' is this, it'll return true.</li>
-<li>Otherwise, the values are compared outright. </li>
-</ul>
+<p>If the object is null, it'll return false. If the object is 'this', it'll return true. Otherwise, the values are compared outright. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">obj</td><td>The object in question to compare to this <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> instance</td></tr>
+    <tr><td class="paramname">obj</td><td>The object in question to compare to this <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> instance.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A boolean value if the object is equal to this <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> instance</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean value if the object is equal to this <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> instance.</dd></dl>
 
 </div>
 </div>
@@ -348,11 +349,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This multiplies 2 Matrices, and returns the resulting <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>. </p>
-<p>This will throw an 'ArgumentNullException' if either 'left' or 'right' are null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>This first <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'left' or 'right' are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -395,11 +401,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This multiplies a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> by a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>, and returns a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if either 'vec2' or 'matrix' are null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">matrix</td><td>The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> that's used to create a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>.</td></tr>
     <tr><td class="paramname">vec2</td><td>The <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> in question.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'matrix' or 'vec2' are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -442,11 +453,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This multiplies a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> by a <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a>, and returns a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if either 'matrix' or 'vec3' are null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">matrix</td><td>The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> that's used to create a modified <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a>.</td></tr>
     <tr><td class="paramname">vec3</td><td>The <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> in question.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'matrix' or 'vec3' are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -489,12 +505,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This multiplies a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> by a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and returns a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if either 'vec2' or 'matrix' are null.</p>
-<p>This is functionally the same as matrix * vec2 </p>
+<p>This is functionally the same as matrix * vec2. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vec2</td><td>The <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> in question.</td></tr>
     <tr><td class="paramname">matrix</td><td>The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> that's used to create a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'vec2' or 'matrix' are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -537,11 +558,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This multiplies a <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> by a <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>, and returns a modified <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if either 'vec3' or 'matrix' are null. This is functionally the same as matrix * vec3 </p>
+<p>This is functionally the same as matrix * vec3. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vec3</td><td>The <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> in question.</td></tr>
     <tr><td class="paramname">matrix</td><td>The <a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a> that's used to create a modified <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if either 'vec3' or 'matrix' are null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -572,12 +599,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>This will reset the values to that of an identity matrix, shown below. </p>
-<ul>
-<li>1, 0, 0</li>
-<li>0, 1, 0</li>
-<li>0, 0, 1 </li>
-</ul>
+<p>This will reset the values to that of an identity matrix. </p>
 
 </div>
 </div>
@@ -603,7 +625,6 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is a property that exposes the matrix's internal data in the form of 3 vectors. </p>
-<p>There are only 3 vectors present, so any attempt to index beyond 2 will resume in an ArgumentOutOfRangeException. </p>
 
 </div>
 </div>
@@ -628,13 +649,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is an indexing operator on the '<a class="el" href="../../d6/d3f/class_matrix.html" title="This class houses the static operator overloads.">Matrix</a>' class, which allows for accessing the internal vectors. </p>
-<p>The following exceptions can be thrown:</p><ul>
-<li>ArgumentOutOfRangeException: if 'idx' does not conform to 0 &lt;= idx &lt;= 2.</li>
-<li>ArgumentNullException: if the new <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> of a valid index is set to null. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">idx</td><td>The index of the <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> that is trying to be retrieved</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if 'idx' is not between 0 and 2, inclusively.</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if an indexed vector is set to null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -662,11 +686,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is an indexing operator that accepts 2 value to get a particular double value that's stored within its data. </p>
-<p>Both 'y' and 'x' will throw an 'ArgumentOutOfRangeException' if the value does not conform to 0 &lt;= idx &lt;= 2.ß </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">y</td><td>The index of the row that's trying to be accessed.</td></tr>
     <tr><td class="paramname">x</td><td>The index of the column that's being accessed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if either 'y' or 'x' are not between 0 and 2, inclusively.</td></tr>
   </table>
   </dd>
 </dl>

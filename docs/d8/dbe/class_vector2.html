@@ -218,10 +218,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance with both values being the double value passed in. </p>
-<p>This can throw an 'ArgumentException' if the value is NaN, PositiveInfinity, or NegativeInfinity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The value of both 'X' and 'Y'.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -263,11 +268,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance with 2 double values. </p>
-<p>This can throw an 'ArgumentException' if either value is NaN, PositiveInfinity, or NegativeInfinity. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>The 'X' value.</td></tr>
     <tr><td class="paramname">y</td><td>The 'Y' value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'x' or 'y' is NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -299,10 +309,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copies the values of one <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> to another. </p>
-<p>This will throw an 'ArgumentNullException' if 'vec2' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vec2</td><td>The existing <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> to duplicate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'vec2' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -334,10 +349,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copies the values of one <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> to another. </p>
-<p>The 'Z' value of the <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> is ignored. This will throw an 'ArgumentNullException' if 'vec3' is null. </p>
+<p>The 'Z' value of the <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> is ignored. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vec2</td><td>The existing <a class="el" href="../../d3/de7/class_vector3.html">Vector3</a> to duplicate.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'vec3' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -370,11 +391,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Override that compares the 'X' and 'Y' values of 2 Vector2s. </p>
-<p>The following outcomes are possible:</p><ul>
-<li>If 'obj' is null, it'll return false.</li>
-<li>If 'obj' is this, it'll return true.</li>
-<li>Otherwise, the values are compared outright. </li>
-</ul>
+<p>If the object is null, it'll return false. If the object is 'this', it'll return true. Otherwise, the values are compared outright. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object to compare to this <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance.</td></tr>
@@ -420,15 +437,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that multiplies both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> to a double and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentException: If 'value' is either NaN, PositiveInfinity, or NegativeInfinity.</li>
-<li>ArgumentNullException: If 'vector' is null.</li>
-</ul>
 <p>This is functionally the same as <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> * double. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first double operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'right' is null</td></tr>
   </table>
   </dd>
 </dl>
@@ -471,15 +491,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that multiplies a double to both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentNullException: If 'left' is null.</li>
-<li>ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</li>
-</ul>
 <p>This is functionally the same as <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> * double. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second double operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'left' is null</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -522,11 +545,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that multiplies 2 <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instances and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if 'left' or 'right' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'left' or 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -569,15 +597,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that adds both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> to a double and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</li>
-<li>ArgumentNullException: If 'right' is null.</li>
-</ul>
 <p>This is functionally the same as <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> + double. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first double operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -620,15 +651,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that adds a double to both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentNullException: If 'left' is null</li>
-<li>ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity</li>
-</ul>
 <p>This is functionally the same as double + <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second double operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'left' is null</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -671,11 +705,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that adds 2 <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instances and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if 'left' or 'right' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'left' or 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -720,13 +759,19 @@ Properties</h2></td></tr>
 <p>Operator that subtracts both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> from a double and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
 <p>This will throw the following exceptions:</p><ul>
 <li>ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</li>
-<li>ArgumentNullException: If 'right' is null.</li>
+<li>ArgumentNullException: If 'right' is null. </li>
 </ul>
-<p>This is functionally the same as </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first double operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'right' is null</td></tr>
   </table>
   </dd>
 </dl>
@@ -780,6 +825,13 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'left' is null</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> with the subtraction results from both operands.</dd></dl>
 
 </div>
@@ -819,11 +871,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that subtracts one <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance from another and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if 'left' or 'right' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'left' or 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -856,10 +913,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that negates a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>, making both values change their sign. </p>
-<p>This will throw an 'ArgumentNullException' if 'vector' is null </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vector</td><td>The <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> to negate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'vector' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -902,14 +964,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that divides a double by both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentException: If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</li>
-<li>ArgumentNullException: If 'right' is null. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first double operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>If 'left' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -952,14 +1017,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that divides both values of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> by a double and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw the following exceptions:</p><ul>
-<li>ArgumentNullException: If 'left' is null.</li>
-<li>ArgumentException: If 'right' is either NaN, PositiveInfinity, or NegativeInfinity. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second double operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>If 'left' is null</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>If 'right' is either NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1002,11 +1070,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Operator that divides one <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance from another and returns the results as a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a>. </p>
-<p>This will throw an 'ArgumentNullException' if 'left' or 'right' is null. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">left</td><td>The first <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
     <tr><td class="paramname">right</td><td>The second <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'left' or 'right' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1129,13 +1202,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets a double using the index operator. </p>
-<p>The following exceptions can be thrown:</p><ul>
-<li>ArgumentOutOfRangeException: If the index used is not 0 or 1.</li>
-<li>ArgumentException: If the value is NaN, PositiveInfinity, or NegativeInfinity. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">idx</td><td>The index of the value</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>'index' is neither 0 or 1</td></tr>
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'value' is NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1163,7 +1239,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Accesses the first value of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance. </p>
-<p>This will throw an 'ArgumentException' if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1188,7 +1269,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Accesses the second value of a <a class="el" href="../../d8/dbe/class_vector2.html" title="Class that represents 2 double values used in vector maths.">Vector2</a> instance. </p>
-<p>This will throw an 'ArgumentException' if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if an attempt to assign it to NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

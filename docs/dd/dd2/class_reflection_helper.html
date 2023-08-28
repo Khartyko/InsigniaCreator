@@ -146,11 +146,17 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates the signature of a method, and denotes a particular parameter in its list, if found. </p>
-<p>This will throw an 'ArgumentNullException' if 'reflectionMetadata' is null. 'parameterName' can be null, empty, or anything else, as it is only used to look for a parameter's name. </p>
+<p>'parameterName' can be null, empty, or anything else, as it is only used to look for a parameter's name. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">reflectionMetadata</td><td>The metadata of the method.</td></tr>
     <tr><td class="paramname">parameterName</td><td>A parameter that may be found in the method's parameter list.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'reflectionMetadata' is null.</td></tr>
   </table>
   </dd>
 </dl>
@@ -183,10 +189,15 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the metadata of any methods that call this method, depending on how many frames upstream are specified. </p>
-<p>This will throw an 'ArgumentOutOfRangeException' if 'frameOffset' is negative. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">frameOffset</td><td>How many method calls to check upstream.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if 'frameOffset' is negative.</td></tr>
   </table>
   </dd>
 </dl>

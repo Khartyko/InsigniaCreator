@@ -198,15 +198,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This creates an HSV Color with the Hue, Saturation, and Value being specified. The values are strict. </p>
-<p>This can possibly throw one of two exceptions:</p><ul>
-<li>ArgumentException: any of the values passed in aren't a real number.</li>
-<li>ArgumentOutOfRangeException: any of the values passed in aren't within their acceptable ranges. </li>
-</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hue</td><td>A double between 0.0 and 360.0 that represents the color's hue.</td></tr>
     <tr><td class="paramname">saturation</td><td>A number between 0.0 and 1.0 that represents the color's saturation.</td></tr>
     <tr><td class="paramname">value</td><td>A number 0.0 and 1.0 that represents the color's brightness/gamma.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if any of the values passed in are NaN, PositiveInfinity, or NegativeInfinity.</td></tr>
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if any of the values passed in aren't within their acceptable ranges.</td></tr>
   </table>
   </dd>
 </dl>
@@ -238,7 +241,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This copies the values of one HSV Color to another HSV Color. </p>
-<p>This can possibly through an ArgumentNullException if the 'hsvColor' argument is null </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentNullException</td><td>Can be thrown if 'hsvColor' is null.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hsvColor</td><td>An existing HSV Color.</td></tr>
@@ -274,11 +282,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>An override of the default Equals method that checks if it's Hue, Saturation, and Values are equal. </p>
-<p>The following outcomes are possible:</p><ul>
-<li>If 'obj' is null, it'll return false.</li>
-<li>If 'obj' is this, it'll return true.</li>
-<li>Otherwise, the values are compared outright. </li>
-</ul>
+<p>If the object is null, it'll return false. If the object is 'this', it'll return true. Otherwise, the values are compared outright. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>The object that is compared against this instance of an HSV Color</td></tr>
@@ -311,10 +315,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is which hue the color leans towards (i.e., red, blue, green, yellow). It is can only be values between 0 and 360 degrees. </p>
-<p>This can possibly throw one of two exceptions:</p><ul>
-<li>ArgumentException: the double isn't a real number.</li>
-<li>ArgumentOutOfRangeException: the double isn't within 0.0 and 360.0. </li>
-</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</td></tr>
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if 'value' isn't between 0.0 and 360.0 (inclusively).</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -339,10 +346,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is how much of the hue is present. It only accepts values between 0.0 and 1.0. </p>
-<p>This can possibly throw one of two exceptions:</p><ul>
-<li>ArgumentException: the double isn't a real number.</li>
-<li>ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0. </li>
-</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</td></tr>
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if 'value' isn't between 0.0 and 1.0 (inclusively).</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -367,10 +377,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This is how bright the color is. It only accepts values between 0.0 and 1.0. </p>
-<p>This can possibly throw one of two exceptions:</p><ul>
-<li>ArgumentException: the double isn't a real number.</li>
-<li>ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0. </li>
-</ul>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">ArgumentException</td><td>Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</td></tr>
+    <tr><td class="paramname">ArgumentOutOfRangeException</td><td>Can be thrown if 'value' isn't between 0.0 and 1.0 (inclusively).</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
