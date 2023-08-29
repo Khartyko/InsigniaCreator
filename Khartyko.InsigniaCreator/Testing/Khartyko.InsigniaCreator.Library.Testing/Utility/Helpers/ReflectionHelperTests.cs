@@ -312,7 +312,6 @@ public class ReflectionHelperTests
     {
         ReflectionMetadata? metadata = null;
 
-        // ReSharper disable once ConvertToLocalFunction
         Action action = () =>
         {
             metadata = ReflectionHelper.GetCallerMetadata();
@@ -323,6 +322,27 @@ public class ReflectionHelperTests
         string signature = ReflectionHelper.ConstructMethodSignature(metadata);
         
         Assert.Equal("ReflectionHelperTests::ConstructMethodSignature_LambdaMethod_Succeeds() -> λ()", signature);
+    }
+
+    [Fact]
+    public void ConstructMethodSignature_LambdaMethod_ParameterizedLambda_Succeeds()
+    {
+        ReflectionMetadata? metadata = null;
+
+        Action<string> action = (string str) =>
+        {
+            metadata = ReflectionHelper.GetCallerMetadata();
+        };
+        
+        action(string.Empty);
+        
+        string signature = ReflectionHelper.ConstructMethodSignature(metadata, "str");
+        
+        Assert.Equal("ReflectionHelperTests::ConstructMethodSignature_LambdaMethod_ParameterizedLambda_Succeeds() -> λ(>str<)", signature);
+        
+        signature = ReflectionHelper.ConstructMethodSignature(metadata);
+        
+        Assert.Equal("ReflectionHelperTests::ConstructMethodSignature_LambdaMethod_ParameterizedLambda_Succeeds() -> λ(str)", signature);
     }
     
     #endregion ConstructMethodSignature
