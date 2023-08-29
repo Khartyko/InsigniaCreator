@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['app_0',['App',['../d8/d97/class_app.html',1,'']]],
-  ['apptests_1',['AppTests',['../d9/d9d/class_app_tests.html',1,'']]]
+  ['app_0',['App',['../db/ddd/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1App.html',1,'Khartyko::InsigniaCreator::MainApp']]],
+  ['apptests_1',['AppTests',['../d3/de4/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1AppTests.html',1,'Khartyko::InsigniaCreator::MainApp::Testing']]]
 ];

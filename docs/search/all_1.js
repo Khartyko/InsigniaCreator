@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['build_0',['Build',['../d6/d63/class_view_locator.html#a3d24a86978a77d34f25376a36fd45dfd',1,'ViewLocator']]],
-  ['buildavaloniaapp_1',['BuildAvaloniaApp',['../d3/d8a/class_program.html#a7c5a66c5428564821da24b3ac53b73f8',1,'Program']]]
+  ['build_0',['Build',['../dd/dc2/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1ViewLocator.html#aee62fadd7606803daab24c88f26aafb7',1,'Khartyko::InsigniaCreator::MainApp::ViewLocator']]],
+  ['buildavaloniaapp_1',['BuildAvaloniaApp',['../dd/dcc/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Program.html#ac922efa17fe05eb48d1fa2313712a6de',1,'Khartyko::InsigniaCreator::MainApp::Program']]]
 ];

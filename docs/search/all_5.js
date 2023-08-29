@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['program_0',['Program',['../d3/d8a/class_program.html',1,'']]],
-  ['programtests_1',['ProgramTests',['../d5/df2/class_program_tests.html',1,'']]]
+  ['onframeworkinitializationcompleted_0',['OnFrameworkInitializationCompleted',['../db/ddd/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1App.html#afab48fc10c35f8ecc6671958be89df28',1,'Khartyko::InsigniaCreator::MainApp::App']]]
 ];

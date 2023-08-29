@@ -1,26 +1,27 @@
 var hierarchy =
 [
     [ "Application", null, [
-      [ "App", "d8/d97/class_app.html", null ]
+      [ "Khartyko.InsigniaCreator.MainApp.App", "db/ddd/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1App.html", null ]
     ] ],
-    [ "AppTests", "d9/d9d/class_app_tests.html", null ],
+    [ "Khartyko.InsigniaCreator.MainApp.Testing.AppTests", "d3/de4/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1AppTests.html", null ],
     [ "IDataTemplate", null, [
-      [ "ViewLocator", "d6/d63/class_view_locator.html", null ]
+      [ "Khartyko.InsigniaCreator.MainApp.ViewLocator", "dd/dc2/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1ViewLocator.html", null ]
     ] ],
-    [ "MainWindowViewModelTests", "dc/dce/class_main_window_view_model_tests.html", null ],
-    [ "MockTest", "dd/dc7/class_mock_test.html", null ],
-    [ "Program", "d3/d8a/class_program.html", null ],
-    [ "ProgramTests", "d5/df2/class_program_tests.html", null ],
+    [ "Khartyko.InsigniaCreator.MainApp.Testing.MainWindowViewModelTests", "d5/df7/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1MainWindowViewModelTests.html", null ],
+    [ "Khartyko.InsigniaCreator.Domain.Testing.MockTest", "d9/d2d/classKhartyko_1_1InsigniaCreator_1_1Domain_1_1Testing_1_1MockTest.html", null ],
+    [ "Khartyko.InsigniaCreator.Library.Testing.MockTest", "d0/df6/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1MockTest.html", null ],
+    [ "Khartyko.InsigniaCreator.MainApp.Program", "dd/dcc/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Program.html", null ],
+    [ "Khartyko.InsigniaCreator.MainApp.Testing.ProgramTests", "de/d0a/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ProgramTests.html", null ],
     [ "ReactiveObject", null, [
-      [ "ViewModelBase", "d0/d3c/class_view_model_base.html", [
-        [ "MainWindowViewModel", "d7/de6/class_main_window_view_model.html", null ]
+      [ "Khartyko.InsigniaCreator.MainApp.ViewModels.ViewModelBase", "d4/d7a/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1ViewModels_1_1ViewModelBase.html", [
+        [ "Khartyko.InsigniaCreator.MainApp.ViewModels.MainWindowViewModel", "d2/d27/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1ViewModels_1_1MainWindowViewModel.html", null ]
       ] ]
     ] ],
     [ "UserControl", null, [
-      [ "TestView", "d1/d81/class_test_view.html", null ]
+      [ "Khartyko.InsigniaCreator.MainApp.Testing.TestView", "d7/d08/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1TestView.html", null ]
     ] ],
-    [ "ViewLocatorTests", "d0/d05/class_view_locator_tests.html", null ],
+    [ "Khartyko.InsigniaCreator.MainApp.Testing.ViewLocatorTests", "d0/db3/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ViewLocatorTests.html", null ],
     [ "Window", null, [
-      [ "MainWindow", "d9/dc6/class_main_window.html", null ]
+      [ "Khartyko.InsigniaCreator.MainApp.Views.MainWindow", "db/d95/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Views_1_1MainWindow.html", null ]
     ] ]
 ];
