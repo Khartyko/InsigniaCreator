@@ -286,7 +286,7 @@ public class AtlasTests
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 
-		Assert.Throws<ArgumentException>(() => new Atlas(invalidId, name, width, height, rgbColor));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor));
 	}
 
 	[Theory]
@@ -366,7 +366,7 @@ public class AtlasTests
 
 		Cartograph cartograph = ConstructCartograph();
 
-		Assert.Throws<ArgumentException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartograph));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartograph));
 	}
 
 	[Theory]
@@ -470,7 +470,7 @@ public class AtlasTests
 			ConstructCartograph()
 		};
 
-		Assert.Throws<ArgumentException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartographs));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartographs));
 	}
 
 	[Theory]
@@ -609,7 +609,7 @@ public class AtlasTests
 		const long invalidId = -1L;
 		Atlas atlas = ConstructAtlas();
 
-		Assert.Throws<ArgumentException>(() => new Atlas(invalidId, atlas));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, atlas));
 	}
 
 	[Fact]

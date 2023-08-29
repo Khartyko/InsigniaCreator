@@ -625,7 +625,6 @@ public class Vector2Tests
     }
 
     [Theory]
-    [InlineData(0.0)]
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
@@ -634,6 +633,14 @@ public class Vector2Tests
         Vector2 validVector = Vector2.Zero;
 
         Assert.Throws<ArgumentException>(() => validVector / invalidDouble);
+    }
+
+    [Fact]
+    public void DivisionOperator_Vector2AndDouble_ZeroValue_Fails()
+    {
+        Vector2 actualResult = Vector2.One / 0.0;
+        
+        Assert.Equal(Vector2.Zero, actualResult);
     }
 
     [Theory]

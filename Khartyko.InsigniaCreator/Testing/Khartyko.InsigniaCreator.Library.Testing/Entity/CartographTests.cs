@@ -206,8 +206,8 @@ public class CartographTests
 		
 		long validId = DataGenerator.GenerateRandomLong(0, 100L);
 
-		Assert.Throws<ArgumentException>(() => new Cartograph(invalidId, validId, "Cartograph", s_templateNetwork));
-		Assert.Throws<ArgumentException>(() => new Cartograph(validId, invalidId, "Cartograph", s_templateNetwork));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(invalidId, validId, "Cartograph", s_templateNetwork));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(validId, invalidId, "Cartograph", s_templateNetwork));
 	}
 
 	[Fact]
@@ -271,7 +271,7 @@ public class CartographTests
 		long atlasId = DataGenerator.GenerateRandomLong(0, 100);
 		Cartograph cartograph = new Cartograph(id, atlasId, "Cartograph", s_templateNetwork);
 
-		Assert.Throws<ArgumentException>(() => new Cartograph(invalidId, cartograph));
+		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(invalidId, cartograph));
 	}
 
 	[Fact]

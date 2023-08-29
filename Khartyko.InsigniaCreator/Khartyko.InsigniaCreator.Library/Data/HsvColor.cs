@@ -24,11 +24,8 @@ public class HsvColor
 	/// This is which hue the color leans towards (i.e., red, blue, green, yellow).
 	/// It is can only be values between 0 and 360 degrees.
 	/// </summary>
-	/// <remarks>
-	/// This can possibly throw one of two exceptions:
-	/// - ArgumentException: the double isn't a real number.
-	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 360.0.
-	/// </remarks>
+	/// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' isn't between 0.0 and 360.0 (inclusively).</exception>
 	public double Hue
 	{
 		get => _hue;
@@ -45,11 +42,8 @@ public class HsvColor
 	/// This is how much of the hue is present.
 	/// It only accepts values between 0.0 and 1.0.
 	/// </summary>
-	/// <remarks>
-	/// This can possibly throw one of two exceptions:
-	/// - ArgumentException: the double isn't a real number.
-	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0.
-	/// </remarks>
+	/// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' isn't between 0.0 and 1.0 (inclusively).</exception>
 	public double Saturation
 	{
 		get => _saturation;
@@ -66,11 +60,8 @@ public class HsvColor
 	/// This is how bright the color is.
 	/// It only accepts values between 0.0 and 1.0.
 	/// </summary>
-	/// <remarks>
-	/// This can possibly throw one of two exceptions:
-	/// - ArgumentException: the double isn't a real number.
-	/// - ArgumentOutOfRangeException: the double isn't within 0.0 and 1.0.
-	/// </remarks>
+	/// <exception cref="ArgumentException">Can be thrown if 'value' is NaN, PositiveInfinity, or 'NegativeInfinity'.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' isn't between 0.0 and 1.0 (inclusively).</exception>
 	public double Value
 	{
 		get => _value;
@@ -97,14 +88,11 @@ public class HsvColor
 	/// This creates an HSV Color with the Hue, Saturation, and Value being specified.
 	/// The values are strict
 	/// </summary>
-	/// <remarks>
-	/// This can possibly throw one of two exceptions:
-	/// - ArgumentException: any of the values passed in aren't a real number.
-	/// - ArgumentOutOfRangeException: any of the values passed in aren't within their acceptable ranges.
-	/// </remarks>
 	/// <param name="hue">A double between 0.0 and 360.0 that represents the color's hue.</param>
 	/// <param name="saturation">A number between 0.0 and 1.0 that represents the color's saturation.</param>
 	/// <param name="value">A number 0.0 and 1.0 that represents the color's brightness/gamma.</param>
+	/// <exception cref="ArgumentException">Can be thrown if any of the values passed in are NaN, PositiveInfinity, or NegativeInfinity.</exception>
+	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if any of the values passed in aren't within their acceptable ranges.</exception>
 	public HsvColor(double hue, double saturation, double value)
 	{
 		AssertionHelper.InvalidDoubleCheck(hue, nameof(hue));
@@ -123,9 +111,7 @@ public class HsvColor
 	/// <summary>
 	/// This copies the values of one HSV Color to another HSV Color.
 	/// </summary>
-	/// <remarks>
-	/// This can possibly through an ArgumentNullException if the 'hsvColor' argument is null
-	/// </remarks>
+	/// <exception cref="ArgumentNullException">Can be thrown if 'hsvColor' is null.</exception>
 	/// <param name="hsvColor">An existing HSV Color.</param>
 	public HsvColor(HsvColor hsvColor)
 	{
@@ -140,13 +126,12 @@ public class HsvColor
 	/// An override of the default Equals method that checks if it's Hue, Saturation, and Values are equal
 	/// </summary>
 	/// <remarks>
-	/// The following outcomes are possible:
-	/// - If 'obj' is null, it'll return false.
-	/// - If 'obj' is this, it'll return true.
-	/// - Otherwise, the values are compared outright.
+	/// If the object is null, it'll return false.
+	/// If the object is 'this', it'll return true.
+	/// Otherwise, the values are compared outright.
 	/// </remarks>
-	/// <param name="obj">The object that is compared against this instance of an HSV Color</param>
-	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color </returns>
+	/// <param name="obj">The object that is compared against this instance of an HSV Color.</param>
+	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color.</returns>
 	public override bool Equals(object? obj)
 	{
 		if (ReferenceEquals(null, obj))

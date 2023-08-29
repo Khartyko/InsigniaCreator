@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['saturation_0',['Saturation',['../d0/da5/class_hsv_color.html#a14c99e428a8e7d32c064fdbb63c85fc0',1,'HsvColor']]]
+  ['data_0',['Data',['../df/d63/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1Matrix.html#a92f80105b05c50554c35e14a0f8afdcc',1,'Khartyko::InsigniaCreator::Library::Data::Matrix']]]
 ];

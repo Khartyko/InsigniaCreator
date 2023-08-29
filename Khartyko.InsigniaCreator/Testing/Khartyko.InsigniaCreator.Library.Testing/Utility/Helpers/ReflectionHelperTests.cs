@@ -162,6 +162,12 @@ public class ReflectionHelperTests
         Assert.Equal(MethodTypes.Lambda, metadata.MethodType);
     }
 
+    [Fact]
+    public void GetCallerMetadata_InvalidFrameOffset_Fails()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => ReflectionHelper.GetCallerMetadata(-1));
+    }
+    
     #endregion GetCallerMetadata
     
     #region ConstructMethodSignature

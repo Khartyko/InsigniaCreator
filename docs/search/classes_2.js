@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hsvcolor_0',['HsvColor',['../d0/da5/class_hsv_color.html',1,'']]],
-  ['hsvcolortests_1',['HsvColorTests',['../d4/dfe/class_hsv_color_tests.html',1,'']]]
+  ['hsvcolor_0',['HsvColor',['../d5/dac/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1HsvColor.html',1,'Khartyko::InsigniaCreator::Library::Data']]],
+  ['hsvcolortests_1',['HsvColorTests',['../d2/dbd/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1HsvColorTests.html',1,'Khartyko::InsigniaCreator::Library::Testing::Data']]]
 ];
