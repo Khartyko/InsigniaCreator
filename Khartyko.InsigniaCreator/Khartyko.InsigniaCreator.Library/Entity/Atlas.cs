@@ -10,7 +10,7 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 namespace Khartyko.InsigniaCreator.Library.Entity;
 
 /// <summary>
-/// 
+/// Represents the overall structure of an image that can have a background color, width, and height. 
 /// </summary>
 public class Atlas : IEntity
 {
