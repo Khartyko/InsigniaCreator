@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.MainApp.Testing", "Testing\Khartyko.InsigniaCreator.MainApp.Testing\Khartyko.InsigniaCreator.MainApp.Testing.csproj", "{020D3A81-1ED7-4893-ABE8-1B917ACCB15A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.TestingLibrary", "Testing\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj", "{D73005D4-21FF-47D4-94CD-2868920CA4F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,10 +46,15 @@ Global
 		{020D3A81-1ED7-4893-ABE8-1B917ACCB15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{020D3A81-1ED7-4893-ABE8-1B917ACCB15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{020D3A81-1ED7-4893-ABE8-1B917ACCB15A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D73005D4-21FF-47D4-94CD-2868920CA4F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D73005D4-21FF-47D4-94CD-2868920CA4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D73005D4-21FF-47D4-94CD-2868920CA4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D73005D4-21FF-47D4-94CD-2868920CA4F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0033657F-071E-4D3C-8C32-DF005EB844BD} = {A992FD23-44A7-44AF-BE06-BA81ECB12E33}
 		{40B1F605-D582-4A1A-A11A-25F52140E706} = {A992FD23-44A7-44AF-BE06-BA81ECB12E33}
 		{020D3A81-1ED7-4893-ABE8-1B917ACCB15A} = {A992FD23-44A7-44AF-BE06-BA81ECB12E33}
+		{D73005D4-21FF-47D4-94CD-2868920CA4F6} = {A992FD23-44A7-44AF-BE06-BA81ECB12E33}
 	EndGlobalSection
 EndGlobal
