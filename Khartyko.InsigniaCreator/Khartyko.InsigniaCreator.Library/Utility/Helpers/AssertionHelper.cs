@@ -246,15 +246,8 @@ public static class AssertionHelper
     public static void RangeCheck(int value, int minimum, int maximum, string descriptor)
     {
         EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
-        
-        if (maximum <= minimum)
-        {
-            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
 
-            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
-
-            throw new ArgumentException($"{signature}:\n\t'maximum' cannot be less than or equal to 'minimum'; got: maximum: {maximum}, minimum: {minimum}, value: {value}");
-        }
+        CheckMinimum(minimum, maximum, descriptor);
 
         if (value < minimum)
         {
@@ -311,14 +304,7 @@ public static class AssertionHelper
         
         EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
 
-        if (maximum <= minimum)
-        {
-            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
-
-            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
-
-            throw new ArgumentException($"{signature}:\n\t'maximum' cannot be less than or equal to 'minimum'; got: maximum: {maximum}, minimum: {minimum}, value: {value}");
-        }
+        CheckMinimum(minimum, maximum, descriptor);
         
         if (value < minimum)
         {
@@ -451,6 +437,18 @@ public static class AssertionHelper
         string duplicatesString = string.Join(", ", duplicatesFound);
         
         throw new ArgumentException($"{signature}:\n\t'' contains duplicates; got '{duplicatesString}'");
+    }
+
+    private static void CheckMinimum(double minimum, double maximum, string descriptor)
+    {
+        if (maximum <= minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentException($"{signature}:\n\t'maximum' cannot be less than or equal to 'minimum'; got: maximum: {maximum}, minimum: {minimum}");
+        }
     }
 }
 /** @} */
