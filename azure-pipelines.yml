@@ -8,7 +8,8 @@ trigger:
 
 pr:
   branches:
-    include: '*'
+    include:
+      '*'
 
 variables:
   sdkVersion: 7.0.x
