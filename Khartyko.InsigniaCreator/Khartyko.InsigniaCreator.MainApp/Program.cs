@@ -1,4 +1,4 @@
-/** \addtogroup MainApp
+﻿/** \addtogroup MainApp
  * @{
  */
 using Avalonia;
