@@ -635,6 +635,14 @@ public class Vector2Tests
         Assert.Throws<ArgumentException>(() => validVector / invalidDouble);
     }
 
+    [Fact]
+    public void DivisionOperator_Vector2AndDouble_ZeroValue_Fails()
+    {
+        Vector2 actualResult = Vector2.One / 0.0;
+        
+        Assert.Equal(Vector2.Zero, actualResult);
+    }
+
     [Theory]
     [InlineData(-3.5)]
     [InlineData(42)]
