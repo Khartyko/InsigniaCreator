@@ -163,14 +163,21 @@ public class CellTests
     }
 
     [Fact]
-    public void Contains_Nodes_Fails()
+    public void Contains_Nodes_NullNode_Fails()
+    {
+        Node nullNode = null;
+        var cell = new Cell(s_nodes, s_links);
+
+        Assert.Throws<ArgumentNullException>(() => cell.Contains(nullNode));
+    }
+
+    [Fact]
+    public void Contains_Nodes_UnrelatedNode_Fails()
     {
         var cell = new Cell(s_nodes, s_links);
 
-        Node nullNode = null;
         var testNode = new Node(Vector2.One * -1);
 
-        Assert.False(cell.Contains(nullNode));
         Assert.False(cell.Contains(testNode));
     }
 
@@ -185,17 +192,24 @@ public class CellTests
     }
 
     [Fact]
-    public void Contains_Links_Fails()
+    public void Contains_Links_NullLink_Fails()
+    {
+        Link nullLink = null;
+        var cell = new Cell(s_nodes, s_links);
+
+        Assert.Throws<ArgumentNullException>(() => cell.Contains(nullLink));
+    }
+    
+    [Fact]
+    public void Contains_Links_UnrelatedLink_Fails()
     {
         var cell = new Cell(s_nodes, s_links);
 
-        Link nullLink = null;
         var testLink = new Link(
             new Node(Vector2.One * -1),
             new Node(Vector2.One * 2)
         );
 
-        Assert.False(cell.Contains(nullLink));
         Assert.False(cell.Contains(testLink));
     }
 

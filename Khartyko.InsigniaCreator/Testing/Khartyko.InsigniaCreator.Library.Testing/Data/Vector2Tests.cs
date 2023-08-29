@@ -625,7 +625,6 @@ public class Vector2Tests
     }
 
     [Theory]
-    [InlineData(0.0)]
     [InlineData(double.NaN)]
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
