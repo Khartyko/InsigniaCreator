@@ -95,7 +95,10 @@ public class ActiveNetwork : NetworkBase
             return true;
         }
 
-        return base.Equals(obj);
+        return obj is ActiveNetwork activeNetwork
+               && Nodes.All(activeNetwork.Nodes.Contains)
+               && Links.All(activeNetwork.Links.Contains)
+               && Cells.All(activeNetwork.Cells.Contains);
     }
 }
 /** @} */

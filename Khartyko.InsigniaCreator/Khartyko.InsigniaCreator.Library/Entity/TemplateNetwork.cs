@@ -75,7 +75,10 @@ public class TemplateNetwork : NetworkBase
             return true;
         }
 
-        return base.Equals(obj);
+        return obj is TemplateNetwork templateNetwork
+            && Nodes.All(templateNetwork.Nodes.Contains)
+            && Links.All(templateNetwork.Links.Contains)
+            && Cells.All(templateNetwork.Cells.Contains);
     }
 
     /// <summary>
