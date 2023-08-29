@@ -7,7 +7,8 @@ trigger:
   - develop
 
 pr:
-  includes: '*'
+  branches:
+    include: '*'
 
 variables:
   sdkVersion: 7.0.x
