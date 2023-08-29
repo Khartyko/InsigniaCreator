@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['viewlocator_0',['ViewLocator',['../d6/d63/class_view_locator.html',1,'']]],
-  ['viewlocatortests_1',['ViewLocatorTests',['../d0/d05/class_view_locator_tests.html',1,'']]],
-  ['viewmodelbase_2',['ViewModelBase',['../d0/d3c/class_view_model_base.html',1,'']]]
+  ['link_0',['Link',['../d4/dfe/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Entity_1_1Link.html',1,'Khartyko::InsigniaCreator::Library::Entity']]],
+  ['linktests_1',['LinkTests',['../db/df3/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Entity_1_1LinkTests.html',1,'Khartyko::InsigniaCreator::Library::Testing::Entity']]]
 ];
