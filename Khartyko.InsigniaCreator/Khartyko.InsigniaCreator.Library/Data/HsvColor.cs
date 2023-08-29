@@ -130,8 +130,8 @@ public class HsvColor
 	/// If the object is 'this', it'll return true.
 	/// Otherwise, the values are compared outright.
 	/// </remarks>
-	/// <param name="obj">The object that is compared against this instance of an HSV Color</param>
-	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color </returns>
+	/// <param name="obj">The object that is compared against this instance of an HSV Color.</param>
+	/// <returns>A boolean value as to whether 'obj' is equal to this instance of an HSV Color.</returns>
 	public override bool Equals(object? obj)
 	{
 		if (ReferenceEquals(null, obj))
