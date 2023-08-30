@@ -25,6 +25,7 @@ var classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tes
     [ "DivisionOperator_Vector2AndDouble_Fails", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a97a85eebeaf34ec5efeedf7e3a181f36", null ],
     [ "DivisionOperator_Vector2AndDouble_NullVector_Fails", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#ad013a8a448d038acf4d8dd45c771b139", null ],
     [ "DivisionOperator_Vector2AndDouble_Succeeds", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a62ca58a6700239f6b75aed158bd33ff4", null ],
+    [ "DivisionOperator_Vector2AndDouble_ZeroValue_Fails", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a3c21a178d93f868cbaa2d563c1cdd86d", null ],
     [ "Equals_Fails_BadData", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a783d1fa40a5f3117aa6ce591d3740755", null ],
     [ "Equals_Fails_NoBadData", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a0121a77f2eb2801d6fa70f528e84367a", null ],
     [ "Equals_Succeeds", "d1/d8f/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector2Tests.html#a31391988b4fe617f5f4c20220d4be9ce", null ],

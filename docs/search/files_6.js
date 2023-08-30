@@ -10,5 +10,7 @@ var searchData=
   ['khartyko_2einsigniacreator_2elibrary_2etesting_2eglobalusings_2eg_2ecs_7',['Khartyko.InsigniaCreator.Library.Testing.GlobalUsings.g.cs',['../df/d10/Khartyko_8InsigniaCreator_8Library_8Testing_8GlobalUsings_8g_8cs.html',1,'']]],
   ['khartyko_2einsigniacreator_2emainapp_2eassemblyinfo_2ecs_8',['Khartyko.InsigniaCreator.MainApp.AssemblyInfo.cs',['../d4/d96/Khartyko_8InsigniaCreator_8MainApp_8AssemblyInfo_8cs.html',1,'']]],
   ['khartyko_2einsigniacreator_2emainapp_2etesting_2eassemblyinfo_2ecs_9',['Khartyko.InsigniaCreator.MainApp.Testing.AssemblyInfo.cs',['../d0/d3f/Khartyko_8InsigniaCreator_8MainApp_8Testing_8AssemblyInfo_8cs.html',1,'']]],
-  ['khartyko_2einsigniacreator_2emainapp_2etesting_2eglobalusings_2eg_2ecs_10',['Khartyko.InsigniaCreator.MainApp.Testing.GlobalUsings.g.cs',['../da/d17/Khartyko_8InsigniaCreator_8MainApp_8Testing_8GlobalUsings_8g_8cs.html',1,'']]]
+  ['khartyko_2einsigniacreator_2emainapp_2etesting_2eglobalusings_2eg_2ecs_10',['Khartyko.InsigniaCreator.MainApp.Testing.GlobalUsings.g.cs',['../da/d17/Khartyko_8InsigniaCreator_8MainApp_8Testing_8GlobalUsings_8g_8cs.html',1,'']]],
+  ['khartyko_2einsigniacreator_2etestinglibrary_2eassemblyinfo_2ecs_11',['Khartyko.InsigniaCreator.TestingLibrary.AssemblyInfo.cs',['../d3/ddf/Khartyko_8InsigniaCreator_8TestingLibrary_8AssemblyInfo_8cs.html',1,'']]],
+  ['khartyko_2einsigniacreator_2etestinglibrary_2eglobalusings_2eg_2ecs_12',['Khartyko.InsigniaCreator.TestingLibrary.GlobalUsings.g.cs',['../d1/d94/Khartyko_8InsigniaCreator_8TestingLibrary_8GlobalUsings_8g_8cs.html',1,'']]]
 ];
