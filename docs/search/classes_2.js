@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['program_0',['Program',['../dd/dcc/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Program.html',1,'Khartyko::InsigniaCreator::MainApp']]],
-  ['programtests_1',['ProgramTests',['../de/d0a/classKhartyko_1_1InsigniaCreator_1_1MainApp_1_1Testing_1_1ProgramTests.html',1,'Khartyko::InsigniaCreator::MainApp::Testing']]]
+  ['hsvcolor_0',['HsvColor',['../d5/dac/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Data_1_1HsvColor.html',1,'Khartyko::InsigniaCreator::Library::Data']]],
+  ['hsvcolortests_1',['HsvColorTests',['../d2/dbd/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1HsvColorTests.html',1,'Khartyko::InsigniaCreator::Library::Testing::Data']]]
 ];

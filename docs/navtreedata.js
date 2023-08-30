@@ -27,23 +27,35 @@ var NAVTREE =
   [ "Khartyko Insignia Creator", "index.html", [
     [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ]
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ]
+      ] ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ]
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Variables", "functions_vars.html", null ],
+        [ "Properties", "functions_prop.html", null ]
       ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"annotated.html",
+"d4/d72/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Utility_1_1Model_1_1RandomMatrixData.html",
+"d8/dbb/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1MatrixTests.html#af64425a93db8ce020edfd46224740ae2",
+"dd/de9/classKhartyko_1_1InsigniaCreator_1_1Library_1_1Testing_1_1Data_1_1Vector3Tests.html#a5359b947a8a1a00546d510c2c41c8ee2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
