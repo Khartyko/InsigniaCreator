@@ -1,8 +1,8 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
-// ReSharper disable All
 
 #pragma warning disable CS0660, CS0661, CS0659
 
@@ -309,4 +309,5 @@ public partial class Vector3
 	/// <returns>A string containing the 'X', 'Y', and 'Z' values.</returns>
 	public override string ToString() => $"{{ x: {X}, y: {Y}, z: {Z} }}";
 }
+
 /** @} */

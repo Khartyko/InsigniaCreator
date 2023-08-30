@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
@@ -187,4 +188,5 @@ public class Transform
         Matrix = translationMatrix * rotationMatrix * scaleMatrix;
     }
 }
+
 /** @} */

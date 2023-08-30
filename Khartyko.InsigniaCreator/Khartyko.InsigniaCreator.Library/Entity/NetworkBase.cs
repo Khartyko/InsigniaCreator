@@ -1,10 +1,12 @@
 ﻿/** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
-namespace Khartyko.InsigniaCreator.Library.Entity;
 
 #pragma warning disable CS0659
+
+namespace Khartyko.InsigniaCreator.Library.Entity;
 
 /// <summary>
 /// Base Network that holds a collection of Nodes, Links, and Cells.
@@ -59,4 +61,5 @@ public abstract class NetworkBase
         Cells = existing.Cells.Select(cell => new Cell(cell)).ToList();
     }
 }
+
 /** @} */

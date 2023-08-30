@@ -1,6 +1,7 @@
 /** \addtogroup MainApp
  * @{
  */
+
 namespace Khartyko.InsigniaCreator.MainApp.ViewModels;
 
 /// <summary>
@@ -9,4 +10,5 @@ namespace Khartyko.InsigniaCreator.MainApp.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
 }
+
 /** @} */

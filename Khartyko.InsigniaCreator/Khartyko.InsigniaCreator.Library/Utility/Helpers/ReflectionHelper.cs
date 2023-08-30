@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -221,4 +222,5 @@ public static partial class ReflectionHelper
         return $"{typeName}{methodName}{parameterList}";
     }
 }
+
 /** @} */

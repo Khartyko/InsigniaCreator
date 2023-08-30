@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Interfaces;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -213,4 +214,5 @@ public class Atlas : IEntity
                && atlas.Cartographs.All(Cartographs.Contains);
     }
 }
+
 /** @} */

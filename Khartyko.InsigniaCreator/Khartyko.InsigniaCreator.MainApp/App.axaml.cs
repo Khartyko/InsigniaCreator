@@ -1,6 +1,7 @@
 /** \addtogroup MainApp
  * @{
  */
+
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -38,4 +39,5 @@ public partial class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 }
+
 /** @} */

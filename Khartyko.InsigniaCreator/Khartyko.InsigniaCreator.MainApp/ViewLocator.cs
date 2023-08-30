@@ -1,6 +1,7 @@
 /** \addtogroup MainApp
  * @{
  */
+
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
@@ -47,4 +48,5 @@ public class ViewLocator : IDataTemplate
         return data is ViewModelBase;
     }
 }
+
 /** @} */

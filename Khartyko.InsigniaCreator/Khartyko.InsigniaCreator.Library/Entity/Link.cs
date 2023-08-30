@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
@@ -126,4 +127,5 @@ public class Link
     /// <returns>A string containing the data of 'Head' and 'Tail'.</returns>
     public override string ToString() => $"{{ Head: {Head}, Tail: {Tail} }}";
 }
+
 /** @} */

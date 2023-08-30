@@ -1,3 +1,7 @@
+/** \addtogroup Library
+ * @{
+ */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Library.Data;
@@ -147,3 +151,5 @@ public partial class Matrix
         return result;
     }
 }
+
+/** @} */
