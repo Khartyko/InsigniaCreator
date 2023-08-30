@@ -1,6 +1,7 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 
 #pragma warning disable CS8604 // Possible null reference argument.
@@ -270,4 +271,5 @@ public class HsvColorTests
 	
 	#endregion Equals
 }
+
 /** @} */

@@ -1,6 +1,7 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using System.Reflection;
 using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -347,4 +348,5 @@ public class ReflectionHelperTests
     
     #endregion ConstructMethodSignature
 }
+
 /** @} */

@@ -1,6 +1,7 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Testing.Utility;
 using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
@@ -280,4 +281,5 @@ public class TransformTests
 
     #endregion Reset
 }
+
 /** @} */
