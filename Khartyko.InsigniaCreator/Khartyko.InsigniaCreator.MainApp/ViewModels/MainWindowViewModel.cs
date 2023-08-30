@@ -1,4 +1,4 @@
-﻿/** \addtogroup MainApp
+/** \addtogroup MainApp
  * @{
  */
 namespace Khartyko.InsigniaCreator.MainApp.ViewModels;

@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Khartyko.InsigniaCreator.MainApp\Khartyko.InsigniaCreator.MainApp.csproj" />
-      <ProjectReference Include="..\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj" />
     </ItemGroup>
 
 </Project>
