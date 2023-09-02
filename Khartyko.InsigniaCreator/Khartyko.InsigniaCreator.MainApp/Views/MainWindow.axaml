@@ -1,17 +1,21 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Khartyko.InsigniaCreator.MainApp.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:local="using:Khartyko.InsigniaCreator.MainApp.Views"
         x:Class="Khartyko.InsigniaCreator.MainApp.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Khartyko.InsigniaCreator.MainApp">
-
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-
-    <StackPanel></StackPanel>
+        Title="Insignia Creator"
+        x:DataType="vm:MainWindowViewModel"
+        Width="{Binding Width}"
+        Height="{Binding Height}"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        ExtendClientAreaToDecorationsHint="True"
+        RequestedThemeVariant="Dark">
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
+            <local:AtlasTabView />
+            <local:AtlasViewportView />
+        </StackPanel>
+    </StackPanel>
 </Window>

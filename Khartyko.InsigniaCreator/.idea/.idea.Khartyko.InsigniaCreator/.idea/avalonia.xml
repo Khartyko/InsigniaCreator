@@ -3,7 +3,14 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="Khartyko.InsigniaCreator.MainApp/App.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/AtlasCreation/AtlasCreationView.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/AtlasTabView.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/AtlasViewport.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/AtlasViewportView.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
         <entry key="Khartyko.InsigniaCreator.MainApp/Views/MainWindow.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/TestTemplatedControl.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
+        <entry key="Khartyko.InsigniaCreator.MainApp/Views/Windows/AtlasCreation.axaml" value="Khartyko.InsigniaCreator.MainApp/Khartyko.InsigniaCreator.MainApp.csproj" />
       </map>
     </option>
   </component>
