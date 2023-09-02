@@ -44,37 +44,37 @@ public class AtlasService : IAtlasService
 
     #region IAtlasService Methods
 
-    public Task DeselectAtlasAsync()
+    public async Task DeselectAtlasAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> SelectAtlasAsync(long id)
+    public async Task<bool> SelectAtlasAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<long> CreateAtlasAsync(AtlasData atlasData)
+    public async Task<Atlas> CreateAtlasAsync(AtlasData atlasData)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Atlas>> GetAllAtlasesAsync()
+    public async Task<IEnumerable<Atlas>> GetAllAtlasesAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Atlas?> GetAtlasAsync(long id)
+    public async Task<Atlas?> GetAtlasAsync(long id)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> RemoveCartographFromAtlasAsync(long id, long cartographId)
+    public async Task<bool> RemoveCartographFromAtlasAsync(long id, long cartographId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAtlasAsync(long id)
+    public async Task<bool> DeleteAtlasAsync(long id)
     {
         throw new NotImplementedException();
     }
