@@ -10,4 +10,8 @@
       <ProjectReference Include="..\Khartyko.InsigniaCreator.Library\Khartyko.InsigniaCreator.Library.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\" />
+    </ItemGroup>
+
 </Project>
