@@ -137,10 +137,7 @@ public class AtlasTests
 		Assert.Equal(newWidth, atlas.Width);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Width_Set_InvalidWidth_Fails(double invalidWidth)
 	{
 		Atlas atlas = ConstructAtlas();
@@ -198,10 +195,7 @@ public class AtlasTests
 		Assert.Equal(newHeight, atlas.Height);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Height_Set_InvalidWidth_Fails(double invalidHeight)
 	{
 		Atlas atlas = ConstructAtlas();
@@ -291,10 +285,7 @@ public class AtlasTests
 		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_NoCartographs_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);
@@ -371,10 +362,7 @@ public class AtlasTests
 		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartograph));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_FromSingleCartograph_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);
@@ -475,10 +463,7 @@ public class AtlasTests
 		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartographs));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_FromMultipleCartographs_InvalidBounds_Fails(double invalidBoundary)
 	{
 		long id = DataGenerator.GenerateRandomLong(0, 100);

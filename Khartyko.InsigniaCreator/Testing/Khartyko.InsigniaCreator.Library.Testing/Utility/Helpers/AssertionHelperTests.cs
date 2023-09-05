@@ -3,6 +3,7 @@
  */
 
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8604
 
@@ -87,13 +88,10 @@ public class AssertionHelperTests
 	public void InvalidDoubleCheck_Succeeds(double input, string descriptor) =>
 		AssertionHelper.InvalidDoubleCheck(input, descriptor);
 
-	[Theory]
-	[InlineData(double.NaN, "value")]
-	[InlineData(double.PositiveInfinity, "value")]
-	[InlineData(double.NegativeInfinity, "value")]
-	public void InvalidDoubleCheck_BadInput_Fails(double input, string descriptor)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void InvalidDoubleCheck_BadInput_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => AssertionHelper.InvalidDoubleCheck(input, descriptor));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.InvalidDoubleCheck(invalidValue, nameof(invalidValue)));
 	}
 
 	[Theory]
@@ -208,10 +206,7 @@ public class AssertionHelperTests
 		AssertionHelper.PositiveCheck(value, nameof(value));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void PositiveCheck_DoubleValue_InvalidDouble_Fails(double invalidValue)
 	{
 		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(invalidValue, nameof(invalidValue)));
@@ -368,17 +363,14 @@ public class AssertionHelperTests
 		AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
-	public void RangeCheck_InvalidDoubleValues_DoubleValue_Fails(double value)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void RangeCheck_InvalidDoubleValues_DoubleValue_Fails(double invalidValue)
 	{
 		const double validValue = 0.0;
 
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, validValue, validValue, nameof(value)));
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, value, value, nameof(value)));
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, validValue, value, nameof(value)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(invalidValue, validValue, validValue, nameof(invalidValue)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, invalidValue, invalidValue, nameof(invalidValue)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, validValue, invalidValue, nameof(invalidValue)));
 	}
 
 	[Theory]

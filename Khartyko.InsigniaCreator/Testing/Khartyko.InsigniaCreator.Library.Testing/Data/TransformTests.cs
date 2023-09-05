@@ -3,9 +3,8 @@
  */
 
 using Khartyko.InsigniaCreator.Library.Data;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
-using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8625, CS8600, CS8604
 
@@ -99,10 +98,7 @@ public class TransformTests
         Assert.True(expectedMatrix.Equals(transform.Matrix));
     }
 
-    [Theory]
-    [InlineData(double.NaN)]
-    [InlineData(double.PositiveInfinity)]
-    [InlineData(double.NegativeInfinity)]
+    [Theory, ClassData(typeof(InvalidDoubleData))]
     public void Rotation_Mutator_Fails(double value)
     {
         var transform = new Transform();
@@ -202,10 +198,7 @@ public class TransformTests
         Assert.Throws<ArgumentNullException>(() => new Transform(null, rotation, translation));
     }
 
-    [Theory]
-    [InlineData(double.NaN)]
-    [InlineData(double.PositiveInfinity)]
-    [InlineData(double.NegativeInfinity)]
+    [Theory, ClassData(typeof(InvalidDoubleData))]
     public void Create_Fails_BadRotation(double rotation)
     {
         var scale = new Vector2(1);

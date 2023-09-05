@@ -93,16 +93,13 @@ public class MathHelperTests
 		Assert.False(MathHelper.Equals(d0, d1));
 	}
 
-	[Theory]
-	[InlineData(double.NaN, 1.0)]
-	[InlineData(double.PositiveInfinity, 1.0)]
-	[InlineData(double.NegativeInfinity, 1.0)]
-	[InlineData(1.0, double.NaN)]
-	[InlineData(1.0, double.PositiveInfinity)]
-	[InlineData(1.0, double.NegativeInfinity)]
-	public void Equals_Fails_BadValues(double d0, double d1)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Equals_Fails_BadValues(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.Equals(d0, d1));
+		double validValue = DataGenerator.GenerateRandomDouble();
+		
+		Assert.Throws<ArgumentException>(() => MathHelper.Equals(invalidValue, validValue));
+		Assert.Throws<ArgumentException>(() => MathHelper.Equals(validValue, invalidValue));
 	}
 
 	#endregion Equals
@@ -119,10 +116,7 @@ public class MathHelperTests
 		Assert.Equal(expectedResult, actualResult);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public static void LessThan_InvalidDouble_Fails(double invalidValue)
 	{
 		double validValue = DataGenerator.GenerateRandomDouble();
@@ -145,10 +139,7 @@ public class MathHelperTests
 		Assert.Equal(expectedResult, actualResult);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public static void GreaterThan_InvalidDouble_Fails(double invalidValue)
 	{
 		double validValue = DataGenerator.GenerateRandomDouble();
@@ -169,12 +160,10 @@ public class MathHelperTests
 	public void Round_Succeeds(double input, double expected) =>
 		Assert.Equal(expected, MathHelper.Round(input));
 
-	[Fact]
-	public void Round_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Round_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.Round(double.NaN));
-		Assert.Throws<ArgumentException>(() => MathHelper.Round(double.PositiveInfinity));
-		Assert.Throws<ArgumentException>(() => MathHelper.Round(double.NegativeInfinity));
+		Assert.Throws<ArgumentException>(() => MathHelper.Round(invalidValue));
 	}
 
 	#endregion Round
@@ -191,13 +180,11 @@ public class MathHelperTests
 		Assert.Equal(expected, MathHelper.Sqrt(input));
 	}
 
-	[Fact]
-	public void Sqrt_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Sqrt_Fails(double invalidValue)
 	{
 		Assert.Throws<ArgumentOutOfRangeException>(() => MathHelper.Sqrt(-1));
-		Assert.Throws<ArgumentException>(() => MathHelper.Sqrt(double.NaN));
-		Assert.Throws<ArgumentException>(() => MathHelper.Sqrt(double.PositiveInfinity));
-		Assert.Throws<ArgumentException>(() => MathHelper.Sqrt(double.NegativeInfinity));
+		Assert.Throws<ArgumentException>(() => MathHelper.Sqrt(invalidValue));
 	}
 
 	#endregion Sqrt
@@ -229,13 +216,21 @@ public class MathHelperTests
 		Assert.Equal(expected, result);
 	}
 
-	[Fact]
-	public void PiOverload_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void PiOverload_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.Pi(double.NaN, 1.0));
-		Assert.Throws<ArgumentException>(() => MathHelper.Pi(1.0, 0.0));
-		Assert.Throws<ArgumentException>(() => MathHelper.Pi(double.PositiveInfinity, 1.0));
-		Assert.Throws<ArgumentException>(() => MathHelper.Pi(double.NegativeInfinity, 1.0));
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentException>(() => MathHelper.Pi(invalidValue, validValue));
+		Assert.Throws<ArgumentException>(() => MathHelper.Pi(validValue, invalidValue));
+	}
+
+	[Fact]
+	public void PiOverload_Zero_Fails()
+	{
+		double validValue = DataGenerator.GenerateRandomDouble();
+
+		Assert.Throws<ArgumentException>(() => MathHelper.Pi(validValue, 0.0));
 	}
 
 	#endregion PiOverload
@@ -252,13 +247,10 @@ public class MathHelperTests
 		Assert.Equal(expectedValue, actualValue);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
-	public void Cos_Fails(double value)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Cos_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.Cos(value));
+		Assert.Throws<ArgumentException>(() => MathHelper.Cos(invalidValue));
 	}
 
 	#endregion Cos
@@ -275,13 +267,10 @@ public class MathHelperTests
 		Assert.Equal(expectedValue, actualValue);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
-	public void Sin_Fails(double value)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Sin_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.Sin(value));
+		Assert.Throws<ArgumentException>(() => MathHelper.Sin(invalidValue));
 	}
 
 	#endregion Sin
@@ -296,12 +285,10 @@ public class MathHelperTests
 		Assert.Equal(expected, actual);
 	}
 
-	[Fact]
-	public void ToDegrees_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void ToDegrees_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.ToDegrees(double.NaN));
-		Assert.Throws<ArgumentException>(() => MathHelper.ToDegrees(double.PositiveInfinity));
-		Assert.Throws<ArgumentException>(() => MathHelper.ToDegrees(double.NegativeInfinity));
+		Assert.Throws<ArgumentException>(() => MathHelper.ToDegrees(invalidValue));
 	}
 
 	#endregion ToDegrees
@@ -316,12 +303,10 @@ public class MathHelperTests
 		Assert.Equal(expected, actual);
 	}
 
-	[Fact]
-	public void ToRadians_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void ToRadians_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => MathHelper.ToRadians(double.NaN));
-		Assert.Throws<ArgumentException>(() => MathHelper.ToRadians(double.PositiveInfinity));
-		Assert.Throws<ArgumentException>(() => MathHelper.ToRadians(double.NegativeInfinity));
+		Assert.Throws<ArgumentException>(() => MathHelper.ToRadians(invalidValue));
 	}
 
 	#endregion ToRadians
