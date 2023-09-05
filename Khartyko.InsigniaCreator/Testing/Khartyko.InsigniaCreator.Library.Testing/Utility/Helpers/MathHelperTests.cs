@@ -3,6 +3,7 @@
  */
 
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8604, CS8625 // Cannot convert null literal to non-nullable reference type.
 

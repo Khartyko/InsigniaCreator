@@ -24,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Khartyko.InsigniaCreator.Library\Khartyko.InsigniaCreator.Library.csproj" />
+      <ProjectReference Include="..\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,14 +1,9 @@
-/** \addtogroup LibraryTests
- * @{
- */
-
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 
-namespace Khartyko.InsigniaCreator.Library.Testing.Utility;
+namespace Khartyko.InsigniaCreator.TestingLibrary;
 
-internal static class DataGenerator
+public static class DataGenerator
 {
     private static readonly Random s_random = new();
 
@@ -27,6 +22,13 @@ internal static class DataGenerator
         GenerateRandomDouble()
     );
 
+    public static RgbColor GenerateRandomColor() => new(
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256)
+    );
+    
     public static Node GenerateRandomNode() => new(
         GenerateRandomVector2()
     );
@@ -62,5 +64,3 @@ internal static class DataGenerator
         };
     }
 }
-
-/** @} */
