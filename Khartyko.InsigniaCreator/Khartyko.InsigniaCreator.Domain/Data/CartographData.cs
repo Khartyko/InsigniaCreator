@@ -1,4 +1,4 @@
-/** \addtogroup Khartyko.InsigniaCreator.Domain
+/** \addtogroup Domain
  * @{
  */
 
