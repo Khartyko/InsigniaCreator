@@ -3,7 +3,6 @@
  */
 
 using Khartyko.InsigniaCreator.Domain.Interface;
-using Khartyko.InsigniaCreator.Library.Entity;
 
 namespace Khartyko.InsigniaCreator.Domain.Data;
 
@@ -11,7 +10,7 @@ namespace Khartyko.InsigniaCreator.Domain.Data;
 /// Stores possible Cartograph data that will be used.
 /// It can be used for creating or updating.
 /// </summary>
-public class CartographData : IEntityData<Cartograph>
+public class CartographData : IEntityData
 {
 }
 
