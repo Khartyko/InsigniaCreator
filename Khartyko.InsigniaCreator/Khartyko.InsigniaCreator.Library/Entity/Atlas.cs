@@ -23,7 +23,7 @@ public class Atlas : IEntity
     /// <summary>
     /// Gets the unique long to identify an Atlas.
     /// </summary>
-    public long Id { get; }
+    public ulong Id { get; }
     
     /// <summary>
     /// Gets the list of Cartographs associated with an Atlas.
@@ -102,9 +102,8 @@ public class Atlas : IEntity
     /// <exception cref="ArgumentNullException">Can be thrown if either 'name' or 'backgroundColor' is null.</exception>
     /// <exception cref="ArgumentException">Can be thrown if 'name' is empty or whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'width' or 'height' is 0.0 or negative.</exception>
-    public Atlas(long id, string name, double width, double height, RgbColor backgroundColor)
+    public Atlas(ulong id, string name, double width, double height, RgbColor backgroundColor)
     {
-        AssertionHelper.PositiveCheck(id, nameof(id));
         AssertionHelper.EmptyOrWhitespaceCheck(name, nameof(name));
         AssertionHelper.PositiveCheck(width, nameof(width));
         AssertionHelper.PositiveCheck(height, nameof(height));
@@ -130,7 +129,7 @@ public class Atlas : IEntity
     /// <exception cref="ArgumentNullException">Can be thrown if either 'name', 'backgroundColor', or 'cartograph' is null.</exception>
     /// <exception cref="ArgumentException">Can be thrown if 'name' is empty or whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'width' or 'height' is 0.0 or negative.</exception>
-    public Atlas(long id, string name, double width, double height, RgbColor backgroundColor, Cartograph cartograph)
+    public Atlas(ulong id, string name, double width, double height, RgbColor backgroundColor, Cartograph cartograph)
         : this(id, name, width, height, backgroundColor)
     {
         AssertionHelper.NullCheck(cartograph, nameof(cartograph));
@@ -149,7 +148,7 @@ public class Atlas : IEntity
     /// <exception cref="ArgumentNullException">Can be thrown if either 'name', 'backgroundColor', or 'cartographs' is null.</exception>
     /// <exception cref="ArgumentException">Can be thrown if either 'name' or 'cartographs' is empty or whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'width' or 'height' is 0.0 or negative.</exception>
-    public Atlas(long id, string name, double width, double height, RgbColor backgroundColor, IList<Cartograph> cartographs)
+    public Atlas(ulong id, string name, double width, double height, RgbColor backgroundColor, IList<Cartograph> cartographs)
         : this(id, name, width, height, backgroundColor)
     {
         AssertionHelper.EmptyCheck(cartographs, nameof(cartographs));
@@ -170,7 +169,7 @@ public class Atlas : IEntity
     /// <param name="existing">The existing Atlas to duplicate.</param>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'id' is negative.</exception>
     /// <exception cref="ArgumentNullException">Can be thrown if 'existing' is null.</exception>
-    public Atlas(long id, Atlas existing)
+    public Atlas(ulong id, Atlas existing)
     {
         AssertionHelper.PositiveCheck(id, nameof(id));
         AssertionHelper.NullCheck(existing, nameof(existing));

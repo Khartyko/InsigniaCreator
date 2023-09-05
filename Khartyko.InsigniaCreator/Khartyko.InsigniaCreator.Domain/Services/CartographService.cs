@@ -24,7 +24,7 @@ public class CartographService
     /// </summary>
     /// <param name="cartographId">The id of the desired Cartograph.</param>
     /// <returns>The Cartograph instance if found; otherwise null.</returns>
-    public async Task<Cartograph?> GetAsync(long cartographId)
+    public async Task<Cartograph?> GetAsync(ulong cartographId)
 	{
 		throw new NotImplementedException();
 	}
@@ -34,7 +34,7 @@ public class CartographService
     /// </summary>
     /// <param name="cartographId">The id of the Cartograph.</param>
     /// <returns>True if the Cartograph was found and deleted; otherwise false.</returns>
-    public async Task<bool> DeleteByIdAsync(long cartographId)
+    public async Task<bool> DeleteByIdAsync(ulong cartographId)
 	{
 		throw new NotImplementedException();
 	}

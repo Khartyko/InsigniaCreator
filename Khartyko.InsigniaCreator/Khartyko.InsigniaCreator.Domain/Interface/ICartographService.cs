@@ -24,14 +24,14 @@ public interface ICartographService : ICallbackService<Cartograph>
     /// </summary>
     /// <param name="cartographId">The id of the desired Cartograph.</param>
     /// <returns>The Cartograph instance if found; otherwise null.</returns>
-    Task<Cartograph?> GetAsync(long cartographId);
+    Task<Cartograph?> GetAsync(ulong cartographId);
 
     /// <summary>
     /// Deletes a Cartograph by the specified id.
     /// </summary>
     /// <param name="cartographId">The id of the Cartograph.</param>
     /// <returns>True if the Cartograph was found and deleted; otherwise false.</returns>
-    Task<bool> DeleteByIdAsync(long cartographId);
+    Task<bool> DeleteByIdAsync(ulong cartographId);
 }
 
 /** @} */

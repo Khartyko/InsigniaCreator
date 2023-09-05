@@ -17,9 +17,9 @@ public interface IRepository<TData, TTarget>
 	/// <summary>
 	/// Used to get an IEntity instance by its id.
 	/// </summary>
-	/// <param name="id">The unique long to identify an IEntity.</param>
+	/// <param name="id">The unique ulong to identify an IEntity.</param>
 	/// <returns>If found, the IEntity being searched for; otherwise null.</returns>
-	Task<TTarget?> RetrieveAsync(long id);
+	Task<TTarget?> RetrieveAsync(ulong id);
 
 	/// <summary>
 	/// Gets all of the IEntity instances stored.
@@ -37,17 +37,17 @@ public interface IRepository<TData, TTarget>
     /// <summary>
     /// Update an IEntity instance by its id with the given data.
     /// </summary>
-    /// <param name="id">The unique long to identify an IEntity.</param>
+    /// <param name="id">The unique ulong to identify an IEntity.</param>
     /// <param name="data">The data to update for a particular IEntity instance.</param>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
-    Task<bool> UpdateAsync(long id, TData data);
+    Task<bool> UpdateAsync(ulong id, TData data);
 
     /// <summary>
     /// Delete an IEntity by its unique id.
     /// </summary>
-    /// <param name="id">The unique long to identify an IEntity.</param>
+    /// <param name="id">The unique ulong to identify an IEntity.</param>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
-    Task<bool> DeleteAsync(long id);
+    Task<bool> DeleteAsync(ulong id);
 }
 
 /** @} */

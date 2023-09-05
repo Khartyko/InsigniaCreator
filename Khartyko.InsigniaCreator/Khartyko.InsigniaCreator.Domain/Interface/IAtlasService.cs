@@ -28,7 +28,7 @@ public interface IAtlasService : ICallbackService<Atlas>
     /// </summary>
     /// <param name="id">The id of the Atlas.</param>
     /// <returns>True if the Atlas was found and selected; otherwise false.</returns>
-    Task<bool> SelectAtlasAsync(long id);
+    Task<bool> SelectAtlasAsync(ulong id);
     
     /// <summary>
     /// Creates an atlas with the given data and returns the newly created Atlas.
@@ -51,7 +51,7 @@ public interface IAtlasService : ICallbackService<Atlas>
     /// </summary>
     /// <param name="id">The id of the Atlas.</param>
     /// <returns>The Atlas is found; otherwise null.</returns>
-    Task<Atlas?> GetAtlasAsync(long id);
+    Task<Atlas?> GetAtlasAsync(ulong id);
     
     /// <summary>
     /// Removes a Cartograph from an Atlas.
@@ -59,14 +59,14 @@ public interface IAtlasService : ICallbackService<Atlas>
     /// <param name="id">The id of the Atlas.</param>
     /// <param name="cartographId">The id of the Cartograph</param>
     /// <returns>True if the Cartograph was removed from the Atlas; otherwise false.</returns>
-    Task<bool> RemoveCartographFromAtlasAsync(long id, long cartographId);
+    Task<bool> RemoveCartographFromAtlasAsync(ulong id, ulong cartographId);
     
     /// <summary>
     /// 
     /// </summary>
     /// <param name="id">The id of the Atlas.</param>
     /// <returns>True if the Atlas was found and deleted; false otherwise</returns>
-    Task<bool> DeleteAtlasAsync(long id);
+    Task<bool> DeleteAtlasAsync(ulong id);
 }
 
 /** @} */

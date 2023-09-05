@@ -16,9 +16,9 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <summary>
 	/// Used to get an Atlas instance by its id.
 	/// </summary>
-	/// <param name="id">The unique long to identify an Atlas.</param>
+	/// <param name="id">The unique ulong to identify an Atlas.</param>
 	/// <returns>If found, the Atlas being searched for; otherwise null.</returns>
-	public async Task<Atlas?> RetrieveAsync(long id)
+	public async Task<Atlas?> RetrieveAsync(ulong id)
 	{
 		throw new NotImplementedException();
 	}
@@ -45,10 +45,10 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <summary>
     /// Update an Atlas instance by its id with the given data.
     /// </summary>
-    /// <param name="id">The unique long to identify an Atlas.</param>
+    /// <param name="id">The unique ulong to identify an Atlas.</param>
     /// <param name="data">The data to update for a particular Atlas instance.</param>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
-	public async Task<bool> UpdateAsync(long id, AtlasData data)
+	public async Task<bool> UpdateAsync(ulong id, AtlasData data)
 	{
 		throw new NotImplementedException();
 	}
@@ -56,9 +56,9 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <summary>
     /// Delete an Atlas by its unique id.
     /// </summary>
-    /// <param name="id">The unique long to identify an Atlas.</param>
+    /// <param name="id">The unique ulong to identify an Atlas.</param>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
-	public async Task<bool> DeleteAsync(long id)
+	public async Task<bool> DeleteAsync(ulong id)
 	{
 		throw new NotImplementedException();
 	}

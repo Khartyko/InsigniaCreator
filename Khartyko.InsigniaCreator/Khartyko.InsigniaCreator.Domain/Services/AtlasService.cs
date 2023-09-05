@@ -49,7 +49,7 @@ public class AtlasService : IAtlasService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> SelectAtlasAsync(long id)
+    public async Task<bool> SelectAtlasAsync(ulong id)
     {
         throw new NotImplementedException();
     }
@@ -64,17 +64,17 @@ public class AtlasService : IAtlasService
         throw new NotImplementedException();
     }
 
-    public async Task<Atlas?> GetAtlasAsync(long id)
+    public async Task<Atlas?> GetAtlasAsync(ulong id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> RemoveCartographFromAtlasAsync(long id, long cartographId)
+    public async Task<bool> RemoveCartographFromAtlasAsync(ulong id, ulong cartographId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteAtlasAsync(long id)
+    public async Task<bool> DeleteAtlasAsync(ulong id)
     {
         throw new NotImplementedException();
     }
