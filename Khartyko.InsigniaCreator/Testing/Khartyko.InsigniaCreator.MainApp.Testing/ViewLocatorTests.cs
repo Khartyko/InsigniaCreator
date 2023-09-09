@@ -1,5 +1,10 @@
+/** \addtogroup MainAppTests
+ * @{
+ */
+
 using Avalonia.Controls;
 using Khartyko.InsigniaCreator.MainApp.ViewModels;
+
 namespace Khartyko.InsigniaCreator.MainApp.Testing;
 
 internal class InvalidViewModel : ViewModelBase
@@ -88,3 +93,5 @@ public class ViewLocatorTests
 
 	#endregion Match
 }
+
+/** @} */
