@@ -40,15 +40,6 @@ public static class DataGenerator
         GenerateRandomVector3(),
         GenerateRandomVector3()
     );
-        
-    public static RandomMatrixData GenerateRandomMatrixData()
-    {
-        return new RandomMatrixData(
-            GenerateRandomVector3(),
-            GenerateRandomVector3(),
-            GenerateRandomVector3()
-        );
-    }
 
     public static RandomTransformData GenerateRandomTransformData(bool randomScale, bool randomRotation,
         bool randomTranslation)
