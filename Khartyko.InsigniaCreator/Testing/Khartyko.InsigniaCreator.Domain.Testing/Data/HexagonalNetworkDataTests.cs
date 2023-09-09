@@ -1,4 +1,8 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+﻿/** \addtogroup DomainTesting
+ * @{
+ */
+
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.TestingLibrary;
 
 namespace Khartyko.InsigniaCreator.Domain.Testing.Data;
@@ -57,3 +61,5 @@ public class HexagonalNetworkDataTests
 		Assert.Null(data.StartOffset);
 	}
 }
+
+/** @} */

@@ -1,9 +1,11 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+﻿/** \addtogroup DomainTesting
+ * @{
+ */
+
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.TestingLibrary;
 
 namespace Khartyko.InsigniaCreator.Domain.Testing.Data;
-
-// TODO: Fill out these
 
 public class TriangularNetworkDataTests
 {
@@ -59,3 +61,5 @@ public class TriangularNetworkDataTests
 		Assert.Null(data.StartFlipped);
 	}
 }
+
+/** @} */

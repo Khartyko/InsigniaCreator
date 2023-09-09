@@ -1,4 +1,8 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+﻿/** \addtogroup DomainTesting
+ * @{
+ */
+
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.TestingLibrary;
 
@@ -399,3 +403,5 @@ public class NetworkDataTests
 
 	#endregion CellTransform
 }
+
+/** @} */
