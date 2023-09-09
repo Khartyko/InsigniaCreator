@@ -1,15 +1,11 @@
-using System.Collections;
-
 namespace Khartyko.InsigniaCreator.TestingLibrary;
 
-public class InvalidDoubleData : IEnumerable<object[]>
+public class InvalidDoubleData : TestDataItem
 {
-    public IEnumerator<object[]> GetEnumerator()
+    public override IEnumerable<object[]> GetData()
     {
         yield return new object[] { double.NaN };
         yield return new object[] { double.PositiveInfinity };
         yield return new object[] { double.NegativeInfinity };
     }
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
