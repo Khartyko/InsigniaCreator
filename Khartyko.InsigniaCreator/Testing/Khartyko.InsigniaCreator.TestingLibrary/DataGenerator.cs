@@ -7,6 +7,7 @@ public static class DataGenerator
 {
     private static readonly Random s_random = new();
 
+    public static bool GenerateRandomBool() => GenerateRandomInt(0, 2) == 1;
     public static int GenerateRandomInt(int min, int max) => s_random.Next(min, max);
     public static long GenerateRandomLong(long min, long max) => s_random.NextInt64(min, max);
     public static ulong GenerateRandomULong(long max) => (ulong)s_random.NextInt64(0, max);
