@@ -2,9 +2,7 @@
  * @{
  */
 
-using Khartyko.InsigniaCreator.Library.Interfaces;
-
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Interface that declares that a child is associated with the given IEntity type.

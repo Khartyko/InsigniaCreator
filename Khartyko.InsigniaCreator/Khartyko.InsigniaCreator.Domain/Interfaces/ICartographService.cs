@@ -1,11 +1,11 @@
-﻿/** \addtogroup Domain
+/** \addtogroup Domain
  * @{
  */
 
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Declares method to manage Cartographs.

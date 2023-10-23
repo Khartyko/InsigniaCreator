@@ -2,7 +2,7 @@
  * @{
  */
 
-using Khartyko.InsigniaCreator.Domain.Interface;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 
 namespace Khartyko.InsigniaCreator.Domain.Data;
 

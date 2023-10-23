@@ -3,7 +3,7 @@
  */
 
 using Khartyko.InsigniaCreator.Domain.Data;
-using Khartyko.InsigniaCreator.Domain.Interface;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Library.Entity;
 
 namespace Khartyko.InsigniaCreator.Domain.Repositories;

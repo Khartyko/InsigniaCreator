@@ -2,7 +2,7 @@
  * @{
  */
 
-namespace Khartyko.InsigniaCreator.Domain.Testing;
+namespace Khartyko.InsigniaCreator.Domain.Testing.Repositories;
 
 // TODO: Fill this out.
 

@@ -2,7 +2,9 @@
  * @{
  */
 
-namespace Khartyko.InsigniaCreator.Domain.Testing;
+namespace Khartyko.InsigniaCreator.Domain.Testing.Data;
+
+// TODO: Fill this out.
 
 public class AtlasDataTests
 {

@@ -5,7 +5,7 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Declares methods for manages Atlases.

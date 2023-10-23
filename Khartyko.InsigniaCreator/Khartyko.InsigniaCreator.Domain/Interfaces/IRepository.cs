@@ -4,7 +4,7 @@
 
 using Khartyko.InsigniaCreator.Library.Interfaces;
 
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Stores and handles running CRUD operations on the IEntity type that it is registered with.

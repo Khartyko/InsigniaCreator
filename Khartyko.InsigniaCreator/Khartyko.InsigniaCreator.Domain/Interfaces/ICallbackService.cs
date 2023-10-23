@@ -1,11 +1,11 @@
-﻿/** \addtogroup Domain
+/** \addtogroup Domain
 * @{
 */
 
 using Khartyko.InsigniaCreator.Domain.Utility;
 using Khartyko.InsigniaCreator.Library.Interfaces;
 
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Declares methods to be used for Registering and Unregistering callbacks.

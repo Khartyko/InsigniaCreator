@@ -1,7 +1,11 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+/** \addtogroup Domain
+ * @{
+ */
+
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
-namespace Khartyko.InsigniaCreator.Domain.Interface;
+namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 
 /// <summary>
 /// Declares a method that generates a TemplateNetwork with data of the specified type.
@@ -17,3 +21,5 @@ public interface INetworkGenerator<TGenerationData>
     /// <returns>The newly generated TemplateNetwork.</returns>
     TemplateNetwork GenerateNetwork(TGenerationData generationData);
 }
+
+/** @} */
