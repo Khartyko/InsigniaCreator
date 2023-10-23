@@ -4,7 +4,6 @@
 
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
 using Khartyko.InsigniaCreator.TestingLibrary;
 
 namespace Khartyko.InsigniaCreator.Library.Testing.Entity;

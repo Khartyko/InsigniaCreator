@@ -12,7 +12,7 @@ namespace Khartyko.InsigniaCreator.Domain.Services;
 
 public class AtlasService : IAtlasService
 {
-    public Atlas? SelectedAtlas { get; }
+    public Atlas? SelectedAtlas { get; } = null;
 
     private readonly IRepository<AtlasData, Atlas> _atlasRepository;
 

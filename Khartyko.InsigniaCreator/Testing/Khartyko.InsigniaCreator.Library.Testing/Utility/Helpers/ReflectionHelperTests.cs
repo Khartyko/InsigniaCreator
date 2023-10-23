@@ -330,6 +330,8 @@ public class ReflectionHelperTests
     {
         ReflectionMetadata? metadata = null;
 
+        // ReSharper disable once UnusedParameter.Local
+        // ReSharper disable once RedundantLambdaParameterType
         Action<string> action = (string str) =>
         {
             metadata = ReflectionHelper.GetCallerMetadata();

@@ -469,7 +469,7 @@ public class AtlasTests
 			ConstructCartograph()
 		};
 
-		Assert.Throws<ArgumentNullException>(() => new Atlas(id, name, width, height, nullColor));
+		Assert.Throws<ArgumentNullException>(() => new Atlas(id, name, width, height, nullColor, cartographs));
 	}
 
 	[Fact]

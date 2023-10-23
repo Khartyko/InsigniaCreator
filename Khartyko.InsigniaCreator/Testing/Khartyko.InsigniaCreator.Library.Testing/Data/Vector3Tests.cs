@@ -329,10 +329,6 @@ public class Vector3Tests
 	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Create_FromSingleValue_Fails(double invalidValue)
 	{
-		double x = DataGenerator.GenerateRandomDouble();
-		double y = DataGenerator.GenerateRandomDouble();
-		double z = DataGenerator.GenerateRandomDouble();
-		
 		Assert.Throws<ArgumentException>(() => new Vector3(invalidValue));
 	}
 

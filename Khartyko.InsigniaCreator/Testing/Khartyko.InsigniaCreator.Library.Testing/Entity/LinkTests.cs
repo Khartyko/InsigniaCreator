@@ -204,7 +204,7 @@ public class LinkTests
         var tail = new Node(Vector2.One);
 
         var link = new Link(head, tail);
-        Link? reversedLink = link.Reversed();
+        Link reversedLink = link.Reversed();
 
         Assert.Equal(head, reversedLink.Tail);
         Assert.Equal(tail, reversedLink.Head);

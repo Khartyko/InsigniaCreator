@@ -85,7 +85,7 @@ public class ViewLocatorTests
 	[Fact]
 	public void Match_InvalidObject_Fails()
 	{
-		object? invalidObject = new object();
+		var invalidObject = new object();
 		var viewLocator = new ViewLocator();
 		
 		Assert.False(viewLocator.Match(invalidObject));

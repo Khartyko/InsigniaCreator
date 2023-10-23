@@ -283,7 +283,7 @@ public class Vector2Tests
         var vec0 = new Vector2(x0, y0);
         var vec1 = new Vector2(x1, y1);
 
-        Vector2? additionResult = vec0 + vec1;
+        Vector2 additionResult = vec0 + vec1;
 
         Assert.Equal(x0 + x1, additionResult.X);
         Assert.Equal(y0 + y1, additionResult.Y);

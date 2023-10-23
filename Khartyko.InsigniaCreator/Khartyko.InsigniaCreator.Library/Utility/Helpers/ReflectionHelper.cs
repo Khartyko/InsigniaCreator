@@ -115,7 +115,7 @@ public static partial class ReflectionHelper
                 string contents = parameterName ?? string.Empty;
 
                 string[] parameterNames = methodBase.GetParameters()
-                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter.Name))
                     .Select(parameter => parameter.Name!)
                     .ToArray();
 
@@ -136,7 +136,7 @@ public static partial class ReflectionHelper
                 string contents = parameterName ?? string.Empty;
 
                 string[] parameterNames = methodBase.GetParameters()
-                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter?.Name))
+                    .Where(parameter => !string.IsNullOrWhiteSpace(parameter.Name))
                     .Select(parameter => parameter.Name!)
                     .ToArray();
 

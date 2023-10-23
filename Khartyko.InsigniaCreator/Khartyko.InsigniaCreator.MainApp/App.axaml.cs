@@ -13,6 +13,7 @@ namespace Khartyko.InsigniaCreator.MainApp;
 /// <summary>
 /// Base application that is used by the Program.cs file
 /// </summary>
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class App : Application
 {
     /// <summary>
