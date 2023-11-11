@@ -1,4 +1,4 @@
-﻿
+
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
 using Khartyko.InsigniaCreator.Library.Data;
@@ -16,7 +16,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -49,7 +49,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255),
+			Background = DataGenerator.GenerateRandomColor(),
 			Cartograph = cartograph
 		};
 		
@@ -91,7 +91,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255),
+			Background = DataGenerator.GenerateRandomColor(),
 			Cartographs = new List<Cartograph>
 			{
 				cartograph1,
@@ -145,7 +145,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255),
+			Background = DataGenerator.GenerateRandomColor(),
 			Cartograph = cartograph3,
 			Cartographs = new List<Cartograph>
 			{
@@ -194,7 +194,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255),
+			Background = DataGenerator.GenerateRandomColor(),
 			Cartograph = cartograph1,
 			Cartographs = new List<Cartograph>
 			{
@@ -223,7 +223,7 @@ public class AtlasGeneratorTests
 		{
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -242,7 +242,7 @@ public class AtlasGeneratorTests
 			Name = name,
 			Width = 1280,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -260,7 +260,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = width,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -279,7 +279,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = width,
 			Height = 800,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -297,7 +297,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = height,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
@@ -316,7 +316,7 @@ public class AtlasGeneratorTests
 			Name = "Atlas I",
 			Width = 1280,
 			Height = height,
-			Background = new RgbColor(255, 255, 255)
+			Background = DataGenerator.GenerateRandomColor()
 		};
 		
 		var generator = new AtlasGenerator();
