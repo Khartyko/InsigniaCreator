@@ -12,6 +12,10 @@
 
     <ItemGroup>
       <Folder Include="Services\" />
+      <Folder Include="Generators\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Generators\" />
+    </ItemGroup>
 </Project>
