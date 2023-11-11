@@ -18,7 +18,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// </summary>
 	/// <param name="id">The unique ulong to identify an Atlas.</param>
 	/// <returns>If found, the Atlas being searched for; otherwise null.</returns>
-	public async Task<Atlas?> RetrieveAsync(ulong id)
+	public Atlas? Retrieve(ulong id)
 	{
 		throw new NotImplementedException();
 	}
@@ -27,7 +27,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// Gets all of the Atlas instances stored.
 	/// </summary>
 	/// <returns>A collection of the Atlas instances that are currently stored.</returns>
-	public async Task<IEnumerable<Atlas>> RetrieveAllAsync()
+	public IEnumerable<Atlas> RetrieveAll()
 	{
 		throw new NotImplementedException();
 	}
@@ -37,7 +37,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// </summary>
 	/// <param name="data">The data of the Atlas to use</param>
 	/// <returns>The newly created Atlas instance.</returns>
-	public async Task<Atlas> CreateAsync(AtlasData data)
+	public Atlas Create(AtlasData data)
 	{
 		throw new NotImplementedException();
 	}
@@ -46,9 +46,9 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
     /// Update an Atlas instance by its id with the given data.
     /// </summary>
     /// <param name="id">The unique ulong to identify an Atlas.</param>
-    /// <param name="data">The data to update for a particular Atlas instance.</param>
+    /// <param name="update">The new Atlas to update the existing with</param>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
-	public async Task<bool> UpdateAsync(ulong id, AtlasData data)
+	public bool Update(ulong id, Atlas update)
 	{
 		throw new NotImplementedException();
 	}
@@ -58,7 +58,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
     /// </summary>
     /// <param name="id">The unique ulong to identify an Atlas.</param>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
-	public async Task<bool> DeleteAsync(ulong id)
+	public bool Delete(ulong id)
 	{
 		throw new NotImplementedException();
 	}

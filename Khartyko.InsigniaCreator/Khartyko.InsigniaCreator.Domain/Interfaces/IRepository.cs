@@ -19,35 +19,35 @@ public interface IRepository<TData, TTarget>
 	/// </summary>
 	/// <param name="id">The unique ulong to identify an IEntity.</param>
 	/// <returns>If found, the IEntity being searched for; otherwise null.</returns>
-	Task<TTarget?> RetrieveAsync(ulong id);
+	TTarget? Retrieve(ulong id);
 
 	/// <summary>
 	/// Gets all of the IEntity instances stored.
 	/// </summary>
 	/// <returns>A collection of the IEntity instances that are currently stored.</returns>
-	Task<IEnumerable<TTarget>> RetrieveAllAsync();
+	IEnumerable<TTarget> RetrieveAll();
 
 	/// <summary>
 	/// Creates an IEntity instance with its respective data.
 	/// </summary>
 	/// <param name="data">The data of the IEntity to use</param>
 	/// <returns>The newly created IEntity instance.</returns>
-	Task<TTarget> CreateAsync(TData data);
+	TTarget Create(TData data);
 
     /// <summary>
     /// Update an IEntity instance by its id with the given data.
     /// </summary>
     /// <param name="id">The unique ulong to identify an IEntity.</param>
-    /// <param name="data">The data to update for a particular IEntity instance.</param>
+    /// <param name="update">The value to update an existing IEntity with.</param>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
-    Task<bool> UpdateAsync(ulong id, TData data);
+    bool Update(ulong id, TTarget update);
 
     /// <summary>
     /// Delete an IEntity by its unique id.
     /// </summary>
     /// <param name="id">The unique ulong to identify an IEntity.</param>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
-    Task<bool> DeleteAsync(ulong id);
+    bool Delete(ulong id);
 }
 
 /** @} */

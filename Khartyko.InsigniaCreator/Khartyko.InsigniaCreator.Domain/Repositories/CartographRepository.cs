@@ -5,6 +5,7 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.Repositories;
 
@@ -13,23 +14,36 @@ namespace Khartyko.InsigniaCreator.Domain.Repositories;
 /// </summary>
 public class CartographRepository : IRepository<CartographData, Cartograph>
 {
+    private readonly Dictionary<ulong, Cartograph> _cartographs;
+    private readonly IGenerator<CartographData, Cartograph> _generator;
+
+    public CartographRepository(IGenerator<CartographData, Cartograph> generator)
+    {
+        AssertionHelper.NullCheck(generator, nameof(generator));
+
+        _generator = generator;
+        _cartographs = new Dictionary<ulong, Cartograph>();
+    }
+
     /// <summary>
 	/// Used to get an IEntity instance by its id.
 	/// </summary>
 	/// <param name="id">The unique ulong to identify an IEntity.</param>
 	/// <returns>If found, the IEntity being searched for; otherwise null.</returns>
-    public async Task<Cartograph?> RetrieveAsync(ulong id)
+    public Cartograph? Retrieve(ulong id)
     {
-        throw new NotImplementedException();
+	    return !_cartographs.ContainsKey(id)
+		    ? null
+		    : _cartographs[id];
     }
 
 	/// <summary>
 	/// Gets all of the IEntity instances stored.
 	/// </summary>
 	/// <returns>A collection of the IEntity instances that are currently stored.</returns>
-    public async Task<IEnumerable<Cartograph>> RetrieveAllAsync()
+    public IEnumerable<Cartograph> RetrieveAll()
     {
-        throw new NotImplementedException();
+        return _cartographs.Values.AsEnumerable();
     }
 
 	/// <summary>
@@ -37,20 +51,37 @@ public class CartographRepository : IRepository<CartographData, Cartograph>
 	/// </summary>
 	/// <param name="data">The data of the IEntity to use</param>
 	/// <returns>The newly created IEntity instance.</returns>
-    public async Task<Cartograph> CreateAsync(CartographData data)
+    public Cartograph Create(CartographData data)
     {
-        throw new NotImplementedException();
+        AssertionHelper.NullCheck(data, nameof(data));
+
+        Cartograph cartograph = _generator.Generate(data);
+
+        _cartographs[cartograph.Id] = cartograph;
+
+        return cartograph;
     }
 
     /// <summary>
     /// Update an IEntity instance by its id with the given data.
     /// </summary>
     /// <param name="id">The unique ulong to identify an IEntity.</param>
-    /// <param name="data">The data to update for a particular IEntity instance.</param>
+    /// <param name="update">The new Cartograph value to update an existing Cartograph with.</param>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
-    public async Task<bool> UpdateAsync(ulong id, CartographData data)
+    public bool Update(ulong id, Cartograph update)
     {
-        throw new NotImplementedException();
+        AssertionHelper.NullCheck(update, nameof(update));
+
+        Cartograph? cartograph = Retrieve(id);
+
+        if (cartograph is null)
+        {
+            return false;
+        }
+
+        _cartographs[id] = new Cartograph(id, update);
+
+        return true;
     }
 
     /// <summary>
@@ -58,9 +89,9 @@ public class CartographRepository : IRepository<CartographData, Cartograph>
     /// </summary>
     /// <param name="id">The unique ulong to identify an IEntity.</param>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
-    public async Task<bool> DeleteAsync(ulong id)
+    public bool Delete(ulong id)
     {
-        throw new NotImplementedException();
+        return _cartographs.Remove(id);
     }
 }
 
