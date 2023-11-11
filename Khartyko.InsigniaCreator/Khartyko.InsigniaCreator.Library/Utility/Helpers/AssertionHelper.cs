@@ -235,6 +235,28 @@ public static class AssertionHelper
     }
 
     /// <summary>
+    /// Checks if a given value is at least a minimum specified.
+    /// </summary>
+    /// <param name="value">The double in question.</param>
+    /// <param name="minimum">The minimum value to check for.</param>
+    /// <param name="descriptor">The name of the double in question.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'descriptor' is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' is less than 'minimum'.</exception>
+    public static void MinimumCheck(ulong value, ulong minimum, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (value < minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than or equal to the minimum; got: {value} < {minimum}");
+        }
+    }
+
+    /// <summary>
     /// Checks if an integer value falls within a given range.
     /// </summary>
     /// <param name="value">The integer value in question.</param>
