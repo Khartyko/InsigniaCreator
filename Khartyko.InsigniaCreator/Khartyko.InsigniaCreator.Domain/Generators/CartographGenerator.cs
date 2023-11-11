@@ -14,7 +14,7 @@ namespace Khartyko.InsigniaCreator.Domain.Generators;
 /// </summary>
 public class CartographGenerator : IGenerator<CartographData, Cartograph>
 {
-    private ulong _currentId = 0L;
+    private ulong _currentId = 1L;
     
     /// <summary>
     /// Generates a Cartograph with the given data, and supplies an id.
@@ -25,6 +25,7 @@ public class CartographGenerator : IGenerator<CartographData, Cartograph>
     public Cartograph Generate(CartographData data)
     {
         AssertionHelper.NullCheck(data, nameof(data));
+        AssertionHelper.MinimumCheck(data.AtlasId, 1uL, "data::AtlasId");
         AssertionHelper.EmptyOrWhitespaceCheck(data.Name, "data::Name");
         AssertionHelper.NullCheck(data.Network, "data::Network");
         

@@ -50,19 +50,19 @@ public class CartographRepositoryTests
         {
             new()
             {
-                AtlasId = 0L,
+                AtlasId = 1L,
                 Name = "Cartograph I",
                 Network = new TemplateNetwork(nodes, links, cells)
             },
             new()
             {
-                AtlasId = 1L,
+                AtlasId = 2L,
                 Name = "Cartograph II",
                 Network = new TemplateNetwork(nodes, links, cells)
             },
             new()
             {
-                AtlasId = 2L,
+                AtlasId = 3L,
                 Name = "Cartograph III",
                 Network = new TemplateNetwork(nodes, links, cells)
             }
@@ -203,7 +203,7 @@ public class CartographRepositoryTests
         Cartograph createdCartograph = repository.Create(_cartographDatas[0]);
         Cartograph updatedCartograph = repository.Create(_cartographDatas[1]);
         
-        Assert.False(repository.Update(2L, updatedCartograph));
+        Assert.False(repository.Update(4L, updatedCartograph));
 
         Cartograph? unmodifiedInitialCartograph = repository.Retrieve(createdCartograph.Id);
         Assert.NotNull(unmodifiedInitialCartograph);

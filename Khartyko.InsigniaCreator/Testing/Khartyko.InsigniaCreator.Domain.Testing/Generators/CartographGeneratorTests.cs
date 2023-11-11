@@ -18,8 +18,7 @@ public class CartographGeneratorTests
 	 * - Valid data
 	 */
 
-	[Fact]
-	public void Generate_Succeeds()
+	private TemplateNetwork GenerateNetwork()
 	{
 		var nodes = new List<Node>
 		{
@@ -42,18 +41,24 @@ public class CartographGeneratorTests
 			new(nodes, links)
 		};
 
+		return new TemplateNetwork(nodes, links, cells);
+	}
+	
+	[Fact]
+	public void Generate_Succeeds()
+	{
 		var data = new CartographData
 		{
-			AtlasId = 0L,
+			AtlasId = 1L,
 			Name = "Cartograph",
-			Network = new TemplateNetwork(nodes, links, cells)
+			Network = GenerateNetwork()
 		};
 
 		var generator = new CartographGenerator();
 
 		Cartograph generatedCartograph = generator.Generate(data);
 
-		const ulong expectedId = 0L;
+		const ulong expectedId = 1L;
 		ulong actualId = generatedCartograph.Id;
 		
 		Assert.Equal(expectedId, actualId);
@@ -67,6 +72,63 @@ public class CartographGeneratorTests
 		var generator = new CartographGenerator();
 
 		Assert.Throws<ArgumentNullException>(() => generator.Generate(null));
+	}
+
+	[Fact]
+	public void Generator_InvalidAtlasId_Fails()
+	{
+		var data = new CartographData
+		{
+			Name = "Cartograph",
+			Network = GenerateNetwork()
+		};
+
+		var generator = new CartographGenerator();
+
+		Assert.Throws<ArgumentOutOfRangeException>(() => generator.Generate(data));
+	}
+
+	[Fact]
+	public void Generator_NullName_Fails()
+	{
+		var data = new CartographData
+		{
+			AtlasId = 1L,
+			Network = GenerateNetwork()
+		};
+
+		var generator = new CartographGenerator();
+
+		Assert.Throws<ArgumentNullException>(() => generator.Generate(data));
+	}
+
+	[Fact]
+	public void Generator_EmptyName_Fails()
+	{
+		var data = new CartographData
+		{
+			AtlasId = 1L,
+			Name = "",
+			Network = GenerateNetwork()
+		};
+
+		var generator = new CartographGenerator();
+
+		Assert.Throws<ArgumentException>(() => generator.Generate(data));
+	}
+	
+	[Fact]
+	public void Generator_NullNetwork_Fails()
+	{
+		var data = new CartographData
+		{
+			AtlasId = 1L,
+			Name = "Cartograph"
+		};
+
+		var generator = new CartographGenerator();
+
+		Assert.Throws<ArgumentNullException>(() => generator.Generate(data));
 	}
 }
 
