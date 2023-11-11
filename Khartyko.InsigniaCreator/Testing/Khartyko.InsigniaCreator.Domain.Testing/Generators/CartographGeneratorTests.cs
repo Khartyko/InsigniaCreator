@@ -5,6 +5,7 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8625
 
@@ -18,32 +19,6 @@ public class CartographGeneratorTests
 	 * - Valid data
 	 */
 
-	private TemplateNetwork GenerateNetwork()
-	{
-		var nodes = new List<Node>
-		{
-			new(1, 1),
-			new(1, -1),
-			new(-1, -1),
-			new(-1, 1)
-		};
-
-		var links = new List<Link>
-		{
-			new(nodes[0], nodes[1]),
-			new(nodes[1], nodes[2]),
-			new(nodes[2], nodes[3]),
-			new(nodes[3], nodes[0])
-		};
-
-		var cells = new List<Cell>
-		{
-			new(nodes, links)
-		};
-
-		return new TemplateNetwork(nodes, links, cells);
-	}
-	
 	[Fact]
 	public void Generate_Succeeds()
 	{
@@ -51,7 +26,7 @@ public class CartographGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "Cartograph",
-			Network = GenerateNetwork()
+			Network = DataGenerator.GenerateSquareNetwork()
 		};
 
 		var generator = new CartographGenerator();
@@ -80,7 +55,7 @@ public class CartographGeneratorTests
 		var data = new CartographData
 		{
 			Name = "Cartograph",
-			Network = GenerateNetwork()
+			Network = DataGenerator.GenerateSquareNetwork()
 		};
 
 		var generator = new CartographGenerator();
@@ -94,7 +69,7 @@ public class CartographGeneratorTests
 		var data = new CartographData
 		{
 			AtlasId = 1L,
-			Network = GenerateNetwork()
+			Network = DataGenerator.GenerateSquareNetwork()
 		};
 
 		var generator = new CartographGenerator();
@@ -109,7 +84,7 @@ public class CartographGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "",
-			Network = GenerateNetwork()
+			Network = DataGenerator.GenerateSquareNetwork()
 		};
 
 		var generator = new CartographGenerator();

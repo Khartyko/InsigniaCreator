@@ -55,4 +55,31 @@ public static class DataGenerator
             Transform = new Transform(scale, rotation, translation)
         };
     }
+    
+    
+    public static TemplateNetwork GenerateSquareNetwork()
+    {
+        var nodes = new List<Node>
+        {
+            new(1, 1),
+            new(1, -1),
+            new(-1, -1),
+            new(-1, 1)
+        };
+
+        var links = new List<Link>
+        {
+            new(nodes[0], nodes[1]),
+            new(nodes[1], nodes[2]),
+            new(nodes[2], nodes[3]),
+            new(nodes[3], nodes[0])
+        };
+
+        var cells = new List<Cell>
+        {
+            new(nodes, links)
+        };
+
+        return new TemplateNetwork(nodes, links, cells);
+    }
 }
