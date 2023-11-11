@@ -20,6 +20,7 @@ public class CartographGenerator : IGenerator<CartographData, Cartograph>
     /// Generates a Cartograph with the given data, and supplies an id.
     /// </summary>
     /// <param name="data">The data to use to generate a Cartograph.</param>
+    /// <exception cref="NullReferenceException">Can be thrown if 'data' is null.</exception>
     /// <returns>A newly generated Cartograph.</returns>
     public Cartograph Generate(CartographData data)
     {
