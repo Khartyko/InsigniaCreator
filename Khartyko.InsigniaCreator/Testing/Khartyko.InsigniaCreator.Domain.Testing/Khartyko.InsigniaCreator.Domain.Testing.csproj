@@ -26,4 +26,10 @@
       <ProjectReference Include="..\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Generators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Generators\" />
+    </ItemGroup>
 </Project>
