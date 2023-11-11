@@ -25,6 +25,8 @@ public class CartographGenerator : IGenerator<CartographData, Cartograph>
     public Cartograph Generate(CartographData data)
     {
         AssertionHelper.NullCheck(data, nameof(data));
+        AssertionHelper.EmptyOrWhitespaceCheck(data.Name, "data::Name");
+        AssertionHelper.NullCheck(data.Network, "data::Network");
         
         return new Cartograph(_currentId++, data.AtlasId, data.Name, data.Network);
     }
