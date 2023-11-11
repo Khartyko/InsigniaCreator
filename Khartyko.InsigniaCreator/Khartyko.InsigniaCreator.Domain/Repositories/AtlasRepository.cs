@@ -5,6 +5,7 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.Repositories;
 
@@ -13,6 +14,17 @@ namespace Khartyko.InsigniaCreator.Domain.Repositories;
 /// </summary>
 public class AtlasRepository : IRepository<AtlasData, Atlas>
 {
+	private readonly Dictionary<ulong, Atlas> _atlases;
+	private readonly IGenerator<AtlasData, Atlas> _generator;
+	
+	public AtlasRepository(IGenerator<AtlasData, Atlas> generator)
+	{
+		AssertionHelper.NullCheck(generator, nameof(generator));
+		
+		_generator = generator;
+		_atlases = new Dictionary<ulong, Atlas>();
+	}
+	
 	/// <summary>
 	/// Used to get an Atlas instance by its id.
 	/// </summary>
@@ -20,7 +32,9 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <returns>If found, the Atlas being searched for; otherwise null.</returns>
 	public Atlas? Retrieve(ulong id)
 	{
-		throw new NotImplementedException();
+		return !_atlases.ContainsKey(id)
+			? null
+			: _atlases[id];
 	}
 
 	/// <summary>
@@ -29,7 +43,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <returns>A collection of the Atlas instances that are currently stored.</returns>
 	public IEnumerable<Atlas> RetrieveAll()
 	{
-		throw new NotImplementedException();
+		return _atlases.Values.AsEnumerable();
 	}
 	
 	/// <summary>
@@ -39,7 +53,13 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
 	/// <returns>The newly created Atlas instance.</returns>
 	public Atlas Create(AtlasData data)
 	{
-		throw new NotImplementedException();
+		AssertionHelper.NullCheck(data, nameof(data));
+
+		Atlas atlas = _generator.Generate(data);
+
+		_atlases[atlas.Id] = atlas;
+
+		return atlas;
 	}
 	
 	/// <summary>
@@ -50,7 +70,18 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
     /// <returns>True if the record was found and succeeded; false otherwise.</returns>
 	public bool Update(ulong id, Atlas update)
 	{
-		throw new NotImplementedException();
+		AssertionHelper.NullCheck(update, nameof(update));
+
+		Atlas? atlas = Retrieve(id);
+
+		if (atlas is null)
+		{
+			return false;
+		}
+
+		_atlases[id] = new Atlas(id, update);
+
+		return true;
 	}
 	
 	/// <summary>
@@ -60,7 +91,7 @@ public class AtlasRepository : IRepository<AtlasData, Atlas>
     /// <returns>True if the record was found and deleted; false otherwise.</returns>
 	public bool Delete(ulong id)
 	{
-		throw new NotImplementedException();
+		return _atlases.Remove(id);
 	}
 }
 
