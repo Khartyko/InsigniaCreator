@@ -3,6 +3,7 @@
  */
 
 using Khartyko.InsigniaCreator.Domain.Interfaces;
+using Khartyko.InsigniaCreator.Library.Entity;
 
 namespace Khartyko.InsigniaCreator.Domain.Data;
 
@@ -12,6 +13,9 @@ namespace Khartyko.InsigniaCreator.Domain.Data;
 /// </summary>
 public class CartographData : IEntityData
 {
+	public ulong AtlasId { get; set; }
+	public string Name { get; set; }
+	public TemplateNetwork Network { get; set; }
 }
 
 /** @} */
