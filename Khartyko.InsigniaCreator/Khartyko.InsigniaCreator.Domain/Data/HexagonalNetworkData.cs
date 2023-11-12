@@ -12,7 +12,7 @@ public class HexagonalNetworkData : NetworkData
     /// <summary>
     /// Gets or sets whether the triangles will start with an offset hexagon or not.
     /// </summary>
-    public bool? StartOffset { get; set; }
+    public bool StartOffset { get; set; }
 }
 
 /** @} */

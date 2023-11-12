@@ -12,7 +12,7 @@ public class TriangularNetworkData : NetworkData
     /// <summary>
     /// Gets or sets whether the triangles will start flipped or not.
     /// </summary>
-    public bool? StartFlipped { get; set; }
+    public bool StartFlipped { get; set; }
 }
 
 /** @} */
