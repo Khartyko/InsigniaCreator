@@ -15,6 +15,32 @@ namespace Khartyko.InsigniaCreator.Domain.Generators;
 public class CartographGenerator : IGenerator<CartographData, Cartograph>
 {
     private ulong _currentId = 1L;
+
+    private readonly Dictionary<Type, INetworkGenerator> _networkGenerators;
+
+    private INetworkGenerator<TNetworkData> GetNetworkOfType<TNetworkData>(TNetworkData type)
+	    where TNetworkData : NetworkData
+    {
+	    return (INetworkGenerator<TNetworkData>)_networkGenerators[type.GetType()];
+    }
+    
+    public CartographGenerator(
+	    INetworkGenerator<TriangularNetworkData> triangularNetworkGenerator,
+	    INetworkGenerator<NetworkData> squareNetworkGenerator,
+	    INetworkGenerator<HexagonalNetworkData> hexagonalNetworkGenerator
+	)
+    {
+	    AssertionHelper.NullCheck(triangularNetworkGenerator, nameof(triangularNetworkGenerator));
+	    AssertionHelper.NullCheck(squareNetworkGenerator, nameof(squareNetworkGenerator));
+	    AssertionHelper.NullCheck(hexagonalNetworkGenerator, nameof(hexagonalNetworkGenerator));
+
+	    _networkGenerators = new Dictionary<Type, INetworkGenerator>
+	    {
+		    { typeof(TriangularNetworkData), triangularNetworkGenerator },
+		    { typeof(NetworkData), squareNetworkGenerator },
+		    { typeof(HexagonalNetworkData), hexagonalNetworkGenerator }
+	    };
+    }
     
     /// <summary>
     /// Generates a Cartograph with the given data, and supplies an id.
@@ -27,9 +53,11 @@ public class CartographGenerator : IGenerator<CartographData, Cartograph>
         AssertionHelper.NullCheck(data, nameof(data));
         AssertionHelper.MinimumCheck(data.AtlasId, 1uL, "data::AtlasId");
         AssertionHelper.EmptyOrWhitespaceCheck(data.Name, "data::Name");
-        AssertionHelper.NullCheck(data.Network, "data::Network");
+        AssertionHelper.NullCheck(data.NetworkData, "data::NetworkData");
+
+        TemplateNetwork network = GetNetworkOfType(data.NetworkData).GenerateNetwork(data.NetworkData);
         
-        return new Cartograph(_currentId++, data.AtlasId, data.Name, data.Network);
+        return new Cartograph(_currentId++, data.AtlasId, data.Name, network);
     }
 }
 

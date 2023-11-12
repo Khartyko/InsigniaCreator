@@ -40,7 +40,7 @@ public class AtlasData : IEntityData
 	/// Either this or 'Cartographs' can be set; if both are set, then they will be joined.
 	/// Any overlap will be ignored.
 	/// </remarks>
-	public Cartograph Cartograph { get; set; }
+	public CartographData CartographData { get; set; }
 	
 	/// <summary>
 	/// Multiple Cartographs associated with an Atlas to be used.
@@ -49,7 +49,7 @@ public class AtlasData : IEntityData
 	/// Either this or 'Cartograph' can be set; if both are set, then they will be joined.
 	/// Any overlap will be ignored.
 	/// </remarks>
-	public IList<Cartograph> Cartographs { get; set; }
+	public IList<CartographData> CartographDatas { get; set; }
 }
 
 /** @} */

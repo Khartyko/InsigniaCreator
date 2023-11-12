@@ -1,13 +1,35 @@
-
+﻿
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.TestingLibrary;
+
 namespace Khartyko.InsigniaCreator.Domain.Testing.Generators;
 
 public class AtlasGeneratorTests
 {
+	private CartographGenerator CreateCartographGenerator()
+	{
+		INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator();
+		INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
+		INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator();
+
+		return new CartographGenerator(
+			triNetworkGenerator,
+			quadNetworkGenerator,
+			hexNetworkGenerator
+		);
+	}
+
+	private AtlasGenerator CreateAtlasGenerator()
+	{
+		var cartographGenerator = CreateCartographGenerator();
+
+		return new AtlasGenerator(cartographGenerator);
+	}
+	
 	[Fact]
 	public void Generate_Valid_NeitherCartograph_Succeeds()
 	{
@@ -19,7 +41,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Atlas atlas = generator.Generate(data);
 		Assert.NotNull(atlas);
@@ -33,27 +55,33 @@ public class AtlasGeneratorTests
 	[Fact]
 	public void Generate_Valid_CartographOnly_Succeeds()
 	{
-		var cartographData = new CartographData
-		{
-			AtlasId = 1L,
-			Name = "Cartograph",
-			Network = DataGenerator.GenerateSquareNetwork()
-		};
-		
-		var cartographGenerator = new CartographGenerator();
-
-		Cartograph cartograph = cartographGenerator.Generate(cartographData);
+		const double width = 1280;
+		const double height = 720;
 		
 		var atlasData = new AtlasData
 		{
 			Name = "Atlas I",
-			Width = 1280,
-			Height = 800,
+			Width = width,
+			Height = height,
 			Background = DataGenerator.GenerateRandomColor(),
-			Cartograph = cartograph
+			CartographData = new CartographData
+			{
+				AtlasId = 1L,
+				Name = "Cartograph I",
+				NetworkData = new NetworkData
+				{
+					Width = width,
+					Height = height,
+					CenterAlongXAxis = true,
+					CenterAlongYAxis = true,
+					HorizontalCellCount = 1,
+					VerticalCellCount = 1,
+					CellTransform = new Transform()
+				}
+			}
 		};
 		
-		var atlasGenerator = new AtlasGenerator();
+		AtlasGenerator atlasGenerator = CreateAtlasGenerator();
 
 		Atlas atlas = atlasGenerator.Generate(atlasData);
 		Assert.NotNull(atlas);
@@ -62,44 +90,45 @@ public class AtlasGeneratorTests
 		Assert.Equal(atlasData.Height, atlas.Height);
 		Assert.Equal(atlasData.Background, atlas.BackgroundColor);
 		Assert.Equal(1, atlas.Cartographs.Count);
-		Assert.Equal(cartograph, atlas.Cartographs.First());
 	}
 
 	[Fact]
 	public void Generate_Valid_CartographsOnly_Succeeds()
 	{
+		const double width = 1280;
+		const double height = 720;
+
 		var cartographData1 = new CartographData
 		{
 			AtlasId = 1L,
 			Name = "Cartograph I",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 		var cartographData2 = new CartographData
 		{
 			AtlasId = 1L,
 			Name = "Cartograph II",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
-		
-		var cartographGenerator = new CartographGenerator();
-
-		Cartograph cartograph1 = cartographGenerator.Generate(cartographData1);
-		Cartograph cartograph2 = cartographGenerator.Generate(cartographData2);
 		
 		var atlasData = new AtlasData
 		{
 			Name = "Atlas I",
-			Width = 1280,
-			Height = 800,
+			Width = width,
+			Height = height,
 			Background = DataGenerator.GenerateRandomColor(),
-			Cartographs = new List<Cartograph>
+			CartographDatas = new List<CartographData>
 			{
-				cartograph1,
-				cartograph2
+				cartographData1,
+				cartographData2
 			}
 		};
-		
-		var atlasGenerator = new AtlasGenerator();
+
+		CartographGenerator cartographGenerator = CreateCartographGenerator();
+		AtlasGenerator atlasGenerator = CreateAtlasGenerator();
+
+		Cartograph expectedCartograph1 = cartographGenerator.Generate(cartographData1);
+		Cartograph expectedCartograph2 = cartographGenerator.Generate(cartographData2);
 
 		Atlas atlas = atlasGenerator.Generate(atlasData);
 		Assert.NotNull(atlas);
@@ -108,8 +137,8 @@ public class AtlasGeneratorTests
 		Assert.Equal(atlasData.Height, atlas.Height);
 		Assert.Equal(atlasData.Background, atlas.BackgroundColor);
 		Assert.Equal(2, atlas.Cartographs.Count);
-		Assert.Contains(atlasData.Cartographs[0], atlas.Cartographs);
-		Assert.Contains(atlasData.Cartographs[1], atlas.Cartographs);
+		Assert.Equal(expectedCartograph1, atlas.Cartographs[0]);
+		Assert.Equal(expectedCartograph2, atlas.Cartographs[1]);
 	}
 
 	[Fact]
@@ -119,26 +148,20 @@ public class AtlasGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "Cartograph I",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 		var cartographData2 = new CartographData
 		{
 			AtlasId = 1L,
 			Name = "Cartograph II",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 		var cartographData3 = new CartographData
 		{
 			AtlasId = 1L,
 			Name = "Cartograph III",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
-		
-		var cartographGenerator = new CartographGenerator();
-
-		Cartograph cartograph1 = cartographGenerator.Generate(cartographData1);
-		Cartograph cartograph2 = cartographGenerator.Generate(cartographData2);
-		Cartograph cartograph3 = cartographGenerator.Generate(cartographData3);
 		
 		var atlasData = new AtlasData
 		{
@@ -146,15 +169,20 @@ public class AtlasGeneratorTests
 			Width = 1280,
 			Height = 800,
 			Background = DataGenerator.GenerateRandomColor(),
-			Cartograph = cartograph3,
-			Cartographs = new List<Cartograph>
+			CartographData = cartographData3,
+			CartographDatas = new List<CartographData>
 			{
-				cartograph1,
-				cartograph2
+				cartographData1,
+				cartographData2
 			}
 		};
 		
-		var atlasGenerator = new AtlasGenerator();
+		CartographGenerator cartographGenerator = CreateCartographGenerator();
+		AtlasGenerator atlasGenerator = CreateAtlasGenerator();
+
+		Cartograph expectedCartograph1 = cartographGenerator.Generate(cartographData1);
+		Cartograph expectedCartograph2 = cartographGenerator.Generate(cartographData2);
+		Cartograph expectedCartograph3 = cartographGenerator.Generate(cartographData3);
 
 		Atlas atlas = atlasGenerator.Generate(atlasData);
 		Assert.NotNull(atlas);
@@ -163,9 +191,9 @@ public class AtlasGeneratorTests
 		Assert.Equal(atlasData.Height, atlas.Height);
 		Assert.Equal(atlasData.Background, atlas.BackgroundColor);
 		Assert.Equal(3, atlas.Cartographs.Count);
-		Assert.Contains(atlasData.Cartograph, atlas.Cartographs);
-		Assert.Contains(atlasData.Cartographs[0], atlas.Cartographs);
-		Assert.Contains(atlasData.Cartographs[1], atlas.Cartographs);
+		Assert.Equal(expectedCartograph1, atlas.Cartographs[0]);
+		Assert.Equal(expectedCartograph2, atlas.Cartographs[1]);
+		Assert.Equal(expectedCartograph3, atlas.Cartographs[2]);
 	}
 
 	[Fact]
@@ -175,19 +203,14 @@ public class AtlasGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "Cartograph I",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 		var cartographData2 = new CartographData
 		{
 			AtlasId = 1L,
 			Name = "Cartograph II",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
-		
-		var cartographGenerator = new CartographGenerator();
-
-		Cartograph cartograph1 = cartographGenerator.Generate(cartographData1);
-		Cartograph cartograph2 = cartographGenerator.Generate(cartographData2);
 		
 		var atlasData = new AtlasData
 		{
@@ -195,15 +218,19 @@ public class AtlasGeneratorTests
 			Width = 1280,
 			Height = 800,
 			Background = DataGenerator.GenerateRandomColor(),
-			Cartograph = cartograph1,
-			Cartographs = new List<Cartograph>
+			CartographData = cartographData1,
+			CartographDatas = new List<CartographData>
 			{
-				cartograph1,
-				cartograph2
+				cartographData1,
+				cartographData2
 			}
 		};
 		
-		var atlasGenerator = new AtlasGenerator();
+		CartographGenerator cartographGenerator = CreateCartographGenerator();
+		AtlasGenerator atlasGenerator = CreateAtlasGenerator();
+
+		Cartograph expectedCartograph1 = cartographGenerator.Generate(cartographData1);
+		Cartograph expectedCartograph2 = cartographGenerator.Generate(cartographData2);
 
 		Atlas atlas = atlasGenerator.Generate(atlasData);
 		Assert.NotNull(atlas);
@@ -212,8 +239,8 @@ public class AtlasGeneratorTests
 		Assert.Equal(atlasData.Height, atlas.Height);
 		Assert.Equal(atlasData.Background, atlas.BackgroundColor);
 		Assert.Equal(2, atlas.Cartographs.Count);
-		Assert.Contains(atlasData.Cartographs[0], atlas.Cartographs);
-		Assert.Contains(atlasData.Cartographs[1], atlas.Cartographs);
+		Assert.Equal(expectedCartograph1, atlas.Cartographs[0]);
+		Assert.Equal(expectedCartograph2, atlas.Cartographs[1]);
 	}
 
 	[Fact]
@@ -226,7 +253,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentNullException>(() => generator.Generate(data));
 	}
@@ -245,7 +272,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentException>(() => generator.Generate(data));
 	}
@@ -263,7 +290,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentOutOfRangeException>(() => generator.Generate(data));
 	}
@@ -282,7 +309,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentException>(() => generator.Generate(data));
 	}
@@ -300,7 +327,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentOutOfRangeException>(() => generator.Generate(data));
 	}
@@ -319,7 +346,7 @@ public class AtlasGeneratorTests
 			Background = DataGenerator.GenerateRandomColor()
 		};
 		
-		var generator = new AtlasGenerator();
+		AtlasGenerator generator = CreateAtlasGenerator();
 
 		Assert.Throws<ArgumentException>(() => generator.Generate(data));
 	}

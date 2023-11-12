@@ -15,6 +15,13 @@ namespace Khartyko.InsigniaCreator.Domain.Generators;
 public class AtlasGenerator : IGenerator<AtlasData, Atlas>
 {
 	private ulong _currentId = 1L;
+
+	private readonly IGenerator<CartographData, Cartograph> _cartographGenerator;
+
+	public AtlasGenerator(IGenerator<CartographData, Cartograph> cartographGenerator)
+	{
+		_cartographGenerator = cartographGenerator;
+	}
     
 	/// <summary>
 	/// Generates a Cartograph with the given data, and supplies an id.
@@ -37,31 +44,47 @@ public class AtlasGenerator : IGenerator<AtlasData, Atlas>
 	    AssertionHelper.PositiveCheck(data.Height, "data::Height");
 	    AssertionHelper.NullCheck(data.Background, "data::Background");
 
-	    if (data.Cartographs is not null && data.Cartograph is not null)
+	    var cartographs = new List<Cartograph>();
+
+	    if (data.CartographDatas is not null && data.CartographData is not null)
 	    {
-		    var cartographs = new List<Cartograph>(data.Cartographs);
+		    var cartographDatas = new List<CartographData>(data.CartographDatas);
 
-		    List<ulong> ids = data.Cartographs.Select(cartograph => cartograph.Id).ToList();
+		    List<CartographData> ids = data.CartographDatas.ToList();
 
-		    if (!ids.Contains(data.Cartograph.Id))
+		    if (!ids.Contains(data.CartographData))
 		    {
-			    cartographs.Add(data.Cartograph);
+			    cartographDatas.Add(data.CartographData);
 		    }
 		    
-		    return new Atlas(_currentId++, data.Name, data.Width, data.Height, data.Background, cartographs);
+		    cartographDatas.ToList()
+			    .ForEach(cartographData =>
+			    {
+				    Cartograph cartograph = _cartographGenerator.Generate(cartographData);
+			    
+				    cartographs.Add(cartograph);
+			    });
 	    }
 	    
-	    if (data.Cartographs is not null && data.Cartograph is null)
+	    if (data.CartographDatas is not null && data.CartographData is null)
 	    {
-		    return new Atlas(_currentId++, data.Name, data.Width, data.Height, data.Background, data.Cartographs);
+		    data.CartographDatas.ToList()
+			    .ForEach(cartographData =>
+			    {
+				    Cartograph cartograph = _cartographGenerator.Generate(cartographData);
+			    
+				    cartographs.Add(cartograph);
+			    });
 	    }
 
-	    if (data.Cartographs is null && data.Cartograph is not null)
+	    if (data.CartographDatas is null && data.CartographData is not null)
 	    {
-		    return new Atlas(_currentId++, data.Name, data.Width, data.Height, data.Background, data.Cartograph); 
+		    Cartograph cartograph = _cartographGenerator.Generate(data.CartographData);
+
+		    cartographs.Add(cartograph);
 	    }
-	    
-	    return new Atlas(_currentId++, data.Name, data.Width, data.Height, data.Background);
+		    
+	    return new Atlas(_currentId++, data.Name, data.Width, data.Height, data.Background, cartographs);
     }
 }
 

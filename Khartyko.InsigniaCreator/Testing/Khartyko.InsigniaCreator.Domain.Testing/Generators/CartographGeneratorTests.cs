@@ -4,6 +4,7 @@
 
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.TestingLibrary;
 
@@ -13,11 +14,18 @@ namespace Khartyko.InsigniaCreator.Domain.Testing.Generators;
 
 public class CartographGeneratorTests
 {
-	/*
-	 * Generate:
-	 * - Null Data
-	 * - Valid data
-	 */
+	private CartographGenerator CreateGenerator()
+	{
+		INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator();
+		INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
+		INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator();
+
+		return new CartographGenerator(
+			triNetworkGenerator,
+			quadNetworkGenerator,
+			hexNetworkGenerator
+		);
+	}
 
 	[Fact]
 	public void Generate_Succeeds()
@@ -26,10 +34,13 @@ public class CartographGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "Cartograph",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 
-		var generator = new CartographGenerator();
+		var generator = CreateGenerator();
+		
+		INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
+		TemplateNetwork expectedNetwork = quadNetworkGenerator.GenerateNetwork(data.NetworkData);
 
 		Cartograph generatedCartograph = generator.Generate(data);
 
@@ -38,13 +49,13 @@ public class CartographGeneratorTests
 		
 		Assert.Equal(expectedId, actualId);
 		Assert.Equal(data.Name, generatedCartograph.Name);
-		Assert.Equal(data.Network, generatedCartograph.Template);
+		Assert.Equal(expectedNetwork, generatedCartograph.Template);
 	}
 
 	[Fact]
 	public void Generate_NullData_Fails()
 	{
-		var generator = new CartographGenerator();
+		CartographGenerator generator = CreateGenerator();
 
 		Assert.Throws<ArgumentNullException>(() => generator.Generate(null));
 	}
@@ -55,10 +66,10 @@ public class CartographGeneratorTests
 		var data = new CartographData
 		{
 			Name = "Cartograph",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 
-		var generator = new CartographGenerator();
+		CartographGenerator generator = CreateGenerator();
 
 		Assert.Throws<ArgumentOutOfRangeException>(() => generator.Generate(data));
 	}
@@ -69,10 +80,10 @@ public class CartographGeneratorTests
 		var data = new CartographData
 		{
 			AtlasId = 1L,
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 
-		var generator = new CartographGenerator();
+		CartographGenerator generator = CreateGenerator();
 
 		Assert.Throws<ArgumentNullException>(() => generator.Generate(data));
 	}
@@ -84,10 +95,10 @@ public class CartographGeneratorTests
 		{
 			AtlasId = 1L,
 			Name = "",
-			Network = DataGenerator.GenerateSquareNetwork()
+			NetworkData = DataGenerator.GenerateSquareNetworkData()
 		};
 
-		var generator = new CartographGenerator();
+		CartographGenerator generator = CreateGenerator();
 
 		Assert.Throws<ArgumentException>(() => generator.Generate(data));
 	}
@@ -101,7 +112,7 @@ public class CartographGeneratorTests
 			Name = "Cartograph"
 		};
 
-		var generator = new CartographGenerator();
+		CartographGenerator generator = CreateGenerator();
 
 		Assert.Throws<ArgumentNullException>(() => generator.Generate(data));
 	}

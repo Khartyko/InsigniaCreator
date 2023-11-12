@@ -3,7 +3,6 @@
  */
 
 using Khartyko.InsigniaCreator.Domain.Interfaces;
-using Khartyko.InsigniaCreator.Library.Entity;
 
 namespace Khartyko.InsigniaCreator.Domain.Data;
 
@@ -26,7 +25,7 @@ public class CartographData : IEntityData
 	/// <summary>
 	/// The TemplateNetwork for a Cartograph.
 	/// </summary>
-	public TemplateNetwork Network { get; set; }
+	public NetworkData NetworkData { get; set; }
 }
 
 /** @} */

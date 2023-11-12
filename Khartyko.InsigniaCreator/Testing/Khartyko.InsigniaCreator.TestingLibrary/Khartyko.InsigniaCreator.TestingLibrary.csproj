@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Khartyko.InsigniaCreator.Domain\Khartyko.InsigniaCreator.Domain.csproj" />
       <ProjectReference Include="..\..\Khartyko.InsigniaCreator.Library\Khartyko.InsigniaCreator.Library.csproj" />
     </ItemGroup>
 

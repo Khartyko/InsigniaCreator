@@ -4,6 +4,7 @@
 
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Repositories;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
@@ -16,9 +17,23 @@ public class AtlasRepositoryTests
 {
     private readonly AtlasData[] _atlasDatas;
 
+    private CartographGenerator CreateGenerator()
+    {
+        INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator();
+        INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
+        INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator();
+
+        return new CartographGenerator(
+            triNetworkGenerator,
+            quadNetworkGenerator,
+            hexNetworkGenerator
+        );
+    }
+
     private AtlasRepository CreateRepository()
     {
-        var generator = new AtlasGenerator();
+        CartographGenerator cartographGenerator = CreateGenerator();
+        var generator = new AtlasGenerator(cartographGenerator);
         var repository = new AtlasRepository(generator);
 
         return repository;

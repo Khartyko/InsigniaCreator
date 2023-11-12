@@ -1,3 +1,4 @@
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
@@ -57,29 +58,17 @@ public static class DataGenerator
     }
     
     
-    public static TemplateNetwork GenerateSquareNetwork()
+    public static NetworkData GenerateSquareNetworkData(double width = 1280, double height = 720)
     {
-        var nodes = new List<Node>
+        return new NetworkData
         {
-            new(1, 1),
-            new(1, -1),
-            new(-1, -1),
-            new(-1, 1)
+            Width = width,
+            Height = height,
+            CenterAlongXAxis = true,
+            CenterAlongYAxis = true,
+            HorizontalCellCount = 1,
+            VerticalCellCount = 1,
+            CellTransform = new Transform()
         };
-
-        var links = new List<Link>
-        {
-            new(nodes[0], nodes[1]),
-            new(nodes[1], nodes[2]),
-            new(nodes[2], nodes[3]),
-            new(nodes[3], nodes[0])
-        };
-
-        var cells = new List<Cell>
-        {
-            new(nodes, links)
-        };
-
-        return new TemplateNetwork(nodes, links, cells);
     }
 }

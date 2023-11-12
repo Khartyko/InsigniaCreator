@@ -4,8 +4,10 @@
 
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
+using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Repositories;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8625
 
@@ -15,9 +17,22 @@ public class CartographRepositoryTests
 {
     private readonly CartographData[] _cartographDatas;
 
+    private CartographGenerator CreateGenerator()
+    {
+        INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator();
+        INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
+        INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator();
+
+        return new CartographGenerator(
+            triNetworkGenerator,
+            quadNetworkGenerator,
+            hexNetworkGenerator
+        );
+    }
+
     private CartographRepository CreateRepository()
     {
-        var generator = new CartographGenerator();
+        var generator = CreateGenerator();
         var repository = new CartographRepository(generator);
 
         return repository;
@@ -25,46 +40,25 @@ public class CartographRepositoryTests
     
     public CartographRepositoryTests()
     {
-        var nodes = new List<Node>
-        {
-            new(1, 1),
-            new(1, -1),
-            new(-1, -1),
-            new(-1, 1)
-        };
-
-        var links = new List<Link>
-        {
-            new(nodes[0], nodes[1]),
-            new(nodes[1], nodes[2]),
-            new(nodes[2], nodes[3]),
-            new(nodes[3], nodes[0])
-        };
-
-        var cells = new List<Cell>
-        {
-            new(nodes, links)
-        };
-        
         _cartographDatas = new CartographData[]
         {
             new()
             {
                 AtlasId = 1L,
                 Name = "Cartograph I",
-                Network = new TemplateNetwork(nodes, links, cells)
+                NetworkData = DataGenerator.GenerateSquareNetworkData()
             },
             new()
             {
                 AtlasId = 2L,
                 Name = "Cartograph II",
-                Network = new TemplateNetwork(nodes, links, cells)
+                NetworkData = DataGenerator.GenerateSquareNetworkData()
             },
             new()
             {
                 AtlasId = 3L,
                 Name = "Cartograph III",
-                Network = new TemplateNetwork(nodes, links, cells)
+                NetworkData = DataGenerator.GenerateSquareNetworkData()
             }
         };
     }
