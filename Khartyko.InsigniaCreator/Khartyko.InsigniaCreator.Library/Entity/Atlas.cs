@@ -126,6 +126,7 @@ public class Atlas : IEntity
     /// <param name="width">The width of the Atlas.</param>
     /// <param name="height">The height of the Atlas.</param>
     /// <param name="backgroundColor">The background color of the Atlas.</param>
+    /// <param name="cartograph">The single Cartograph to be assigned to the Atlas.</param>
     /// <exception cref="ArgumentNullException">Can be thrown if either 'name', 'backgroundColor', or 'cartograph' is null.</exception>
     /// <exception cref="ArgumentException">Can be thrown if 'name' is empty or whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'width' or 'height' is 0.0 or negative.</exception>
@@ -145,6 +146,7 @@ public class Atlas : IEntity
     /// <param name="width">The width of the Atlas.</param>
     /// <param name="height">The height of the Atlas.</param>
     /// <param name="backgroundColor">The background color of the Atlas.</param>
+    /// <param name="cartographs">Multiple Cartographs to be assigned to the Atlas.</param>
     /// <exception cref="ArgumentNullException">Can be thrown if either 'name', 'backgroundColor', or 'cartographs' is null.</exception>
     /// <exception cref="ArgumentException">Can be thrown if either 'name' or 'cartographs' is empty or whitespace.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'width' or 'height' is 0.0 or negative.</exception>
