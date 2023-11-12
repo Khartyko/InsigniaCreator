@@ -11,7 +11,7 @@ namespace Khartyko.InsigniaCreator.Domain.Interfaces;
 /// </summary>
 /// <typeparam name="TData">The type of the data that will be used to create the IEntity instance.</typeparam>
 /// <typeparam name="TTarget">The type of IEntity that will be stored and managed.</typeparam>
-public interface IRepository<TData, TTarget>
+public interface IRepository<in TData, TTarget>
 	where TTarget : IEntity
 {
 	/// <summary>
