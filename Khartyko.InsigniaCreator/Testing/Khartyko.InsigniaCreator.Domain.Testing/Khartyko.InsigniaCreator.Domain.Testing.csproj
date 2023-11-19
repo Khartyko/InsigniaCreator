@@ -32,4 +32,10 @@
     <ItemGroup>
       <Folder Include="Generators\" />
     </ItemGroup>
+    <ItemGroup>
+      <None Remove="NetworkGenerators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="NetworkGenerators\" />
+    </ItemGroup>
 </Project>
