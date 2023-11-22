@@ -1,5 +1,7 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
+using Khartyko.InsigniaCreator.Domain.Utility;
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkCalculators;
 
@@ -8,15 +10,17 @@ namespace Khartyko.InsigniaCreator.Domain.NetworkCalculators;
 /// </summary>
 public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkData>
 {
-	/// <summary>
-	/// Calculates the number of Nodes with the given data.
-	/// </summary>
-	/// <param name="networkData"></param>
-	/// <returns></returns>
-	/// <exception cref="NotImplementedException"></exception>
-	public int CalculateNodeCount(TriangularNetworkData networkData)
-	{
-		int horizontalCount = networkData!.HorizontalCellCount;
+    /// <summary>
+    /// Calculates the number of Nodes with the given data.
+    /// </summary>
+    /// <param name="networkData"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public int CalculateNodeCount(TriangularNetworkData networkData)
+    {
+        DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+        int horizontalCount = networkData!.HorizontalCellCount;
 		int verticalCount = networkData.VerticalCellCount;
 		bool startFlipped = networkData.StartFlipped;
 		var flippedBit = Convert.ToInt32(startFlipped);
@@ -37,8 +41,10 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
 	/// <returns></returns>
 	/// <exception cref="NotImplementedException"></exception>
 	public int CalculateLinkCount(TriangularNetworkData networkData)
-	{
-		int horizontalCount = networkData!.HorizontalCellCount;
+    {
+        DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+        int horizontalCount = networkData!.HorizontalCellCount;
 		int verticalCount = networkData.VerticalCellCount;
 		bool startFlipped = networkData.StartFlipped;
 		var flippedBit = Convert.ToInt32(startFlipped);
@@ -56,8 +62,10 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
 	/// <returns></returns>
 	/// <exception cref="NotImplementedException"></exception>
 	public int CalculateCellCount(TriangularNetworkData networkData)
-	{
-		int horizontalCount = networkData!.HorizontalCellCount;
+    {
+        DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+        int horizontalCount = networkData!.HorizontalCellCount;
 		int verticalCount = networkData.VerticalCellCount;
 		
 		return verticalCount * (horizontalCount + (horizontalCount - 1));

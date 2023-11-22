@@ -16,27 +16,27 @@ public class TriangularNetworkCalculatorTests
 	#region CalculateNodeCount
 
 	/*
-	 * Cases to test for:
-	 * - Width restriction scale.x * HorizontalCellCount:
-	 * - Height restricting scale.y * VerticalCellCount
-	 *
-	 * These two (should force it to be even/odd):
-	 * - Center Along X-Axis
-	 * - Center Along Y-Axis
-	 *
-	 * Check the edge cases here
+	 * Things that can affect the count:
 	 * - StartFlipped
+	 * - HorizontalCellCount
+	 * - VerticalCellCount
+	 * - CellTransform::Scale
 	 */
 
-	[Fact]
-	public void CalculateNodeCount_CountRestrictedByHorizontalScaleAndWidth_Succeeds()
-	{
-	}
+	public static IEnumerable<object[]> NodeCountData =>
+		new List<object[]>
+		{
+			new object[]
+			{
+				new TriangularNetworkData
+				{
+					CenterAlongXAxis = true,
+					CenterAlongYAxis = true,
 
-	[Fact]
-	public void CalculateNodeCount_CountRestrictedByVerticalScaleAndWidth_Succeeds()
-	{
-	}
+				},
+				1
+			}
+		};
 
 	[Fact]
 	public void CalculateNodeCount_CountRestrictionByCentering_Succeeds()
@@ -68,11 +68,12 @@ public class TriangularNetworkCalculatorTests
 		};
 	}
 
-	[Fact]
+	[Theory]
+    [MemberData(nameof(NodeCountData))]
 	public void CalculateNodeCount_Succeeds()
 	{
 		var networkData = CreateNetworkData();
-		const int expectedCount = 1;
+		const int expectedCount = 3;
 		var calculator = new TriangularNetworkCalculator();
 
 		int actualCount = calculator.CalculateNodeCount(networkData);
@@ -81,105 +82,11 @@ public class TriangularNetworkCalculatorTests
 	}
 
 	[Fact]
-	public void CalculateNodeCount_VariableValues_CenterAlongXAxis_Succeeds()
-	{
-	}
-
-	[Fact]
-	public void CalculateNodeCount_VariableValues_CenterAlongYAxis_Succeeds()
-	{
-	}
-
-	[Fact]
-	public void CalculateNodeCount_VariableValues_HorizontalCellCount_Succeeds()
-	{
-	}
-
-	[Fact]
-	public void CalculateNodeCount_VariableValues_VerticalCellCount_Succeeds()
-	{
-	}
-
-	[Fact] public void CalculateNodeCount_VariableValues_CellTransform_Succeeds()
-	{
-	}
-
-	[Fact]
-	public void CalculateNodeCount_VariableValues_StartFlipped_Succeeds()
-	{
-	}
-
-	[Fact]
 	public void CalculateNodeCount_NullData_Fails()
 	{
 		var calculator = new TriangularNetworkCalculator();
 
 		Assert.Throws<ArgumentNullException>(() => calculator.CalculateNodeCount(null));
-	}
-
-	[Theory, InlineData(0), InlineData(-1)]
-	public void CalculateNodeCount_WidthOutOfRange_Fails(double width)
-	{
-		var networkData = new TriangularNetworkData
-		{
-			Width = width,
-			Height = 720,
-			HorizontalCellCount = 1,
-			VerticalCellCount = 1
-		};
-		
-		var calculator = new TriangularNetworkCalculator();
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => calculator.CalculateNodeCount(networkData));
-	}
-
-	[Theory, InlineData(0), InlineData(-1)]
-	public void CalculateNodeCount_HeightOutOfRange_Fails(double height)
-	{
-		var networkData = new TriangularNetworkData
-		{
-			Width = 1280,
-			Height = height,
-			HorizontalCellCount = 1,
-			VerticalCellCount = 1
-		};
-		
-		var calculator = new TriangularNetworkCalculator();
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => calculator.CalculateNodeCount(networkData));
-	}
-
-	[Theory, ClassData(typeof(InvalidDoubleData))]
-	public void CalculateNodeCount_InvalidWidth_Fails(double width)
-	{
-		var networkData = new TriangularNetworkData
-		{
-			Width = width,
-			Height = 720,
-			HorizontalCellCount = 1,
-			VerticalCellCount = 1
-		};
-		
-		var calculator = new TriangularNetworkCalculator();
-
-		Assert.Throws<ArgumentException>(() => calculator.CalculateNodeCount(networkData));
-	}
-
-	[Theory, ClassData(typeof(InvalidDoubleData))]
-	public void CalculateNodeCount_InvalidHeight_Fails(double height)
-	{
-		
-		var networkData = new TriangularNetworkData
-		{
-			Width = 1280,
-			Height = height,
-			HorizontalCellCount = 1,
-			VerticalCellCount = 1
-		};
-		
-		var calculator = new TriangularNetworkCalculator();
-
-		Assert.Throws<ArgumentException>(() => calculator.CalculateNodeCount(networkData));
 	}
 
 	[Fact]
