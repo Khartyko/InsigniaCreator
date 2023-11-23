@@ -1,5 +1,6 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
+using Khartyko.InsigniaCreator.Domain.Utility;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkCalculators;
 
@@ -16,8 +17,10 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 	/// <exception cref="NotImplementedException"></exception>
 	public int CalculateNodeCount(HexagonalNetworkData networkData)
 	{
-		int horizontalCount = networkData!.HorizontalCellCount;
-		int verticalCount = networkData.VerticalCellCount;
+		DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+		int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+		int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
 		bool startOffset = networkData.StartOffset;
 
 		int normalColumnCount = (horizontalCount + Convert.ToInt32(!startOffset)) / 2;
@@ -36,8 +39,10 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 	/// <exception cref="NotImplementedException"></exception>
 	public int CalculateLinkCount(HexagonalNetworkData networkData)
 	{
-		int horizontalCount = networkData!.HorizontalCellCount;
-		int verticalCount = networkData.VerticalCellCount;
+		DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+		int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+		int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
 		bool startOffset = networkData.StartOffset;
 		
 		int normalColumnCount = (horizontalCount + Convert.ToInt32(!startOffset)) / 2;
@@ -56,8 +61,10 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 	/// <exception cref="NotImplementedException"></exception>
 	public int CalculateCellCount(HexagonalNetworkData networkData)
 	{
-		int horizontalCount = networkData!.HorizontalCellCount;
-		int verticalCount = networkData.VerticalCellCount;
+		DomainAssertionHelper.CalculatorDataCheck(networkData);
+
+		int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+		int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
 		bool startOffset = networkData.StartOffset;
 		
 		if (horizontalCount == 1 || verticalCount == 1)
