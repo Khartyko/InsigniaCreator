@@ -15,15 +15,6 @@ public class TriangularNetworkCalculatorTests
 {
 	#region CalculateNodeCount
 
-	/*
-	 * Things that can affect the count:
-	 * - StartFlipped
-	 * - HorizontalCellCount
-	 * - VerticalCellCount
-	 * - CenterAlongXAxis
-	 * - CenterAlongYAXis
-	 */
-
 	[Theory]
 	[InlineData(true, true, 1, 1, true, 3)]
 	[InlineData(false, true, 1, 1, true, 5)]
