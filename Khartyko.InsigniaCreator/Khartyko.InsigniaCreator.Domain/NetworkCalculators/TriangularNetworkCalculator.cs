@@ -10,26 +10,6 @@ namespace Khartyko.InsigniaCreator.Domain.NetworkCalculators;
 /// </summary>
 public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkData>
 {
-	private static int ConstrainCountByCentering(int count, bool centerAlongAxis)
-	{
-		bool isEven = MathHelper.IsEven(count);
-
-		int result = count;
-
-		switch (centerAlongAxis)
-		{
-			case true when isEven:
-				result--;
-				break;
-
-			case false when !isEven:
-				result++;
-				break;
-		}
-		
-		return result;
-	}
-	
     /// <summary>
     /// Calculates the number of Nodes with the given data.
     /// </summary>
@@ -40,14 +20,12 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        int horizontalCount = ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
-        int verticalCount = ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
+        int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+        int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
 		bool startFlipped = networkData.StartFlipped;
 		var flippedBit = Convert.ToInt32(startFlipped);
 		int rowCount = (verticalCount + 1) / 2;
 		int nodesPerRow = 3 + 2 * (horizontalCount - 1);
-		
-		// TODO: Rewrite this so that it works better. For now, it doesn't work when it's both flipped and odd, even though the count is the same
 		int remainingNodes = MathHelper.IsEven(verticalCount)
 			? horizontalCount + flippedBit
 			: 0;
@@ -65,8 +43,8 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        int horizontalCount = ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
-        int verticalCount = ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
+        int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+        int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
         
 	    int halfVerticalCount = (verticalCount + 1) / 2;
 	    var evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
@@ -99,8 +77,8 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        int horizontalCount = ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
-        int verticalCount = ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
+        int horizontalCount = INetworkCalculator.ConstrainCountByCentering(networkData.HorizontalCellCount, networkData.CenterAlongYAxis);
+        int verticalCount = INetworkCalculator.ConstrainCountByCentering(networkData.VerticalCellCount, networkData.CenterAlongXAxis);
 		
 		return verticalCount * (horizontalCount + (horizontalCount - 1));
 	}
