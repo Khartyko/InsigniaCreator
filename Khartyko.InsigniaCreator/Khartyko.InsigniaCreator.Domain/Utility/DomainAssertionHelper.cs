@@ -16,19 +16,20 @@ namespace Khartyko.InsigniaCreator.Domain.Utility
             string networkDataName = name ?? nameof(networkData);
 
             AssertionHelper.NullCheck(networkData, nameof(networkData));
-            AssertionHelper.RangeCheck(networkData.HorizontalCellCount, 0, int.MaxValue, "networkData::HorizontalCellCount");
-            AssertionHelper.RangeCheck(networkData.VerticalCellCount, 0, int.MaxValue, "networkData::VerticalCellCount");
+            AssertionHelper.MinimumCheck(networkData.HorizontalCellCount, 1, networkDataName);
+            AssertionHelper.MinimumCheck(networkData.VerticalCellCount, 1, networkDataName);
         }
+        
         public static void NetworkDataCheck<TNetworkData>(TNetworkData networkData, string? name = null)
             where TNetworkData : NetworkData
         {
             string networkDataName = name ?? nameof(networkData);
 
             AssertionHelper.NullCheck(networkData, nameof(networkData));
-            AssertionHelper.RangeCheck(networkData.Width, 0, double.MaxValue, "networkData::Width");
-            AssertionHelper.RangeCheck(networkData.Height, 0, double.MaxValue, "networkData::Height");
-            AssertionHelper.RangeCheck(networkData.HorizontalCellCount, 0, int.MaxValue, "networkData::HorizontalCellCount");
-            AssertionHelper.RangeCheck(networkData.VerticalCellCount, 0, int.MaxValue, "networkData::VerticalCellCount");
+            AssertionHelper.RangeCheck(networkData.Width, 0, double.MaxValue,  networkDataName);
+            AssertionHelper.RangeCheck(networkData.Height, 0, double.MaxValue, networkDataName);
+            AssertionHelper.MinimumCheck(networkData.HorizontalCellCount, 1, networkDataName);
+            AssertionHelper.MinimumCheck(networkData.VerticalCellCount, 1, networkDataName);
         }
     }
 }
