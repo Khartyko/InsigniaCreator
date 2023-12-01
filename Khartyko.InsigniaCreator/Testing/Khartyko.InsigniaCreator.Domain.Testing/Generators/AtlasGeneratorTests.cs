@@ -2,6 +2,8 @@
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Generators;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
+using Khartyko.InsigniaCreator.Domain.NetworkCalculators;
+using Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.TestingLibrary;
@@ -11,12 +13,16 @@ namespace Khartyko.InsigniaCreator.Domain.Testing.Generators;
 public class AtlasGeneratorTests
 {
 	private CartographGenerator CreateCartographGenerator()
-	{
-		INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator();
-		INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator();
-		INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator();
+    {
+        var triangularCalculator = new TriangularNetworkCalculator();
+        var squareCalculator = new SquareNetworkCalculator();
+        var hexagonalCalculator = new HexagonalNetworkCalculator();
 
-		return new CartographGenerator(
+        INetworkGenerator<TriangularNetworkData> triNetworkGenerator = new TriangularNetworkGenerator(triangularCalculator);
+        INetworkGenerator<NetworkData> quadNetworkGenerator = new SquareNetworkGenerator(squareCalculator);
+        INetworkGenerator<HexagonalNetworkData> hexNetworkGenerator = new HexagonalNetworkGenerator(hexagonalCalculator);
+
+        return new CartographGenerator(
 			triNetworkGenerator,
 			quadNetworkGenerator,
 			hexNetworkGenerator

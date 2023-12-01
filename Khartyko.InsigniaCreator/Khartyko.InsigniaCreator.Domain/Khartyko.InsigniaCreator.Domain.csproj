@@ -13,9 +13,13 @@
     <ItemGroup>
       <Folder Include="Services\" />
       <Folder Include="Generators\" />
+      <Folder Include="NetworkGenerators\" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Generators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="NetworkGenerators\" />
     </ItemGroup>
 </Project>
