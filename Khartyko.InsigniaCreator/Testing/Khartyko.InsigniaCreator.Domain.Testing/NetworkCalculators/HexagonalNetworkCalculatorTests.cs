@@ -15,11 +15,12 @@ public class HexagonalNetworkCalculatorTests
 
 	[Theory]
 	[InlineData(true, true, 1, 1, true, 6)]
-	[InlineData(false, true, 1, 1, true, 10)]
-	[InlineData(true, false, 1, 1, true, 10)]
-	[InlineData(false, false, 1, 1, true, 20)]
-	[InlineData(true, true, 4, 4, true, 14)]
-	[InlineData(true, true, 4, 4, false, 14)]
+	[InlineData(false, true, 1, 1, true, 6)]
+	[InlineData(true, false, 1, 1, true, 6)]
+	[InlineData(true, false, 1, 1, false, 10)]
+	[InlineData(false, false, 1, 1, true, 13)]
+	[InlineData(true, true, 5, 5, true, 62)]
+	[InlineData(true, true, 5, 5, false, 66)]
 	public void CalculateNodeCount_Succeeds(
 		bool centerAlongXAxis,
 		bool centerAlongYAxis,
@@ -61,7 +62,7 @@ public class HexagonalNetworkCalculatorTests
 			Width = 1280,
 			Height = 800,
 			HorizontalCellCount = 0,
-			VerticalCellCount = 1
+			VerticalCellCount = 2
 		};
 		
 		var calculator = new HexagonalNetworkCalculator();
@@ -76,7 +77,7 @@ public class HexagonalNetworkCalculatorTests
 		{
 			Width = 1280,
 			Height = 800,
-			HorizontalCellCount = 1,
+			HorizontalCellCount = 2,
 			VerticalCellCount = 0
 		};
 		
@@ -90,12 +91,26 @@ public class HexagonalNetworkCalculatorTests
 	#region CalculateLinkCount
 
 	[Theory]
-	[InlineData(true, true, 1, 1, true, 3)]
+	// For 1x1 grid counts
+	[InlineData(true, true, 1, 1, true, 6)]
+	[InlineData(true, true, 1, 1, false, 6)]
+	[InlineData(true, false, 1, 1, true, 6)]
+	[InlineData(true, false, 1, 1, false, 11)]
 	[InlineData(false, true, 1, 1, true, 6)]
-	[InlineData(true, false, 1, 1, true, 7)]
-	[InlineData(false, false, 1, 1, true, 13)]
-	[InlineData(true, true, 4, 4, true, 28)]
-	[InlineData(true, true, 4, 4, false, 28)]
+	[InlineData(false, true, 1, 1, false, 6)]
+	[InlineData(false, false, 1, 1, true, 15)]
+	[InlineData(false, false, 1, 1, false, 15)]
+	// For 2x2 grid counts
+	[InlineData(true, true, 3, 3, true, 30)]
+	[InlineData(true, true, 3, 3, false, 35)]
+	// For either 3x4 or 4x3 grid counts
+	[InlineData(true, false, 3, 3, true, 41)]
+	[InlineData(true, false, 3, 3, false, 46)]
+	[InlineData(false, true, 3, 3, true, 42)]
+	[InlineData(false, true, 3, 3, false, 42)]
+	// For 4x4 grid counts
+	[InlineData(false, false, 3, 3, true, 56)]
+	[InlineData(false, false, 3, 3, false, 56)]
 	public void CalculateLinkCount_Succeeds(
 		bool centerAlongXAxis,
 		bool centerAlongYAxis,
@@ -168,10 +183,10 @@ public class HexagonalNetworkCalculatorTests
 	[Theory]
 	[InlineData(true, true, 1, 1, true, 1)]
 	[InlineData(false, true, 1, 1, true, 2)]
-	[InlineData(true, false, 1, 1, true, 2)]
-	[InlineData(false, false, 1, 1, true, 4)]
-	[InlineData(true, true, 4, 4, true, 9)]
-	[InlineData(true, true, 4, 4, false, 9)]
+	[InlineData(true, false, 1, 1, true, 1)]
+	[InlineData(false, false, 1, 1, true, 3)]
+	[InlineData(true, true, 4, 4, true, 7)]
+	[InlineData(true, true, 4, 4, false, 8)]
 	public void CalculateCellCount_Succeeds(
 		bool centerAlongXAxis,
 		bool centerAlongYAxis,
