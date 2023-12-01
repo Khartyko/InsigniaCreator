@@ -26,10 +26,9 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
 		var flippedBit = Convert.ToInt32(startFlipped);
 		int rowCount = (verticalCount + 1) / 2;
 		int nodesPerRow = 3 + 2 * (horizontalCount - 1);
-		int remainingNodes = MathHelper.IsEven(verticalCount)
-			? horizontalCount + flippedBit
-			: 0;
-
+		var evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
+		int remainingNodes = evenBit * (horizontalCount + flippedBit);
+		
 		return rowCount * nodesPerRow + remainingNodes;
 	}
 
