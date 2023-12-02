@@ -4,6 +4,7 @@ using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Utility;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 
@@ -48,11 +49,21 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
     /// <returns>A TemplateNetwork generated with the specified data.</returns>
     public TemplateNetwork GenerateNetwork(HexagonalNetworkData generationData)
     {
+        AssertionHelper.NullCheck(generationData, nameof(generationData));
+        AssertionHelper.NullCheck(generationData.Width, nameof(generationData.Width));
+        AssertionHelper.NullCheck(generationData.Height, nameof(generationData.Height));
+        AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
+        AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
+        AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));
+        AssertionHelper.MinimumCheck(generationData.VerticalCellCount, 1, nameof(generationData.VerticalCellCount));
+        AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
+        AssertionHelper.NullCheck(generationData.StartOffset, nameof(generationData.StartOffset));
+
         var startOffset = generationData.StartOffset;
         var centerAlongXAxis = generationData.CenterAlongXAxis;
         var centerAlongYAxis = generationData.CenterAlongYAxis;
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.VerticalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.HorizontalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var scale = transform.Scale;
         var scaledCellWidth = scale.X * s_CellWidth;

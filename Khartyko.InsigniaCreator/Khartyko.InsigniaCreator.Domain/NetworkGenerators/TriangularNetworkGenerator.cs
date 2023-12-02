@@ -38,13 +38,13 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
         AssertionHelper.NullCheck(generationData.Height, nameof(generationData.Height));
         AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
         AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
-        AssertionHelper.NullCheck(generationData.HorizontalCellCount, nameof(generationData.HorizontalCellCount));
-        AssertionHelper.NullCheck(generationData.VerticalCellCount, nameof(generationData.VerticalCellCount));
+        AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));
+        AssertionHelper.MinimumCheck(generationData.VerticalCellCount, 1, nameof(generationData.VerticalCellCount));
         AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
         AssertionHelper.NullCheck(generationData.StartFlipped, nameof(generationData.StartFlipped));
-        
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.VerticalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.HorizontalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var startFlipped = generationData.StartFlipped;
         var flip = startFlipped;
