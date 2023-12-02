@@ -308,6 +308,44 @@ public class AssertionHelperTests
 		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
 	}
 
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_DoubleVariant_Succeeds(double value, double minimum)
+	{
+		AssertionHelper.MinimumCheck(value, minimum, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_DoubleVariant_NullDescriptor_Fails(double value, double minimum)
+	{
+		string nullString = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCheck(value, minimum, nullString));
+	}
+
+	[Theory]
+	[InlineData(3, 0, "")]
+	[InlineData(0, -3, " ")]
+	[InlineData(1, 0, "\n\r\t")]
+	public void MinimumCheck_DoubleVariant_EmptyDescriptor_Fails(double value, double minimum, string descriptor)
+	{
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCheck(value, minimum, descriptor));
+	}
+
+	[Theory]
+	[InlineData(0, 3)]
+	[InlineData(-3, 0)]
+	[InlineData(0, 10)]
+	public void MinimumCheck_DoubleVariant_ValueFailsConstradoubles_Fails(double value, double minimum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
+	}
+
 	#endregion MinimumCheck
 	
 	#region RangeCheck
