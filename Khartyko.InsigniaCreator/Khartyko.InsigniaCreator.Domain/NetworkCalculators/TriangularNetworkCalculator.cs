@@ -20,8 +20,8 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
         bool startFlipped = networkData.StartFlipped;
 		var flippedBit = Convert.ToInt32(startFlipped);
 		int rowCount = (verticalCount + 1) / 2;
@@ -42,8 +42,8 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
 
         int halfVerticalCount = (verticalCount + 1) / 2;
 	    var evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
@@ -76,8 +76,8 @@ public class TriangularNetworkCalculator : INetworkCalculator<TriangularNetworkD
     {
         DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
 
         return verticalCount * (horizontalCount + (horizontalCount - 1));
 	}
