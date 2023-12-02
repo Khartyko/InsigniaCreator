@@ -10,7 +10,7 @@ public static class CellCounterHelper
 {
     public static int ConstrainCountByCentering(bool centerAlongAxis, int count)
     {
-        AssertionHelper.MinimumCheck(count, 0, nameof(count));
+        AssertionHelper.MinimumCheck(count, 1, nameof(count));
 
 		bool isEven = MathHelper.IsEven(count);
 
