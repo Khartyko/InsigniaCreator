@@ -50,8 +50,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
     public TemplateNetwork GenerateNetwork(HexagonalNetworkData generationData)
     {
         AssertionHelper.NullCheck(generationData, nameof(generationData));
-        AssertionHelper.NullCheck(generationData.Width, nameof(generationData.Width));
-        AssertionHelper.NullCheck(generationData.Height, nameof(generationData.Height));
+        AssertionHelper.MinimumCheck(generationData.Width, 1, nameof(generationData.Width));
+        AssertionHelper.MinimumCheck(generationData.Height, 1, nameof(generationData.Height));
         AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
         AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
         AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));

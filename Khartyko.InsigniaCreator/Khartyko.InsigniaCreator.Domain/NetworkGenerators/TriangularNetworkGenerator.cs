@@ -34,8 +34,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
     public TemplateNetwork GenerateNetwork(TriangularNetworkData generationData)
     {
         AssertionHelper.NullCheck(generationData, nameof(generationData));
-        AssertionHelper.NullCheck(generationData.Width, nameof(generationData.Width));
-        AssertionHelper.NullCheck(generationData.Height, nameof(generationData.Height));
+        AssertionHelper.MinimumCheck(generationData.Width, 1, nameof(generationData.Width));
+        AssertionHelper.MinimumCheck(generationData.Height, 1, nameof(generationData.Height));
         AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
         AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
         AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));
@@ -112,15 +112,45 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                     // Remove the link in question
                     previousMiddles.RemoveFirst();
 
-                    leftLink = previousRight?.Reversed() ?? new Link(middleNode, leftNode);
-                    middleLink = previousMiddle?.Reversed() ?? new Link(leftNode, rightNode);
+                    if (previousRight is not null)
+                    {
+                        leftLink = previousRight.Reversed();
+                    }
+                    else
+                    {
+                        leftLink = new Link(leftNode, middleNode);
+                        links.Add(leftLink);
+                    }
+
+                    if (previousMiddle is not null)
+                    {
+                        middleLink = previousMiddle.Reversed();
+                    }
+                    else
+                    {
+                        middleLink = new Link(leftNode, rightNode);
+                        links.Add(middleLink);
+                    }
+                    
                     rightLink = new Link(rightNode, middleNode);
+                    links.Add(rightLink);
                 }
                 else
                 {
-                    leftLink = previousRight?.Reversed() ?? new Link(leftNode, middleNode);
+                    if (previousRight is not null)
+                    {
+                        leftLink = previousRight.Reversed();
+                    }
+                    else
+                    {
+                        leftLink = new Link(leftNode, middleNode);
+                        links.Add(leftLink);
+                    }
+                    
                     middleLink = new Link(rightNode, leftNode);
+                    links.Add(middleLink);
                     rightLink = new Link(middleNode, rightNode);
+                    links.Add(rightLink);
 
                     // Add the middle for the next row
                     previousMiddles.AddLast(middleLink);
