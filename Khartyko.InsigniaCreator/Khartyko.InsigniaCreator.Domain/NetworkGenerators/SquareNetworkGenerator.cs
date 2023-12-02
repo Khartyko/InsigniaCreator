@@ -26,8 +26,6 @@ public class SquareNetworkGenerator : INetworkGenerator<NetworkData>
 
     private static List<Node> GeneratePositions(int verticalNodeCount, int horizontalNodeCount, int nodeCount, Transform transform)
     {
-        
-        
         var nodes = new List<Node>(nodeCount);
         
         int halfHorizontalNodeCount = horizontalNodeCount / 2;
@@ -65,19 +63,9 @@ public class SquareNetworkGenerator : INetworkGenerator<NetworkData>
         AssertionHelper.MinimumCheck(generationData.VerticalCellCount, 1, nameof(generationData.VerticalCellCount));
         AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
         var transform = new Transform(generationData.CellTransform!);
-
-        if (generationData.CenterAlongXAxis && MathHelper.IsEven(horizontalCount))
-        {
-            horizontalCount--;
-        }
-
-        if (generationData.CenterAlongYAxis && MathHelper.IsEven(verticalCount))
-        {
-            verticalCount--;
-        }
 
         int horizontalNodeCount = horizontalCount + 1;
         int verticalNodeCount = verticalCount + 1;

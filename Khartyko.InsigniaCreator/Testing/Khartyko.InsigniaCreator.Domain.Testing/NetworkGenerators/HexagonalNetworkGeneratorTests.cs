@@ -15,8 +15,8 @@ public class HexagonalNetworkGeneratorTests
 {
     private static HexagonalNetworkData ValidData() => new()
     {
-        Width = DataGenerator.GenerateRandomDouble(1000),
-        Height = DataGenerator.GenerateRandomDouble(1000),
+        Width = 1280,
+        Height = 800,
         HorizontalCellCount = DataGenerator.GenerateRandomInt(1, 20),
         VerticalCellCount = DataGenerator.GenerateRandomInt(1, 20)
     };
@@ -38,6 +38,25 @@ public class HexagonalNetworkGeneratorTests
         data.CenterAlongXAxis = centerAlongXAxis;
         data.CenterAlongYAxis = centerAlongYAxis;
         data.StartOffset = startOffset;
+
+        int expectedNodeCount = calculator.CalculateNodeCount(data);
+        int expectedLinkCount = calculator.CalculateLinkCount(data);
+        int expectedCellCount = calculator.CalculateCellCount(data);
+
+        TemplateNetwork actualResult = generator.GenerateNetwork(data);
+
+        Assert.Equal(expectedNodeCount, actualResult.Nodes.Count);
+        Assert.Equal(expectedLinkCount, actualResult.Links.Count);
+        Assert.Equal(expectedCellCount, actualResult.Cells.Count);
+    }
+
+    [Fact]
+    public void GenerateNetwork_RequiredOnly_Succeeds()
+    {
+        var calculator = new SquareNetworkCalculator();
+        var generator = new SquareNetworkGenerator(calculator);
+
+        NetworkData data = ValidData();
 
         int expectedNodeCount = calculator.CalculateNodeCount(data);
         int expectedLinkCount = calculator.CalculateLinkCount(data);

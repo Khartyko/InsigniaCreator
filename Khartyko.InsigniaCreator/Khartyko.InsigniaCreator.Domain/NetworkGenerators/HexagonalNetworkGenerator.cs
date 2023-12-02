@@ -62,8 +62,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var startOffset = generationData.StartOffset;
         var centerAlongXAxis = generationData.CenterAlongXAxis;
         var centerAlongYAxis = generationData.CenterAlongYAxis;
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var scale = transform.Scale;
         var scaledCellWidth = scale.X * s_CellWidth;

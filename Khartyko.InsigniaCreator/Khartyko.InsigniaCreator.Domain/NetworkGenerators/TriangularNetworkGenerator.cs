@@ -1,4 +1,4 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Utility;
@@ -43,8 +43,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
         AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
         AssertionHelper.NullCheck(generationData.StartFlipped, nameof(generationData.StartFlipped));
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.VerticalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.HorizontalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var startFlipped = generationData.StartFlipped;
         var flip = startFlipped;
