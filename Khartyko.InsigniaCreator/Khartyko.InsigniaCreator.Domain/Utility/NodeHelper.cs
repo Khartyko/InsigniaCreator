@@ -1,3 +1,7 @@
+/** \addtogroup MainApp
+ * @{
+ */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -21,3 +25,5 @@ public static class NodeHelper
 		);
 	}
 }
+
+/** @} */

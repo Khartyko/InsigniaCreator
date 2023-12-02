@@ -1,10 +1,9 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+﻿/** \addtogroup MainApp
+ * @{
+ */
+
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Khartyko.InsigniaCreator.Domain.Utility
 {
@@ -33,3 +32,5 @@ namespace Khartyko.InsigniaCreator.Domain.Utility
         }
     }
 }
+
+/** @} */

@@ -8,25 +8,6 @@ namespace Khartyko.InsigniaCreator.Domain.Interface;
 /// </summary>
 public interface INetworkCalculator
 {
-	protected static int ConstrainCountByCentering(int count, bool centerAlongAxis)
-	{
-		bool isEven = MathHelper.IsEven(count);
-
-		int result = count;
-
-		switch (centerAlongAxis)
-		{
-			case true when isEven:
-				result--;
-				break;
-
-			case false when !isEven:
-				result++;
-				break;
-		}
-		
-		return result;
-	}
 }
 
 /// <summary>
