@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 namespace Khartyko.InsigniaCreator.Library.Interfaces;
 
 /// <summary>
@@ -11,6 +12,7 @@ public interface IEntity
     /// <summary>
     /// A value that is used to identify any children of this interface.
     /// </summary>
-	long Id { get; }
+	ulong Id { get; }
 }
+
 /** @} */

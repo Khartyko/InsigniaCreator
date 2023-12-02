@@ -1,3 +1,7 @@
+/** \addtogroup MainAppTests
+ * @{
+ */
+
 using Khartyko.InsigniaCreator.MainApp.ViewModels;
 
 namespace Khartyko.InsigniaCreator.MainApp.Testing;
@@ -12,3 +16,5 @@ public class MainWindowViewModelTests
 		Assert.NotNull(mainWindowViewModel);
 	}
 }
+
+/** @} */

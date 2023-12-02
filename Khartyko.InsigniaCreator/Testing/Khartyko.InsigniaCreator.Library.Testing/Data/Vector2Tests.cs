@@ -1,8 +1,9 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8604
 
@@ -27,12 +28,10 @@ public class Vector2Tests
         Assert.Equal(value, vec.Y);
     }
 
-    [Fact]
-    public void Create_FromSingleValue_Fails()
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void Create_FromSingleValue_Fails(double invalidValue)
     {
-        Assert.Throws<ArgumentException>(() => new Vector2(double.NaN));
-        Assert.Throws<ArgumentException>(() => new Vector2(double.PositiveInfinity));
-        Assert.Throws<ArgumentException>(() => new Vector2(double.NegativeInfinity));
+        Assert.Throws<ArgumentException>(() => new Vector2(invalidValue));
     }
 
     #endregion FromSingleValue
@@ -53,16 +52,13 @@ public class Vector2Tests
         Assert.Equal(y, vec.Y);
     }
 
-    [Theory]
-    [InlineData(double.NaN, 1.0)]
-    [InlineData(double.PositiveInfinity, 1.0)]
-    [InlineData(double.NegativeInfinity, 1.0)]
-    [InlineData(1.0, double.NaN)]
-    [InlineData(1.0, double.PositiveInfinity)]
-    [InlineData(1.0, double.NegativeInfinity)]
-    public void Create_FromXY_Fails(double x, double y)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void Create_FromXY_Fails(double invalidValue)
     {
-        Assert.Throws<ArgumentException>(() => new Vector2(x, y));
+        double validValue = DataGenerator.GenerateRandomDouble();
+        
+        Assert.Throws<ArgumentException>(() => new Vector2(invalidValue, validValue));
+        Assert.Throws<ArgumentException>(() => new Vector2(validValue, invalidValue));
     }
 
     #endregion FromXY
@@ -139,15 +135,14 @@ public class Vector2Tests
         Assert.NotEqual(x, vec.X);
     }
 
-    [Theory]
-    [InlineData(1.0, 1.0, double.NaN)]
-    [InlineData(7.0, -6.0, double.PositiveInfinity)]
-    [InlineData(-3.5, 1.0, double.NegativeInfinity)]
-    public void X_Fails(double x, double y, double valueUpdate)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void X_Fails(double invalidValue)
     {
+        double x = DataGenerator.GenerateRandomDouble();
+        double y = DataGenerator.GenerateRandomDouble();
         var vec = new Vector2(x, y);
 
-        Assert.Throws<ArgumentException>(() => vec.X = valueUpdate);
+        Assert.Throws<ArgumentException>(() => vec.X = invalidValue);
         Assert.Equal(x, vec.X);
     }
 
@@ -172,15 +167,14 @@ public class Vector2Tests
         Assert.NotEqual(y, vec.Y);
     }
 
-    [Theory]
-    [InlineData(1.0, 1.0, double.NaN)]
-    [InlineData(7.0, -6.0, double.PositiveInfinity)]
-    [InlineData(-3.5, 1.0, double.NegativeInfinity)]
-    public void Y_Fails(double x, double y, double valueUpdate)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void Y_Fails(double invalidData)
     {
+        double x = DataGenerator.GenerateRandomDouble();
+        double y = DataGenerator.GenerateRandomDouble();
         var vec = new Vector2(x, y);
 
-        Assert.Throws<ArgumentException>(() => vec.Y = valueUpdate);
+        Assert.Throws<ArgumentException>(() => vec.Y = invalidData);
         Assert.Equal(y, vec.Y);
     }
 
@@ -231,15 +225,15 @@ public class Vector2Tests
         Assert.Throws<ArgumentOutOfRangeException>(() => vec[index]);
     }
 
-    [Theory]
-    [InlineData(1.0, 1.0, 0, double.NaN)]
-    [InlineData(7.0, -6.0, 1, double.PositiveInfinity)]
-    [InlineData(-3.5, 1.0, 0, double.NegativeInfinity)]
-    public void Index_BadValueUpdate_Fails(double x, double y, int index, double valueUpdate)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void Index_BadValueUpdate_Fails(double invalidValue)
     {
+        double x = DataGenerator.GenerateRandomDouble();
+        double y = DataGenerator.GenerateRandomDouble();
         var vec = new Vector2(x, y);
 
-        Assert.Throws<ArgumentException>(() => vec[index] = valueUpdate);
+        Assert.Throws<ArgumentException>(() => vec[0] = invalidValue);
+        Assert.Throws<ArgumentException>(() => vec[1] = invalidValue);
     }
 
     [Theory]
@@ -289,7 +283,7 @@ public class Vector2Tests
         var vec0 = new Vector2(x0, y0);
         var vec1 = new Vector2(x1, y1);
 
-        Vector2? additionResult = vec0 + vec1;
+        Vector2 additionResult = vec0 + vec1;
 
         Assert.Equal(x0 + x1, additionResult.X);
         Assert.Equal(y0 + y1, additionResult.Y);
@@ -327,14 +321,12 @@ public class Vector2Tests
         Assert.Throws<ArgumentNullException>(() => nullVector + value);
     }
 
-    [Fact]
-    public void AdditionOperator_Vector2AndDouble_InvalidDouble_Fails()
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void AdditionOperator_Vector2AndDouble_InvalidDouble_Fails(double invalidValue)
     {
         Vector2 vector = Vector2.Zero;
 
-        Assert.Throws<ArgumentException>(() => vector + double.NaN);
-        Assert.Throws<ArgumentException>(() => vector + double.PositiveInfinity);
-        Assert.Throws<ArgumentException>(() => vector + double.NegativeInfinity);
+        Assert.Throws<ArgumentException>(() => vector + invalidValue);
     }
 
     [Fact]
@@ -358,14 +350,12 @@ public class Vector2Tests
         Assert.Throws<ArgumentNullException>(() => value + nullVector);
     }
 
-    [Fact]
-    public void AdditionOperator_DoubleAndVector2_InvalidDouble_Fails()
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void AdditionOperator_DoubleAndVector2_InvalidDouble_Fails(double invalidValue)
     {
         Vector2 vector = Vector2.Zero;
 
-        Assert.Throws<ArgumentException>(() => double.NaN + vector);
-        Assert.Throws<ArgumentException>(() => double.PositiveInfinity + vector);
-        Assert.Throws<ArgumentException>(() => double.NegativeInfinity + vector);
+        Assert.Throws<ArgumentException>(() => invalidValue + vector);
     }
 
     #endregion AdditionOperator
@@ -419,14 +409,12 @@ public class Vector2Tests
         Assert.Throws<ArgumentNullException>(() => nullVector - value);
     }
 
-    [Fact]
-    public void SubtractionOperator_Vector2AndDouble_InvalidDouble_Fails()
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void SubtractionOperator_Vector2AndDouble_InvalidDouble_Fails(double invalidValue)
     {
         Vector2 vector = Vector2.Zero;
 
-        Assert.Throws<ArgumentException>(() => vector - double.NaN);
-        Assert.Throws<ArgumentException>(() => vector - double.PositiveInfinity);
-        Assert.Throws<ArgumentException>(() => vector - double.NegativeInfinity);
+        Assert.Throws<ArgumentException>(() => vector - invalidValue);
     }
 
     [Fact]
@@ -450,14 +438,12 @@ public class Vector2Tests
         Assert.Throws<ArgumentNullException>(() => value - nullVector);
     }
 
-    [Fact]
-    public void SubtractionOperator_DoubleAndVector2_InvalidDouble_Fails()
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void SubtractionOperator_DoubleAndVector2_InvalidDouble_Fails(double invalidValue)
     {
         Vector2 vector = Vector2.Zero;
 
-        Assert.Throws<ArgumentException>(() => double.NaN - vector);
-        Assert.Throws<ArgumentException>(() => double.PositiveInfinity - vector);
-        Assert.Throws<ArgumentException>(() => double.NegativeInfinity - vector);
+        Assert.Throws<ArgumentException>(() => invalidValue - vector);
     }
 
     #endregion SubtractionOperator
@@ -510,15 +496,14 @@ public class Vector2Tests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory]
-    [InlineData(10, 1, double.NaN)]
-    [InlineData(1, -10, double.PositiveInfinity)]
-    [InlineData(-10, -1, double.NegativeInfinity)]
-    public void MultiplyOperator_Vector2AndDouble_Fails(double x, double y, double value)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void MultiplyOperator_Vector2AndDouble_Fails(double invalidValue)
     {
+        double x = DataGenerator.GenerateRandomDouble();
+        double y = DataGenerator.GenerateRandomDouble();
         var vector = new Vector2(x, y);
 
-        Assert.Throws<ArgumentException>(() => vector * value);
+        Assert.Throws<ArgumentException>(() => vector * invalidValue);
     }
 
     [Theory]
@@ -538,8 +523,7 @@ public class Vector2Tests
 
     #region DoubleAndVector2
 
-    [Theory]
-    [InlineData(1, 1, 1, 1, 1)]
+    [Theory, InlineData(1, 1, 1, 1, 1)]
     public void MultiplyOperator_DoubleAndVector2_Succeeds(double value, double x, double y, double expectedX,
         double expectedY)
     {
@@ -551,10 +535,7 @@ public class Vector2Tests
         Assert.Equal(expectedVector, actualVector);
     }
 
-    [Theory]
-    [InlineData(double.NaN)]
-    [InlineData(double.PositiveInfinity)]
-    [InlineData(double.NegativeInfinity)]
+    [Theory, ClassData(typeof(InvalidDoubleData))]
     public void MultiplyOperator_DoubleAndVector2_Fails(double invalidDouble)
     {
         Vector2 validVector = Vector2.Zero;
@@ -624,10 +605,7 @@ public class Vector2Tests
         Assert.Equal(expectedResult, actualResult);
     }
 
-    [Theory]
-    [InlineData(double.NaN)]
-    [InlineData(double.PositiveInfinity)]
-    [InlineData(double.NegativeInfinity)]
+    [Theory, ClassData(typeof(InvalidDoubleData))]
     public void DivisionOperator_Vector2AndDouble_Fails(double invalidDouble)
     {
         Vector2 validVector = Vector2.Zero;
@@ -682,10 +660,7 @@ public class Vector2Tests
         Assert.Equal(Vector2.Zero, zero / testVector);
     }
 
-    [Theory]
-    [InlineData(double.NaN)]
-    [InlineData(double.PositiveInfinity)]
-    [InlineData(double.NegativeInfinity)]
+    [Theory, ClassData(typeof(InvalidDoubleData))]
     public void DivisionOperator_DoubleAndVector2_Fails(double invalidDouble)
     {
         Vector2 validVector = Vector2.Zero;
@@ -749,4 +724,5 @@ public class Vector2Tests
 
     #endregion Equals
 }
+
 /** @} */

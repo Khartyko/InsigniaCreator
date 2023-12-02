@@ -1,0 +1,9 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewmodels="clr-namespace:Khartyko.InsigniaCreator.MainApp.ViewModels"
+             x:DataType="viewmodels:AtlasViewportViewModel"
+             x:Class="Khartyko.InsigniaCreator.MainApp.Views.AtlasViewportView">
+    <StackPanel>
+        
+    </StackPanel>
+</UserControl>

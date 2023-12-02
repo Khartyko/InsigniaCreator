@@ -1,3 +1,7 @@
+/** \addtogroup MainAppTests
+ * @{
+ */
+
 using Avalonia;
 
 namespace Khartyko.InsigniaCreator.MainApp.Testing;
@@ -20,3 +24,5 @@ public class ProgramTests
 		Assert.Equal(typeof(App), appBuilder.ApplicationType);
 	}
 }
+
+/** @} */

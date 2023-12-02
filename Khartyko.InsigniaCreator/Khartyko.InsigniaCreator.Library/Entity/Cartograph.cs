@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Interfaces;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -19,12 +20,12 @@ public class Cartograph : IEntity
 	/// <summary>
 	/// Gets the unique long identifier of a Cartograph.
 	/// </summary>
-	public long Id { get; }
+	public ulong Id { get; }
 	
 	/// <summary>
 	/// Gets the identifier of the Atlas that a Cartograph belongs to.
 	/// </summary>
-	public long AtlasId { get; }
+	public ulong AtlasId { get; }
 
 	/// <summary>
 	/// Get or Sets the active state of a Cartograph.
@@ -66,10 +67,8 @@ public class Cartograph : IEntity
 	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if either 'id' or 'atlasId' is negative</exception>
 	/// <exception cref="ArgumentNullException">Can be thrown if either 'name' or 'templateNetwork' is null.</exception>
 	/// <exception cref="ArgumentException">Can be thrown if 'name' is either empty or whitespace.</exception>
-	public Cartograph(long id, long atlasId, string name, TemplateNetwork templateNetwork)
+	public Cartograph(ulong id, ulong atlasId, string name, TemplateNetwork templateNetwork)
 	{
-		AssertionHelper.PositiveCheck(id, nameof(id));
-		AssertionHelper.PositiveCheck(atlasId, nameof(atlasId));
 		AssertionHelper.EmptyOrWhitespaceCheck(name, nameof(name));
 		AssertionHelper.NullCheck(templateNetwork, nameof(templateNetwork));
 		
@@ -89,9 +88,8 @@ public class Cartograph : IEntity
 	/// <param name="existing"></param>
 	/// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'id' is negative</exception>
 	/// <exception cref="ArgumentNullException">Can be thrown if either 'existing' is null.</exception>
-	public Cartograph(long id, Cartograph existing)
+	public Cartograph(ulong id, Cartograph existing)
 	{
-		AssertionHelper.PositiveCheck(id, nameof(id));
 		AssertionHelper.NullCheck(existing, nameof(existing));
 		
 		Id = id;
@@ -157,4 +155,5 @@ public class Cartograph : IEntity
 		       && cartograph.Active.Equals(Active);
 	}
 }
+
 /** @} */

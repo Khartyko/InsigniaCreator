@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 /// <summary>
@@ -214,9 +215,9 @@ public static class AssertionHelper
     /// <summary>
     /// Checks if a given value is at least a minimum specified.
     /// </summary>
-    /// <param name="value">The double in question.</param>
+    /// <param name="value">The int in question.</param>
     /// <param name="minimum">The minimum value to check for.</param>
-    /// <param name="descriptor">The name of the double in question.</param>
+    /// <param name="descriptor">The name of the int in question.</param>
     /// <exception cref="ArgumentNullException">Can be thrown if 'descriptor' is null.</exception>
     /// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' is less than 'minimum'.</exception>
     public static void MinimumCheck(int value, int minimum, string descriptor)
@@ -224,6 +225,53 @@ public static class AssertionHelper
         EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
 
         if (value < minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than or equal to the minimum; got: {value} < {minimum}");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a given value is at least a minimum specified.
+    /// </summary>
+    /// <param name="value">The ulong in question.</param>
+    /// <param name="minimum">The minimum value to check for.</param>
+    /// <param name="descriptor">The name of the ulong in question.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'descriptor' is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' is less than 'minimum'.</exception>
+    public static void MinimumCheck(ulong value, ulong minimum, string descriptor)
+    {
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (value < minimum)
+        {
+            ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
+
+            string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
+
+            throw new ArgumentOutOfRangeException(descriptor, $"{signature}:\n\tvalue cannot be less than or equal to the minimum; got: {value} < {minimum}");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a given value is at least a minimum specified.
+    /// </summary>
+    /// <param name="value">The double in question.</param>
+    /// <param name="minimum">The minimum value to check for.</param>
+    /// <param name="descriptor">The name of the double in question.</param>
+    /// <exception cref="ArgumentNullException">Can be thrown if 'descriptor' is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Can be thrown if 'value' is less than 'minimum'.</exception>
+    /// <exception cref="ArgumentException">Can be thrown if 'value' or 'minimum' are invalid doubles.</exception>
+    public static void MinimumCheck(double value, double minimum, string descriptor)
+    {
+        InvalidDoubleCheck(value, nameof(value));
+        InvalidDoubleCheck(minimum, nameof(minimum));
+        EmptyOrWhitespaceCheck(descriptor, nameof(descriptor));
+
+        if (MathHelper.LessThan(value, minimum))
         {
             ReflectionMetadata metadata = ReflectionHelper.GetCallerMetadata(1);
 
@@ -451,4 +499,5 @@ public static class AssertionHelper
         }
     }
 }
+
 /** @} */

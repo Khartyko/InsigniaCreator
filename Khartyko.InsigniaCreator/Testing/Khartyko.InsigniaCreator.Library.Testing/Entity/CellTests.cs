@@ -1,6 +1,7 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
 
@@ -222,7 +223,9 @@ public class CellTests
     {
         var cell = new Cell(s_nodes, s_links);
 
+        // ReSharper disable EqualExpressionComparison
         Assert.True(cell.Equals(cell));
+        // ReSharper restore EqualExpressionComparison
     }
 
     [Fact]
@@ -284,4 +287,5 @@ public class CellTests
 
     #endregion Equals
 }
+
 /** @} */

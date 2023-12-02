@@ -1,5 +1,7 @@
-using Avalonia.Controls.ApplicationLifetimes;
-using Khartyko.InsigniaCreator.MainApp.ViewModels;
+/** \addtogroup MainAppTests
+ * @{
+ */
+
 namespace Khartyko.InsigniaCreator.MainApp.Testing;
 
 public class AppTests
@@ -18,3 +20,5 @@ public class AppTests
 		Assert.Equal("Avalonia Application", app.Name);
 	}
 }
+
+/** @} */

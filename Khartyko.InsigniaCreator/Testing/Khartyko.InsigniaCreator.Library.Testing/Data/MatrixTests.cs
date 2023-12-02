@@ -1,8 +1,9 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8601, CS8625, CS8604
 
@@ -595,4 +596,5 @@ public class MatrixTests
 
     #endregion Multiplication Operator
 }
+
 /** @} */

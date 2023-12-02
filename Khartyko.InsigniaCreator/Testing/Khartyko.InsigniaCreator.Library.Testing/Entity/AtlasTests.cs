@@ -1,9 +1,10 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8604, CS8601, CS8625
 
@@ -13,7 +14,7 @@ public class AtlasTests
 {
 	private static Atlas ConstructAtlas()
 	{
-		const long id = 1L;
+		const ulong id = 1L;
 		const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
@@ -24,7 +25,7 @@ public class AtlasTests
 
 	private static Cartograph ConstructCartograph()
 	{
-		const long id = 1L;
+		const ulong id = 1L;
 		const string name = "Cartograph #1";
 		
 		var nodes = new List<Node>
@@ -105,9 +106,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Width_Get_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const double width = 100;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const double width = 100;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		const string name = "Atlas";
 		var rgbColor = new RgbColor(0);
@@ -119,9 +120,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Width_Set_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const double boundary = 100;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const double boundary = 100;
 		const string name = "Atlas";
 		var rgbColor = new RgbColor(0);
 		
@@ -135,10 +136,7 @@ public class AtlasTests
 		Assert.Equal(newWidth, atlas.Width);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Width_Set_InvalidWidth_Fails(double invalidWidth)
 	{
 		Atlas atlas = ConstructAtlas();
@@ -166,9 +164,9 @@ public class AtlasTests
 	
 	[Fact]
 	public void Height_Get_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		double width = DataGenerator.GenerateRandomDouble() + 1.0;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		const double height = 100.0;
 		const string name = "Atlas";
 		var rgbColor = new RgbColor(0);
@@ -180,9 +178,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Height_Set_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const double boundary = 100;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const double boundary = 100;
 		const string name = "Atlas";
 		var rgbColor = new RgbColor(0);
 		
@@ -196,10 +194,7 @@ public class AtlasTests
 		Assert.Equal(newHeight, atlas.Height);
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Height_Set_InvalidWidth_Fails(double invalidHeight)
 	{
 		Atlas atlas = ConstructAtlas();
@@ -260,9 +255,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_NoCartographs_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -277,26 +272,11 @@ public class AtlasTests
 		Assert.Empty(atlas.Cartographs);
 	}
 
-	[Fact]
-	public void Construct_InvalidId_NoCartographs_Fails()
-	{
-		const long invalidId = -1L;
-		const string name = "Atlas";
-		double width = DataGenerator.GenerateRandomDouble() + 1.0;
-		double height = DataGenerator.GenerateRandomDouble() + 1.0;
-		var rgbColor = new RgbColor(0);
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor));
-	}
-
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_NoCartographs_InvalidBounds_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -308,9 +288,9 @@ public class AtlasTests
 	[InlineData(-1.0)]
 	[InlineData(0.0)]
 	public void Construct_NoCartographs_BoundsOutOfRange_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -319,10 +299,10 @@ public class AtlasTests
 	}
 
 	[Fact]
-	public void Construct_NullBackgroundColor_NoCartographs_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+	public void Construct_NoCartographs_NullBackgroundColor_Fails()
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		RgbColor nullColor = null;
@@ -336,9 +316,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromSingleCartograph_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -355,28 +335,11 @@ public class AtlasTests
 		Assert.Contains(cartograph, atlas.Cartographs);
 	}
 
-	[Fact]
-	public void Construct_FromSingleCartograph_InvalidId_Fails()
-	{
-		const long invalidId = -1L;
-		const string name = "Atlas";
-		double width = DataGenerator.GenerateRandomDouble() + 1.0;
-		double height = DataGenerator.GenerateRandomDouble() + 1.0;
-		var rgbColor = new RgbColor(0);
-
-		Cartograph cartograph = ConstructCartograph();
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartograph));
-	}
-
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_FromSingleCartograph_InvalidBounds_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -390,9 +353,9 @@ public class AtlasTests
 	[InlineData(-1.0)]
 	[InlineData(0.0)]
 	public void Construct_FromSingleCartograph_BoundsOutOfRange_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -404,9 +367,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromSingleCartograph_NullBackgroundColor_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		RgbColor nullColor = null;
@@ -416,9 +379,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromSingleCartograph_NullCartograph_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -434,9 +397,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_Succeeds()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -456,31 +419,11 @@ public class AtlasTests
 		Assert.Equal(cartographs, atlas.Cartographs);
 	}
 
-	[Fact]
-	public void Construct_FromMultipleCartographs_InvalidId_Fails()
-	{
-		const long invalidId = -1L;
-		const string name = "Atlas";
-		double width = DataGenerator.GenerateRandomDouble() + 1.0;
-		double height = DataGenerator.GenerateRandomDouble() + 1.0;
-		var rgbColor = new RgbColor(0);
-
-		IList<Cartograph> cartographs = new List<Cartograph>
-		{
-			ConstructCartograph()
-		};
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, name, width, height, rgbColor, cartographs));
-	}
-
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void Construct_FromMultipleCartographs_InvalidBounds_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -497,9 +440,9 @@ public class AtlasTests
 	[InlineData(-1.0)]
 	[InlineData(0.0)]
 	public void Construct_FromMultipleCartographs_OutOfRangeBounds_Fails(double invalidBoundary)
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double validBoundary = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
 		
@@ -514,9 +457,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_NullBackgroundColor_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		RgbColor nullColor = null;
@@ -526,14 +469,14 @@ public class AtlasTests
 			ConstructCartograph()
 		};
 
-		Assert.Throws<ArgumentNullException>(() => new Atlas(id, name, width, height, nullColor));
+		Assert.Throws<ArgumentNullException>(() => new Atlas(id, name, width, height, nullColor, cartographs));
 	}
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_NullCartographsList_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -544,9 +487,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_EmptyCartographs_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -557,9 +500,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_OneCartographIsNull_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -574,9 +517,9 @@ public class AtlasTests
 
 	[Fact]
 	public void Construct_FromMultipleCartographs_DuplicateIds_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		const string name = "Atlas";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Atlas";
 		double width = DataGenerator.GenerateRandomDouble() + 1.0;
 		double height = DataGenerator.GenerateRandomDouble() + 1.0;
 		var rgbColor = new RgbColor(0);
@@ -601,15 +544,6 @@ public class AtlasTests
 		var secondAtlas = new Atlas(2L, firstAtlas);
 		
 		Assert.Equal(firstAtlas, secondAtlas);
-	}
-
-	[Fact]
-	public void Construct_FromExisting_InvalidId_Fails()
-	{
-		const long invalidId = -1L;
-		Atlas atlas = ConstructAtlas();
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Atlas(invalidId, atlas));
 	}
 
 	[Fact]
@@ -684,4 +618,5 @@ public class AtlasTests
 
 	#endregion Equals
 }
+
 /** @} */

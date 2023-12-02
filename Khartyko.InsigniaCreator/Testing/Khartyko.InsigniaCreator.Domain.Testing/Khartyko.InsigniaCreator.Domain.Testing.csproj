@@ -23,6 +23,19 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Khartyko.InsigniaCreator.Domain\Khartyko.InsigniaCreator.Domain.csproj" />
+      <ProjectReference Include="..\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Generators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Generators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="NetworkGenerators\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="NetworkGenerators\" />
+    </ItemGroup>
 </Project>

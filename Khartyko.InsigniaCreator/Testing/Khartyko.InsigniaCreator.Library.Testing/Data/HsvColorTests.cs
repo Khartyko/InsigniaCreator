@@ -1,7 +1,9 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8604 // Possible null reference argument.
 
@@ -33,14 +35,12 @@ public class HsvColorTests
 		Assert.Equal(expectedHue, hsvColor.Hue);
 	}
 
-	[Fact]
-	public void Hue_Set_InvalidDouble_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Hue_Set_InvalidDouble_Fails(double invalidValue)
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Hue = double.NaN);
-		Assert.Throws<ArgumentException>(() => hsvColor.Hue = double.PositiveInfinity);
-		Assert.Throws<ArgumentException>(() => hsvColor.Hue = double.NegativeInfinity);
+		Assert.Throws<ArgumentException>(() => hsvColor.Hue = invalidValue);
 	}
 
 	[Theory]
@@ -79,14 +79,12 @@ public class HsvColorTests
 		Assert.Equal(expectedSaturation, hsvColor.Saturation);
 	}
 
-	[Fact]
-	public void Saturation_Set_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Saturation_Set_Fails(double invalidValue)
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Saturation = double.NaN);
-		Assert.Throws<ArgumentException>(() => hsvColor.Saturation = double.PositiveInfinity);
-		Assert.Throws<ArgumentException>(() => hsvColor.Saturation = double.NegativeInfinity);
+		Assert.Throws<ArgumentException>(() => hsvColor.Saturation = invalidValue);
 	}
 
 	[Theory]
@@ -125,14 +123,12 @@ public class HsvColorTests
 		Assert.Equal(expectedValue, hsvColor.Value);
 	}
 
-	[Fact]
-	public void Value_Set_Fails()
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void Value_Set_Fails(double invalidValue)
 	{
 		var hsvColor = new HsvColor();
 
-		Assert.Throws<ArgumentException>(() => hsvColor.Value = double.NaN);
-		Assert.Throws<ArgumentException>(() => hsvColor.Value = double.PositiveInfinity);
-		Assert.Throws<ArgumentException>(() => hsvColor.Value = double.NegativeInfinity);
+		Assert.Throws<ArgumentException>(() => hsvColor.Value = invalidValue);
 	}
 
 	[Theory]
@@ -270,4 +266,5 @@ public class HsvColorTests
 	
 	#endregion Equals
 }
+
 /** @} */

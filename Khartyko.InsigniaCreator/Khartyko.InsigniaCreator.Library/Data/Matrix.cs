@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0660, CS0661, CS0659
@@ -171,4 +172,5 @@ public partial class Matrix
         return true;
     }
 }
+
 /** @} */

@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
@@ -212,4 +213,5 @@ public partial class RgbColor
         }
     }
 }
+
 /** @} */

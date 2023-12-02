@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 /// <summary>
@@ -8,7 +9,7 @@ namespace Khartyko.InsigniaCreator.Library.Utility.Helpers;
 /// </summary>
 public static class MathHelper
 {
-    private const double _tolerance = 0.0001;
+    private const double c_tolerance = 0.0001;
 
     /// <summary>
     /// Checks if an integer value is odd.
@@ -36,7 +37,7 @@ public static class MathHelper
         AssertionHelper.InvalidDoubleCheck(d0, nameof(d0));
         AssertionHelper.InvalidDoubleCheck(d1, nameof(d1));
 
-        return Math.Abs(d0 - d1) < _tolerance;
+        return Math.Abs(d0 - d1) < c_tolerance;
     }
 
     /// <summary>
@@ -183,4 +184,5 @@ public static class MathHelper
         return Round(innerFacingAngle);
     }
 }
+
 /** @} */

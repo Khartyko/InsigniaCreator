@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659, CS0660, CS0661
@@ -150,4 +151,5 @@ public class HsvColor
 		       && MathHelper.Equals(Value, hsvColor.Value);
 	}
 }
+
 /** @} */

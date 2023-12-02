@@ -1,9 +1,10 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS0219, CS8600, CS8601, CS8604
 
@@ -34,10 +35,10 @@ public class CartographTests
 
 	private static readonly TemplateNetwork s_templateNetwork = new(s_nodes, s_links, s_cells);
 
-	private static Cartograph CreateTestCartograph(long? id = null, long? atlasId = null, string? cartographName = null)
+	private static Cartograph CreateTestCartograph(ulong? id = null, ulong? atlasId = null, string? cartographName = null)
 	{
-		long usedCartographId = id ?? DataGenerator.GenerateRandomLong(0, 10);
-		long usedAtlasId = atlasId ?? DataGenerator.GenerateRandomLong(0, 10);
+		ulong usedCartographId = id ?? DataGenerator.GenerateRandomULong(10);
+		ulong usedAtlasId = atlasId ?? DataGenerator.GenerateRandomULong(10);
 		string usedCartographName = cartographName ?? "CartographName";
 
 		var cartograph = new Cartograph(usedCartographId, usedAtlasId, usedCartographName, s_templateNetwork);
@@ -50,7 +51,7 @@ public class CartographTests
 	[Fact]
 	public void Id_Succeeds()
 	{
-		long id = DataGenerator.GenerateRandomLong(0, 10);
+		ulong id = DataGenerator.GenerateRandomULong(10);
 		
 		Cartograph cartograph = CreateTestCartograph(id);
 		
@@ -64,7 +65,7 @@ public class CartographTests
 	[Fact]
 	public void AtlasId_Succeeds()
 	{
-		int atlasId = DataGenerator.GenerateRandomInt(0, 10);
+		ulong atlasId = DataGenerator.GenerateRandomULong(10);
 		
 		Cartograph cartograph = CreateTestCartograph(atlasId: atlasId);
 		
@@ -190,8 +191,8 @@ public class CartographTests
 	[Fact]
 	public void Construct_FromValues_Succeeds()
 	{
-		long id = DataGenerator.GenerateRandomLong(0, 100L);
-		long atlasId = DataGenerator.GenerateRandomLong(0, 100L);
+		ulong id = DataGenerator.GenerateRandomULong(100L);
+		ulong atlasId = DataGenerator.GenerateRandomULong(100L);
 		
 		var cartograph = new Cartograph(id, atlasId, "Cartograph", s_templateNetwork);
 		
@@ -200,42 +201,31 @@ public class CartographTests
 	}
 
 	[Fact]
-	public void Construct_FromValues_BadIds_Fails()
-	{
-		long invalidId = -1;
-		
-		long validId = DataGenerator.GenerateRandomLong(0, 100L);
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(invalidId, validId, "Cartograph", s_templateNetwork));
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(validId, invalidId, "Cartograph", s_templateNetwork));
-	}
-
-	[Fact]
 	public void Construct_FromValues_NullString_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100L);
-		long atlasId = DataGenerator.GenerateRandomLong(0, 100L);
-		string nullString = null;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        ulong atlasId = DataGenerator.GenerateRandomULong(100L);
+        string nullString = null;
 
 		Assert.Throws<ArgumentNullException>(() => new Cartograph(id, atlasId, nullString, s_templateNetwork));
 	}
 
 	[Fact]
 	public void Construct_FromValues_WhitespaceString_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100L);
-		long atlasId = DataGenerator.GenerateRandomLong(0, 100L);
-		
-		Assert.Throws<ArgumentException>(() => new Cartograph(id, atlasId, string.Empty, s_templateNetwork));
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        ulong atlasId = DataGenerator.GenerateRandomULong(100L);
+
+        Assert.Throws<ArgumentException>(() => new Cartograph(id, atlasId, string.Empty, s_templateNetwork));
 		Assert.Throws<ArgumentException>(() => new Cartograph(id, atlasId, "\t\r\n", s_templateNetwork));
 	}
 
 	[Fact]
 	public void Construct_FromValues_NullTemplateNetwork_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100L);
-		long atlasId = DataGenerator.GenerateRandomLong(0, 100L);
-		const string name = "Cartograph";
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        ulong atlasId = DataGenerator.GenerateRandomULong(100L);
+        const string name = "Cartograph";
 		TemplateNetwork nullTemplateNetwork = null;
 
 		Assert.Throws<ArgumentNullException>(() => new Cartograph(id, atlasId, name, nullTemplateNetwork));
@@ -263,22 +253,10 @@ public class CartographTests
 	}
 
 	[Fact]
-	public void Construct_FromExisting_InvalidId_Fails()
-	{
-		const long invalidId = -1L;
-
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		long atlasId = DataGenerator.GenerateRandomLong(0, 100);
-		Cartograph cartograph = new Cartograph(id, atlasId, "Cartograph", s_templateNetwork);
-
-		Assert.Throws<ArgumentOutOfRangeException>(() => new Cartograph(invalidId, cartograph));
-	}
-
-	[Fact]
 	public void Construct_FromExisting_NullCartograph_Fails()
-	{
-		long id = DataGenerator.GenerateRandomLong(0, 100);
-		Cartograph nullCartograph = null;
+    {
+        ulong id = DataGenerator.GenerateRandomULong(100L);
+        Cartograph nullCartograph = null;
 
 		Assert.Throws<ArgumentNullException>(() => new Cartograph(id, nullCartograph));
 	}
@@ -419,4 +397,5 @@ public class CartographTests
 
 	#endregion Equals
 }
+
 /** @} */

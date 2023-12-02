@@ -1,6 +1,7 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using System.Reflection;
 using Khartyko.InsigniaCreator.Library.Utility;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
@@ -329,6 +330,8 @@ public class ReflectionHelperTests
     {
         ReflectionMetadata? metadata = null;
 
+        // ReSharper disable once UnusedParameter.Local
+        // ReSharper disable once RedundantLambdaParameterType
         Action<string> action = (string str) =>
         {
             metadata = ReflectionHelper.GetCallerMetadata();
@@ -347,4 +350,5 @@ public class ReflectionHelperTests
     
     #endregion ConstructMethodSignature
 }
+
 /** @} */

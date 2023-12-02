@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0660, CS0661, CS0659
@@ -168,4 +169,5 @@ public partial class Vector2
     /// <returns>A string containing the 'X' and 'Y' values.</returns>
     public override string ToString() => $"{{ x: {X}, y: {Y} }}";
 }
+
 /** @} */

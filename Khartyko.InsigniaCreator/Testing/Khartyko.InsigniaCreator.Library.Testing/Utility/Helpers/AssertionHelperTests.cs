@@ -1,7 +1,9 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8604
 
@@ -86,13 +88,10 @@ public class AssertionHelperTests
 	public void InvalidDoubleCheck_Succeeds(double input, string descriptor) =>
 		AssertionHelper.InvalidDoubleCheck(input, descriptor);
 
-	[Theory]
-	[InlineData(double.NaN, "value")]
-	[InlineData(double.PositiveInfinity, "value")]
-	[InlineData(double.NegativeInfinity, "value")]
-	public void InvalidDoubleCheck_BadInput_Fails(double input, string descriptor)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void InvalidDoubleCheck_BadInput_Fails(double invalidValue)
 	{
-		Assert.Throws<ArgumentException>(() => AssertionHelper.InvalidDoubleCheck(input, descriptor));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.InvalidDoubleCheck(invalidValue, nameof(invalidValue)));
 	}
 
 	[Theory]
@@ -207,10 +206,7 @@ public class AssertionHelperTests
 		AssertionHelper.PositiveCheck(value, nameof(value));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
+	[Theory, ClassData(typeof(InvalidDoubleData))]
 	public void PositiveCheck_DoubleValue_InvalidDouble_Fails(double invalidValue)
 	{
 		Assert.Throws<ArgumentException>(() => AssertionHelper.PositiveCheck(invalidValue, nameof(invalidValue)));
@@ -243,7 +239,7 @@ public class AssertionHelperTests
 	[InlineData(3, 0)]
 	[InlineData(0, -3)]
 	[InlineData(1, 0)]
-	public void MinimumCheck_Succeeds(int value, int minimum)
+	public void MinimumCheck_IntVariant_Succeeds(int value, int minimum)
 	{
 		AssertionHelper.MinimumCheck(value, minimum, nameof(value));
 	}
@@ -252,7 +248,7 @@ public class AssertionHelperTests
 	[InlineData(3, 0)]
 	[InlineData(0, -3)]
 	[InlineData(1, 0)]
-	public void MinimumCheck_NullDescriptor_Fails(int value, int minimum)
+	public void MinimumCheck_IntVariant_NullDescriptor_Fails(int value, int minimum)
 	{
 		string nullString = null;
 		
@@ -263,7 +259,7 @@ public class AssertionHelperTests
 	[InlineData(3, 0, "")]
 	[InlineData(0, -3, " ")]
 	[InlineData(1, 0, "\n\r\t")]
-	public void MinimumCheck_EmptyDescriptor_Fails(int value, int minimum, string descriptor)
+	public void MinimumCheck_IntVariant_EmptyDescriptor_Fails(int value, int minimum, string descriptor)
 	{
 		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCheck(value, minimum, descriptor));
 	}
@@ -272,7 +268,80 @@ public class AssertionHelperTests
 	[InlineData(0, 3)]
 	[InlineData(-3, 0)]
 	[InlineData(0, 10)]
-	public void MinimumCheck_ValueFailsConstraints_Fails(int value, int minimum)
+	public void MinimumCheck_IntVariant_ValueFailsConstraints_Fails(int value, int minimum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
+	}
+
+	[Theory]
+	[InlineData(3ul, 0ul)]
+	[InlineData(1ul, 0ul)]
+	public void MinimumCheck_ULongVariant_Succeeds(ulong value, ulong minimum)
+	{
+		AssertionHelper.MinimumCheck(value, minimum, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(3ul, 0ul)]
+	[InlineData(1ul, 0ul)]
+	public void MinimumCheck_ULongVariant_NullDescriptor_Fails(ulong value, ulong minimum)
+	{
+		string nullString = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCheck(value, minimum, nullString));
+	}
+
+	[Theory]
+	[InlineData(3ul, 0ul, "")]
+	[InlineData(1ul, 0ul, " ")]
+	[InlineData(2ul, 0ul, "\n\r\t")]
+	public void MinimumCheck_ULongVariant_EmptyDescriptor_Fails(ulong value, ulong minimum, string descriptor)
+	{
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCheck(value, minimum, descriptor));
+	}
+
+	[Theory]
+	[InlineData(0ul, 3ul)]
+	[InlineData(0ul, 10ul)]
+	public void MinimumCheck_ULongVariant_ValueFailsConstraints_Fails(ulong value, ulong minimum)
+	{
+		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
+	}
+
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_DoubleVariant_Succeeds(double value, double minimum)
+	{
+		AssertionHelper.MinimumCheck(value, minimum, nameof(value));
+	}
+
+	[Theory]
+	[InlineData(3, 0)]
+	[InlineData(0, -3)]
+	[InlineData(1, 0)]
+	public void MinimumCheck_DoubleVariant_NullDescriptor_Fails(double value, double minimum)
+	{
+		string nullString = null;
+		
+		Assert.Throws<ArgumentNullException>(() => AssertionHelper.MinimumCheck(value, minimum, nullString));
+	}
+
+	[Theory]
+	[InlineData(3, 0, "")]
+	[InlineData(0, -3, " ")]
+	[InlineData(1, 0, "\n\r\t")]
+	public void MinimumCheck_DoubleVariant_EmptyDescriptor_Fails(double value, double minimum, string descriptor)
+	{
+		Assert.Throws<ArgumentException>(() => AssertionHelper.MinimumCheck(value, minimum, descriptor));
+	}
+
+	[Theory]
+	[InlineData(0, 3)]
+	[InlineData(-3, 0)]
+	[InlineData(0, 10)]
+	public void MinimumCheck_DoubleVariant_ValueFailsConstradoubles_Fails(double value, double minimum)
 	{
 		Assert.Throws<ArgumentOutOfRangeException>(() => AssertionHelper.MinimumCheck(value, minimum, nameof(value)));
 	}
@@ -367,17 +436,14 @@ public class AssertionHelperTests
 		AssertionHelper.RangeCheck(value, minimum, maximum, nameof(value));
 	}
 
-	[Theory]
-	[InlineData(double.NaN)]
-	[InlineData(double.PositiveInfinity)]
-	[InlineData(double.NegativeInfinity)]
-	public void RangeCheck_InvalidDoubleValues_DoubleValue_Fails(double value)
+	[Theory, ClassData(typeof(InvalidDoubleData))]
+	public void RangeCheck_InvalidDoubleValues_DoubleValue_Fails(double invalidValue)
 	{
 		const double validValue = 0.0;
 
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(value, validValue, validValue, nameof(value)));
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, value, value, nameof(value)));
-		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, validValue, value, nameof(value)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(invalidValue, validValue, validValue, nameof(invalidValue)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, invalidValue, invalidValue, nameof(invalidValue)));
+		Assert.Throws<ArgumentException>(() => AssertionHelper.RangeCheck(validValue, validValue, invalidValue, nameof(invalidValue)));
 	}
 
 	[Theory]
@@ -604,4 +670,5 @@ public class AssertionHelperTests
 
 	#endregion DuplicatesCheck
 }
+
 /** @} */

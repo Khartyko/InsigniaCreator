@@ -1,18 +1,16 @@
-/** \addtogroup LibraryTests
- * @{
- */
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility.Model;
 
-namespace Khartyko.InsigniaCreator.Library.Testing.Utility;
+namespace Khartyko.InsigniaCreator.TestingLibrary;
 
-internal static class DataGenerator
+public static class DataGenerator
 {
     private static readonly Random s_random = new();
 
+    public static bool GenerateRandomBool() => GenerateRandomInt(0, 2) == 1;
     public static int GenerateRandomInt(int min, int max) => s_random.Next(min, max);
-    public static long GenerateRandomLong(long min, long max) => s_random.NextInt64(min, max);
+    public static ulong GenerateRandomULong(long max) => (ulong)s_random.NextInt64(0, max);
     public static double GenerateRandomDouble(double multiplier = 100) => s_random.NextDouble() * multiplier;
 
     public static Vector2 GenerateRandomVector2() => new(
@@ -26,6 +24,13 @@ internal static class DataGenerator
         GenerateRandomDouble()
     );
 
+    public static RgbColor GenerateRandomColor() => new(
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256),
+        (byte)s_random.Next(0, 256)
+    );
+    
     public static Node GenerateRandomNode() => new(
         GenerateRandomVector2()
     );
@@ -35,22 +40,13 @@ internal static class DataGenerator
         GenerateRandomVector3(),
         GenerateRandomVector3()
     );
-        
-    public static RandomMatrixData GenerateRandomMatrixData()
-    {
-        return new RandomMatrixData(
-            GenerateRandomVector3(),
-            GenerateRandomVector3(),
-            GenerateRandomVector3()
-        );
-    }
 
     public static RandomTransformData GenerateRandomTransformData(bool randomScale, bool randomRotation,
         bool randomTranslation)
     {
-        Vector2? scale = randomScale ? GenerateRandomVector2() : new Vector2(1);
+        Vector2 scale = randomScale ? GenerateRandomVector2() : new Vector2(1);
         double rotation = randomRotation ? GenerateRandomDouble() : 0.0;
-        Vector2? translation = randomTranslation ? GenerateRandomVector2() : new Vector2(0);
+        Vector2 translation = randomTranslation ? GenerateRandomVector2() : new Vector2(0);
 
         return new RandomTransformData
         {
@@ -60,5 +56,19 @@ internal static class DataGenerator
             Transform = new Transform(scale, rotation, translation)
         };
     }
+    
+    
+    public static NetworkData GenerateSquareNetworkData(double width = 1280, double height = 720)
+    {
+        return new NetworkData
+        {
+            Width = width,
+            Height = height,
+            CenterAlongXAxis = true,
+            CenterAlongYAxis = true,
+            HorizontalCellCount = 1,
+            VerticalCellCount = 1,
+            CellTransform = new Transform()
+        };
+    }
 }
-/** @} */

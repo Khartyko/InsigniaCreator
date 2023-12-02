@@ -1,9 +1,10 @@
 /** \addtogroup LibraryTests
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Testing.Utility;
+using Khartyko.InsigniaCreator.TestingLibrary;
 
 #pragma warning disable CS8600, CS8601, CS8604
 
@@ -95,16 +96,13 @@ public class NodeTests
         Assert.Equal(y, node.Position.Y);
     }
 
-    [Theory]
-    [InlineData(double.NaN, 0.0)]
-    [InlineData(double.PositiveInfinity, 0.0)]
-    [InlineData(double.NegativeInfinity, 0.0)]
-    [InlineData(0.0, double.NaN)]
-    [InlineData(0.0, double.PositiveInfinity)]
-    [InlineData(0.0, double.NegativeInfinity)]
-    public void ConstructFromDoubles_BadValues_Fails(double x, double y)
+    [Theory, ClassData(typeof(InvalidDoubleData))]
+    public void ConstructFromDoubles_BadValues_Fails(double invalidValue)
     {
-        Assert.Throws<ArgumentException>(() => new Node(x, y));
+        double validValue = DataGenerator.GenerateRandomDouble();
+        
+        Assert.Throws<ArgumentException>(() => new Node(validValue, invalidValue));
+        Assert.Throws<ArgumentException>(() => new Node(invalidValue, validValue));
     }
 
     #endregion Construct From Doubles
@@ -215,4 +213,5 @@ public class NodeTests
     
     #endregion ToString
 }
+
 /** @} */

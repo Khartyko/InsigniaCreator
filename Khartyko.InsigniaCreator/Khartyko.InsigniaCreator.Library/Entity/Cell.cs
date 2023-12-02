@@ -1,6 +1,7 @@
 /** \addtogroup Library
  * @{
  */
+
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 #pragma warning disable CS0659
@@ -110,4 +111,5 @@ public class Cell
                && Links.All(cell.Contains);
     }
 }
+
 /** @} */
