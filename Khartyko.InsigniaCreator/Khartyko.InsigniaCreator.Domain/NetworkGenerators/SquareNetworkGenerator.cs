@@ -59,8 +59,8 @@ public class SquareNetworkGenerator : INetworkGenerator<NetworkData>
         AssertionHelper.NullCheck(generationData, nameof(generationData));
         AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
         
-        int horizontalCount = generationData.HorizontalCellCount;
-        int verticalCount = generationData.VerticalCellCount;
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
         var transform = new Transform(generationData.CellTransform!);
 
         if (generationData.CenterAlongXAxis && MathHelper.IsEven(horizontalCount))
