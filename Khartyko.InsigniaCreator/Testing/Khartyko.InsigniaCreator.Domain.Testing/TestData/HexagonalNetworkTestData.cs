@@ -40,7 +40,11 @@ public class HexagonalNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -63,7 +67,11 @@ public class HexagonalNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -87,7 +95,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -97,7 +109,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -107,7 +123,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -146,7 +166,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -171,7 +195,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -197,7 +225,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -208,7 +240,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -219,7 +255,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -244,7 +284,11 @@ public class HexagonalNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -268,7 +312,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -278,7 +326,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -288,7 +340,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -313,7 +369,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -323,7 +383,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = true,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -333,7 +397,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -359,7 +427,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -370,7 +442,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -381,7 +457,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -392,7 +472,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = true,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -403,7 +487,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -414,7 +502,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -425,7 +517,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -451,7 +547,11 @@ public class HexagonalNetworkTestData
                     // PatchWork Variables:
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -477,7 +577,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -488,7 +592,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -499,7 +607,11 @@ public class HexagonalNetworkTestData
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -526,7 +638,11 @@ public class HexagonalNetworkTestData
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -537,7 +653,11 @@ public class HexagonalNetworkTestData
                     CenterAlongYAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,
@@ -548,7 +668,11 @@ public class HexagonalNetworkTestData
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new HexagonalNetworkData()
                 {
                     Width = 1280,

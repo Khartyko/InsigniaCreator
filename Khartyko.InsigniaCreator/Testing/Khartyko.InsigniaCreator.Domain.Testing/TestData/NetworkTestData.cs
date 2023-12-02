@@ -21,7 +21,11 @@ public class NetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -44,7 +48,11 @@ public class NetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -68,7 +76,11 @@ public class NetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -78,8 +90,11 @@ public class NetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
-                },
-
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -89,7 +104,11 @@ public class NetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -128,7 +147,11 @@ public class NetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,
@@ -153,7 +176,11 @@ public class NetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new NetworkData()
                 {
                     Width = 1280,

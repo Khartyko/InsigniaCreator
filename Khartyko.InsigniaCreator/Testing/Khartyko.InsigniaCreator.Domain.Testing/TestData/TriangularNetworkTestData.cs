@@ -40,7 +40,11 @@ public class TriangularNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -63,7 +67,11 @@ public class TriangularNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -87,7 +95,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -97,7 +109,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -107,7 +123,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -146,7 +166,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -171,7 +195,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -197,7 +225,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -208,7 +240,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -219,7 +255,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -244,7 +284,11 @@ public class TriangularNetworkTestData
                     VerticalCellCount = 13,
                     // PatchWork Variables:
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -268,7 +312,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -278,7 +326,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -288,7 +340,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = false,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -298,7 +354,7 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongXAxis = true,
                     StartFlipped = true
-                },
+                }
             };
 
             // 0101
@@ -313,7 +369,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -323,7 +383,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = true,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -333,7 +397,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CenterAlongYAxis = false,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -359,7 +427,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -370,7 +442,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -381,7 +457,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -392,7 +472,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = true,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -403,7 +487,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = false,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -414,7 +502,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = true,
                     CenterAlongYAxis = false,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -425,7 +517,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CenterAlongYAxis = true,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -451,7 +547,11 @@ public class TriangularNetworkTestData
                     // PatchWork Variables:
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -477,7 +577,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -488,7 +592,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -499,7 +607,11 @@ public class TriangularNetworkTestData
                     CenterAlongXAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -526,7 +638,11 @@ public class TriangularNetworkTestData
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -537,7 +653,11 @@ public class TriangularNetworkTestData
                     CenterAlongYAxis = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
@@ -548,7 +668,11 @@ public class TriangularNetworkTestData
                     CenterAlongYAxis = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
-                },
+                }
+            };
+            
+            yield return new object[]
+            {
                 new TriangularNetworkData()
                 {
                     Width = 1280,
