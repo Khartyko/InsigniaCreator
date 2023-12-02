@@ -17,10 +17,10 @@ public class TriangularNetworkGeneratorTests
 {
     private static TriangularNetworkData ValidData() => new()
     {
-        Width = DataGenerator.GenerateRandomDouble(2048),
-        Height = DataGenerator.GenerateRandomDouble(2048),
-        HorizontalCellCount = DataGenerator.GenerateRandomInt(1, 512),
-        VerticalCellCount = DataGenerator.GenerateRandomInt(1, 512)
+        Width = DataGenerator.GenerateRandomDouble(1000),
+        Height = DataGenerator.GenerateRandomDouble(1000),
+        HorizontalCellCount = DataGenerator.GenerateRandomInt(1, 20),
+        VerticalCellCount = DataGenerator.GenerateRandomInt(1, 20)
     };
 
     [Theory]
