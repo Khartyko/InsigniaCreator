@@ -1,9 +1,9 @@
-﻿
-
-using Khartyko.InsigniaCreator.Domain.Utility;
-/** \addtogroup Domain.Testing
+﻿/** \addtogroup Domain.Testing
 * @{
 */
+
+using Khartyko.InsigniaCreator.Domain.Utility;
+
 namespace Khartyko.InsigniaCreator.Domain.Testing.Utility;
 
 public class CellCountHelperTests
