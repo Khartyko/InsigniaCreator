@@ -484,7 +484,7 @@ public static class AssertionHelper
         string signature = ReflectionHelper.ConstructMethodSignature(metadata, descriptor);
         string duplicatesString = string.Join(", ", duplicatesFound);
         
-        throw new ArgumentException($"{signature}:\n\t'' contains duplicates; got '{duplicatesString}'");
+        throw new ArgumentException($"{signature}:\n\t'{descriptor}' contains duplicates; got '{duplicatesString}'");
     }
 
     private static void CheckMinimum(double minimum, double maximum, string descriptor)
