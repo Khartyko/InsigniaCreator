@@ -15,25 +15,7 @@ namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 /// </summary>
 public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkData>
 {
-    private static string s_directory = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-        ".khartyko",
-        "InsigniaCreator",
-        "Logging"
-    );
-    private static string s_logFile => Path.Combine(
-        s_directory,
-        @$"TriangularNetworkGenerator_GenerateNetwork {DateTime.Now:dd MMM yyyy HH_mm_ss}.log"
-    );
-
     private readonly INetworkCalculator<TriangularNetworkData> _calculator;
-
-    private static char GetLetter(int index) => (char)('A' + index);
-
-    private static void LogToFile(string content)
-    {
-        //File.AppendAllText(s_logFile, content);
-    }
 
     /// <summary>
     /// 
@@ -42,17 +24,6 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
     public TriangularNetworkGenerator(INetworkCalculator<TriangularNetworkData> calculator)
     {
         _calculator = calculator;
-
-        if (!Directory.Exists(s_directory))
-        {
-            Directory.CreateDirectory(s_directory);
-        }
-
-        if (File.Exists(s_logFile))
-        {
-            File.Delete(s_logFile);
-            File.Create(s_logFile);
-        }
     }
 
     /// <summary>
@@ -113,6 +84,10 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
 
         // Reset the flippedBit
         flippedBit = Convert.ToInt32(startFlipped);
+        /*
+         * The below condition should default to 0, unless the grid happens to be a normal 1x1 Triangular Network,
+         * which doesn't follow the norm and is the only edge-case where this logic doesn't work as it should
+         */
         currentNodePosition = Convert.ToInt32(!startFlipped && horizontalCount == 1 && verticalCount == 1);
         int currentLinkIndex = 0;
         int horizontalCellCount = horizontalCount * 2;
@@ -176,12 +151,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                 // The Cell is upright, with a single Node at the top
                 () =>
                 {
-                    LogToFile("\t\tSubsequent normal Cell:\n");
-
                     // Get the relevant Nodes
                     var (firstNodePosition, secondNodePosition, thirdNodePosition) = positionRetrievalFuncs[flippedBit]();
-
-                    LogToFile($"\t\t- Retrieved Node positions:  [ {GetLetter(firstNodePosition)}, {GetLetter(secondNodePosition)}, {GetLetter(thirdNodePosition)} ]\n");
 
                     var cellNodes = new List<Node>
                     {
@@ -203,8 +174,6 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                     int lateralLinkIndex = currentLateralLinkIndex + (horizontalCount * 3 - 1);
                     Link lateralLink = links[lateralLinkIndex];
 
-                    LogToFile($"\t\t- Using Link positions:      [ {leftLinkIndex}, *{bridgingLinkIndex}, {lateralLinkIndex} ]\n");
-
                     var cellLinks = new List<Link>
                     {
                         leftLink,
@@ -218,12 +187,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                 // The Cell is flipped, with a single Node at the bottom
                 () =>
                 {
-                    LogToFile("\t\tSubsequent flipped Cell:\n");
-
                     // Get the relevant Nodes
                     var (firstNodePosition, secondNodePosition, thirdNodePosition) = positionRetrievalFuncs[flippedBit]();
-
-                    LogToFile($"\t\t- Retrieved Node positions:  [ {GetLetter(firstNodePosition)}, {GetLetter(secondNodePosition)}, {GetLetter(thirdNodePosition)} ]\n");
 
                     var cellNodes = new List<Node>
                     {
@@ -244,8 +209,6 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                     Link leftLink = links[leftLinkIndex];
                     Link lateralLink = links[currentLateralLinkIndex];
 
-                    LogToFile($"\t\t- Using Link positions:      [ {leftLinkIndex}, *{bridgingLinkIndex}, {currentLateralLinkIndex} ]\n");
-
                     var cellLinks = new List<Link>
                     {
                         leftLink,
@@ -265,12 +228,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                 // The Cell is upright, with a single Node at the top
                 () =>
                 {
-                    LogToFile("\t\tFirst normal Cell:\n");
-
                     // Get the relevant Nodes
                     var (firstNodePosition, secondNodePosition, thirdNodePosition) = positionRetrievalFuncs[flippedBit]();
-
-                    LogToFile($"\t\t- Retrieved Node positions:  [ {GetLetter(firstNodePosition)}, {GetLetter(secondNodePosition)}, {GetLetter(thirdNodePosition)} ]\n");
 
                     var cellNodes = new List<Node>
                     {
@@ -293,8 +252,6 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                     int lateralLinkIndex = currentLateralLinkIndex + (horizontalCount * 3 - 1);
                     Link lateralLink = links[lateralLinkIndex];
 
-                    LogToFile($"\t\t- Using Link positions:      [ *{bridgingLeftLinkIndex}, *{bridgingRightLinkIndex}, {lateralLinkIndex} ]\n");
-
                     var cellLinks = new List<Link>
                     {
                         bridgingLeftLink,
@@ -308,12 +265,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
                 // The Cell is flipped, with a single Node at the bottom
                 () =>
                 {
-                    LogToFile("\t\tFirst flipped Cell:\n");
-
                     // Get the relevant Nodes
                     var (firstNodePosition, secondNodePosition, thirdNodePosition) = positionRetrievalFuncs[flippedBit]();
-
-                    LogToFile($"\t\t- Retrieved Node positions:  [ {GetLetter(firstNodePosition)}, {GetLetter(secondNodePosition)}, {GetLetter(thirdNodePosition)} ]\n");
 
                     var cellNodes = new List<Node>
                     {
@@ -334,8 +287,6 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
 
                     // Get the positions of the existing Links
                     Link lateralLink = links[currentLateralLinkIndex];
-
-                    LogToFile($"\t\t- Using Link positions:      [ *{bridgingLeftLinkIndex}, *{bridgingRightLinkIndex}, {currentLateralLinkIndex} ]\n");
 
                     var cellLinks = new List<Link>
                     {
@@ -359,12 +310,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
 
             int isFirstNodeBit = 1;
 
-            LogToFile("Vertical Iteration Start:");
-
             for (int x = 1; x < horizontalCellCount; x++)
             {
-                LogToFile("\n\tHorizontal Iteration Start:\n");
-
                 Cell cell = cellCreationFuncs[isFirstNodeBit, flippedBit]();
 
                 // Nullify this bit
@@ -384,16 +331,12 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
 
                 // Toggle the flippedBit
                 flippedBit = (1 - flippedBit);
-
-                LogToFile("\tHorizontal Iteration End\n");
             }
 
             // Update the link index
             currentLinkIndex += horizontalCount + flippedBit;
             currentLateralLinkIndex += horizontalCount * 2;
             currentNodePosition++;
-
-            LogToFile("Vertical Iteration End\n\n");
         }
 
         return new TemplateNetwork(nodes, links, cells);
