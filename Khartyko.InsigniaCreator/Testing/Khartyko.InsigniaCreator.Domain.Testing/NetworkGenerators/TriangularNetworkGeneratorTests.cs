@@ -23,6 +23,34 @@ public class TriangularNetworkGeneratorTests
         VerticalCellCount = DataGenerator.GenerateRandomInt(1, 20)
     };
 
+    [Theory, InlineData(true), InlineData(false)]
+    public void GenerateNetwork_1x1TriangleGrid_Succeeds(bool startFlipped)
+    {
+        var calculator = new TriangularNetworkCalculator();
+        var generator = new TriangularNetworkGenerator(calculator);
+
+        var data = new TriangularNetworkData
+        {
+            Width = 1280,
+            Height = 800,
+            CenterAlongXAxis = true,
+            CenterAlongYAxis = true,
+            HorizontalCellCount = 1,
+            VerticalCellCount = 1,
+            StartFlipped = startFlipped
+        };
+
+        int expectedNodeCount = calculator.CalculateNodeCount(data);
+        int expectedLinkCount = calculator.CalculateLinkCount(data);
+        int expectedCellCount = calculator.CalculateCellCount(data);
+
+        TemplateNetwork actualResult = generator.GenerateNetwork(data);
+
+        Assert.Equal(expectedNodeCount, actualResult.Nodes.Count);
+        Assert.Equal(expectedLinkCount, actualResult.Links.Count);
+        Assert.Equal(expectedCellCount, actualResult.Cells.Count);
+    }
+
     [Theory]
     [InlineData(false, false, false)]
     [InlineData(true, false, false)]
