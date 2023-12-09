@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.MainApp", "Khartyko.InsigniaCreator.MainApp\Khartyko.InsigniaCreator.MainApp.csproj", "{59288D33-6FF1-494C-8621-AA0E4AD9705A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.Library", "Khartyko.InsigniaCreator.Library\Khartyko.InsigniaCreator.Library.csproj", "{A1FEADFB-A2A3-44D0-9CC0-B82778942865}"
@@ -15,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.MainApp.Testing", "Testing\Khartyko.InsigniaCreator.MainApp.Testing\Khartyko.InsigniaCreator.MainApp.Testing.csproj", "{020D3A81-1ED7-4893-ABE8-1B917ACCB15A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Khartyko.InsigniaCreator.TestingLibrary", "Testing\Khartyko.InsigniaCreator.TestingLibrary\Khartyko.InsigniaCreator.TestingLibrary.csproj", "{0EAF058A-A511-4690-BB82-ECE8D818813B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{194A7341-DB31-446B-8A73-F8502F5A62CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +53,10 @@ Global
 		{0EAF058A-A511-4690-BB82-ECE8D818813B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EAF058A-A511-4690-BB82-ECE8D818813B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EAF058A-A511-4690-BB82-ECE8D818813B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{194A7341-DB31-446B-8A73-F8502F5A62CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{194A7341-DB31-446B-8A73-F8502F5A62CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{194A7341-DB31-446B-8A73-F8502F5A62CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{194A7341-DB31-446B-8A73-F8502F5A62CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0033657F-071E-4D3C-8C32-DF005EB844BD} = {A992FD23-44A7-44AF-BE06-BA81ECB12E33}
