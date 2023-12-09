@@ -54,14 +54,7 @@ public class SquareNetworkGenerator : INetworkGenerator<NetworkData>
     /// <returns>A TemplateNetwork generated with the specified data.</returns>
     public TemplateNetwork GenerateNetwork(NetworkData generationData)
     {
-        AssertionHelper.NullCheck(generationData, nameof(generationData));
-        AssertionHelper.MinimumCheck(generationData.Width, 1, nameof(generationData.Width));
-        AssertionHelper.MinimumCheck(generationData.Height, 1, nameof(generationData.Height));
-        AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
-        AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
-        AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));
-        AssertionHelper.MinimumCheck(generationData.VerticalCellCount, 1, nameof(generationData.VerticalCellCount));
-        AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
+        DomainAssertionHelper.NetworkDataCheck(generationData);
 
         var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
