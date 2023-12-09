@@ -94,7 +94,7 @@ public class TemplateNetwork : NetworkBase
     private static IList<T> Validate<T>(IList<T> list, string descriptor)
     {
         AssertionHelper.EmptyCheck(list, descriptor);
-        AssertionHelper.DuplicatesCheck(list, nameof(descriptor));
+        AssertionHelper.DuplicatesCheck(list, descriptor);
         
         return list;
     }
