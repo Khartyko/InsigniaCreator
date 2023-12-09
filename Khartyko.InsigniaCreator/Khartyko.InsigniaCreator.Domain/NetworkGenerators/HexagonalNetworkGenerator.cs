@@ -4,7 +4,6 @@ using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Utility;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
-using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 
@@ -13,21 +12,8 @@ namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 /// </summary>
 public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 {
-    /* The following number was calculated by:
-    * a² + b² = c²
-    * a² + 0.5² = 1²
-    * a² + 0.25 = 1
-    * a = √(1 - 0.25)
-    * a = √(0.75)
-    */
-    private static double s_CellWidth = Math.Sqrt(0.75);
-
-    private static Vector2 s_TopVector = new Vector2(0, 0.5);
-    private static Vector2 s_TopRightVector = new Vector2(Math.Sqrt(3) / 4.0, 0.25);
-    private static Vector2 s_BottomRightVector = new Vector2(Math.Sqrt(3) / 4.0, -0.25);
-    private static Vector2 s_BottomVector = new Vector2(0, -0.5);
-    private static Vector2 s_BottomLeftVector = new Vector2(-Math.Sqrt(3) / 4.0, -0.25);
-    private static Vector2 s_TopLeftVector = new Vector2(-Math.Sqrt(3) / 4.0, 0.25);
+    private static readonly double s_CellWidth = Math.Sqrt(0.75);
+    private static readonly double s_CellHeight = 0.75;
 
     private readonly INetworkCalculator<HexagonalNetworkData> _calculator;
 
@@ -49,213 +35,494 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
     /// <returns>A TemplateNetwork generated with the specified data.</returns>
     public TemplateNetwork GenerateNetwork(HexagonalNetworkData generationData)
     {
-        AssertionHelper.NullCheck(generationData, nameof(generationData));
-        AssertionHelper.MinimumCheck(generationData.Width, 1, nameof(generationData.Width));
-        AssertionHelper.MinimumCheck(generationData.Height, 1, nameof(generationData.Height));
-        AssertionHelper.NullCheck(generationData.CenterAlongXAxis, nameof(generationData.CenterAlongXAxis));
-        AssertionHelper.NullCheck(generationData.CenterAlongYAxis, nameof(generationData.CenterAlongYAxis));
-        AssertionHelper.MinimumCheck(generationData.HorizontalCellCount, 1, nameof(generationData.HorizontalCellCount));
-        AssertionHelper.MinimumCheck(generationData.VerticalCellCount, 1, nameof(generationData.VerticalCellCount));
-        AssertionHelper.NullCheck(generationData.CellTransform, nameof(generationData.CellTransform));
-        AssertionHelper.NullCheck(generationData.StartOffset, nameof(generationData.StartOffset));
+        DomainAssertionHelper.NetworkDataCheck(generationData);
 
-        var startOffset = generationData.StartOffset;
-        var centerAlongXAxis = generationData.CenterAlongXAxis;
-        var centerAlongYAxis = generationData.CenterAlongYAxis;
         var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var scale = transform.Scale;
-        var scaledCellWidth = scale.X * s_CellWidth;
 
         int nodeCount = _calculator.CalculateNodeCount(generationData);
         int linkCount = _calculator.CalculateLinkCount(generationData);
         int cellCount = _calculator.CalculateCellCount(generationData);
 
-        var nodes = new List<Node>(nodeCount);
-        var links = new List<Link>(linkCount);
-        var cells = new List<Cell>(cellCount);
+        var nodes = new Node[nodeCount];
+        var links = new Link[linkCount];
+        var cells = new Cell[cellCount];
 
-        var previousLinks = new LinkedList<Link>();
+        int horizontalNodeCount = 2 * horizontalCount + 1;
+        int verticalNodeCount = verticalCount + 1;
 
-        for (int y = 1; y < verticalCount + 1; y++)
+        int offsetBit = Convert.ToInt32(generationData.StartOffset);
+        int normalBit = Convert.ToInt32(!generationData.StartOffset);
+
+        var globalNodeOffset = new Vector2(
+            (generationData.Width - (horizontalNodeCount * scale.X)) / 2,
+            (generationData.Height - (verticalNodeCount * scale.Y)) / 2
+        );
+
+        int currentNodeIndex = 0;
+        int currentLinkIndex = 0;
+        int currentCellIndex = horizontalCount - offsetBit;
+        double oscillationModifier = -0.125;
+
+        // These are for the start of a row
+        var startingRowFuncs = new Action[2]
         {
-            var offsetBit = Convert.ToInt32(startOffset);
-
-            var verticalOffset = (verticalCount - 1) * (scale.Y * 0.75);
-            Link? previousLink = null;
-
-            var horizontalIterationsCount = horizontalCount - offsetBit + 1;
-
-            for (int x = 1; x < horizontalIterationsCount; x++)
+            // Starting normal row
+            () =>
             {
-                var horizontalOffset = (horizontalCount - offsetBit) * (scale.X * s_CellWidth);
-
-                // Calculate the translation
-                transform.Translation = new Vector2(
-                    horizontalOffset / -2 + (x * scale.X * s_CellWidth) - (scale.X * s_CellWidth / 2),
-                    verticalOffset / -2 + ((y - 1) * scale.Y * 0.75)
+                var localPosition = new Vector2(
+                    s_CellWidth * scale.X,
+                    s_CellHeight * scale.Y + oscillationModifier
                 );
 
-                var cellNodes = new Node[6];
-                var cellLinks = new Link[6];
-                var nodeAdditions = new List<int>();
-                var linkAdditions = new List<int>();
-
-                /*
-                * For the Node indices:
-                * 0: Top
-                * 1: Top-Right
-                * 2: Bottom-Right
-                * 3: Bottom
-                * 4: Bottom-Left
-                * 5: Top-Left
-                */
-
-                var useTopLeft = () =>
+                // Create the first Node
+                Node node = NodeHelper.Create(transform, globalNodeOffset + localPosition);
+                nodes[currentNodeIndex] = node;
+                currentNodeIndex++;
+                
+                // Add 1 because the above Node is already done
+                for (var x = 1; x < horizontalNodeCount; x++)
                 {
-                    var topLeft = previousLinks.First!.Value;
-                    previousLinks.RemoveFirst();
+                    localPosition = new Vector2(
+                        s_CellWidth * scale.X * (x + 1),
+                        s_CellHeight * scale.Y + oscillationModifier
+                    );
 
-                    cellNodes[5] = topLeft.Head;
-                    cellLinks[5] = topLeft.Reversed();
-                };
+                    // Create the next Nodes
+                    Vector2 followingPosition = globalNodeOffset + localPosition;
 
-                var useTopRight = () =>
-                {
-                    var topRight = previousLinks.First!.Value;
-                    previousLinks.RemoveFirst();
+                    Node followingNode = NodeHelper.Create(transform, followingPosition);
+                    nodes[currentNodeIndex] = followingNode;
 
-                    cellNodes[0] = topRight.Tail;
-                    cellNodes[1] = topRight.Head;
-                    cellLinks[0] = topRight.Reversed();
-                };
+                    // Create the angled Link
+                    var link = new Link(node, followingNode);
+                    links[currentLinkIndex] = link;
 
-                if (previousLink is null)
-                {
-                    // It's null, so that means generate the left-most Link
-                    cellNodes[4] = NodeHelper.Create(transform, s_BottomLeftVector);
-                    nodeAdditions.Add(4);
+                    // Update the variables
+                    oscillationModifier *= -1;
+                    currentNodeIndex++;
+                    currentLinkIndex++;
                 }
-                else
+            },
+            // Starting offset row
+            () =>
+            {
+                var localPosition = new Vector2(
+                    s_CellWidth * scale.X,
+                    s_CellHeight * scale.Y + oscillationModifier
+                );
+
+                // Create the offset that's a result from the offsetBit
+                Vector2 offsetFromStartOffset = scale / 2;
+                
+                // Create the local position of the first Node in the row
+                Vector2 position = globalNodeOffset + offsetFromStartOffset + localPosition;
+                
+                // Create the first Node
+                Node node = NodeHelper.Create(transform, position);
+                nodes[currentNodeIndex] = node;
+                currentNodeIndex++;
+                
+                // Add 1 because the above Node is already done
+                for (var x = 2; x < horizontalNodeCount - 1; x++)
                 {
-                    // It's found, so that knocks off 2 Nodes and a Link that need to be created
-                    cellNodes[4] = previousLink.Tail;
+                    localPosition = new Vector2(
+                        s_CellWidth * scale.X * x,
+                        s_CellHeight * scale.Y + oscillationModifier
+                    );
+
+                    // Create the next Nodes
+                    Vector2 followingPosition = globalNodeOffset + offsetFromStartOffset + localPosition;
+
+                    Node followingNode = NodeHelper.Create(transform, followingPosition);
+                    nodes[currentNodeIndex] = followingNode;
+
+                    // Create the angled Link
+                    var link = new Link(node, followingNode);
+                    links[currentLinkIndex] = link;
+
+                    // Update the variables
+                    oscillationModifier *= -1;
+                    currentNodeIndex++;
+                    currentLinkIndex++;
                 }
-
-                // Check if the top layer has any
-                if (previousLinks.Any())
-                {
-                    // There are some, so they'll have to be retrieved
-
-                    if (startOffset)
-                    {
-                        /*
-                        * Nodes Handled: 0, 1, 5
-                        * Links Handled: 0, 5
-                        */
-                        useTopLeft();
-                        useTopRight();
-                    }
-
-                    if (x == 1)
-                    {
-                        /*
-                        * Nodes Handled: 0, 1, 5
-                        * Links Handled: 0, 5
-                        */
-                        useTopRight();
-
-                        cellNodes[5] = NodeHelper.Create(transform, s_TopLeftVector);
-                        cellLinks[5] = new Link(cellNodes[5], cellNodes[0]);
-
-                        nodeAdditions.Add(5);
-                        linkAdditions.Add(5);
-                    }
-
-                    if (x == horizontalIterationsCount - 1)
-                    {
-                        /*
-                        * Nodes Handled: 0, 1, 5
-                        * Links Handled: 0, 5
-                        */
-                        useTopLeft();
-
-                        cellNodes[0] = NodeHelper.Create(transform, s_TopVector);
-                        cellNodes[1] = NodeHelper.Create(transform, s_TopRightVector);
-                        cellLinks[0] = new Link(cellNodes[0], cellNodes[1]);
-
-                        nodeAdditions.Add(0);
-                        nodeAdditions.Add(1);
-                        linkAdditions.Add(0);
-                    }
-                }
-                else
-                {
-                    // There isn't a top row, so the relevant Nodes and Links will have to be generated
-                    cellNodes[0] = NodeHelper.Create(transform, s_TopVector);
-                    cellNodes[1] = NodeHelper.Create(transform, s_TopRightVector);
-                    cellNodes[5] = NodeHelper.Create(transform, s_TopLeftVector);
-                    cellLinks[0] = new Link(cellNodes[0], cellNodes[1]);
-                    cellLinks[5] = new Link(cellNodes[5], cellNodes[0]);
-
-                    nodeAdditions.Add(0);
-                    nodeAdditions.Add(1);
-                    nodeAdditions.Add(5);
-                    linkAdditions.Add(0);
-                    linkAdditions.Add(5);
-                }
-
-                if (previousLink is null)
-                {
-                    // It's null, so that means generate the left-most Link
-                    cellLinks[4] = new Link(cellNodes[4], cellNodes[5]);
-
-                    linkAdditions.Add(4);
-                }
-                else
-                {
-                    // It's found, so that knocks off 2 Nodes and a Link that need to be created
-                    cellLinks[4] = previousLink.Reversed();
-                }
-
-                // Generate the rest of the Nodes and Links:
-
-                // Nodes: 2, 3
-                cellNodes[2] = NodeHelper.Create(transform, s_BottomRightVector);
-                cellNodes[3] = NodeHelper.Create(transform, s_BottomVector);
-
-                // Links: 1, 2, 3
-                cellLinks[1] = new Link(cellNodes[1], cellNodes[2]);
-                cellLinks[2] = new Link(cellNodes[2], cellNodes[3]);
-                cellLinks[3] = new Link(cellNodes[3], cellNodes[4]);
-
-                nodeAdditions.Add(2);
-                nodeAdditions.Add(3);
-                linkAdditions.Add(1);
-                linkAdditions.Add(2);
-                linkAdditions.Add(3);
-
-                var cell = new Cell(cellNodes, cellLinks);
-                cells.Add(cell);
-
-                nodeAdditions.Sort();
-                linkAdditions.Sort();
-
-                nodes.AddRange(nodeAdditions.Select(index => cellNodes[index]));
-                links.AddRange(linkAdditions.Select(index => cellLinks[index]));
-
-                previousLink = cellLinks[1];
-
-                if (startOffset)
-                {
-                    previousLinks.Append(cellLinks[3]);
-                }
-
-                previousLinks.Append(cellLinks[2]);
             }
+        };
 
-            startOffset = !startOffset;
+        // These are for any subsequent rows
+        var subsequentRowFuncs = new Action<int>[2]
+        {
+            // Subsequent normal rows
+            (int y) =>
+            {
+                int startingNodeIndex = currentNodeIndex;
+                int startingLinkIndex = currentLinkIndex;
+
+                var topLocalPosition = new Vector2(
+                    s_CellWidth * scale.X,
+                    s_CellHeight * scale.Y * y + oscillationModifier
+                );
+
+                var bottomLocalPosition = new Vector2(
+                    s_CellWidth * scale.X,
+                    s_CellHeight * scale.Y * (y + 1) + oscillationModifier
+                );
+
+                // Create the first Node of the 1st row
+                Node topNode = NodeHelper.Create(transform, globalNodeOffset + topLocalPosition);
+                
+                Node bottomNode = NodeHelper.Create(transform, globalNodeOffset + bottomLocalPosition);
+
+                nodes[currentNodeIndex] = topNode;
+                nodes[currentNodeIndex + horizontalNodeCount] = bottomNode;
+
+                currentNodeIndex++;
+                
+                int bottomLinkIndexDelta = 3 * horizontalCount + 1;
+
+                // Add 1 because the above Node is already done
+                for (var x = 1; x < horizontalNodeCount; x++)
+                {
+                    topLocalPosition = new Vector2(
+                        s_CellWidth * scale.X * (x + 1),
+                        s_CellHeight * scale.Y * y + oscillationModifier
+                    );
+
+                    bottomLocalPosition = new Vector2(
+                        s_CellWidth * scale.X * (x + 1),
+                        s_CellHeight * scale.Y * (y + 1) + oscillationModifier
+                    );
+
+                    Vector2 topFollowingPosition = globalNodeOffset + topLocalPosition;
+                    Vector2 bottomFollowingPosition = globalNodeOffset + bottomLocalPosition;
+                    
+                    // Create the next top and bottom Nodes
+                    Node topFollowingNode = NodeHelper.Create(transform, topFollowingPosition);
+                    Node bottomFollowingNode = NodeHelper.Create(transform, bottomFollowingPosition);
+
+                    nodes[currentNodeIndex] = topFollowingNode;
+                    nodes[currentNodeIndex + horizontalNodeCount] = bottomFollowingNode;
+
+                    // Create the angled Links
+                    var topLink = new Link(topNode, topFollowingNode);
+                    var bottomLink = new Link(bottomNode, bottomFollowingNode);
+
+                    links[currentLinkIndex] = topLink;
+                    links[currentLinkIndex + bottomLinkIndexDelta] = bottomLink;
+
+                    topNode = topFollowingNode;
+                    bottomNode = bottomFollowingNode;
+
+                    // Update and/or increment the variables
+                    oscillationModifier *= -1;
+                    currentNodeIndex++;
+                    currentLinkIndex++;
+                }
+
+                currentNodeIndex -= horizontalNodeCount;
+
+                int verticalLinksAdded = 0;
+
+                for(var i = 0; i < horizontalNodeCount; i += 2)
+                {
+                    Node head = nodes[currentNodeIndex + i];
+                    Node tail = nodes[currentNodeIndex + i + horizontalNodeCount];
+
+                    var link = new Link(head, tail);
+                    links[currentLinkIndex] = link;
+
+                    // Increment the currentLinkIndex
+                    currentLinkIndex++;
+
+                    verticalLinksAdded++;
+                }
+
+                currentNodeIndex = startingNodeIndex;
+                currentLinkIndex = startingLinkIndex;
+
+                for(var x = 0; x < horizontalCount; x++)
+                {
+                    // Compute the indices for the Nodes
+                    int lowerNodePosition = currentNodeIndex + horizontalNodeCount;
+                    
+                    // Compute the indices for the Links
+                    int verticalLinkIndex = currentLinkIndex + (2 * horizontalCount - 1);
+                    int lowerLinkIndex = verticalLinkIndex + horizontalCount + 1;
+
+                    // Get the Nodes for the Cell
+                    Node topLeft = nodes[currentNodeIndex];
+                    Node topRight = nodes[currentNodeIndex + 1];
+                    Node left = nodes[currentNodeIndex + 2];
+                    Node right = nodes[lowerNodePosition];
+                    Node bottomLeft = nodes[lowerNodePosition + 1];
+                    Node bottomRight = nodes[lowerNodePosition + 2];
+
+                    // Get the Links for the Cell
+                    Link topLeftLink = links[currentLinkIndex];
+                    Link topRightLink = links[currentLinkIndex + 1];
+                    Link leftLink = links[verticalLinkIndex];
+                    Link rightLink = links[verticalLinkIndex + 1];
+                    Link bottomLeftLink = links[lowerLinkIndex];
+                    Link bottomRightLink = links[lowerLinkIndex + 1];
+
+                    var cell = new Cell(
+                        new List<Node>
+                        {
+                            topLeft,
+                            topRight,
+                            left,
+                            right,
+                            bottomLeft,
+                            bottomRight
+                        },
+                        new List<Link>
+                        {
+                            topLeftLink,
+                            topRightLink,
+                            leftLink,
+                            rightLink,
+                            bottomLeftLink,
+                            bottomRightLink
+                        }
+                    );
+
+                    cells[currentCellIndex] = cell;
+
+                    // Increment the counters
+                    currentCellIndex++;
+                    currentNodeIndex += 2;
+                    currentLinkIndex += 2;
+                }
+
+                // Set the Node index for the next offset row
+                currentNodeIndex += 2;
+
+                // Set the Link index for the next offset row
+                currentLinkIndex += verticalLinksAdded + 1;
+            },
+            // Subsequent offset row
+            (int y) =>
+            {
+                // Get the starting indices that'll be used for creating the Cells
+                int startingNodeIndex = currentNodeIndex;
+                int startingLinkIndex = currentLinkIndex;
+
+                int verticalLinkCount = horizontalCount;
+                int topAngledLinksCount = 2 * (horizontalCount - 1);
+
+                // Adjust the indices for the current offset row
+                currentNodeIndex += horizontalNodeCount - 1;
+                currentLinkIndex += topAngledLinksCount + horizontalCount + 1;
+
+                // Create the offset that's a result from the offsetBit
+                Vector2 offsetFromStartOffset = scale / 2;
+                
+                // Create the local position of the first Node in the row
+                Vector2 position = globalNodeOffset + offsetFromStartOffset;
+                
+                // Create the first Node
+                Node node = NodeHelper.Create(transform, position);
+                nodes[currentNodeIndex] = node;
+                currentNodeIndex++;
+                
+                // Add 1 because the above Node is already done
+                for (var x = 2; x < horizontalNodeCount - 1; x++)
+                {
+                    var localPosition = new Vector2(
+                        s_CellWidth * scale.X * x,
+                        s_CellHeight * scale.Y * y + oscillationModifier
+                    );
+
+                    // Create the next Nodes
+                    Vector2 followingPosition = globalNodeOffset + offsetFromStartOffset + localPosition;
+
+                    Node followingNode = NodeHelper.Create(transform, followingPosition);
+                    nodes[currentNodeIndex] = followingNode;
+
+                    // Create the angled Link
+                    var link = new Link(node, followingNode);
+                    links[currentLinkIndex] = link;
+                    
+                    // Update and/or increment the variables
+                    oscillationModifier *= -1;
+                    currentNodeIndex++;
+                    currentLinkIndex++;
+                }
+
+                currentNodeIndex = startingNodeIndex;
+                currentLinkIndex = startingLinkIndex + topAngledLinksCount + 1;
+
+                for(var i = 0; i < horizontalNodeCount - 1; i += 2)
+                {
+                    Node head = nodes[currentNodeIndex + i];
+                    Node tail = nodes[currentNodeIndex + i + horizontalNodeCount - 1];
+
+                    var link = new Link(head, tail);
+                    links[currentLinkIndex] = link;
+
+                    // Increment the currentLinkIndex
+                    currentLinkIndex++;
+                }
+
+                currentNodeIndex = startingNodeIndex;
+                currentLinkIndex = startingLinkIndex;
+
+                for(var x = 0; x < horizontalCount - 1; x++)
+                {
+                    // Compute the indices for the Nodes
+                    int lowerNodePosition = currentNodeIndex + horizontalNodeCount - 1;
+                    
+                    // Compute the indices for the Links
+                    int verticalLinkIndex = currentLinkIndex + (2 * horizontalCount - 1);
+                    int lowerLinkIndex = verticalLinkIndex + horizontalCount;
+
+                    // Get the Nodes for the Cell
+                    Node topLeft = nodes[currentNodeIndex];
+                    Node topRight = nodes[currentNodeIndex + 1];
+                    Node left = nodes[currentNodeIndex + 2];
+                    Node right = nodes[lowerNodePosition];
+                    Node bottomLeft = nodes[lowerNodePosition + 1];
+                    Node bottomRight = nodes[lowerNodePosition + 2];
+
+                    // Get the Links for the Cell
+                    Link topLeftLink = links[currentLinkIndex];
+                    Link topRightLink = links[currentLinkIndex + 1];
+                    Link leftLink = links[verticalLinkIndex];
+                    Link rightLink = links[verticalLinkIndex + 1];
+                    Link bottomLeftLink = links[lowerLinkIndex];
+                    Link bottomRightLink = links[lowerLinkIndex + 1];
+
+                    var cell = new Cell(
+                        new List<Node>
+                        {
+                            topLeft,
+                            topRight,
+                            left,
+                            right,
+                            bottomLeft,
+                            bottomRight
+                        },
+                        new List<Link>
+                        {
+                            topLeftLink,
+                            topRightLink,
+                            leftLink,
+                            rightLink,
+                            bottomLeftLink,
+                            bottomRightLink
+                        }
+                    );
+
+                    cells[currentCellIndex] = cell;
+
+                    // Increment the counters
+                    currentCellIndex++;
+                    currentNodeIndex += 2;
+                    currentLinkIndex += 2;
+                }
+
+                // Set the Node index for the next normal row
+                currentNodeIndex += 2;
+
+                // Set the Link index for the next normal row
+                currentLinkIndex += topAngledLinksCount + 1;
+            }
+        };
+
+        // Set up the first row
+        startingRowFuncs[offsetBit]();
+
+        currentLinkIndex += horizontalCount + normalBit;
+        offsetBit = (1 - offsetBit);
+        normalBit = (1 - normalBit);
+
+        // Setup the Nodes along with the angled Links
+        for (var y = 1; y < verticalNodeCount; y += 1 + normalBit)
+        {
+            subsequentRowFuncs[offsetBit](y);
+
+            // Toggle the offsetBit
+            offsetBit = (1 - offsetBit);
+            normalBit = (1 - normalBit);
+
+            // Reset the oscillationModifier
+            oscillationModifier = -0.125;
+        }
+
+        // Set up the indices
+        offsetBit = Convert.ToInt32(generationData.StartOffset);
+        currentNodeIndex = 0;
+        currentLinkIndex = 2 * (horizontalCount - offsetBit);
+
+        for (var i = 0; i < horizontalNodeCount - offsetBit; i += 2)
+        {
+            Node head = nodes[currentNodeIndex + i];
+            Node tail = nodes[currentNodeIndex + i + horizontalNodeCount - 1];
+
+            var link = new Link(head, tail);
+            links[currentLinkIndex] = link;
+
+            // Increment the currentLinkIndex
+            currentLinkIndex++;
+        }
+
+        currentNodeIndex = 0;
+        currentLinkIndex = 0;
+
+        // Add in the rest of the first row of vertical Links and Cells
+        for (var x = 0; x < horizontalCount - offsetBit; x++)
+        {
+            // Compute the indices for the Nodes
+            int lowerNodePosition = currentNodeIndex + horizontalNodeCount - 1;
+
+            // Compute the indices for the Links
+            int verticalLinkIndex = 2 * (horizontalCount - offsetBit) + x;
+            int lowerLinkIndex = verticalLinkIndex + horizontalCount + offsetBit;
+
+            // Get the Nodes for the Cell
+            Node topLeft = nodes[currentNodeIndex];
+            Node topRight = nodes[currentNodeIndex + 1];
+            Node left = nodes[currentNodeIndex + 2];
+            Node right = nodes[lowerNodePosition];
+            Node bottomLeft = nodes[lowerNodePosition + 1];
+            Node bottomRight = nodes[lowerNodePosition + 2];
+
+            // Get the Links for the Cell
+            Link topLeftLink = links[currentLinkIndex];
+            Link topRightLink = links[currentLinkIndex + 1];
+            Link leftLink = links[verticalLinkIndex];
+            Link rightLink = links[verticalLinkIndex + 1];
+            Link bottomLeftLink = links[lowerLinkIndex];
+            Link bottomRightLink = links[lowerLinkIndex + 1];
+
+            var cell = new Cell(
+                new List<Node>
+                {
+                    topLeft,
+                    topRight,
+                    left,
+                    right,
+                    bottomLeft,
+                    bottomRight
+                },
+                new List<Link>
+                {
+                    topLeftLink,
+                    topRightLink,
+                    leftLink,
+                    rightLink,
+                    bottomLeftLink,
+                    bottomRightLink
+                }
+            );
+
+            cells[x] = cell;
+
+            // Increment the counters
+            currentNodeIndex += 2;
+            currentLinkIndex += 2;
         }
 
         return new TemplateNetwork(nodes, links, cells);
