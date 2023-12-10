@@ -1,4 +1,4 @@
-﻿using Khartyko.InsigniaCreator.Domain.Data;
+using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Utility;
@@ -89,8 +89,10 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var verticalOffset = (verticalCount - 1) * (scale.Y * s_CellHeight);
         var horizontalOffset = (horizontalCount - offsetBit) * (scale.X * s_CellWidth);
 
+        int offsetRowCount = horizontalNodeCount - offsetBit * 2 * Convert.ToInt32(nodeCount > 6);
+
         // Generate the first row of Nodes
-        for (int x = 0; x < horizontalNodeCount - offsetBit * 2; x++)
+        for (int x = 0; x < offsetRowCount; x++)
         {
             //oscillationModifier = UpdateOscillationModifier(flippedBit);
 
@@ -145,7 +147,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         flippedBit = 1;
 
         // Generate the last row of Nodes
-        for (int x = 0; x < horizontalNodeCount - offsetBit * 2; x++)
+        for (int x = 0; x < offsetRowCount; x++)
         {
             oscillationModifier = UpdateOscillationModifier(flippedBit);
 
