@@ -4,6 +4,7 @@ using Khartyko.InsigniaCreator.Domain.Interfaces;
 using Khartyko.InsigniaCreator.Domain.Utility;
 using Khartyko.InsigniaCreator.Library.Data;
 using Khartyko.InsigniaCreator.Library.Entity;
+using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 
@@ -180,6 +181,23 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
         int linkCount = _calculator.CalculateLinkCount(networkData);
 
+        var indexStrings = new List<string>
+        {
+            "Input NetworkData:",
+            $"\tWidth:                  {networkData.Width}",
+            $"\tHeight:                 {networkData.Height}",
+            $"\tHorizontalCellCount:    {networkData.HorizontalCellCount}",
+            $"\tVerticalCellCount:      {networkData.VerticalCellCount}",
+            $"\tCenterAlongXAxis:       {networkData.CenterAlongXAxis}",
+            $"\tCenterAlongYAxis:       {networkData.CenterAlongYAxis}",
+            $"\tStartOffset:            {networkData.StartOffset}",
+            $"\tCellTransform:",
+            $"\t\tScale:                {networkData.CellTransform.Scale}",
+            $"\t\tRotation:             {networkData.CellTransform.Rotation}",
+            $"\t\tTranslation:          {networkData.CellTransform.Translation}",
+            "\nLink connections formed:"
+        };
+
         int offsetBit = Convert.ToInt32(networkData.StartOffset);
         int normalBit = Convert.ToInt32(!networkData.StartOffset);
 
@@ -187,6 +205,228 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int currentLinkIndex = 0;
 
         Link[] links = new Link[linkCount];
+
+        /*
+         * For angledRowType:
+         * - 0: Starting
+         * - 1: Ending
+         */
+        int angledRowType = 1;
+        /*
+         * For rowTypeBit:
+         * - 0: Angled
+         * - 1: Vertical
+         */
+        int rowTypeBit = 0;
+        int horizontalLinkCount = 2 * (horizontalCount - offsetBit);
+
+        var angledLinkFuncs = new Action[2, 2]
+        {
+            // Offset = 0
+            {
+                // angledRowType = 0
+                () =>
+                {
+
+                },
+                // angledRowType = 1
+                () =>
+                {
+
+                }
+            },
+            // Offset = 1
+            {
+                // angledRowType = 0
+                () =>
+                {
+
+                },
+                // angledRowType = 1
+                () =>
+                {
+
+                }
+            }
+        };
+
+        var verticalLinkFuncs = new Action[2, 2]
+        {
+            // Offset = 0
+            {
+                // angledRowType = 0
+                () =>
+                {
+                    
+                },
+                // angledRowType = 1
+                () =>
+                {
+
+                }
+            },
+            // Offset = 1
+            {
+                // angledRowType = 0
+                () =>
+                {
+
+                },
+                // angledRowType = 1
+                () =>
+                {
+
+                }
+            }
+        };
+
+        var linkCreationFuncs = new Action[2]
+        {
+            // Row Type 0: Angled Links
+            () =>
+            {
+                int localNodeCount = 2 * horizontalCount;
+
+                for (int x = 0; x < localNodeCount; x++)
+                {
+                    int headIndex = currentNodeIndex + x;
+                    int tailIndex = currentNodeIndex + x + 1;
+
+                    Node head = nodes[headIndex];
+                    Node tail = nodes[tailIndex];
+
+                    indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
+
+                    var link = new Link(head, tail);
+                    links[currentLinkIndex] = link;
+
+                    currentLinkIndex++;
+                }
+
+                // Update the currentNodeIndex if the row is normal
+                currentNodeIndex += normalBit;
+                
+                // Update the angledRowType, since it alternates
+                angledRowType = 1 - angledRowType;
+
+                angledLinkFuncs[offsetBit, angledRowType]();
+
+                // Update the offsetBit, if it's an Angled Ending row
+                offsetBit = normalBit & angledRowType;
+                normalBit = 1 - offsetBit;
+            },
+            // Row Type 1: Vertical Links
+            () =>
+            {
+                // How to handle if it's the last row of vertical Links
+                // and if it's odd and offset, or even and normal?
+                int verticalLinkStride = horizontalCount * 2 + normalBit - offsetBit;
+
+                for (int x = 0; x < verticalLinkStride; x += 2)
+                {
+                    int headIndex = currentNodeIndex + x;
+                    int tailIndex = currentNodeIndex + x + verticalLinkStride;
+
+                    Node head = nodes[headIndex];
+                    Node tail = nodes[tailIndex];
+
+                    indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
+
+                    var link = new Link(head, tail);
+                    links[currentLinkIndex] = link;
+
+                    currentLinkIndex++;
+                }
+
+                // Update the currentNodeIndex for the next row
+                currentNodeIndex += verticalLinkStride;
+
+                verticalLinkFuncs[offsetBit, angledRowType]();
+
+                angledRowType = 0;
+                offsetBit *= 0;
+                normalBit = 1;
+            }
+        };
+
+        indexStrings.Add($"\tFirst {(networkData.StartOffset ? "Offset" : "Normal")} Row #0");
+
+        // Row type here will always be angled
+        for (int x = 0; x < horizontalLinkCount; x++)
+        {
+            int headIndex = currentNodeIndex + x;
+            int tailIndex = currentNodeIndex + x + 1;
+
+            Node head = nodes[headIndex];
+            Node tail = nodes[tailIndex];
+
+            indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
+
+            var link = new Link(head, tail);
+            links[currentLinkIndex] = link;
+
+            currentLinkIndex++;
+        }
+
+        rowTypeBit = 1;
+
+        for (int y = 1; y < 2 * verticalCount; y++)
+        {
+            indexStrings.Add($"\n\tSubsequent {(rowTypeBit == 0 ? "Angled" : "Vertical")} Row #{y}");
+
+            linkCreationFuncs[rowTypeBit]();
+
+            // Toggle the row type, since it alternates
+            rowTypeBit = 1 - rowTypeBit;
+        }
+
+        // Reset this bit, just in case
+        angledRowType = 1;
+
+        string descriptor = MathHelper.IsEven(verticalCount)
+            ? networkData.StartOffset ? "Normal" : "Offset"
+            : networkData.StartOffset ? "Offset" : "Normal";
+
+        indexStrings.Add($"\n\tFinal {descriptor} Row #{2 * verticalCount - 1}");
+
+        int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
+        int oddBit = 1 - evenBit;
+
+        int originalOffsetBit = Convert.ToInt32(networkData.StartOffset);
+        int originalNormalBit = 1 - originalOffsetBit;
+
+        int finalLinkCountModifier = originalOffsetBit & oddBit | originalNormalBit & evenBit;
+        int finalLinkCount = 2 * (horizontalCount - finalLinkCountModifier);
+
+        // Row type here will always be angled
+        for (int x = 0; x < finalLinkCount; x++)
+        {
+            int headIndex = currentNodeIndex + x;
+            int tailIndex = currentNodeIndex + x + 1;
+
+            Node head = nodes[headIndex];
+            Node tail = nodes[tailIndex];
+
+            indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
+
+            var link = new Link(head, tail);
+            links[currentLinkIndex] = link;
+
+            currentLinkIndex++;
+        };
+
+        string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string fileName = $"HexagonalNetworkGenerator_GenerateNetwork Links {DateTime.Now:dd MMM yyyy HH_mm_ss}.log";
+        string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging");
+
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+
+        path = Path.Combine(path, fileName);
+        
+        File.WriteAllLines(path, indexStrings);
 
         return links;
     }
