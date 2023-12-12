@@ -197,14 +197,99 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
         int cellCount = _calculator.CalculateCellCount(networkData);
 
+        int horizontalNodeCount = 2 * horizontalCount + 1;
         int offsetBit = Convert.ToInt32(networkData.StartOffset);
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
 
         int currentNodeIndex = 0;
-        int currentLinkIndex = 0;
+        int currentLinkIndex = 2 * Math.Max(1, horizontalCount - offsetBit);
         int currentCellIndex = 0;
 
         Cell[] cells = new Cell[cellCount];
+
+        int topNodeIndex = 0;
+        int bottomNodeIndex = 2 * (horizontalCount - offsetBit);
+
+        int topLeftLinkIndex = 0;
+        int midLeftLinkIndex = 2 * (horizontalCount - offsetBit);
+        int bottomLeftLinkIndex = midLeftLinkIndex + horizontalCount + offsetBit;
+
+        // Setup the bridging Links
+        for (var y = 0; y < verticalCount; y++)
+        {
+            int currentNodeCount = horizontalNodeCount - offsetBit;
+
+            for (var x = offsetBit; x < currentNodeCount; x += 2)
+            {
+                Node head = nodes[currentNodeIndex + x];
+                Node tail = nodes[currentNodeIndex + x + currentNodeCount];
+
+                var link = new Link(head, tail);
+                links[currentLinkIndex] = link;
+                currentLinkIndex++;
+            }
+
+            // Update the currentNodePosition
+            currentNodeIndex += horizontalNodeCount;
+
+            // Update the Link position to start from
+            currentLinkIndex += 2 * horizontalCount + 1;
+
+            // Create the Cells for the row
+            for (var x = 0; x < horizontalCount; x++)
+            {
+                Node topLeft = nodes[topNodeIndex];
+                Node topRight = nodes[topNodeIndex + 1];
+                Node left = nodes[topNodeIndex + 2];
+                Node right = nodes[bottomNodeIndex];
+                Node bottomLeft = nodes[bottomNodeIndex + 1];
+                Node bottomRight = nodes[bottomNodeIndex + 2];
+
+                Link topLeftLink = links[topLeftLinkIndex];
+                Link topRightLink = links[topLeftLinkIndex + 1];
+                Link leftLink = links[midLeftLinkIndex];
+                Link rightLink = links[midLeftLinkIndex + 1];
+                Link bottomLeftLink = links[bottomLeftLinkIndex];
+                Link bottomRightLink = links[bottomLeftLinkIndex + 1];
+
+                var cell = new Cell(
+                    new List<Node>
+                    {
+                        topLeft,
+                        topRight,
+                        left,
+                        right,
+                        bottomLeft,
+                        bottomRight
+                    },
+                    new List<Link>
+                    {
+                        topLeftLink,
+                        topRightLink,
+                        leftLink,
+                        rightLink,
+                        bottomLeftLink,
+                        bottomRightLink
+                    }
+                );
+
+                cells[currentCellIndex] = cell;
+
+                // Increment the counters
+                currentCellIndex++;
+                topNodeIndex += 2;
+                bottomNodeIndex += 2;
+                topLeftLinkIndex += 2;
+                midLeftLinkIndex++;
+                bottomLeftLinkIndex += 2;
+            }
+
+            // Increment the counters for Node indexes
+            topNodeIndex += 3;
+            bottomNodeIndex += 3 + offsetBit;
+
+            // Toggle the bits
+            offsetBit = (1 - offsetBit);
+        }
 
         return cells;
     }
