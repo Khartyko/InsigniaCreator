@@ -181,6 +181,15 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
         int linkCount = _calculator.CalculateLinkCount(networkData);
 
+        int offsetBit = Convert.ToInt32(networkData.StartOffset);
+        int normalBit = Convert.ToInt32(!networkData.StartOffset);
+        int verticalNodeCount = 2 * verticalCount + 1;
+
+        int currentNodeIndex = 0;
+        int currentLinkIndex = 0;
+
+        Link[] links = new Link[linkCount];
+
         var indexStrings = new List<string>
         {
             "Input NetworkData:",
@@ -198,222 +207,76 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             "\nLink connections formed:"
         };
 
-        int offsetBit = Convert.ToInt32(networkData.StartOffset);
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
+        // TODO: Find a way to submit less data to the method
+        int[] rowCounts = CalculaterowCounts(networkData);
 
-        int currentNodeIndex = 0;
-        int currentLinkIndex = 0;
-
-        Link[] links = new Link[linkCount];
-
-        /*
-         * For angledRowType:
-         * - 0: Starting
-         * - 1: Ending
-         */
-        int angledRowType = 1;
-        /*
-         * For rowTypeBit:
-         * - 0: Angled
-         * - 1: Vertical
-         */
-        int rowTypeBit = 0;
-        int horizontalLinkCount = 2 * (horizontalCount - offsetBit);
-
-        var angledLinkFuncs = new Action[2, 2]
+        // Go through all of the angled Links
+        for (var y = 0; y < rowCounts.Length; y += 2)
         {
-            // Offset = 0
+            indexStrings.Add($"\n\t{(offsetBit == 1 ? "Offset" : "Normal")} Angled Row #{y}");
+
+            int horizontalNodeCount = 2 * (horizontalCount - offsetBit);
+
+            for (var x = 0; x < rowCounts[y]; x++)
             {
-                // angledRowType = 0
-                () =>
-                {
+                int nodeIndex = currentNodeIndex + x;
 
-                },
-                // angledRowType = 1
-                () =>
-                {
+                Node head = nodes[nodeIndex];
+                Node tail = nodes[nodeIndex + 1];
 
-                }
-            },
-            // Offset = 1
-            {
-                // angledRowType = 0
-                () =>
-                {
+                var link = new Link(head, tail);
+                links[currentLinkIndex] = link;
 
-                },
-                // angledRowType = 1
-                () =>
-                {
+                indexStrings.Add($"\t\t{currentLinkIndex}; {nodeIndex} -> {nodeIndex + 1}");
 
-                }
+                currentLinkIndex++;
             }
-        };
 
-        var verticalLinkFuncs = new Action[2, 2]
-        {
-            // Offset = 0
-            {
-                // angledRowType = 0
-                () =>
-                {
-                    
-                },
-                // angledRowType = 1
-                () =>
-                {
+            currentNodeIndex += horizontalNodeCount + 1;
+            currentLinkIndex += horizontalCount + normalBit;
 
-                }
-            },
-            // Offset = 1
-            {
-                // angledRowType = 0
-                () =>
-                {
-
-                },
-                // angledRowType = 1
-                () =>
-                {
-
-                }
-            }
-        };
-
-        var linkCreationFuncs = new Action[2]
-        {
-            // Row Type 0: Angled Links
-            () =>
-            {
-                int localNodeCount = 2 * horizontalCount;
-
-                for (int x = 0; x < localNodeCount; x++)
-                {
-                    int headIndex = currentNodeIndex + x;
-                    int tailIndex = currentNodeIndex + x + 1;
-
-                    Node head = nodes[headIndex];
-                    Node tail = nodes[tailIndex];
-
-                    indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
-
-                    var link = new Link(head, tail);
-                    links[currentLinkIndex] = link;
-
-                    currentLinkIndex++;
-                }
-
-                // Update the currentNodeIndex if the row is normal
-                currentNodeIndex += normalBit;
-                
-                // Update the angledRowType, since it alternates
-                angledRowType = 1 - angledRowType;
-
-                angledLinkFuncs[offsetBit, angledRowType]();
-
-                // Update the offsetBit, if it's an Angled Ending row
-                offsetBit = normalBit & angledRowType;
-                normalBit = 1 - offsetBit;
-            },
-            // Row Type 1: Vertical Links
-            () =>
-            {
-                // How to handle if it's the last row of vertical Links
-                // and if it's odd and offset, or even and normal?
-                int verticalLinkStride = horizontalCount * 2 + normalBit - offsetBit;
-
-                for (int x = 0; x < verticalLinkStride; x += 2)
-                {
-                    int headIndex = currentNodeIndex + x;
-                    int tailIndex = currentNodeIndex + x + verticalLinkStride;
-
-                    Node head = nodes[headIndex];
-                    Node tail = nodes[tailIndex];
-
-                    indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
-
-                    var link = new Link(head, tail);
-                    links[currentLinkIndex] = link;
-
-                    currentLinkIndex++;
-                }
-
-                // Update the currentNodeIndex for the next row
-                currentNodeIndex += verticalLinkStride;
-
-                verticalLinkFuncs[offsetBit, angledRowType]();
-
-                angledRowType = 0;
-                offsetBit *= 0;
-                normalBit = 1;
-            }
-        };
-
-        indexStrings.Add($"\tFirst {(networkData.StartOffset ? "Offset" : "Normal")} Row #0");
-
-        // Row type here will always be angled
-        for (int x = 0; x < horizontalLinkCount; x++)
-        {
-            int headIndex = currentNodeIndex + x;
-            int tailIndex = currentNodeIndex + x + 1;
-
-            Node head = nodes[headIndex];
-            Node tail = nodes[tailIndex];
-
-            indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
-
-            var link = new Link(head, tail);
-            links[currentLinkIndex] = link;
-
-            currentLinkIndex++;
+            offsetBit = 1 - offsetBit;
+            normalBit = 1 - normalBit;
         }
 
-        rowTypeBit = 1;
+        // Reset the offsetBit
+        offsetBit = Convert.ToInt32(networkData.StartOffset);
 
-        for (int y = 1; y < 2 * verticalCount; y++)
+        // Reset the index
+        currentNodeIndex = 0;
+
+        // Reset the index to the first vertical Link
+        currentLinkIndex = 2 * (horizontalCount - offsetBit);
+
+        indexStrings.Add("\n=========================================");
+
+        // Go through all of the vertical Links
+        for (var y = 1; y < rowCounts.Length; y += 2)
         {
-            indexStrings.Add($"\n\tSubsequent {(rowTypeBit == 0 ? "Angled" : "Vertical")} Row #{y}");
+            indexStrings.Add($"\n\t{(offsetBit == 1 ? "Offset" : "Normal")} Vertical Row #{y}");
 
-            linkCreationFuncs[rowTypeBit]();
+            int horizontalNodeCount = 2 * horizontalCount + normalBit;
 
-            // Toggle the row type, since it alternates
-            rowTypeBit = 1 - rowTypeBit;
+            for (var x = 0; x < rowCounts[y]; x++)
+            {
+                int nodeIndex = currentNodeIndex + x * 2;
+
+                Node head = nodes[nodeIndex];
+                Node tail = nodes[nodeIndex + horizontalNodeCount];
+
+                var link = new Link(head, tail);
+                links[currentLinkIndex] = link;
+
+                indexStrings.Add($"\t\t{currentLinkIndex}; {nodeIndex} -> {nodeIndex + horizontalNodeCount}");
+
+                currentLinkIndex++;
+            }
+
+            offsetBit = 1 - offsetBit;
+            normalBit = 1 - normalBit;
+            currentNodeIndex += horizontalNodeCount - normalBit + offsetBit;
+            currentLinkIndex += rowCounts[y + 1];
         }
-
-        // Reset this bit, just in case
-        angledRowType = 1;
-
-        string descriptor = MathHelper.IsEven(verticalCount)
-            ? networkData.StartOffset ? "Normal" : "Offset"
-            : networkData.StartOffset ? "Offset" : "Normal";
-
-        indexStrings.Add($"\n\tFinal {descriptor} Row #{2 * verticalCount - 1}");
-
-        int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
-        int oddBit = 1 - evenBit;
-
-        int originalOffsetBit = Convert.ToInt32(networkData.StartOffset);
-        int originalNormalBit = 1 - originalOffsetBit;
-
-        int finalLinkCountModifier = originalOffsetBit & oddBit | originalNormalBit & evenBit;
-        int finalLinkCount = 2 * (horizontalCount - finalLinkCountModifier);
-
-        // Row type here will always be angled
-        for (int x = 0; x < finalLinkCount; x++)
-        {
-            int headIndex = currentNodeIndex + x;
-            int tailIndex = currentNodeIndex + x + 1;
-
-            Node head = nodes[headIndex];
-            Node tail = nodes[tailIndex];
-
-            indexStrings.Add($"\t\t{headIndex} -> {tailIndex}");
-
-            var link = new Link(head, tail);
-            links[currentLinkIndex] = link;
-
-            currentLinkIndex++;
-        };
 
         string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         string fileName = $"HexagonalNetworkGenerator_GenerateNetwork Links {DateTime.Now:dd MMM yyyy HH_mm_ss}.log";
@@ -425,7 +288,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         }
 
         path = Path.Combine(path, fileName);
-        
+
         File.WriteAllLines(path, indexStrings);
 
         return links;
@@ -532,5 +395,149 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         }
 
         return cells;
+    }
+
+    private static int[] CalculaterowCounts(HexagonalNetworkData networkData)
+    {
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
+        int offsetBit = Convert.ToInt32(networkData.StartOffset);
+        int normalBit = Convert.ToInt32(!networkData.StartOffset);
+        int verticalNodeCount = 2 * verticalCount + 1;
+
+        /*
+         * How to keep track of the type of angled row?
+         * How to handle the change from offset -> normal and vice versa?
+         * How to handle the last one being offset?
+         * 
+         * Angled rows:
+         *  2 * (horizontalCount - offsetBit)
+         * 
+         * Vertical rows:
+         *  2 * horizontalCount + normalBit
+         */
+
+        /*
+         * Row Type:
+         * - 0: Angled
+         * - 1: Vertical
+         */
+        int rowType = 0;
+
+        /*
+         * Angled Row Type:
+         * - 0: Start
+         * - 1: End
+         */
+        int angledRowType = 0;
+
+        void PrintMessage(string message)
+        {
+            string offsetString = offsetBit == 1 ? "Offset" : "Normal";
+            string rowTypeString = rowType == 0 ? "Angled" : "Vertical";
+            string angledRowTypeString = rowType == 0
+                ? angledRowType == 0 ? "\n- Starting" : "\n- Ending"
+                : string.Empty;
+
+            string combinedMessage = $"{message}:\n- {offsetString}\n- {rowTypeString}{angledRowTypeString}\n";
+
+            Console.WriteLine(combinedMessage);
+        }
+
+        var calculateRowCountFuncs = new Func<int>[2]
+        {
+            () => 2 * (horizontalCount - offsetBit),
+            () => horizontalCount + normalBit
+        };
+
+        var updateBitsFuncs = new Action[2, 2]
+        {
+            // Normal row
+            {
+                // Angled row
+                () =>
+                {
+                    // This can be any row that isn't the starting/ending row
+                    // There's 2 cases:
+                    // - offset -> normal
+                    // - normal, but remains normal
+                    offsetBit = angledRowType;
+                    normalBit = 1 - offsetBit;
+                    // Toggle the angledRowType
+                    angledRowType = 1 - angledRowType;
+
+                    // Toggle the rowType, since it alternates
+                    rowType = 1 - rowType;
+                },
+                // Vertical row
+                () =>
+                {
+                    // Next angled row will be normal
+                    angledRowType = 1;
+                    offsetBit = 0;
+                    normalBit = 1;
+
+                    // Toggle the rowType, since it alternates
+                    rowType = 1 - rowType;
+                }
+            },
+            // Offset row
+            {
+                // Angled row
+                () =>
+                {
+                    // This only happens if it's the starting/ending row
+                    rowType = 1;
+                    angledRowType = normalBit;
+                },
+                // Vertical row
+                () =>
+                {
+                    // Next angled row will be normal
+                    angledRowType = 0;
+                    offsetBit = 0;
+                    normalBit = 1;
+
+                    // Toggle the rowType, since it alternates
+                    rowType = 1 - rowType;
+                }
+            }
+        };
+
+        int[] rowCounts = new int[verticalNodeCount];
+        
+        // Set the length of the first row
+        rowCounts[0] = calculateRowCountFuncs[rowType]();
+
+        updateBitsFuncs[offsetBit, rowType]();
+
+        PrintMessage($"Row #1");
+
+        for (var i = 1; i < rowCounts.Length - 1; i++)
+        {
+            PrintMessage($"Row #{i + 1}");
+
+            rowCounts[i] = calculateRowCountFuncs[rowType]();
+            updateBitsFuncs[offsetBit, rowType]();
+        }
+
+        // Reset these bits
+        offsetBit = Convert.ToInt32(networkData.StartOffset);
+        normalBit = Convert.ToInt32(!networkData.StartOffset);
+
+        // Get these bits
+        int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
+        int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
+
+        offsetBit = offsetBit & oddBit | normalBit & evenBit;
+        angledRowType = 1;
+        rowType = 0;
+
+        PrintMessage($"Row #{rowCounts.Length}");
+
+        // Set the length of the last row
+        rowCounts[^1] = calculateRowCountFuncs[rowType]();
+
+        return rowCounts;
     }
 }
