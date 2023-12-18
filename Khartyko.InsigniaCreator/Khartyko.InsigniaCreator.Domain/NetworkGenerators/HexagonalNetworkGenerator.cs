@@ -1,3 +1,4 @@
+using System.Linq;
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
@@ -18,7 +19,25 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
     private readonly INetworkCalculator<HexagonalNetworkData> _calculator;
 
-    private static double UpdateOscillationModifier(int flippedBit)
+    private static readonly string s_loggingFileName = $"HexagonalNetworkGenerator_GenerateNetwork Links {DateTime.Now:HH_mm_ss}.log";
+
+    private static string s_LoggingFilepath
+    {
+        get
+        {
+            string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging", DateTime.Now.ToString("dd MMM yyyy"));
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return Path.Combine(path, s_loggingFileName);
+        }
+    }
+    
+    private static double GetModifiedOscillationModifier(int flippedBit)
         => 0.125 * (1 - flippedBit) - 0.125 * flippedBit;
 
     private static (double, double) CalculateTranslation(Transform transform, double horizontalOffset, double verticalOffset, int xIndex, int yIndex)
@@ -64,10 +83,10 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int flippedBit = 0;
         var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
-        int nodeCount = _calculator.CalculateNodeCount(networkData);
         var originalTransform = networkData.CellTransform;
         var transform = new Transform(networkData.CellTransform);
         var scale = transform.Scale;
+        int nodeCount = _calculator.CalculateNodeCount(networkData);
         int currentNodeIndex = 0;
 
         int offsetBit = Convert.ToInt32(networkData.StartOffset);
@@ -91,11 +110,30 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var horizontalOffset = (horizontalCount - offsetBit) * (scale.X * s_CellWidth);
 
         int offsetRowCount = horizontalNodeCount - offsetBit * 2 * Convert.ToInt32(nodeCount > 6);
+        Console.WriteLine("Row #1:");
+
+        var indexStrings = new List<string>
+        {
+            "Input NetworkData:",
+            $"\tWidth:                  {networkData.Width}",
+            $"\tHeight:                 {networkData.Height}",
+            $"\tHorizontalCellCount:    {networkData.HorizontalCellCount}",
+            $"\tVerticalCellCount:      {networkData.VerticalCellCount}",
+            $"\tCenterAlongXAxis:       {networkData.CenterAlongXAxis}",
+            $"\tCenterAlongYAxis:       {networkData.CenterAlongYAxis}",
+            $"\tStartOffset:            {networkData.StartOffset}",
+            $"\tCellTransform:",
+            $"\t\tScale:                {networkData.CellTransform.Scale}",
+            $"\t\tRotation:             {networkData.CellTransform.Rotation}",
+            $"\t\tTranslation:          {networkData.CellTransform.Translation}",
+            "\nLink connections formed:"
+        };
 
         // Generate the first row of Nodes
         for (int x = 0; x < offsetRowCount; x++)
         {
-            //oscillationModifier = UpdateOscillationModifier(flippedBit);
+            Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
+            oscillationModifier = GetModifiedOscillationModifier(flippedBit);
 
             // TODO: Figure out how the local position works for the Nodes
 
@@ -121,10 +159,12 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         // Generate the middle row of Nodes
         for (var y = 1; y < verticalCount; y++)
         {
-            // NOTE: Be careful about using 'x' here -- it could go out of bounds
+            Console.WriteLine($"\tRow #{y + 1}:");
+
             for (int x = 2; x < horizontalNodeCount + 2; x++)
             {
-                oscillationModifier = UpdateOscillationModifier(flippedBit);
+                Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
+                oscillationModifier = GetModifiedOscillationModifier(flippedBit);
 
                 // TODO: Figure out how the local position works for the Nodes
 
@@ -146,11 +186,20 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
         // Toggle this bit so it doesn't repeat the row direction
         flippedBit = 1;
+        int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
+        int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
+        int normalBit = Convert.ToInt32(!networkData.StartOffset);
+        offsetBit = Convert.ToInt32(networkData.StartOffset);
+        offsetBit = evenBit & normalBit | oddBit & offsetBit;
+        offsetRowCount = horizontalNodeCount - offsetBit * 2 * Convert.ToInt32(nodeCount > 6);
+
+        Console.WriteLine($"\tRow #{verticalCount}:");
 
         // Generate the last row of Nodes
         for (int x = 0; x < offsetRowCount; x++)
         {
-            oscillationModifier = UpdateOscillationModifier(flippedBit);
+            Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
+            oscillationModifier = GetModifiedOscillationModifier(flippedBit);
 
             int yIndex = verticalCount - 1;
             double yValue = scaledY * (yIndex + oscillationModifier);
@@ -172,6 +221,12 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             flippedBit = 1 - flippedBit;
         }
 
+        currentNodeIndex = 0;
+        indexStrings.Add($"\tNodes:");
+        indexStrings.AddRange(nodes.Select(node => $"\t\t{currentNodeIndex++}: {node}"));
+
+        File.WriteAllLines(s_LoggingFilepath, indexStrings);
+
         return nodes;
     }
 
@@ -190,25 +245,9 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
         Link[] links = new Link[linkCount];
 
-        var indexStrings = new List<string>
-        {
-            "Input NetworkData:",
-            $"\tWidth:                  {networkData.Width}",
-            $"\tHeight:                 {networkData.Height}",
-            $"\tHorizontalCellCount:    {networkData.HorizontalCellCount}",
-            $"\tVerticalCellCount:      {networkData.VerticalCellCount}",
-            $"\tCenterAlongXAxis:       {networkData.CenterAlongXAxis}",
-            $"\tCenterAlongYAxis:       {networkData.CenterAlongYAxis}",
-            $"\tStartOffset:            {networkData.StartOffset}",
-            $"\tCellTransform:",
-            $"\t\tScale:                {networkData.CellTransform.Scale}",
-            $"\t\tRotation:             {networkData.CellTransform.Rotation}",
-            $"\t\tTranslation:          {networkData.CellTransform.Translation}",
-            "\nLink connections formed:"
-        };
+        var indexStrings = new List<string>();
 
-        // TODO: Find a way to submit less data to the method
-        int[] rowCounts = CalculaterowCounts(networkData);
+        int[] rowCounts = CalculateRowCounts(networkData);
 
         // Go through all of the angled Links
         for (var y = 0; y < rowCounts.Length; y += 2)
@@ -278,18 +317,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             currentLinkIndex += rowCounts[y + 1];
         }
 
-        string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        string fileName = $"HexagonalNetworkGenerator_GenerateNetwork Links {DateTime.Now:dd MMM yyyy HH_mm_ss}.log";
-        string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging");
-
-        if (!Directory.Exists(path))
-        {
-            Directory.CreateDirectory(path);
-        }
-
-        path = Path.Combine(path, fileName);
-
-        File.WriteAllLines(path, indexStrings);
+        File.AppendAllLines(s_LoggingFilepath, indexStrings);
 
         return links;
     }
@@ -300,12 +328,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
         int cellCount = _calculator.CalculateCellCount(networkData);
 
-        int horizontalNodeCount = 2 * horizontalCount + 1;
         int offsetBit = Convert.ToInt32(networkData.StartOffset);
-
-        int currentNodeIndex = 0;
-        int currentLinkIndex = 2 * Math.Max(1, horizontalCount - offsetBit);
-        int currentCellIndex = 0;
+        int normalBit = Convert.ToInt32(!networkData.StartOffset);
 
         Cell[] cells = new Cell[cellCount];
 
@@ -315,30 +339,18 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int topLeftLinkIndex = 0;
         int midLeftLinkIndex = 2 * (horizontalCount - offsetBit);
         int bottomLeftLinkIndex = midLeftLinkIndex + horizontalCount + offsetBit;
+        int currentCellIndex = 0;
+
+        var indexStrings = new List<string>
+        {
+            "\nCells formed:"
+        };
 
         // Setup the bridging Links
         for (var y = 0; y < verticalCount; y++)
         {
-            int currentNodeCount = horizontalNodeCount - offsetBit;
-
-            for (var x = offsetBit; x < currentNodeCount; x += 2)
-            {
-                Node head = nodes[currentNodeIndex + x];
-                Node tail = nodes[currentNodeIndex + x + currentNodeCount];
-
-                var link = new Link(head, tail);
-                links[currentLinkIndex] = link;
-                currentLinkIndex++;
-            }
-
-            // Update the currentNodePosition
-            currentNodeIndex += horizontalNodeCount;
-
-            // Update the Link position to start from
-            currentLinkIndex += 2 * horizontalCount + 1;
-
             // Create the Cells for the row
-            for (var x = 0; x < horizontalCount; x++)
+            for (var x = 0; x < horizontalCount - offsetBit; x++)
             {
                 Node topLeft = nodes[topNodeIndex];
                 Node topRight = nodes[topNodeIndex + 1];
@@ -377,10 +389,22 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
                 cells[currentCellIndex] = cell;
 
+                indexStrings.Add($"\tCell #{currentCellIndex + 1}:");
+                indexStrings.Add($"\t\tTop Left:        {topLeftLinkIndex}");
+                indexStrings.Add($"\t\tMiddle Left:     {topLeftLinkIndex + 1}");
+                indexStrings.Add($"\t\tBottom Left:     {midLeftLinkIndex}");
+                indexStrings.Add($"\t\tTop Right:       {midLeftLinkIndex + 1}");
+                indexStrings.Add($"\t\tMiddle Right:    {bottomLeftLinkIndex}");
+                indexStrings.Add($"\t\tBottom Right:    {bottomLeftLinkIndex + 1}");
+
                 // Increment the counters
                 currentCellIndex++;
+
+                // Increment Node indices
                 topNodeIndex += 2;
                 bottomNodeIndex += 2;
+
+                // Increment Link indices
                 topLeftLinkIndex += 2;
                 midLeftLinkIndex++;
                 bottomLeftLinkIndex += 2;
@@ -388,16 +412,20 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
             // Increment the counters for Node indexes
             topNodeIndex += 3;
+            midLeftLinkIndex += 2 + horizontalCount + normalBit + normalBit;
             bottomNodeIndex += 3 + offsetBit;
 
             // Toggle the bits
-            offsetBit = (1 - offsetBit);
+            offsetBit = 1 - offsetBit;
+            normalBit = 1 - normalBit;
         }
+
+        File.AppendAllLines(s_LoggingFilepath, indexStrings);
 
         return cells;
     }
 
-    private static int[] CalculaterowCounts(HexagonalNetworkData networkData)
+    private static int[] CalculateRowCounts(HexagonalNetworkData networkData)
     {
         var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
         var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
