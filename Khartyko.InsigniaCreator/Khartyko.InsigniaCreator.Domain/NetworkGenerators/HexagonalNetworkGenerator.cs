@@ -36,7 +36,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             return Path.Combine(path, s_loggingFileName);
         }
     }
-    
+
     private static double GetModifiedOscillationModifier(int flippedBit)
         => 0.125 * (1 - flippedBit) - 0.125 * flippedBit;
 
@@ -71,379 +71,63 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
     {
         DomainAssertionHelper.NetworkDataCheck(generationData);
 
-        Node[] nodes = SetupNodes(generationData);
-        Link[] links = SetupLinks(generationData, nodes);
-        Cell[] cells = SetupCells(generationData, nodes, links);
+        int horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
+        int verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
+
+        int nodeCount = _calculator.CalculateNodeCount(generationData);
+        int linkCount = _calculator.CalculateLinkCount(generationData);
+        int cellCount = _calculator.CalculateCellCount(generationData);
+
+        Node[] nodes = new Node[nodeCount];
+        Link[] links = new Link[linkCount];
+        Cell[] cells = new Cell[cellCount];
+
+        int[] nodeRowCounts = CalculateNodeRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
+        int[] linkRowCounts = CalculateLinkRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
+        int[] cellRowCounts = CalculateCellRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
 
         return new TemplateNetwork(nodes, links, cells);
     }
 
-    private Node[] SetupNodes(HexagonalNetworkData networkData)
+    private static int[] CalculateNodeRowCounts(
+        int horizontalCount,
+        int verticalCount,
+        bool startOffset
+    )
     {
-        int flippedBit = 0;
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
-        var originalTransform = networkData.CellTransform;
-        var transform = new Transform(networkData.CellTransform);
-        var scale = transform.Scale;
-        int nodeCount = _calculator.CalculateNodeCount(networkData);
-        int currentNodeIndex = 0;
+        int offsetBit = Convert.ToInt32(startOffset);
+        int normalBit = 1 - offsetBit;
+        int verticalRowCount = verticalCount + 1;
 
-        int offsetBit = Convert.ToInt32(networkData.StartOffset);
+        int[] nodeRowCounts = new int[verticalRowCount];
 
-        int horizontalNodeCount = 2 * horizontalCount + 1;
-        int verticalNodeCount = verticalCount + 1;
+        nodeRowCounts[0] = 2 * (horizontalCount - offsetBit) + 1;
 
-        double scaledX = s_CellWidth * scale.X;
-        double scaledY = s_CellHeight * scale.Y;
-        // This is the delta between higher and lower Nodes
-        double oscillationModifier;
+        int midNodeRowCounts = 2 * horizontalCount + 1;
 
-        Node[] nodes = new Node[nodeCount];
-
-        var globalNodeOffset = new Vector2(
-            (networkData.Width - (horizontalNodeCount * scale.X)) / 2,
-            (networkData.Height - (verticalNodeCount * scale.Y)) / 2
-        );
-
-        var verticalOffset = (verticalCount - 1) * (scale.Y * s_CellHeight);
-        var horizontalOffset = (horizontalCount - offsetBit) * (scale.X * s_CellWidth);
-
-        int offsetRowCount = horizontalNodeCount - offsetBit * 2 * Convert.ToInt32(nodeCount > 6);
-        Console.WriteLine("Row #1:");
-
-        var indexStrings = new List<string>
+        for (var i = 1; i < verticalCount; i++)
         {
-            "Input NetworkData:",
-            $"\tWidth:                  {networkData.Width}",
-            $"\tHeight:                 {networkData.Height}",
-            $"\tHorizontalCellCount:    {networkData.HorizontalCellCount}",
-            $"\tVerticalCellCount:      {networkData.VerticalCellCount}",
-            $"\tCenterAlongXAxis:       {networkData.CenterAlongXAxis}",
-            $"\tCenterAlongYAxis:       {networkData.CenterAlongYAxis}",
-            $"\tStartOffset:            {networkData.StartOffset}",
-            $"\tCellTransform:",
-            $"\t\tScale:                {networkData.CellTransform.Scale}",
-            $"\t\tRotation:             {networkData.CellTransform.Rotation}",
-            $"\t\tTranslation:          {networkData.CellTransform.Translation}",
-            "\nLink connections formed:"
-        };
-
-        // Generate the first row of Nodes
-        for (int x = 0; x < offsetRowCount; x++)
-        {
-            Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
-            oscillationModifier = GetModifiedOscillationModifier(flippedBit);
-
-            // TODO: Figure out how the local position works for the Nodes
-
-            var localPosition = new Vector2(scaledX * x, 0);
-            //var startOffsetModifier = new Vector2(scale.X / 2 * offsetBit, 0);
-            //var translation = globalNodeOffset + localPosition;
-            
-            // Calculate the translation and update it as needed
-            //var (translationX, translationY) = CalculateTranslation(originalTransform, horizontalOffset, verticalOffset, x, 0);
-            //transform.Translation.X = translationX;
-            //transform.Translation.Y = translationY;
-
-            var node = NodeHelper.Create(transform, localPosition);
-            nodes[currentNodeIndex] = node;
-
-            currentNodeIndex++;
-            flippedBit = 1 - flippedBit;
+            nodeRowCounts[i] = midNodeRowCounts;
         }
 
-        // Toggle this bit so it doesn't repeat the row direction
-        flippedBit = 1;
-
-        // Generate the middle row of Nodes
-        for (var y = 1; y < verticalCount; y++)
-        {
-            Console.WriteLine($"\tRow #{y + 1}:");
-
-            for (int x = 2; x < horizontalNodeCount + 2; x++)
-            {
-                Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
-                oscillationModifier = GetModifiedOscillationModifier(flippedBit);
-
-                // TODO: Figure out how the local position works for the Nodes
-
-                var localPosition = new Vector2(scaledX * x, scaledY * (y + oscillationModifier));
-                //var position = globalNodeOffset + localPosition;
-
-                // Calculate the translation and update it as needed
-                //var (translationX, translationY) = CalculateTranslation(originalTransform, horizontalOffset, verticalOffset, x, y);
-                //transform.Translation.X = translationX;
-                //transform.Translation.Y = translationY;
-
-                var node = NodeHelper.Create(transform, localPosition);
-                nodes[currentNodeIndex] = node;
-
-                currentNodeIndex++;
-                flippedBit = 1 - flippedBit;
-            }
-        }
-
-        // Toggle this bit so it doesn't repeat the row direction
-        flippedBit = 1;
         int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
         int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
-        offsetBit = Convert.ToInt32(networkData.StartOffset);
+
         offsetBit = evenBit & normalBit | oddBit & offsetBit;
-        offsetRowCount = horizontalNodeCount - offsetBit * 2 * Convert.ToInt32(nodeCount > 6);
+        nodeRowCounts[^1] = 2 * (horizontalCount - offsetBit) + 1;
 
-        Console.WriteLine($"\tRow #{verticalCount}:");
-
-        // Generate the last row of Nodes
-        for (int x = 0; x < offsetRowCount; x++)
-        {
-            Console.WriteLine($"\tCurrent Node Index:\t{currentNodeIndex}");
-            oscillationModifier = GetModifiedOscillationModifier(flippedBit);
-
-            int yIndex = verticalCount - 1;
-            double yValue = scaledY * (yIndex + oscillationModifier);
-
-            // TODO: Figure out how the local position works for the Nodes
-
-            var localPosition = new Vector2(scaledX * x, yValue);
-            //var position = globalNodeOffset + localPosition;
-
-            // Calculate the translation and update it as needed
-            //var (translationX, translationY) = CalculateTranslation(originalTransform, horizontalOffset, verticalOffset, x, yIndex);
-            //transform.Translation.X = translationX;
-            //transform.Translation.Y = translationY;
-
-            var node = NodeHelper.Create(transform, localPosition);
-            nodes[currentNodeIndex] = node;
-
-            currentNodeIndex++;
-            flippedBit = 1 - flippedBit;
-        }
-
-        currentNodeIndex = 0;
-        indexStrings.Add($"\tNodes:");
-        indexStrings.AddRange(nodes.Select(node => $"\t\t{currentNodeIndex++}: {node}"));
-
-        File.WriteAllLines(s_LoggingFilepath, indexStrings);
-
-        return nodes;
+        return nodeRowCounts;
     }
 
-    private Link[] SetupLinks(HexagonalNetworkData networkData, Node[] nodes)
+    private static int[] CalculateLinkRowCounts(
+        int horizontalCount,
+        int verticalCount,
+        bool startOffset
+    )
     {
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
-        int linkCount = _calculator.CalculateLinkCount(networkData);
-
-        int offsetBit = Convert.ToInt32(networkData.StartOffset);
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
+        int offsetBit = Convert.ToInt32(startOffset);
+        int normalBit = Convert.ToInt32(!startOffset);
         int verticalNodeCount = 2 * verticalCount + 1;
-
-        int currentNodeIndex = 0;
-        int currentLinkIndex = 0;
-
-        Link[] links = new Link[linkCount];
-
-        var indexStrings = new List<string>();
-
-        int[] rowCounts = CalculateRowCounts(networkData);
-
-        // Go through all of the angled Links
-        for (var y = 0; y < rowCounts.Length; y += 2)
-        {
-            indexStrings.Add($"\n\t{(offsetBit == 1 ? "Offset" : "Normal")} Angled Row #{y}");
-
-            int horizontalNodeCount = 2 * (horizontalCount - offsetBit);
-
-            for (var x = 0; x < rowCounts[y]; x++)
-            {
-                int nodeIndex = currentNodeIndex + x;
-
-                Node head = nodes[nodeIndex];
-                Node tail = nodes[nodeIndex + 1];
-
-                var link = new Link(head, tail);
-                links[currentLinkIndex] = link;
-
-                indexStrings.Add($"\t\t{currentLinkIndex}; {nodeIndex} -> {nodeIndex + 1}");
-
-                currentLinkIndex++;
-            }
-
-            currentNodeIndex += horizontalNodeCount + 1;
-            currentLinkIndex += horizontalCount + normalBit;
-
-            offsetBit = 1 - offsetBit;
-            normalBit = 1 - normalBit;
-        }
-
-        // Reset the offsetBit
-        offsetBit = Convert.ToInt32(networkData.StartOffset);
-
-        // Reset the index
-        currentNodeIndex = 0;
-
-        // Reset the index to the first vertical Link
-        currentLinkIndex = 2 * (horizontalCount - offsetBit);
-
-        indexStrings.Add("\n=========================================");
-
-        // Go through all of the vertical Links
-        for (var y = 1; y < rowCounts.Length; y += 2)
-        {
-            indexStrings.Add($"\n\t{(offsetBit == 1 ? "Offset" : "Normal")} Vertical Row #{y}");
-
-            int horizontalNodeCount = 2 * horizontalCount + normalBit;
-
-            for (var x = 0; x < rowCounts[y]; x++)
-            {
-                int nodeIndex = currentNodeIndex + x * 2;
-
-                Node head = nodes[nodeIndex];
-                Node tail = nodes[nodeIndex + horizontalNodeCount];
-
-                var link = new Link(head, tail);
-                links[currentLinkIndex] = link;
-
-                indexStrings.Add($"\t\t{currentLinkIndex}; {nodeIndex} -> {nodeIndex + horizontalNodeCount}");
-
-                currentLinkIndex++;
-            }
-
-            offsetBit = 1 - offsetBit;
-            normalBit = 1 - normalBit;
-            currentNodeIndex += horizontalNodeCount - normalBit + offsetBit;
-            currentLinkIndex += rowCounts[y + 1];
-        }
-
-        File.AppendAllLines(s_LoggingFilepath, indexStrings);
-
-        return links;
-    }
-
-    private Cell[] SetupCells(HexagonalNetworkData networkData, Node[] nodes, Link[] links)
-    {
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
-        int cellCount = _calculator.CalculateCellCount(networkData);
-
-        int offsetBit = Convert.ToInt32(networkData.StartOffset);
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
-
-        Cell[] cells = new Cell[cellCount];
-
-        int topNodeIndex = 0;
-        int bottomNodeIndex = 2 * (horizontalCount - offsetBit);
-
-        int topLeftLinkIndex = 0;
-        int midLeftLinkIndex = 2 * (horizontalCount - offsetBit);
-        int bottomLeftLinkIndex = midLeftLinkIndex + horizontalCount + offsetBit;
-        int currentCellIndex = 0;
-
-        var indexStrings = new List<string>
-        {
-            "\nCells formed:"
-        };
-
-        // Setup the bridging Links
-        for (var y = 0; y < verticalCount; y++)
-        {
-            // Create the Cells for the row
-            for (var x = 0; x < horizontalCount - offsetBit; x++)
-            {
-                Node topLeft = nodes[topNodeIndex];
-                Node topRight = nodes[topNodeIndex + 1];
-                Node left = nodes[topNodeIndex + 2];
-                Node right = nodes[bottomNodeIndex];
-                Node bottomLeft = nodes[bottomNodeIndex + 1];
-                Node bottomRight = nodes[bottomNodeIndex + 2];
-
-                Link topLeftLink = links[topLeftLinkIndex];
-                Link topRightLink = links[topLeftLinkIndex + 1];
-                Link leftLink = links[midLeftLinkIndex];
-                Link rightLink = links[midLeftLinkIndex + 1];
-                Link bottomLeftLink = links[bottomLeftLinkIndex];
-                Link bottomRightLink = links[bottomLeftLinkIndex + 1];
-
-                var cell = new Cell(
-                    new List<Node>
-                    {
-                        topLeft,
-                        topRight,
-                        left,
-                        right,
-                        bottomLeft,
-                        bottomRight
-                    },
-                    new List<Link>
-                    {
-                        topLeftLink,
-                        topRightLink,
-                        leftLink,
-                        rightLink,
-                        bottomLeftLink,
-                        bottomRightLink
-                    }
-                );
-
-                cells[currentCellIndex] = cell;
-
-                indexStrings.Add($"\tCell #{currentCellIndex + 1}:");
-                indexStrings.Add($"\t\tTop Left:        {topLeftLinkIndex}");
-                indexStrings.Add($"\t\tMiddle Left:     {topLeftLinkIndex + 1}");
-                indexStrings.Add($"\t\tBottom Left:     {midLeftLinkIndex}");
-                indexStrings.Add($"\t\tTop Right:       {midLeftLinkIndex + 1}");
-                indexStrings.Add($"\t\tMiddle Right:    {bottomLeftLinkIndex}");
-                indexStrings.Add($"\t\tBottom Right:    {bottomLeftLinkIndex + 1}");
-
-                // Increment the counters
-                currentCellIndex++;
-
-                // Increment Node indices
-                topNodeIndex += 2;
-                bottomNodeIndex += 2;
-
-                // Increment Link indices
-                topLeftLinkIndex += 2;
-                midLeftLinkIndex++;
-                bottomLeftLinkIndex += 2;
-            }
-
-            // Increment the counters for Node indexes
-            topNodeIndex += 3;
-            midLeftLinkIndex += 2 + horizontalCount + normalBit + normalBit;
-            bottomNodeIndex += 3 + offsetBit;
-
-            // Toggle the bits
-            offsetBit = 1 - offsetBit;
-            normalBit = 1 - normalBit;
-        }
-
-        File.AppendAllLines(s_LoggingFilepath, indexStrings);
-
-        return cells;
-    }
-
-    private static int[] CalculateRowCounts(HexagonalNetworkData networkData)
-    {
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
-        int offsetBit = Convert.ToInt32(networkData.StartOffset);
-        int normalBit = Convert.ToInt32(!networkData.StartOffset);
-        int verticalNodeCount = 2 * verticalCount + 1;
-
-        /*
-         * How to keep track of the type of angled row?
-         * How to handle the change from offset -> normal and vice versa?
-         * How to handle the last one being offset?
-         * 
-         * Angled rows:
-         *  2 * (horizontalCount - offsetBit)
-         * 
-         * Vertical rows:
-         *  2 * horizontalCount + normalBit
-         */
 
         /*
          * Row Type:
@@ -459,19 +143,6 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
          */
         int angledRowType = 0;
 
-        void PrintMessage(string message)
-        {
-            string offsetString = offsetBit == 1 ? "Offset" : "Normal";
-            string rowTypeString = rowType == 0 ? "Angled" : "Vertical";
-            string angledRowTypeString = rowType == 0
-                ? angledRowType == 0 ? "\n- Starting" : "\n- Ending"
-                : string.Empty;
-
-            string combinedMessage = $"{message}:\n- {offsetString}\n- {rowTypeString}{angledRowTypeString}\n";
-
-            Console.WriteLine(combinedMessage);
-        }
-
         var calculateRowCountFuncs = new Func<int>[2]
         {
             () => 2 * (horizontalCount - offsetBit),
@@ -485,27 +156,17 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 // Angled row
                 () =>
                 {
-                    // This can be any row that isn't the starting/ending row
-                    // There's 2 cases:
-                    // - offset -> normal
-                    // - normal, but remains normal
                     offsetBit = angledRowType;
                     normalBit = 1 - offsetBit;
-                    // Toggle the angledRowType
                     angledRowType = 1 - angledRowType;
-
-                    // Toggle the rowType, since it alternates
                     rowType = 1 - rowType;
                 },
                 // Vertical row
                 () =>
                 {
-                    // Next angled row will be normal
                     angledRowType = 1;
                     offsetBit = 0;
                     normalBit = 1;
-
-                    // Toggle the rowType, since it alternates
                     rowType = 1 - rowType;
                 }
             },
@@ -514,46 +175,35 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 // Angled row
                 () =>
                 {
-                    // This only happens if it's the starting/ending row
                     rowType = 1;
                     angledRowType = normalBit;
                 },
                 // Vertical row
                 () =>
                 {
-                    // Next angled row will be normal
                     angledRowType = 0;
                     offsetBit = 0;
                     normalBit = 1;
-
-                    // Toggle the rowType, since it alternates
                     rowType = 1 - rowType;
                 }
             }
         };
 
         int[] rowCounts = new int[verticalNodeCount];
-        
-        // Set the length of the first row
+
         rowCounts[0] = calculateRowCountFuncs[rowType]();
 
         updateBitsFuncs[offsetBit, rowType]();
 
-        PrintMessage($"Row #1");
-
         for (var i = 1; i < rowCounts.Length - 1; i++)
         {
-            PrintMessage($"Row #{i + 1}");
-
             rowCounts[i] = calculateRowCountFuncs[rowType]();
             updateBitsFuncs[offsetBit, rowType]();
         }
 
-        // Reset these bits
-        offsetBit = Convert.ToInt32(networkData.StartOffset);
-        normalBit = Convert.ToInt32(!networkData.StartOffset);
+        offsetBit = Convert.ToInt32(startOffset);
+        normalBit = Convert.ToInt32(!startOffset);
 
-        // Get these bits
         int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
         int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
 
@@ -561,11 +211,37 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         angledRowType = 1;
         rowType = 0;
 
-        PrintMessage($"Row #{rowCounts.Length}");
-
-        // Set the length of the last row
         rowCounts[^1] = calculateRowCountFuncs[rowType]();
 
         return rowCounts;
+    }
+
+    private static int[] CalculateCellRowCounts(
+        int horizontalCount,
+        int verticalCount,
+        bool startOffset
+    )
+    {
+        int offsetBit = Convert.ToInt32(startOffset);
+        int normalBit = 1 - offsetBit;
+
+        int[] cellRowCounts = new int[verticalCount];
+
+        cellRowCounts[0] = horizontalCount - offsetBit;
+
+        for (var i = 1; i < verticalCount - 1; i++)
+        {
+            offsetBit = 1 - offsetBit;
+
+            cellRowCounts[i] = horizontalCount - offsetBit;
+        }
+
+        int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
+        int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
+
+        offsetBit = evenBit & normalBit | oddBit & offsetBit;
+        cellRowCounts[^1] = horizontalCount - offsetBit;
+
+        return cellRowCounts;
     }
 }
