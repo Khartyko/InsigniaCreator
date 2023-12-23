@@ -1,4 +1,3 @@
-using System.Linq;
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
@@ -73,27 +72,195 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
         int horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
         int verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
+        bool startOffset = generationData.StartOffset;
 
         int nodeCount = _calculator.CalculateNodeCount(generationData);
         int linkCount = _calculator.CalculateLinkCount(generationData);
         int cellCount = _calculator.CalculateCellCount(generationData);
 
-        Node[] nodes = new Node[nodeCount];
-        Link[] links = new Link[linkCount];
-        Cell[] cells = new Cell[cellCount];
-
-        int[] nodeRowCounts = CalculateNodeRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
-        int[] linkRowCounts = CalculateLinkRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
+        int[] nodeRowCounts = CalculateNodeRowCounts(horizontalCount, verticalCount, startOffset);
+        int[] linkRowCounts = CalculateLinkRowCounts(horizontalCount, verticalCount, startOffset);
         int[] cellRowCounts = CalculateCellRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
+
+        Node[] nodes = GenerateNodes(nodeRowCounts, nodeCount);
+        Link[] links = GenerateLinks(nodeRowCounts, linkRowCounts, nodes, linkCount, startOffset);
+        Cell[] cells = GenerateCells(nodeRowCounts, linkRowCounts, cellRowCounts, nodes, links, cellCount);
 
         return new TemplateNetwork(nodes, links, cells);
     }
 
-    private static int[] CalculateNodeRowCounts(
-        int horizontalCount,
-        int verticalCount,
-        bool startOffset
-    )
+    private static Node[] GenerateNodes(int[] nodeRowCounts, int nodeCount)
+    {
+        Node[] nodes = new Node[nodeCount];
+
+        int lastNodeIndex = 0;
+
+        for (var y = 0; y < nodeRowCounts.Length; y++)
+        {
+            int rowCount = nodeRowCounts[y];
+
+            for (var x = 0; x < rowCount; x++)
+            {
+                var node = new Node(x, y);
+
+                nodes[lastNodeIndex] = node;
+
+                lastNodeIndex++;
+            }
+        }
+
+        return nodes;
+    }
+
+    private static Link[] GenerateLinks(int[] nodeRowCounts, int[] linkRowCounts, Node[] nodes, int linkCount, bool startOffset)
+    {
+        Link[] links = new Link[linkCount];
+
+        int lastNodeIndex = 0;
+        int lastLinkIndex = 0;
+        int lastRowIndex = 0;
+
+        var linkStrings = new List<string>
+        {
+            "Links:\n\tAngled Link Sections:"
+        };
+
+        // Create all of the angled Links
+        for (var y = 0; y < linkRowCounts.Length; y += 2)
+        {
+            int rowCount = linkRowCounts[y];
+
+            for (var x = 0; x < rowCount; x++)
+            {
+                Node head = nodes[lastNodeIndex];
+                Node tail = nodes[lastNodeIndex + 1];
+
+                linkStrings.Add($"\t\t{lastLinkIndex}: {lastNodeIndex} -> {lastNodeIndex + 1}");
+
+                var link = new Link(head, tail);
+                links[lastLinkIndex] = link;
+
+                lastNodeIndex++;
+                lastLinkIndex++;
+            }
+
+            linkStrings.Add(string.Empty);
+            lastLinkIndex += linkRowCounts[Math.Min(y + 1, linkRowCounts.Length - 1)];
+
+            lastNodeIndex++;
+            lastRowIndex++;
+        }
+
+        linkStrings.Add("\tVertical Links Sections:");
+        lastNodeIndex = 0;
+        lastLinkIndex = linkRowCounts[0] + 1;
+        lastRowIndex = 0;
+
+        int startOffsetBit = Convert.ToInt32(startOffset);
+
+        // Create all of the vertical Links
+        for (var y = 1; y < linkRowCounts.Length; y += 2)
+        {
+            int rowCount = linkRowCounts[y];
+            int lastNodeRowCount = nodeRowCounts[lastRowIndex];
+
+            for (var x = 0; x < rowCount; x++)
+            {
+                Node head = nodes[lastNodeIndex];
+                Node tail = nodes[lastNodeIndex + lastNodeRowCount];
+
+                linkStrings.Add($"\t\t{lastLinkIndex}: {lastNodeIndex} -> {lastNodeIndex + lastNodeRowCount}");
+
+                var link = new Link(head, tail);
+                links[lastLinkIndex] = link;
+
+                lastNodeIndex += 2;
+                lastLinkIndex++;
+            }
+
+            linkStrings.Add(string.Empty);
+            lastNodeIndex -= startOffsetBit;
+            lastRowIndex++;
+
+            startOffsetBit = 0;
+        }
+
+        File.WriteAllLines(s_LoggingFilepath, linkStrings);
+
+        return links;
+    }
+
+    private static Cell[] GenerateCells(int[] nodeRowCounts, int[] linkRowCounts, int[] cellRowCounts, Node[] nodes, Link[] links, int cellCount)
+    {
+        Cell[] cells = new Cell[cellCount];
+
+        int lastCellIndex = 0;
+        int lastNodeIndex = 0;
+        int lastNodeRowIndex = 0;
+        int lastLinkTopIndex = 0;
+
+        var cellStrings = new List<string>
+        {
+            "Cells:"
+        };
+
+        for (var y = 0; y < cellRowCounts.Length; y++)
+        {
+            int rowCount = cellRowCounts[y];
+            int lastNodeRowCount = nodeRowCounts[lastNodeRowIndex];
+            int linkRowIndex = 2 * y;
+            int topLinkRowCount = linkRowCounts[linkRowIndex];
+            int middleLinkRowCount = linkRowCounts[linkRowIndex + 1];
+
+            for (var x = 0; x < rowCount; x++)
+            {
+                int nextRowNodeIndex = lastNodeIndex + lastNodeRowCount;
+
+                //Node topLeftNode = nodes[lastNodeIndex];
+                //Node topMiddleNode = nodes[lastNodeIndex + 1];
+                //Node topRightNode = nodes[lastNodeIndex + 2];
+                //Node bottomLeftNode = nodes[nextRowNodeIndex];
+                //Node bottomMiddleNode = nodes[nextRowNodeIndex + 1];
+                //Node bottomRightNode = nodes[nextRowNodeIndex + 2];
+
+                cellStrings.Add($"Cell #{lastCellIndex + 1}");
+                cellStrings.Add("\tCell Nodes:");
+                cellStrings.Add($"\t\tTop Left:         {lastNodeIndex}");
+                cellStrings.Add($"\t\tTop Middle:       {lastNodeIndex + 1}");
+                cellStrings.Add($"\t\tTop Right:        {lastNodeIndex + 2}");
+                cellStrings.Add($"\t\tBottom Left:      {nextRowNodeIndex}");
+                cellStrings.Add($"\t\tBottom Middle:    {nextRowNodeIndex + 1}");
+                cellStrings.Add($"\t\tBottom Right:     {nextRowNodeIndex + 2}");
+
+                int middleRowLinkIndex = lastLinkTopIndex + topLinkRowCount;
+                int bottomRowLinkIndex = middleRowLinkIndex + middleLinkRowCount;
+
+                cellStrings.Add("\n\tCell Links:");
+                cellStrings.Add($"\t\tTop Left:         {lastLinkTopIndex}");
+                cellStrings.Add($"\t\tTop Right:        {lastLinkTopIndex + 1}");
+                cellStrings.Add($"\t\tMiddle Left:      {middleRowLinkIndex}");
+                cellStrings.Add($"\t\tMiddle Right:     {middleRowLinkIndex + 1}");
+                cellStrings.Add($"\t\tBottom Left:      {bottomRowLinkIndex}");
+                cellStrings.Add($"\t\tBottom Right:     {bottomRowLinkIndex + 1}");
+
+                lastNodeIndex += 2;
+                lastLinkTopIndex += 2;
+                lastCellIndex++;
+
+                cellStrings.Add("\n=======================================\n");
+            }
+
+            lastNodeIndex += 2;
+            lastNodeRowIndex++;
+            lastLinkTopIndex += topLinkRowCount + middleLinkRowCount;
+        }
+
+        File.AppendAllLines(s_LoggingFilepath, cellStrings);
+
+        return cells;
+    }
+
+    private static int[] CalculateNodeRowCounts(int horizontalCount, int verticalCount, bool startOffset)
     {
         int offsetBit = Convert.ToInt32(startOffset);
         int normalBit = 1 - offsetBit;
@@ -119,11 +286,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         return nodeRowCounts;
     }
 
-    private static int[] CalculateLinkRowCounts(
-        int horizontalCount,
-        int verticalCount,
-        bool startOffset
-    )
+    private static int[] CalculateLinkRowCounts(int horizontalCount, int verticalCount, bool startOffset)
     {
         int offsetBit = Convert.ToInt32(startOffset);
         int normalBit = Convert.ToInt32(!startOffset);
@@ -216,11 +379,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         return rowCounts;
     }
 
-    private static int[] CalculateCellRowCounts(
-        int horizontalCount,
-        int verticalCount,
-        bool startOffset
-    )
+    private static int[] CalculateCellRowCounts(int horizontalCount, int verticalCount, bool startOffset)
     {
         int offsetBit = Convert.ToInt32(startOffset);
         int normalBit = 1 - offsetBit;

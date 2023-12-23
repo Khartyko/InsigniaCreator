@@ -10,12 +10,12 @@ internal static class Program
 {
     private static HexagonalNetworkData GenerateData() => new()
     {
-        Width = 1280,
-        Height = 720,
-        HorizontalCellCount = 4,
+        Width = 1024,
+        Height = 1024,
+        HorizontalCellCount = 3,
         VerticalCellCount = 3,
         CenterAlongXAxis = true,
-        CenterAlongYAxis = false,
+        CenterAlongYAxis = true,
         CellTransform = new Transform(
             new Vector2(10.0),
             0,
