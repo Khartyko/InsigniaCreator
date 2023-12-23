@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 using Khartyko.InsigniaCreator.Domain.Data;
 using Khartyko.InsigniaCreator.Domain.Interface;
 using Khartyko.InsigniaCreator.Domain.Interfaces;
@@ -7,6 +9,13 @@ using Khartyko.InsigniaCreator.Library.Entity;
 using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
+
+class CellInfo
+{
+    public string CellNumber { get; set; }
+    public Dictionary<string, int> Nodes { get; set; }
+    public Dictionary<string, int> Links { get; set; }
+}
 
 /// <summary>
 /// Represents an instance of a NetworkGenerator that generates TemplateNetworks based on a hexagonal grid.
@@ -18,23 +27,20 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
     private readonly INetworkCalculator<HexagonalNetworkData> _calculator;
 
-    private static readonly string s_loggingFileName = $"HexagonalNetworkGenerator_GenerateNetwork Links {DateTime.Now:HH_mm_ss}.log";
-
-    private static string s_LoggingFilepath
+    private static string GenerateLoggingFilepath(string filename, string extension)
     {
-        get
+        string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging", DateTime.Now.ToString("dd MMM yyyy"));
+
+        if (!Directory.Exists(path))
         {
-            string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging", DateTime.Now.ToString("dd MMM yyyy"));
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            return Path.Combine(path, s_loggingFileName);
+            Directory.CreateDirectory(path);
         }
+
+        return Path.Combine(path, CreateFilename(filename, extension));
     }
+
+    private static string CreateFilename(string name, string extension) => $"{name} {DateTime.Now:HH_mm_ss}.{extension}";
 
     private static double GetModifiedOscillationModifier(int flippedBit)
         => 0.125 * (1 - flippedBit) - 0.125 * flippedBit;
@@ -120,11 +126,6 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int lastLinkIndex = 0;
         int lastRowIndex = 0;
 
-        var linkStrings = new List<string>
-        {
-            "Links:\n\tAngled Link Sections:"
-        };
-
         // Create all of the angled Links
         for (var y = 0; y < linkRowCounts.Length; y += 2)
         {
@@ -135,8 +136,6 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 Node head = nodes[lastNodeIndex];
                 Node tail = nodes[lastNodeIndex + 1];
 
-                linkStrings.Add($"\t\t{lastLinkIndex}: {lastNodeIndex} -> {lastNodeIndex + 1}");
-
                 var link = new Link(head, tail);
                 links[lastLinkIndex] = link;
 
@@ -144,14 +143,12 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 lastLinkIndex++;
             }
 
-            linkStrings.Add(string.Empty);
             lastLinkIndex += linkRowCounts[Math.Min(y + 1, linkRowCounts.Length - 1)];
 
             lastNodeIndex++;
             lastRowIndex++;
         }
 
-        linkStrings.Add("\tVertical Links Sections:");
         lastNodeIndex = 0;
         lastLinkIndex = linkRowCounts[0] + 1;
         lastRowIndex = 0;
@@ -169,8 +166,6 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 Node head = nodes[lastNodeIndex];
                 Node tail = nodes[lastNodeIndex + lastNodeRowCount];
 
-                linkStrings.Add($"\t\t{lastLinkIndex}: {lastNodeIndex} -> {lastNodeIndex + lastNodeRowCount}");
-
                 var link = new Link(head, tail);
                 links[lastLinkIndex] = link;
 
@@ -178,14 +173,11 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 lastLinkIndex++;
             }
 
-            linkStrings.Add(string.Empty);
             lastNodeIndex -= startOffsetBit;
             lastRowIndex++;
 
             startOffsetBit = 0;
         }
-
-        File.WriteAllLines(s_LoggingFilepath, linkStrings);
 
         return links;
     }
@@ -199,10 +191,210 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int lastNodeRowIndex = 0;
         int lastLinkTopIndex = 0;
 
-        var cellStrings = new List<string>
+        var expectedCellInfo = new List<CellInfo>
         {
-            "Cells:"
+            new()
+            {
+                CellNumber = "I",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "II",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "III",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "IV",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "V",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "VI",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "VII",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "VIII",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
+            new()
+            {
+                CellNumber = "IX",
+                Nodes = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopMiddle", 0 },
+                    { "TopRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomMiddle", 0 },
+                    { "BottomRight", 0 }
+                },
+                Links = new Dictionary<string, int>
+                {
+                    { "TopLeft", 0 },
+                    { "TopRight", 0 },
+                    { "MiddleLeft", 0 },
+                    { "MiddleRight", 0 },
+                    { "BottomLeft", 0 },
+                    { "BottomRight", 0 }
+                }
+            },
         };
+
+        string[] cellNames = new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+        var cellInfo = new List<CellInfo>();
 
         for (var y = 0; y < cellRowCounts.Length; y++)
         {
@@ -223,31 +415,37 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 //Node bottomMiddleNode = nodes[nextRowNodeIndex + 1];
                 //Node bottomRightNode = nodes[nextRowNodeIndex + 2];
 
-                cellStrings.Add($"Cell #{lastCellIndex + 1}");
-                cellStrings.Add("\tCell Nodes:");
-                cellStrings.Add($"\t\tTop Left:         {lastNodeIndex}");
-                cellStrings.Add($"\t\tTop Middle:       {lastNodeIndex + 1}");
-                cellStrings.Add($"\t\tTop Right:        {lastNodeIndex + 2}");
-                cellStrings.Add($"\t\tBottom Left:      {nextRowNodeIndex}");
-                cellStrings.Add($"\t\tBottom Middle:    {nextRowNodeIndex + 1}");
-                cellStrings.Add($"\t\tBottom Right:     {nextRowNodeIndex + 2}");
-
                 int middleRowLinkIndex = lastLinkTopIndex + topLinkRowCount;
                 int bottomRowLinkIndex = middleRowLinkIndex + middleLinkRowCount;
 
-                cellStrings.Add("\n\tCell Links:");
-                cellStrings.Add($"\t\tTop Left:         {lastLinkTopIndex}");
-                cellStrings.Add($"\t\tTop Right:        {lastLinkTopIndex + 1}");
-                cellStrings.Add($"\t\tMiddle Left:      {middleRowLinkIndex}");
-                cellStrings.Add($"\t\tMiddle Right:     {middleRowLinkIndex + 1}");
-                cellStrings.Add($"\t\tBottom Left:      {bottomRowLinkIndex}");
-                cellStrings.Add($"\t\tBottom Right:     {bottomRowLinkIndex + 1}");
+                var cellData = new CellInfo
+                {
+                    CellNumber = cellNames[lastCellIndex],
+                    Nodes = new Dictionary<string, int>
+                    {
+                        { "TopLeft", lastNodeIndex },
+                        { "TopMiddle", lastNodeIndex + 1 },
+                        { "TopRight", lastNodeIndex + 2 },
+                        { "BottomLeft", nextRowNodeIndex },
+                        { "BottomMiddle", nextRowNodeIndex + 1 },
+                        { "BottomRight", nextRowNodeIndex + 2 }
+                    },
+                    Links = new Dictionary<string, int>
+                    {
+                        { "TopLeft", lastLinkTopIndex },
+                        { "TopRight", lastLinkTopIndex + 1 },
+                        { "MiddleLeft", middleRowLinkIndex },
+                        { "MiddleRight", middleRowLinkIndex + 1 },
+                        { "BottomLeft", bottomRowLinkIndex },
+                        { "BottomRight", bottomRowLinkIndex + 1 }
+                    }
+                };
+
+                cellInfo.Add(cellData);
 
                 lastNodeIndex += 2;
                 lastLinkTopIndex += 2;
                 lastCellIndex++;
-
-                cellStrings.Add("\n=======================================\n");
             }
 
             lastNodeIndex += 2;
@@ -255,7 +453,17 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             lastLinkTopIndex += topLinkRowCount + middleLinkRowCount;
         }
 
-        File.AppendAllLines(s_LoggingFilepath, cellStrings);
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
+
+        string jsonText = JsonSerializer.Serialize(cellInfo, options);
+
+        var jsonFilepath = GenerateLoggingFilepath("Cells", "json");
+        File.WriteAllText(jsonFilepath, jsonText);
+
+        Environment.Exit(0);
 
         return cells;
     }
