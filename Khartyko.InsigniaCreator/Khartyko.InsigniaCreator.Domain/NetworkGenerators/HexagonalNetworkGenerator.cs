@@ -10,11 +10,25 @@ using Khartyko.InsigniaCreator.Library.Utility.Helpers;
 
 namespace Khartyko.InsigniaCreator.Domain.NetworkGenerators;
 
-class CellInfo
+struct BoundInfo
 {
-    public string CellNumber { get; set; }
-    public Dictionary<string, int> Nodes { get; set; }
-    public Dictionary<string, int> Links { get; set; }
+    public int Lower { get; set; }
+    public int Upper { get; set; }
+
+    public readonly override string ToString() => $"[{Lower}-{Upper}]";
+}
+
+struct CellRowInfo
+{
+    public int Top { get; set; }
+    public int Mid { get; set; }
+    public int Bot { get; set; }
+
+    public readonly override string ToString()
+    {
+
+        return $"[Top: {Top}, Mid: {Mid}, Bot: {Bot}]";
+    }
 }
 
 /// <summary>
@@ -27,20 +41,18 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
     private readonly INetworkCalculator<HexagonalNetworkData> _calculator;
 
-    private static string GenerateLoggingFilepath(string filename, string extension)
+    private static string GenerateLoggingFilepath(string directory, string extension)
     {
         string userDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging", DateTime.Now.ToString("dd MMM yyyy"));
+        string path = Path.Combine(userDirectory, "Khartyko", "InsigniaCreator", "Logging", DateTime.Now.ToString("dd MMM yyyy"), directory);
 
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
         }
 
-        return Path.Combine(path, CreateFilename(filename, extension));
+        return Path.Combine(path, $"{DateTime.Now:HH_mm_ss}.{extension}");
     }
-
-    private static string CreateFilename(string name, string extension) => $"{name} {DateTime.Now:HH_mm_ss}.{extension}";
 
     private static double GetModifiedOscillationModifier(int flippedBit)
         => 0.125 * (1 - flippedBit) - 0.125 * flippedBit;
@@ -86,11 +98,11 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
         int[] nodeRowCounts = CalculateNodeRowCounts(horizontalCount, verticalCount, startOffset);
         int[] linkRowCounts = CalculateLinkRowCounts(horizontalCount, verticalCount, startOffset);
-        int[] cellRowCounts = CalculateCellRowCounts(horizontalCount, verticalCount, generationData.StartOffset);
+        int[] cellRowCounts = CalculateCellRowCounts(horizontalCount, verticalCount, startOffset);
 
         Node[] nodes = GenerateNodes(nodeRowCounts, nodeCount);
         Link[] links = GenerateLinks(nodeRowCounts, linkRowCounts, nodes, linkCount, startOffset);
-        Cell[] cells = GenerateCells(nodeRowCounts, linkRowCounts, cellRowCounts, nodes, links, cellCount);
+        Cell[] cells = GenerateCells(nodeRowCounts, linkRowCounts, cellRowCounts, nodes, links, cellCount, startOffset);
 
         return new TemplateNetwork(nodes, links, cells);
     }
@@ -126,6 +138,16 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         int lastLinkIndex = 0;
         int lastRowIndex = 0;
 
+        var linkInfo = new
+        {
+            LinkData = new Dictionary<int, string>[linkRowCounts.Length]
+        };
+
+        for (var i = 0; i < linkInfo.LinkData.Length; i++)
+        {
+            linkInfo.LinkData[i] = new Dictionary<int, string>();
+        }
+
         // Create all of the angled Links
         for (var y = 0; y < linkRowCounts.Length; y += 2)
         {
@@ -135,6 +157,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
             {
                 Node head = nodes[lastNodeIndex];
                 Node tail = nodes[lastNodeIndex + 1];
+
+                linkInfo.LinkData[y][lastLinkIndex] = $"{lastNodeIndex} - {lastNodeIndex + 1}";
 
                 var link = new Link(head, tail);
                 links[lastLinkIndex] = link;
@@ -150,14 +174,36 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
         }
 
         lastNodeIndex = 0;
-        lastLinkIndex = linkRowCounts[0] + 1;
+        lastLinkIndex = linkRowCounts[0];
         lastRowIndex = 0;
 
         int startOffsetBit = Convert.ToInt32(startOffset);
+        int startNormalBit = 1 - startOffsetBit;
+        int evenBit = Convert.ToInt32(MathHelper.IsEven((linkRowCounts.Length - 1) / 2));
+        int oddBit = 1 - evenBit;
+        int nodeCountInRow = nodeRowCounts[1];
+
+        for (var x = 0; x < linkRowCounts[1]; x++)
+        {
+            Node head = nodes[lastNodeIndex];
+            Node tail = nodes[lastNodeIndex + nodeCountInRow - startOffsetBit];
+
+            linkInfo.LinkData[1][lastLinkIndex] = $"{lastNodeIndex} - {lastNodeIndex + nodeCountInRow - startOffsetBit}";
+
+            var link = new Link(head, tail);
+            links[lastLinkIndex] = link;
+
+            lastNodeIndex += 2;
+            lastLinkIndex++;
+        }
+
+        lastRowIndex++;
+        lastNodeIndex -= startOffsetBit;
 
         // Create all of the vertical Links
-        for (var y = 1; y < linkRowCounts.Length; y += 2)
+        for (var y = 3; y < linkRowCounts.Length - 2; y += 2)
         {
+            lastLinkIndex += linkRowCounts[y - 1];
             int rowCount = linkRowCounts[y];
             int lastNodeRowCount = nodeRowCounts[lastRowIndex];
 
@@ -166,6 +212,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 Node head = nodes[lastNodeIndex];
                 Node tail = nodes[lastNodeIndex + lastNodeRowCount];
 
+                linkInfo.LinkData[y][lastLinkIndex] = $"{lastNodeIndex} - {lastNodeIndex + lastNodeRowCount}";
+
                 var link = new Link(head, tail);
                 links[lastLinkIndex] = link;
 
@@ -173,294 +221,200 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
                 lastLinkIndex++;
             }
 
-            lastNodeIndex -= startOffsetBit;
             lastRowIndex++;
-
-            startOffsetBit = 0;
         }
+
+        lastLinkIndex += linkRowCounts[^3];
+        nodeCountInRow = nodeRowCounts[^2];
+        int offsetLastRow = evenBit & startNormalBit | oddBit & startOffsetBit;
+
+        for (var x = 0; x < linkRowCounts[^2]; x++)
+        {
+            Node head = nodes[lastNodeIndex];
+            Node tail = nodes[lastNodeIndex + nodeCountInRow - offsetLastRow];
+
+            linkInfo.LinkData[^2][lastLinkIndex] = $"{lastNodeIndex} - {lastNodeIndex + nodeCountInRow - offsetLastRow}";
+
+            var link = new Link(head, tail);
+            links[lastLinkIndex] = link;
+
+            lastNodeIndex += 2;
+            lastLinkIndex++;
+        }
+
+        // var options = new JsonSerializerOptions
+        // {
+        //     WriteIndented = true,
+        //
+        // };
+
+        // string jsonText = JsonSerializer.Serialize(linkInfo, options);
+
+        // var jsonFilepath = GenerateLoggingFilepath("Links", "jsonc");
+        // File.WriteAllText(jsonFilepath, jsonText);
+
+        // Environment.Exit(0);
 
         return links;
     }
 
-    private static Cell[] GenerateCells(int[] nodeRowCounts, int[] linkRowCounts, int[] cellRowCounts, Node[] nodes, Link[] links, int cellCount)
+    private static Cell[] GenerateCells(int[] nodeRowCounts, int[] linkRowCounts, int[] cellRowCounts, Node[] nodes, Link[] links, int cellCount, bool startOffset)
     {
-        Cell[] cells = new Cell[cellCount];
+        var cells = new Cell[cellCount];
 
-        int lastCellIndex = 0;
-        int lastNodeIndex = 0;
-        int lastNodeRowIndex = 0;
-        int lastLinkTopIndex = 0;
+        int offsetBit = Convert.ToInt32(startOffset);
 
-        var expectedCellInfo = new List<CellInfo>
+        // Node indices
+        int nodeIndex = 0;
+        int nodeRowIndex = 0;
+        int nodeRowCount = nodeRowCounts[nodeRowIndex] - 1;
+
+        int linkIndex = 0;
+        int linkRowIndex = 0;
+        int linkRowCount = linkRowCounts[linkRowIndex] - 1;
+
+        int cellIndex = 0;
+        int cellRowIndex = 0;
+        int cellRowCount = cellRowCounts[cellRowIndex];
+
+        var cellRowInfo = new List<CellRowInfo>();
+
+        // Handle the first row of Cells
+        for (var x = 0; x < cellRowCount; x++)
         {
-            new()
-            {
-                CellNumber = "I",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "II",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "III",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "IV",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "V",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "VI",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "VII",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "VIII",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-            new()
-            {
-                CellNumber = "IX",
-                Nodes = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopMiddle", 0 },
-                    { "TopRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomMiddle", 0 },
-                    { "BottomRight", 0 }
-                },
-                Links = new Dictionary<string, int>
-                {
-                    { "TopLeft", 0 },
-                    { "TopRight", 0 },
-                    { "MiddleLeft", 0 },
-                    { "MiddleRight", 0 },
-                    { "BottomLeft", 0 },
-                    { "BottomRight", 0 }
-                }
-            },
-        };
+            #region Node Indexing
+            
+            int upperStartIndex = nodeIndex;
+            int lowerStartIndex = nodeIndex + nodeRowCount + offsetBit + 1;
 
-        string[] cellNames = new string[] { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
-        var cellInfo = new List<CellInfo>();
+            #endregion Node Indexing
 
-        for (var y = 0; y < cellRowCounts.Length; y++)
-        {
-            int rowCount = cellRowCounts[y];
-            int lastNodeRowCount = nodeRowCounts[lastNodeRowIndex];
-            int linkRowIndex = 2 * y;
-            int topLinkRowCount = linkRowCounts[linkRowIndex];
-            int middleLinkRowCount = linkRowCounts[linkRowIndex + 1];
+            #region Link Indexing
 
-            for (var x = 0; x < rowCount; x++)
+            int topRowCount = linkRowCounts[linkRowIndex];
+            int midRowCount = linkRowCounts[linkRowIndex + 1];
+            
+            int topLinkStartIndex = linkIndex;
+            int midLinkStartIndex = linkIndex + topRowCount + offsetBit;
+            int botLinkStartIndex = linkIndex + topRowCount + midRowCount + offsetBit;
+
+            #endregion Link Indexing
+            
+            var cellInfo = new CellRowInfo
             {
-                int nextRowNodeIndex = lastNodeIndex + lastNodeRowCount;
+                Top = topLinkStartIndex,
+                Mid = midLinkStartIndex,
+                Bot = botLinkStartIndex
+            };
 
-                //Node topLeftNode = nodes[lastNodeIndex];
-                //Node topMiddleNode = nodes[lastNodeIndex + 1];
-                //Node topRightNode = nodes[lastNodeIndex + 2];
-                //Node bottomLeftNode = nodes[nextRowNodeIndex];
-                //Node bottomMiddleNode = nodes[nextRowNodeIndex + 1];
-                //Node bottomRightNode = nodes[nextRowNodeIndex + 2];
+            cellRowInfo.Add(cellInfo);
 
-                int middleRowLinkIndex = lastLinkTopIndex + topLinkRowCount;
-                int bottomRowLinkIndex = middleRowLinkIndex + middleLinkRowCount;
-
-                var cellData = new CellInfo
-                {
-                    CellNumber = cellNames[lastCellIndex],
-                    Nodes = new Dictionary<string, int>
-                    {
-                        { "TopLeft", lastNodeIndex },
-                        { "TopMiddle", lastNodeIndex + 1 },
-                        { "TopRight", lastNodeIndex + 2 },
-                        { "BottomLeft", nextRowNodeIndex },
-                        { "BottomMiddle", nextRowNodeIndex + 1 },
-                        { "BottomRight", nextRowNodeIndex + 2 }
-                    },
-                    Links = new Dictionary<string, int>
-                    {
-                        { "TopLeft", lastLinkTopIndex },
-                        { "TopRight", lastLinkTopIndex + 1 },
-                        { "MiddleLeft", middleRowLinkIndex },
-                        { "MiddleRight", middleRowLinkIndex + 1 },
-                        { "BottomLeft", bottomRowLinkIndex },
-                        { "BottomRight", bottomRowLinkIndex + 1 }
-                    }
-                };
-
-                cellInfo.Add(cellData);
-
-                lastNodeIndex += 2;
-                lastLinkTopIndex += 2;
-                lastCellIndex++;
-            }
-
-            lastNodeIndex += 2;
-            lastNodeRowIndex++;
-            lastLinkTopIndex += topLinkRowCount + middleLinkRowCount;
+            nodeIndex += 2;
+            cellIndex++;
         }
 
+        cellRowInfo = cellRowInfo.GetRange(0, 1).ToList();
+        offsetBit = 1 - offsetBit;
+        nodeIndex++;
+        nodeRowIndex++;
+        cellRowIndex++;
+
+        for (int y = cellRowIndex; y < cellRowCounts.Length - 1; y++)
+        {
+            cellRowCount = cellRowCounts[y];
+
+            #region Node Indexing
+
+            // Get the length of each Node count in the row
+            nodeRowCount = nodeRowCounts[nodeRowIndex] - 1;
+            int nodeRowCountWithOffset = nodeRowCount - 2 * offsetBit;
+
+            int upperStartIndex = nodeIndex + offsetBit;
+            int upperNodeRowCount = upperStartIndex + nodeRowCountWithOffset;
+
+            int lowerStartIndex = nodeIndex + nodeRowCount + offsetBit + 1;
+            int lowerNodeRowCount = lowerStartIndex + nodeRowCountWithOffset;
+
+            #endregion Node Indexing
+
+            #region Link Indexing
+            
+            int topLinkStartIndex = linkIndex;
+            int midLinkStartIndex = linkIndex;
+            int botLinkStartIndex = linkIndex;
+
+            #endregion Link Indexing
+            
+            var cellInfo = new CellRowInfo
+            {
+                Top = topLinkStartIndex,
+                Mid = midLinkStartIndex,
+                Bot = botLinkStartIndex
+            };
+
+            cellRowInfo.Add(cellInfo);
+
+            nodeIndex += nodeRowCounts[nodeRowIndex];
+            cellIndex += cellRowCount;
+
+            // Toggle the 'offset/normal' bits
+            offsetBit = 1 - offsetBit;
+
+            nodeRowIndex++;
+            
+            cellRowIndex++;
+        }
+
+        cellRowCount = cellRowCounts[^1];
+        nodeRowCount = nodeRowCounts[nodeRowIndex] - 1;
+        int normalBit = Convert.ToInt32(!startOffset);
+        
+        for (var x = 0; x < cellRowCount; x++)
+        {
+            #region Node Indexing
+
+            // Get the length of each Node count in the row
+            int nodeRowCountWithOffset = nodeRowCount - 2 * offsetBit;
+
+            int upperStartIndex = nodeIndex + offsetBit;
+            int upperNodeRowCount = upperStartIndex + nodeRowCountWithOffset;
+
+            int lowerStartIndex = nodeIndex + nodeRowCount + 1;
+            int lowerNodeRowCount = lowerStartIndex + nodeRowCountWithOffset;
+
+            #endregion Node Indexing
+
+            #region Link Indexing
+            
+            int topLinkStartIndex = linkIndex;
+            int midLinkStartIndex = linkIndex;
+            int botLinkStartIndex = linkIndex;
+
+            #endregion Link Indexing
+            
+            var cellInfo = new CellRowInfo
+            {
+                Top = topLinkStartIndex,
+                Mid = midLinkStartIndex,
+                Bot = botLinkStartIndex
+            };
+
+            cellRowInfo.Add(cellInfo);
+
+            nodeIndex += 2;
+            cellIndex++;
+        }
+
+        cellRowInfo = cellRowInfo.GetRange(0, cellRowCounts.Length);
+        
         var options = new JsonSerializerOptions
         {
             WriteIndented = true
         };
 
-        string jsonText = JsonSerializer.Serialize(cellInfo, options);
+        string jsonText = JsonSerializer.Serialize(cellRowInfo, options);
 
-        var jsonFilepath = GenerateLoggingFilepath("Cells", "json");
+        var jsonFilepath = GenerateLoggingFilepath("Cells", "jsonc");
         File.WriteAllText(jsonFilepath, jsonText);
 
         Environment.Exit(0);
@@ -605,6 +559,7 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
 
         int evenBit = Convert.ToInt32(MathHelper.IsEven(verticalCount));
         int oddBit = Convert.ToInt32(MathHelper.IsOdd(verticalCount));
+        offsetBit = 1 - offsetBit;
 
         offsetBit = evenBit & normalBit | oddBit & offsetBit;
         cellRowCounts[^1] = horizontalCount - offsetBit;
