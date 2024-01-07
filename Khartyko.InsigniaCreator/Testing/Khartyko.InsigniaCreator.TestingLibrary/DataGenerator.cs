@@ -64,8 +64,8 @@ public static class DataGenerator
         {
             Width = width,
             Height = height,
-            CenterAlongXAxis = true,
-            CenterAlongYAxis = true,
+            VerticalCentering = true,
+            HorizontalCentering = true,
             HorizontalCellCount = 1,
             VerticalCellCount = 1,
             CellTransform = new Transform()

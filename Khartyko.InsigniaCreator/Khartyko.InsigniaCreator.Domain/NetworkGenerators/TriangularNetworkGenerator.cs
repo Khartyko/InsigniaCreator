@@ -37,8 +37,8 @@ public class TriangularNetworkGenerator : INetworkGenerator<TriangularNetworkDat
     {
         DomainAssertionHelper.NetworkDataCheck(generationData);
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.HorizontalCentering, generationData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.VerticalCentering, generationData.VerticalCellCount);
         var transform = new Transform(generationData.CellTransform);
         var startFlipped = generationData.StartFlipped;
 

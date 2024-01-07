@@ -33,8 +33,8 @@ public class TriangularNetworkGeneratorTests
         {
             Width = 1280,
             Height = 800,
-            CenterAlongXAxis = true,
-            CenterAlongYAxis = true,
+            VerticalCentering = true,
+            HorizontalCentering = true,
             HorizontalCellCount = 1,
             VerticalCellCount = 1,
             StartFlipped = startFlipped
@@ -59,14 +59,14 @@ public class TriangularNetworkGeneratorTests
     [InlineData(false, false, true)]
     [InlineData(true, false, true)]
     [InlineData(true, true, true)]
-    public void GenerateNetwork_AllSet_Succeeds(bool centerAlongXAxis, bool centerAlongYAxis, bool startFlipped)
+    public void GenerateNetwork_AllSet_Succeeds(bool verticalCentering, bool horizontalCentering, bool startFlipped)
     {
         var calculator = new TriangularNetworkCalculator();
         var generator = new TriangularNetworkGenerator(calculator);
 
         TriangularNetworkData data = ValidData();
-        data.CenterAlongXAxis = centerAlongXAxis;
-        data.CenterAlongYAxis = centerAlongYAxis;
+        data.VerticalCentering = verticalCentering;
+        data.HorizontalCentering = horizontalCentering;
         data.StartFlipped = startFlipped;
 
         int expectedNodeCount = calculator.CalculateNodeCount(data);

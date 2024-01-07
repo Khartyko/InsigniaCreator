@@ -88,8 +88,8 @@ public class HexagonalNetworkGenerator : INetworkGenerator<HexagonalNetworkData>
     {
         DomainAssertionHelper.NetworkDataCheck(generationData);
 
-        int horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongYAxis, generationData.HorizontalCellCount);
-        int verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.CenterAlongXAxis, generationData.VerticalCellCount);
+        int horizontalCount = CellCounterHelper.ConstrainCountByCentering(generationData.HorizontalCentering, generationData.HorizontalCellCount);
+        int verticalCount = CellCounterHelper.ConstrainCountByCentering(generationData.VerticalCentering, generationData.VerticalCellCount);
         bool startOffset = generationData.StartOffset;
 
         int nodeCount = _calculator.CalculateNodeCount(generationData);

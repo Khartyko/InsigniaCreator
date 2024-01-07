@@ -22,14 +22,14 @@ public class NetworkData
     public double Height { get; set; }
 
     /// <summary>
-    /// Gets or sets whether a TemplateNetwork had Cells centered around the X-Axis.
+    /// Gets or sets whether a TemplateNetwork had Cells centered along the Y-Axis.
     /// </summary>
-    public bool CenterAlongXAxis { get; set; }
+    public bool HorizontalCentering { get; set; }
 
     /// <summary>
-    /// Gets or sets whether a TemplateNetwork had Cells centered around the Y-Axis.
+    /// Gets or sets whether a TemplateNetwork has Cells centered along the X-Axis.
     /// </summary>
-    public bool CenterAlongYAxis { get; set; }
+    public bool VerticalCentering { get; set; }
 
     /// <summary>
     /// Gets or sets the number of Cells horizontally for a TemplateNetwork.

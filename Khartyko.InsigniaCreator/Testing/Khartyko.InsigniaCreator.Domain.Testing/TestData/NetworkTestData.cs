@@ -20,7 +20,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                 }
             };
             
@@ -33,7 +33,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                 }
             };
 
@@ -47,7 +47,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                 }
             };
             
@@ -60,7 +60,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                 }
             };
 
@@ -74,8 +74,8 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                 }
             };
             
@@ -88,8 +88,8 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                 }
             };
             
@@ -102,8 +102,8 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                 }
             };
             
@@ -116,8 +116,8 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                 }
             };
 
@@ -145,7 +145,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -159,7 +159,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -174,7 +174,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -188,7 +188,7 @@ public class NetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };

@@ -23,8 +23,8 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 		DomainAssertionHelper.CalculatorDataCheck(networkData);
 
         // Initial variable setup
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.HorizontalCentering, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.VerticalCentering, networkData.VerticalCellCount);
         bool startOffset = networkData.StartOffset;
 		bool isEven = MathHelper.IsEven(verticalCount);
 		
@@ -75,8 +75,8 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 		DomainAssertionHelper.CalculatorDataCheck(networkData);
 
         // Initial variable setup
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.HorizontalCentering, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.VerticalCentering, networkData.VerticalCellCount);
         bool startOffset = networkData.StartOffset;
 		bool isEven = MathHelper.IsEven(verticalCount);
 		
@@ -127,8 +127,8 @@ public class HexagonalNetworkCalculator : INetworkCalculator<HexagonalNetworkDat
 	{
 		DomainAssertionHelper.CalculatorDataCheck(networkData);
 
-        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongYAxis, networkData.HorizontalCellCount);
-        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.CenterAlongXAxis, networkData.VerticalCellCount);
+        var horizontalCount = CellCounterHelper.ConstrainCountByCentering(networkData.HorizontalCentering, networkData.HorizontalCellCount);
+        var verticalCount = CellCounterHelper.ConstrainCountByCentering(networkData.VerticalCentering, networkData.VerticalCellCount);
         bool startOffset = networkData.StartOffset;
 		
 		int normalColumnCount = (verticalCount + Convert.ToInt32(!startOffset)) / 2;

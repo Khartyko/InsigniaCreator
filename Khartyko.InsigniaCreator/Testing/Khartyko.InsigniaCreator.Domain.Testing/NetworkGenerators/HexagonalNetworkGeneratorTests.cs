@@ -29,14 +29,14 @@ public class HexagonalNetworkGeneratorTests
     [InlineData(false, false, true)]
     [InlineData(true, false, true)]
     [InlineData(true, true, true)]
-    public void GenerateNetwork_Succeeds(bool centerAlongXAxis, bool centerAlongYAxis, bool startOffset)
+    public void GenerateNetwork_Succeeds(bool verticalCentering, bool horizontalCentering, bool startOffset)
     {
         var calculator = new HexagonalNetworkCalculator();
         var generator = new HexagonalNetworkGenerator(calculator);
 
         HexagonalNetworkData data = ValidData();
-        data.CenterAlongXAxis = centerAlongXAxis;
-        data.CenterAlongYAxis = centerAlongYAxis;
+        data.VerticalCentering = verticalCentering;
+        data.HorizontalCentering = horizontalCentering;
         data.StartOffset = startOffset;
 
         int expectedNodeCount = calculator.CalculateNodeCount(data);

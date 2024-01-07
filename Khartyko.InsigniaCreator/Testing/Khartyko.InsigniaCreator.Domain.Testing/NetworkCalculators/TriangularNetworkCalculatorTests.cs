@@ -23,8 +23,8 @@ public class TriangularNetworkCalculatorTests
 	[InlineData(true, true, 4, 4, true, 14)]
 	[InlineData(true, true, 4, 4, false, 14)]
 	public void CalculateNodeCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startFlipped,
@@ -33,8 +33,8 @@ public class TriangularNetworkCalculatorTests
 	{
 		var networkData = new TriangularNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartFlipped = startFlipped
@@ -99,8 +99,8 @@ public class TriangularNetworkCalculatorTests
 	[InlineData(true, true, 4, 4, true, 28)]
 	[InlineData(true, true, 4, 4, false, 28)]
 	public void CalculateLinkCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startFlipped,
@@ -109,8 +109,8 @@ public class TriangularNetworkCalculatorTests
 	{
 		var networkData = new TriangularNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartFlipped = startFlipped
@@ -175,8 +175,8 @@ public class TriangularNetworkCalculatorTests
 	[InlineData(true, true, 4, 4, true, 15)]
 	[InlineData(true, true, 4, 4, false, 15)]
 	public void CalculateCellCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startFlipped,
@@ -185,8 +185,8 @@ public class TriangularNetworkCalculatorTests
 	{
 		var networkData = new TriangularNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartFlipped = startFlipped

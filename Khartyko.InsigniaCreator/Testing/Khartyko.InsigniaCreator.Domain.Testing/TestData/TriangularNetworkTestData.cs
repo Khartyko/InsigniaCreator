@@ -12,7 +12,7 @@ public class TriangularNetworkTestData
         {
             /*
              * Other than the required data, will need a combination of the below:
-             * Configuration    CenterAlongXAxis    CenterAlongYAxis    CellTransform   StartFlipped    Done?
+             * Configuration    verticalCentering    horizontalCentering    CellTransform   StartFlipped    Done?
              * 1000             Y                   N                   N               N               
              * 0100             N                   Y                   N               N               
              * 1100             Y                   Y                   N               N               
@@ -39,7 +39,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                 }
             };
             
@@ -52,7 +52,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                 }
             };
 
@@ -66,7 +66,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false
+                    HorizontalCentering = false
                 }
             };
             
@@ -79,7 +79,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true
+                    HorizontalCentering = true
                 }
             };
 
@@ -93,8 +93,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false
+                    VerticalCentering = false,
+                    HorizontalCentering = false
                 }
             };
             
@@ -107,8 +107,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false
+                    VerticalCentering = true,
+                    HorizontalCentering = false
                 }
             };
             
@@ -121,8 +121,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true
+                    VerticalCentering = false,
+                    HorizontalCentering = true
                 }
             };
             
@@ -135,8 +135,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true
+                    VerticalCentering = true,
+                    HorizontalCentering = true
                 }
             };
 
@@ -164,7 +164,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -178,7 +178,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -193,7 +193,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -207,7 +207,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -222,8 +222,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -237,8 +237,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -252,8 +252,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -267,8 +267,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -310,7 +310,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     StartFlipped = false
                 }
             };
@@ -324,7 +324,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     StartFlipped = false
                 }
             };
@@ -338,7 +338,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     StartFlipped = true
                 }
             };
@@ -352,7 +352,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     StartFlipped = true
                 }
             };
@@ -367,7 +367,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     StartFlipped = false
                 }
             };
@@ -381,7 +381,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     StartFlipped = false
                 }
             };
@@ -395,7 +395,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     StartFlipped = true
                 }
             };
@@ -409,7 +409,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     StartFlipped = true
                 }
             };
@@ -424,8 +424,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     StartFlipped = false
                 }
             };
@@ -439,8 +439,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     StartFlipped = false
                 }
             };
@@ -454,8 +454,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     StartFlipped = false
                 }
             };
@@ -469,8 +469,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     StartFlipped = false
                 }
             };
@@ -484,8 +484,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     StartFlipped = true
                 }
             };
@@ -499,8 +499,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     StartFlipped = true
                 }
             };
@@ -514,8 +514,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     StartFlipped = true
                 }
             };
@@ -529,8 +529,8 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     StartFlipped = true
                 }
             };
@@ -574,7 +574,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
                 }
@@ -589,7 +589,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
                 }
@@ -604,7 +604,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
                 }
@@ -619,7 +619,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
                 }
@@ -635,7 +635,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
                 }
@@ -650,7 +650,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = false
                 }
@@ -665,7 +665,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
                 }
@@ -680,7 +680,7 @@ public class TriangularNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartFlipped = true
                 }

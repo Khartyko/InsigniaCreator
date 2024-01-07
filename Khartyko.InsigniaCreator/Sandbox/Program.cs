@@ -14,8 +14,8 @@ internal static class Program
         Height = 1024,
         HorizontalCellCount = 3,
         VerticalCellCount = 3,
-        CenterAlongXAxis = true,
-        CenterAlongYAxis = true,
+        VerticalCentering = true,
+        HorizontalCentering = true,
         CellTransform = new Transform(
             new Vector2(10.0),
             0,

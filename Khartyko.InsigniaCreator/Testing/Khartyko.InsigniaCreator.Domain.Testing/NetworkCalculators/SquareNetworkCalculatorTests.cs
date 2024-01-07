@@ -20,8 +20,8 @@ public class SquareNetworkCalculatorTests
 	[InlineData(false, false, 1, 1, 9)]
 	[InlineData(true, true, 4, 4, 16)]
 	public void CalculateNodeCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		int expectedCount
@@ -29,8 +29,8 @@ public class SquareNetworkCalculatorTests
 	{
 		var networkData = new NetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount
 		};
@@ -93,8 +93,8 @@ public class SquareNetworkCalculatorTests
 	[InlineData(false, false, 1, 1, 12)]
 	[InlineData(true, true, 4, 4, 24)]
 	public void CalculateLinkCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		int expectedCount
@@ -102,8 +102,8 @@ public class SquareNetworkCalculatorTests
 	{
 		var networkData = new NetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount
 		};
@@ -166,8 +166,8 @@ public class SquareNetworkCalculatorTests
 	[InlineData(false, false, 1, 1, 4)]
 	[InlineData(true, true, 4, 4, 9)]
 	public void CalculateCellCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		int expectedCount
@@ -175,8 +175,8 @@ public class SquareNetworkCalculatorTests
 	{
 		var networkData = new NetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount
 		};

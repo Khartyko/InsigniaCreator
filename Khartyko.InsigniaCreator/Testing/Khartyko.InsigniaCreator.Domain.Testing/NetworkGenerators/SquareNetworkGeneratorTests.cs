@@ -28,14 +28,14 @@ public class SquareNetworkGeneratorTests
     [InlineData(true, false)]
     [InlineData(false, true)]
     [InlineData(true, true)]
-    public void GenerateNetwork_Succeeds(bool centerAlongXAxis, bool centerAlongYAxis)
+    public void GenerateNetwork_Succeeds(bool verticalCentering, bool horizontalCentering)
     {
         var calculator = new SquareNetworkCalculator();
         var generator = new SquareNetworkGenerator(calculator);
 
         NetworkData data = ValidData();
-        data.CenterAlongXAxis = centerAlongXAxis;
-        data.CenterAlongYAxis = centerAlongYAxis;
+        data.VerticalCentering = verticalCentering;
+        data.HorizontalCentering = horizontalCentering;
 
         int expectedNodeCount = calculator.CalculateNodeCount(data);
         int expectedLinkCount = calculator.CalculateLinkCount(data);

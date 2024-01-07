@@ -12,7 +12,7 @@ public class HexagonalNetworkTestData
         {
             /*
              * Other than the required data, will need a combination of the below:
-             * Configuration    CenterAlongXAxis    CenterAlongYAxis    CellTransform   StartOffset    Done?
+             * Configuration    verticalCentering    horizontalCentering    CellTransform   StartOffset    Done?
              * 1000             Y                   N                   N               N               
              * 0100             N                   Y                   N               N               
              * 1100             Y                   Y                   N               N               
@@ -39,7 +39,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                 }
             };
             
@@ -52,7 +52,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                 }
             };
 
@@ -66,7 +66,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false
+                    HorizontalCentering = false
                 }
             };
             
@@ -79,7 +79,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true
+                    HorizontalCentering = true
                 }
             };
 
@@ -93,8 +93,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false
+                    VerticalCentering = false,
+                    HorizontalCentering = false
                 }
             };
             
@@ -107,8 +107,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false
+                    VerticalCentering = true,
+                    HorizontalCentering = false
                 }
             };
             
@@ -121,8 +121,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true
+                    VerticalCentering = false,
+                    HorizontalCentering = true
                 }
             };
             
@@ -135,8 +135,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true
+                    VerticalCentering = true,
+                    HorizontalCentering = true
                 }
             };
 
@@ -164,7 +164,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -178,7 +178,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -193,7 +193,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -207,7 +207,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                 }
             };
@@ -222,8 +222,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -237,8 +237,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -252,8 +252,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -267,8 +267,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform
                 }
             };
@@ -310,7 +310,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     StartOffset = false
                 }
             };
@@ -324,7 +324,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     StartOffset = false
                 }
             };
@@ -338,7 +338,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     StartOffset = true
                 }
             };
@@ -352,7 +352,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     StartOffset = true
                 },
             };
@@ -367,7 +367,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     StartOffset = false
                 }
             };
@@ -381,7 +381,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     StartOffset = false
                 }
             };
@@ -395,7 +395,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     StartOffset = true
                 }
             };
@@ -409,7 +409,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     StartOffset = true
                 }
             };
@@ -424,8 +424,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     StartOffset = false
                 }
             };
@@ -439,8 +439,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     StartOffset = false
                 }
             };
@@ -454,8 +454,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     StartOffset = false
                 }
             };
@@ -469,8 +469,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     StartOffset = false
                 }
             };
@@ -484,8 +484,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = false,
+                    HorizontalCentering = false,
                     StartOffset = true
                 }
             };
@@ -499,8 +499,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = false,
+                    VerticalCentering = true,
+                    HorizontalCentering = false,
                     StartOffset = true
                 }
             };
@@ -514,8 +514,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = false,
+                    HorizontalCentering = true,
                     StartOffset = true
                 }
             };
@@ -529,8 +529,8 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
-                    CenterAlongYAxis = true,
+                    VerticalCentering = true,
+                    HorizontalCentering = true,
                     StartOffset = true
                 }
             };
@@ -574,7 +574,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
                 }
@@ -589,7 +589,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
                 }
@@ -604,7 +604,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = false,
+                    VerticalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
                 }
@@ -619,7 +619,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongXAxis = true,
+                    VerticalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
                 }
@@ -635,7 +635,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
                 }
@@ -650,7 +650,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = false
                 }
@@ -665,7 +665,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = false,
+                    HorizontalCentering = false,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
                 }
@@ -680,7 +680,7 @@ public class HexagonalNetworkTestData
                     HorizontalCellCount = 13,
                     VerticalCellCount = 13,
                     // PatchWork Variables:
-                    CenterAlongYAxis = true,
+                    HorizontalCentering = true,
                     CellTransform = DataGenerator.GenerateRandomTransformData(true, true, true).Transform,
                     StartOffset = true
                 }

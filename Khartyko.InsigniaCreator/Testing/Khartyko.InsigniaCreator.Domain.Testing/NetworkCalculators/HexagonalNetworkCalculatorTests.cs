@@ -22,8 +22,8 @@ public class HexagonalNetworkCalculatorTests
 	[InlineData(true, true, 5, 5, true, 62)]
 	[InlineData(true, true, 5, 5, false, 66)]
 	public void CalculateNodeCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startOffset,
@@ -32,8 +32,8 @@ public class HexagonalNetworkCalculatorTests
 	{
 		var networkData = new HexagonalNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartOffset = startOffset
@@ -112,8 +112,8 @@ public class HexagonalNetworkCalculatorTests
 	[InlineData(false, false, 3, 3, true, 56)]
 	[InlineData(false, false, 3, 3, false, 56)]
 	public void CalculateLinkCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startOffset,
@@ -122,8 +122,8 @@ public class HexagonalNetworkCalculatorTests
 	{
 		var networkData = new HexagonalNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartOffset = startOffset
@@ -188,8 +188,8 @@ public class HexagonalNetworkCalculatorTests
 	[InlineData(true, true, 4, 4, true, 7)]
 	[InlineData(true, true, 4, 4, false, 8)]
 	public void CalculateCellCount_Succeeds(
-		bool centerAlongXAxis,
-		bool centerAlongYAxis,
+		bool verticalCentering,
+		bool horizontalCentering,
 		int horizontalCellCount,
 		int verticalCellCount,
 		bool startOffset,
@@ -198,8 +198,8 @@ public class HexagonalNetworkCalculatorTests
 	{
 		var networkData = new HexagonalNetworkData
 		{
-			CenterAlongXAxis = centerAlongXAxis,
-			CenterAlongYAxis = centerAlongYAxis,
+			VerticalCentering = verticalCentering,
+			HorizontalCentering = horizontalCentering,
 			HorizontalCellCount = horizontalCellCount,
 			VerticalCellCount = verticalCellCount,
 			StartOffset = startOffset
